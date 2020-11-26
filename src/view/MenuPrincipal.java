@@ -1,10 +1,6 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
@@ -13,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.ImageIcon;
 
 public class MenuPrincipal extends JFrame implements ActionListener {
     public MenuPrincipal() {
@@ -28,6 +25,7 @@ public class MenuPrincipal extends JFrame implements ActionListener {
         JButton deconnexion = new JButton("Deconnexion");
         deconnexion.setBackground(Color.red);
         deconnexion.setForeground(Color.BLACK);
+        deconnexion.setPreferredSize(new Dimension(150,60));
 
         /*création du conteneur pour le bouton deconnexion*/
         JPanel conteneurdeconnexion = new JPanel();
@@ -43,10 +41,11 @@ public class MenuPrincipal extends JFrame implements ActionListener {
         conteneurtitre.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
         /*création des boutons de choix de menu*/
-        JButton creation = new JButton("Création de jeux");
+        JButtonRedimension creation = new JButtonRedimension("C:\\Users\\alans\\Pictures\\test\\creation.png");
+
         creation.setBackground(Color.BLACK);
         creation.setForeground(Color.WHITE);
-        JButton gestion = new JButton("Gestion des salles");
+        JButtonRedimension gestion = new JButtonRedimension("C:\\Users\\alans\\Pictures\\test\\gestion.png");
         gestion.setBackground(Color.GRAY);
         creation.setForeground(Color.WHITE);
 
@@ -81,4 +80,24 @@ public class MenuPrincipal extends JFrame implements ActionListener {
     public static void main(String[] args) {
         new MenuPrincipal();
     }
+
+    public class JButtonRedimension extends JButton { // !!! on doit étendre le composant dans lequel on veut insérer une image de fond
+
+        private Image img;
+        private String imageName;
+
+        //Un constructeur pour choisir plus simplement l'image
+        public JButtonRedimension(String path) {
+            img = new ImageIcon(path).getImage();
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            if (img == null) return;
+            g.drawImage(img, 0, 0, getWidth(), getHeight(), this);
+
+        }
+    }
+
 }
