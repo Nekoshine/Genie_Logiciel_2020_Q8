@@ -94,7 +94,7 @@ public class DBUser {
       PreparedStatement requeteVerif = DBUser.getConnexion().prepareStatement("Select * from User where login=?");
       requeteVerif.setString(1,login);
       ResultSet resultat = requeteVerif.executeQuery();
-      if(resultat.next != null){
+      if(resultat.next() != false){
         inserted=true;
       }
       requeteVerif.close();
