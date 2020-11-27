@@ -19,32 +19,32 @@ class DBUserTest {
         DB=null ;
     }
 
-    //@Test
-    /*void testinsertUser() {
+    @Test
+    void testinsertUser() {
         DBUser DB = new DBUser();
         DB.getConnexion();
-        String login="ydauvin";
-        String password="AzertY.123";
+        String login="Jesuisuntest";
+        String password="Jesuislemdpdutest";
         boolean test = DB.insertUser(login,password);
         assertTrue(test);
-    }*/
+    }
 
     @Test
     void connectUser() {
-        String login="ydauvin";
-        String password="AzertY.123";
+        String login="Jesuisuntest";
+        String password="Jesuislemdpdutest";
         boolean test = DB.connectUser(login,password);
         assertTrue(test);
     }
 
-    //@Test
-    /*void doubleInsertion(){
+    @Test
+    void doubleInsertion(){
         DBUser DB = new DBUser();
         DB.getConnexion();
-        String login="ydauvin";
-        String password="AzertY.123";
+        String login="testtest";
+        String password="test";
         DB.insertUser(login,password);
         boolean test = DB.insertUser(login,password);
         assertFalse(test);
-    }*/
+    }
 }
