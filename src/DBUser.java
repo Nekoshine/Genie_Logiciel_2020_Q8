@@ -77,7 +77,7 @@ public class DBUser {
   * Procédure qui insere un nouvel user dans la base en hachant son mdp
   * @param login Login a insérer dans la base
   * @param pwd   Mot de passe a hasher et insérer dans la base
-  * @return      Booleen qui indique si l'insert cest correctement effectué
+  * @return      Booleen qui indique si l insert cest correctement déroulé
   */
   public static boolean insertUser(String login,String pwd){
     boolean inserted=false;
