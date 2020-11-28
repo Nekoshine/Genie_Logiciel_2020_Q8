@@ -77,8 +77,10 @@ public class DBUser {
   * Procédure qui insere un nouvel user dans la base en hachant son mdp
   * @param login Login a insérer dans la base
   * @param pwd   Mot de passe a hasher et insérer dans la base
+  * @return      Booleen qui indique si l insert cest correctement déroulé
   */
-  public static void insertUser(String login,String pwd){
+  public static boolean insertUser(String login,String pwd){
+    boolean inserted=false;
     try{
       MessageDigest md = MessageDigest.getInstance("MD5"); // Création de la classe qui va hash en MD5
       byte[] byteChaine = pwd.getBytes("UTF-8"); // On convertit la chaine en octets
@@ -89,6 +91,13 @@ public class DBUser {
       requete.setString(2,hashString);
       requete.executeUpdate();
       requete.close();
+      PreparedStatement requeteVerif = DBUser.getConnexion().prepareStatement("Select * from User where login=?");
+      requeteVerif.setString(1,login);
+      ResultSet resultat = requeteVerif.executeQuery();
+      if(resultat.next() != false){
+        inserted=true;
+      }
+      requeteVerif.close();
     }catch(SQLException e ){
       System.err.println("Erreur requete insertUser: " + e.getMessage());
     }catch(UnsupportedEncodingException e ){
@@ -96,6 +105,7 @@ public class DBUser {
     }catch(NoSuchAlgorithmException e ){
       System.err.println("Erreur Algorithme: " + e.getMessage());
     }
+    return inserted;
   }
   /*
   public static void main(String[] args) {
