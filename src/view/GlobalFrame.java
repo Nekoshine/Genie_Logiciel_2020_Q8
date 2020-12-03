@@ -26,6 +26,7 @@ public class GlobalFrame extends JFrame {
         this.setVisible(true);
 
 
+
         RoomManagement menu = new RoomManagement();
         this.add(menu,mainLayout.CENTER);
 
@@ -35,20 +36,23 @@ public class GlobalFrame extends JFrame {
         this.setResizable(true);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        /*this.addComponentListener(new ComponentAdapter() {
+        this.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
                 super.componentResized(e);
                 windowSize = getSize();
+                menu.repaint();
+                menu.revalidate();
+
             }
-        });*/
+        });
 
 
 
 
     }
 
-    public static void main(String[] args) throws InterruptedException, IOException {
+    public static void main(String[] args) throws InterruptedException, IOException, ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
         GlobalFrame test = new GlobalFrame();
 
     }
