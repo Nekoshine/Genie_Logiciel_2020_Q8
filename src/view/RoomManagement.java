@@ -4,31 +4,28 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 
 public class RoomManagement extends JPanel{
 
 
-    private JPanel listPanel;
-    private JPanel titlePanel;
-    private JPanel decoPanel;
-    private JPanel newButtonPanel;
-    private JPanel roomPanel;
+    private final JPanel listPanel;
+    private final JPanel titlePanel;
+    private final JPanel decoPanel;
+    private final JPanel newButtonPanel;
+    private final JPanel roomPanel;
 
-    private GridBagLayout listLayout;
-    private JScrollPane scrollPane;
-    private FlowLayout decoLayout;
-    private BorderLayout mainLayout;
-    private BorderLayout centerLayout;
+    private final GridBagLayout listLayout;
+    private final JScrollPane scrollPane;
+    private final FlowLayout decoLayout;
+    private final BorderLayout mainLayout;
+    private final BorderLayout centerLayout;
 
-    private JButton returnButton;
-    private JButton newButton;
+    private final JButton returnButton;
+    private final JButton newButton;
 
-    private JLabel titre;
+    private final JLabel titre;
 
-    private Dimension windowSize;
+    private final Dimension windowSize;
 
 
     public RoomManagement(){
@@ -115,9 +112,9 @@ public class RoomManagement extends JPanel{
         decoPanel.add(returnButton);
         //listPanel.add(scrollPane);
 
-        this.add(listPanel,mainLayout.CENTER);
-        this.add(titlePanel,mainLayout.NORTH);
-        this.add(decoPanel,mainLayout.SOUTH);
+        this.add(listPanel, BorderLayout.CENTER);
+        this.add(titlePanel, BorderLayout.NORTH);
+        this.add(decoPanel, BorderLayout.SOUTH);
 
         this.setVisible(true);
 
