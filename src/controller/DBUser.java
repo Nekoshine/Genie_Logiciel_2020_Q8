@@ -1,12 +1,13 @@
+package controller;
+
+import model.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.security.*;
 import java.io.*;
-import java.util.Arrays;
 import javax.xml.bind.DatatypeConverter;
 /**
 * Classe qui va contenir toutes les méthodes liées a la DB pour le user
