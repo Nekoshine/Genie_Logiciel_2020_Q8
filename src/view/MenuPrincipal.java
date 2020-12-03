@@ -1,3 +1,5 @@
+//Codé par alan
+
 package view;
 
 import java.awt.*;
