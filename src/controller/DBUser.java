@@ -1,12 +1,12 @@
+package controller;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.security.*;
 import java.io.*;
-import java.util.Arrays;
 import javax.xml.bind.DatatypeConverter;
 /**
 * Classe qui va contenir toutes les méthodes liées a la DB pour le user
@@ -53,7 +53,7 @@ public class DBUser {
       byte[] byteChaine = password.getBytes("UTF-8"); // On convertit la chaine en octets
       byte[] hash = md.digest(byteChaine); // On hash notre chaine en MD5
       String hashString = DatatypeConverter.printHexBinary(hash); // On convertit le tableau d'octets en string
-      PreparedStatement requete = DBUser.getConnexion().prepareStatement("Select * from User where login=?");
+      PreparedStatement requete = DBUser.getConnexion().prepareStatement("Select * from model.User where login=?");
       requete.setString(1,login);
       ResultSet resultat = requete.executeQuery();
       resultat.next();
@@ -85,13 +85,13 @@ public class DBUser {
       MessageDigest md = MessageDigest.getInstance("MD5"); // Création de la classe qui va hash en MD5
       byte[] byteChaine = pwd.getBytes("UTF-8"); // On convertit la chaine en octets
       byte[] hash = md.digest(byteChaine); // On hash notre chaine en MD
-      PreparedStatement requete = DBUser.getConnexion().prepareStatement("INSERT INTO User VALUES (?,?,default)");
+      PreparedStatement requete = DBUser.getConnexion().prepareStatement("INSERT INTO model.User VALUES (?,?,default)");
       String hashString = DatatypeConverter.printHexBinary(hash); // On convertit le tableau d'octets en string
       requete.setString(1,login);
       requete.setString(2,hashString);
       requete.executeUpdate();
       requete.close();
-      PreparedStatement requeteVerif = DBUser.getConnexion().prepareStatement("Select * from User where login=?");
+      PreparedStatement requeteVerif = DBUser.getConnexion().prepareStatement("Select * from model.User where login=?");
       requeteVerif.setString(1,login);
       ResultSet resultat = requeteVerif.executeQuery();
       if(resultat.next() != false){
