@@ -1,3 +1,5 @@
+package model;
+
 public class Room{
   private int id;
   private int idGame;
