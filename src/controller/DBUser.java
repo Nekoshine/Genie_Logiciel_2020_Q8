@@ -54,7 +54,7 @@ public class DBUser {
       byte[] byteChaine = password.getBytes("UTF-8"); // On convertit la chaine en octets
       byte[] hash = md.digest(byteChaine); // On hash notre chaine en MD5
       String hashString = DatatypeConverter.printHexBinary(hash); // On convertit le tableau d'octets en string
-      PreparedStatement requete = DBUser.getConnexion().prepareStatement("Select * from model.User where login=?");
+      PreparedStatement requete = DBUser.getConnexion().prepareStatement("Select * from User where login=?");
       requete.setString(1,login);
       ResultSet resultat = requete.executeQuery();
       resultat.next();
@@ -86,13 +86,13 @@ public class DBUser {
       MessageDigest md = MessageDigest.getInstance("MD5"); // Création de la classe qui va hash en MD5
       byte[] byteChaine = pwd.getBytes("UTF-8"); // On convertit la chaine en octets
       byte[] hash = md.digest(byteChaine); // On hash notre chaine en MD
-      PreparedStatement requete = DBUser.getConnexion().prepareStatement("INSERT INTO model.User VALUES (?,?,default)");
+      PreparedStatement requete = DBUser.getConnexion().prepareStatement("INSERT INTO User VALUES (?,?,default)");
       String hashString = DatatypeConverter.printHexBinary(hash); // On convertit le tableau d'octets en string
       requete.setString(1,login);
       requete.setString(2,hashString);
       requete.executeUpdate();
       requete.close();
-      PreparedStatement requeteVerif = DBUser.getConnexion().prepareStatement("Select * from model.User where login=?");
+      PreparedStatement requeteVerif = DBUser.getConnexion().prepareStatement("Select * from User where login=?");
       requeteVerif.setString(1,login);
       ResultSet resultat = requeteVerif.executeQuery();
       if(resultat.next() != false){
