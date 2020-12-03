@@ -1,9 +1,14 @@
 package view;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.image.ImageObserver;
+import java.awt.image.ImageProducer;
+import java.io.File;
+import java.io.IOException;
 
 public class GlobalFrame extends JFrame {
 
@@ -12,8 +17,11 @@ public class GlobalFrame extends JFrame {
 
 
 
-    public GlobalFrame() {
+    public GlobalFrame() throws IOException {
 
+        File fichier = new File(".\\src\\view\\image\\logo.png");
+        Image logo = ImageIO.read(fichier);
+        this.setIconImage(logo);
         this.setTitle("E-Scape Game");
         this.setVisible(true);
 
@@ -40,7 +48,7 @@ public class GlobalFrame extends JFrame {
 
     }
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, IOException {
         GlobalFrame test = new GlobalFrame();
 
     }
