@@ -10,13 +10,18 @@ import java.awt.event.ComponentEvent;
 
 public class RoomManagement extends JPanel{
 
-    private BorderLayout mainLayout;
+
     private JPanel listPanel;
     private JPanel titlePanel;
     private JPanel decoPanel;
-    private BoxLayout listLayout;
+    private JPanel newButtonPanel;
+    private JPanel roomPanel;
+
+    private GridBagLayout listLayout;
     private JScrollPane scrollPane;
     private FlowLayout decoLayout;
+    private BorderLayout mainLayout;
+    private BorderLayout centerLayout;
 
     private JButton returnButton;
     private JButton newButton;
@@ -31,16 +36,23 @@ public class RoomManagement extends JPanel{
         /* Déclaration JPanel / JScrollPane */
 
         listPanel = new JPanel();
+        roomPanel = new JPanel();
         titlePanel = new JPanel();
         decoPanel = new JPanel();
+        newButtonPanel = new JPanel();
         scrollPane = new JScrollPane(listPanel);
 
         /* Déclaration Layouts */
 
         windowSize = new Dimension();
         mainLayout = new BorderLayout(10,10);
+        centerLayout = new BorderLayout(4,4);
         decoLayout = new FlowLayout(FlowLayout.LEFT);
-        listLayout = new BoxLayout(listPanel,BoxLayout.Y_AXIS);
+        listLayout = new GridBagLayout();
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.anchor = GridBagConstraints.NORTH;
+
+
 
         /* Déclaration Boutons */
 
@@ -54,32 +66,42 @@ public class RoomManagement extends JPanel{
         newButton.setBackground(Color.GRAY);
         newButton.setOpaque(false);
         newButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        /* Ajout d'une nouvelle salle */
+
         newButton.setAction(new AbstractAction("Nouvelle Salle") {
 
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                listPanel.remove(newButton);
+                listPanel.remove(newButtonPanel);
                 JPanel panelSalle = new JPanel();
-                panelSalle.setSize(new Dimension(700,40));
+                panelSalle.setSize(new Dimension(roomPanel.getWidth(),roomPanel.getHeight()/4));
                 panelSalle.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                listPanel.add(panelSalle);
-                listPanel.add(newButton);
+                roomPanel.add(panelSalle);
+                listPanel.add(newButtonPanel,BorderLayout.SOUTH);
                 listPanel.revalidate();
                 listPanel.repaint();
 
             }
         });
 
+
+
         Border mainPadding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
         Border listPadding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
         this.setBorder(mainPadding);
         listPanel.setBorder(listPadding);
 
+        newButtonPanel.add(newButton);
+
         this.setLayout(mainLayout);
-        listPanel.setLayout(listLayout);
-        listPanel.add(Box.createRigidArea(new Dimension(0,10)));
-        listPanel.add(newButton);
+        listPanel.setLayout(centerLayout);
+        listPanel.add(roomPanel,BorderLayout.CENTER);
+        listPanel.add(newButtonPanel,BorderLayout.SOUTH);
+
+
+        newButtonPanel.add(newButton);
 
 
         titre = new JLabel("MJ - Gestion des salles");
