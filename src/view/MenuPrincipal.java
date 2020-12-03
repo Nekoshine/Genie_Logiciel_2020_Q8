@@ -7,16 +7,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.ImageIcon;
 
-public class MenuPrincipal extends JFrame implements ActionListener {
+public class MenuPrincipal extends JPanel implements ActionListener {
     public MenuPrincipal() {
-        super("menu principal");
-        this.setLayout(new BorderLayout());
 
         /*Création de la fenetre principale*/
         JPanel principal = new JPanel();
@@ -68,20 +65,9 @@ public class MenuPrincipal extends JFrame implements ActionListener {
         principal.add("North", conteneurtitre);
         principal.add("Center", new JSeparator());
         principal.add("Center", conteneurmenus);
-
-        this.add("Center", principal);
-        this.setDefaultCloseOperation(3);
-        this.setMinimumSize(new Dimension(800, 400));
-        this.pack();
-        this.setVisible(true);
     }
 
-    public void actionPerformed(ActionEvent event) {
-    }
-
-    public static void main(String[] args) {
-        new MenuPrincipal();
-    }
+    public void actionPerformed(ActionEvent event) {}
 
     public class JButtonRedimension extends JButton { // !!! on doit étendre le composant dans lequel on veut insérer une image de fond
 
