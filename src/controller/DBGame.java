@@ -1,12 +1,13 @@
+package controller;
+
+import model.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.security.*;
-import java.io.*;
-import java.util.Arrays;
+
 /**
 * Classe qui va contenir toutes les méthodes liées a la DB pour un jeu
 */
@@ -46,7 +47,7 @@ public class DBGame {
     ArrayList<Game> gameList = new ArrayList<Game>();
     Boolean boolGame=false;
     try{
-      PreparedStatement requete = DBUser.getConnexion().prepareStatement("Select * from Game");
+      PreparedStatement requete = DBUser.getConnexion().prepareStatement("Select * from model.Game");
       ResultSet resultat = requete.executeQuery();
       if (resultat.next()) { // On itère chaque résultat
         if(resultat.getInt("ready")==1){ // On convertit le booleen car il est stocké comme un entier dans la base
@@ -55,7 +56,7 @@ public class DBGame {
           boolGame=false;
         }
         gameList.add(new Game(resultat.getInt("id"), resultat.getString("titre"),
-        resultat.getInt("score"), resultat.getInt("idUser"),resultat.getInt("timer"),boolGame)); // On crée l'objet Game et on l'ajoute dans la liste
+        resultat.getInt("score"), resultat.getInt("idUser"),resultat.getInt("timer"),boolGame)); // On crée l'objet model.Game et on l'ajoute dans la liste
       }
       requete.close();
       resultat.close();
