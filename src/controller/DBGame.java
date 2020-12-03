@@ -47,7 +47,7 @@ public class DBGame {
     ArrayList<Game> gameList = new ArrayList<Game>();
     Boolean boolGame=false;
     try{
-      PreparedStatement requete = DBUser.getConnexion().prepareStatement("Select * from model.Game");
+      PreparedStatement requete = DBUser.getConnexion().prepareStatement("Select * from Game");
       ResultSet resultat = requete.executeQuery();
       if (resultat.next()) { // On itère chaque résultat
         if(resultat.getInt("ready")==1){ // On convertit le booleen car il est stocké comme un entier dans la base
