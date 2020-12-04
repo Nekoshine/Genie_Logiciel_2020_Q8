@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 /**
 * Classe qui va contenir toutes les méthodes liées a la DB pour un jeu
+* Codé par Esteban
 */
 public class DBGame {
   private static Connection connexion;
@@ -47,7 +48,7 @@ public class DBGame {
     ArrayList<Game> gameList = new ArrayList<Game>();
     Boolean boolGame=false;
     try{
-      PreparedStatement requete = DBUser.getConnexion().prepareStatement("Select * from Game");
+      PreparedStatement requete = DBGame.getConnexion().prepareStatement("Select * from Game");
       ResultSet resultat = requete.executeQuery();
       if (resultat.next()) { // On itère chaque résultat
         if(resultat.getInt("ready")==1){ // On convertit le booleen car il est stocké comme un entier dans la base
@@ -64,5 +65,5 @@ public class DBGame {
       System.err.println("Erreur requete connectUser: " + e.getMessage());
     }
     return gameList;
-  }  
+  }
 }
