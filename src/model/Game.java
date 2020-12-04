@@ -1,5 +1,7 @@
 package model;
-
+/**
+* * Codé par Esteban
+*/
 public class Game{
   private int id;
   private String titre;
