@@ -13,12 +13,13 @@ import javax.swing.JSeparator;
 import javax.swing.ImageIcon;
 
 public class MenuPrincipal extends JPanel implements ActionListener {
-    public JPanel conteneurdeconnexion = new JPanel();
-    public JPanel conteneurtitre = new JPanel();
-    public JPanel conteneurmenus = new JPanel();
-    public JButton deconnexion = new JButton("Deconnexion");
-    public JButtonRedimension gestion = new JButtonRedimension("C:\\Users\\alans\\Pictures\\test\\gestion.png");
-    public JButtonRedimension creation = new JButtonRedimension("C:\\Users\\alans\\Pictures\\test\\creation.png");
+    private JPanel conteneurdeconnexion;
+    private JPanel conteneurtitre;
+    private JPanel conteneurmenus;
+
+    private JButton deconnexion;
+    private JButtonRedimension gestion;
+    private JButtonRedimension creation;
 
     public MenuPrincipal() {
 
@@ -28,32 +29,31 @@ public class MenuPrincipal extends JPanel implements ActionListener {
         this.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 
         /*création du bouton deconnexion*/
-
+        deconnexion = new JButton("Deconnexion");
         deconnexion.setBackground(Color.red);
         deconnexion.setForeground(Color.BLACK);
         deconnexion.setPreferredSize(new Dimension(150,60));
 
         /*création du conteneur pour le bouton deconnexion*/
-
+        conteneurdeconnexion = new JPanel();
         conteneurdeconnexion.setLayout(new FlowLayout(0));
 
         /*création du titre*/
         JLabel titre = new JLabel("ceci est le titre de ce test");
 
         /*création du conteneur pour le titre*/
-
+        conteneurtitre = new JPanel();
         conteneurtitre.setLayout(new FlowLayout());
         conteneurtitre.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
         /*création des boutons de choix de menu*/
 
-        creation.setBackground(Color.BLACK);
-        creation.setForeground(Color.WHITE);
-        gestion.setBackground(Color.GRAY);
-        gestion.setForeground(Color.WHITE);
+        creation = new JButtonRedimension("C:\\Users\\alans\\Pictures\\test\\creation.png");
+
+        gestion = new JButtonRedimension("C:\\Users\\alans\\Pictures\\test\\gestion.png");
 
         /*création du conteneur des menus*/
-
+        conteneurmenus = new JPanel();
         conteneurmenus.setLayout(new GridLayout(1, 2, 30, 5));
         conteneurmenus.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 

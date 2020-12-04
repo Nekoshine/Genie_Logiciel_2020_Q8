@@ -10,13 +10,13 @@ import java.awt.event.MouseEvent;
 import javax.swing.*;
 
 
-public class Connexion extends JPanel implements ActionListener {
+public class MenuInscription extends JPanel implements ActionListener {
 
     private JPanel login;
     private JPanel mdp;
     private JPanel conteneurinscription;
 
-    private JButton connexion;
+    private JButton confirmation;
 
     private JTextField saisieidentifiant;
     private JTextField saisiemotdepasse;
@@ -25,7 +25,7 @@ public class Connexion extends JPanel implements ActionListener {
     private JLabel motdepasse;
     private JLabel inscription;
 
-    public Connexion() {
+    public MenuInscription() {
 
         //creation de la partie login
 
@@ -53,18 +53,8 @@ public class Connexion extends JPanel implements ActionListener {
 
         //creation du bouton de connexion
 
-        connexion = new JButton("Connexion");
-        connexion.setBackground(Color.GREEN);
-
-        //création du lien vers l'inscription
-        conteneurinscription = new JPanel();
-        conteneurinscription.setLayout(new FlowLayout());
-
-        inscription = new JLabel("s'inscrire");
-        inscription.setForeground(Color.BLUE);
-
-
-
+        confirmation= new JButton("Confirmation");
+        confirmation.setBackground(Color.GREEN);
 
 
         this.add(Box.createRigidArea(new Dimension(0, 150)));
@@ -73,9 +63,8 @@ public class Connexion extends JPanel implements ActionListener {
         this.add(login);
         mdp.setMaximumSize(new Dimension(800,30));
         this.add(mdp);
-        this.add(inscription);
         this.add(Box.createRigidArea(new Dimension(0, 10)));
-        this.add(connexion);
+        this.add(confirmation);
         this.setVisible(true);
 
     }
@@ -83,5 +72,3 @@ public class Connexion extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent event) {
     }
 }
-
-
