@@ -1,9 +1,10 @@
+package model;
+
 import controller.DBUser;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class DBUserTest {
 
@@ -27,7 +28,7 @@ class DBUserTest {
         String login="Jesuisuntest";
         String password="Jesuislemdpdutest";
         boolean test = DB.insertUser(login,password);
-        assertTrue(test);
+        Assertions.assertTrue(test);
     }
 
     @Test
@@ -35,7 +36,7 @@ class DBUserTest {
         String login="Jesuisuntest";
         String password="Jesuislemdpdutest";
         boolean test = DB.connectUser(login,password);
-        assertTrue(test);
+        Assertions.assertTrue(test);
     }
 
     @Test
@@ -46,6 +47,6 @@ class DBUserTest {
         String password="test";
         DB.insertUser(login,password);
         boolean test = DB.insertUser(login,password);
-        assertFalse(test);
+        Assertions.assertFalse(test);
     }
 }
