@@ -14,6 +14,7 @@ public class GlobalFrame extends JFrame {
 
     public static Dimension windowSize;
     private BorderLayout mainLayout;
+    RoomManagement menu;
 
 
 
@@ -24,15 +25,17 @@ public class GlobalFrame extends JFrame {
         this.setIconImage(logo);
         this.setTitle("E-Scape Game");
         this.setVisible(true);
+        windowSize = new Dimension(1280,720);
 
 
 
-        RoomManagement menu = new RoomManagement();
-        this.add(menu,mainLayout.CENTER);
 
-        //this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        windowSize = new Dimension(854,480);
+        menu = new RoomManagement();
+        this.setContentPane(menu);
+
+
         this.setSize(windowSize);
+        this.setLocationRelativeTo(null);
         this.setResizable(true);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -41,8 +44,10 @@ public class GlobalFrame extends JFrame {
             public void componentResized(ComponentEvent e) {
                 super.componentResized(e);
                 windowSize = getSize();
-                menu.repaint();
-                menu.revalidate();
+                menu = new RoomManagement();
+                setContentPane(menu);
+                revalidate();
+                repaint();
 
             }
         });
@@ -52,7 +57,7 @@ public class GlobalFrame extends JFrame {
 
     }
 
-    public static void main(String[] args) throws InterruptedException, IOException, ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
+    public static void main(String[] args) throws IOException{
         GlobalFrame test = new GlobalFrame();
 
     }
