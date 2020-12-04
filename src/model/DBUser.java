@@ -1,6 +1,4 @@
-package controller;
-
-import model.*;
+package model;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -84,22 +82,35 @@ public class DBUser {
   public static boolean insertUser(String login,String pwd){
     boolean inserted=false;
     try{
-      MessageDigest md = MessageDigest.getInstance("MD5"); // Création de la classe qui va hash en MD5
-      byte[] byteChaine = pwd.getBytes("UTF-8"); // On convertit la chaine en octets
-      byte[] hash = md.digest(byteChaine); // On hash notre chaine en MD
-      PreparedStatement requete = DBUser.getConnexion().prepareStatement("INSERT INTO User VALUES (?,?,default)");
-      String hashString = DatatypeConverter.printHexBinary(hash); // On convertit le tableau d'octets en string
-      requete.setString(1,login);
-      requete.setString(2,hashString);
-      requete.executeUpdate();
-      requete.close();
-      PreparedStatement requeteVerif = DBUser.getConnexion().prepareStatement("Select * from User where login=?");
-      requeteVerif.setString(1,login);
-      ResultSet resultat = requeteVerif.executeQuery();
-      if(resultat.next() != false){
-        inserted=true;
+      PreparedStatement requetePresence = DBUser.getConnexion().prepareStatement("Select * from User where login=?"); // On regarde si l'user n'est pas déja dans la BDD
+      requetePresence.setString(1,login);
+      ResultSet resultatPresence = requetePresence.executeQuery();
+      if(resultatPresence.next() != false){ // Si il est deja dans la bdd
+        inserted=false; //Alors on annule l'insertion
+        requetePresence.close();
+        resultatPresence.close();
+        return inserted;
+      }else{
+        requetePresence.close();
+        resultatPresence.close();
+        MessageDigest md = MessageDigest.getInstance("MD5"); // Création de la classe qui va hash en MD5
+        byte[] byteChaine = pwd.getBytes("UTF-8"); // On convertit la chaine en octets
+        byte[] hash = md.digest(byteChaine); // On hash notre chaine en MD
+        PreparedStatement requete = DBUser.getConnexion().prepareStatement("INSERT INTO User VALUES (?,?,default)");
+        String hashString = DatatypeConverter.printHexBinary(hash); // On convertit le tableau d'octets en string
+        requete.setString(1,login);
+        requete.setString(2,hashString);
+        requete.executeUpdate();
+        requete.close();
+        PreparedStatement requeteVerif = DBUser.getConnexion().prepareStatement("Select * from User where login=?");  // On regarde si l'user a bien été inséré
+        requeteVerif.setString(1,login);
+        ResultSet resultatVerif = requeteVerif.executeQuery();
+        if(resultatVerif.next() != false){ // Si il a été inséré
+          inserted=true; // Alors on valide l insertion
+        }
+        resultatVerif.close();
+        requeteVerif.close();
       }
-      requeteVerif.close();
     }catch(SQLException e ){
       System.err.println("Erreur requete insertUser: " + e.getMessage());
     }catch(UnsupportedEncodingException e ){
@@ -109,13 +120,4 @@ public class DBUser {
     }
     return inserted;
   }
-  /*
-  public static void main(String[] args) {
-  //  insertUser("ecormier","BonsoirParis");
-  if(connectUser("ecormier","ouioui")){
-  System.out.println("OuiOui");
-}else{
-System.out.println("NonNon");
-}
-}*/
 }
