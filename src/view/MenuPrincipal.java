@@ -13,21 +13,28 @@ import javax.swing.JSeparator;
 import javax.swing.ImageIcon;
 
 public class MenuPrincipal extends JPanel implements ActionListener {
+    public JPanel conteneurdeconnexion = new JPanel();
+    public JPanel conteneurtitre = new JPanel();
+    public JPanel conteneurmenus = new JPanel();
+    public JButton deconnexion = new JButton("Deconnexion");
+    public JButtonRedimension gestion = new JButtonRedimension("C:\\Users\\alans\\Pictures\\test\\gestion.png");
+    public JButtonRedimension creation = new JButtonRedimension("C:\\Users\\alans\\Pictures\\test\\creation.png");
+
     public MenuPrincipal() {
 
         /*Création de la fenetre principale*/
-        JPanel principal = new JPanel();
-        principal.setLayout(new BorderLayout(30, 30));
-        principal.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+
+        this.setLayout(new BorderLayout(30, 30));
+        this.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 
         /*création du bouton deconnexion*/
-        JButton deconnexion = new JButton("Deconnexion");
+
         deconnexion.setBackground(Color.red);
         deconnexion.setForeground(Color.BLACK);
         deconnexion.setPreferredSize(new Dimension(150,60));
 
         /*création du conteneur pour le bouton deconnexion*/
-        JPanel conteneurdeconnexion = new JPanel();
+
         conteneurdeconnexion.setLayout(new FlowLayout(0));
 
         /*création du titre*/
@@ -35,22 +42,18 @@ public class MenuPrincipal extends JPanel implements ActionListener {
 
         /*création du conteneur pour le titre*/
 
-        JPanel conteneurtitre = new JPanel();
         conteneurtitre.setLayout(new FlowLayout());
         conteneurtitre.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
         /*création des boutons de choix de menu*/
-        JButtonRedimension creation = new JButtonRedimension("C:\\Users\\alans\\Pictures\\test\\creation.png");
 
         creation.setBackground(Color.BLACK);
         creation.setForeground(Color.WHITE);
-        JButtonRedimension gestion = new JButtonRedimension("C:\\Users\\alans\\Pictures\\test\\gestion.png");
         gestion.setBackground(Color.GRAY);
-        creation.setForeground(Color.WHITE);
+        gestion.setForeground(Color.WHITE);
 
         /*création du conteneur des menus*/
 
-        JPanel conteneurmenus = new JPanel();
         conteneurmenus.setLayout(new GridLayout(1, 2, 30, 5));
         conteneurmenus.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 
@@ -61,10 +64,11 @@ public class MenuPrincipal extends JPanel implements ActionListener {
         conteneurmenus.add(creation);
         conteneurmenus.add(gestion);
 
-        principal.add("South", conteneurdeconnexion);
-        principal.add("North", conteneurtitre);
-        principal.add("Center", new JSeparator());
-        principal.add("Center", conteneurmenus);
+        this.add("South", conteneurdeconnexion);
+        this.add("North", conteneurtitre);
+        this.add("Center", new JSeparator());
+        this.add("Center", conteneurmenus);
+        this.setVisible(true);
     }
 
     public void actionPerformed(ActionEvent event) {}
