@@ -1,4 +1,7 @@
 package model;
+/**
+* * Codé par Esteban
+*/
 
 public class Enigma{
   private int id;

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 /**
 * Classe qui va contenir toutes les méthodes liées a la DB pour un jeu
+* Codé par Esteban
 */
 public class DBGame {
   private static Connection connexion;
