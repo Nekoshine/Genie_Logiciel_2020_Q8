@@ -55,7 +55,6 @@ public class RoomManagement extends JPanel{
         getRoom.add(new Room(3,1));
         getRoom.add(new Room(4,1));
 
-
         /* Déclaration JPanel - JScrollPane */
 
         listPanel = new JPanel();
@@ -80,10 +79,6 @@ public class RoomManagement extends JPanel{
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(7,15,7,30);
 
-        GridLayout grille = new GridLayout(1,4,70,0);
-
-
-
         /* Déclaration Boutons */
 
         returnButton = new JButton("Retour");
@@ -96,9 +91,8 @@ public class RoomManagement extends JPanel{
         newButton.setOpaque(false);
         newButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        /* CHargement des salles */
+        /* Chargement des salles */
 
-        //taille =  new Dimension(listPanel.getWidth()-45,200);
 
         for (int i=0;i<getRoom.size();i++){
             listPanel.remove(newButtonPanel);
@@ -110,7 +104,6 @@ public class RoomManagement extends JPanel{
             listPanel.repaint();
         }
 
-        listPanel.add(newButtonPanel,BorderLayout.SOUTH);
 
         /* Ajout d'une nouvelle salle */
 
@@ -127,7 +120,8 @@ public class RoomManagement extends JPanel{
 
                 gbc.fill = GridBagConstraints.HORIZONTAL;
                 gbc.weightx = 1;
-                gbc.gridy = salle.getId();
+                gbc.gridy = salle.getId()-1;
+                gbc.gridx = 0;
 
 
                 /* Ajout Panel */
@@ -163,13 +157,15 @@ public class RoomManagement extends JPanel{
 
                 panelSalle.setBorder(BorderFactory.createLineBorder(Color.BLACK,3));
                 panelSalle.setPreferredSize(new Dimension(listPanel.getWidth()-45,75));
+                panelSalle.setBounds(0,0+(salle.getId()*75),listPanel.getWidth()-45,75);
+
 
                 /* Ajout à la liste des salles */
 
                 roomPanel.add(panelSalle,gbc);
                 listPanel.add(newButtonPanel,BorderLayout.SOUTH);
                 ajoutListeRoom(salle,getRoom);
-                //System.out.println(getRoom.get(6).getId());
+                System.out.println(getRoom.get(4).getId());
                 listPanel.revalidate();
                 listPanel.repaint();
 
@@ -219,10 +215,26 @@ public class RoomManagement extends JPanel{
 
     }
 
+    /**
+     * La méthode ajoutListeRoom permet l'ajout d'une nouvelle salle au sein de la base de données
+     * @param salle
+     * @param getRoom
+     */
+
     void ajoutListeRoom(Room salle,ArrayList<Room> getRoom){
 
         getRoom.add(salle);
     }
+
+
+    /**
+     * La méthode ajoutSalle() permet l'ajout d'une salle à l'interface de gestion des salles.
+     * Elle renvoie un JPanel contenant les informations de la salle
+     *
+     * @param salle
+     * @param gbc
+     * @return
+     */
 
     JPanel ajoutSalle(Room salle,GridBagConstraints gbc){
 
@@ -231,14 +243,14 @@ public class RoomManagement extends JPanel{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1;
         gbc.gridy = salle.getId()-1;
-        //gbc.gridx = 0;
+        gbc.gridx = 0;
 
         /* Ajout Panel */
 
 
         JPanel panelSalle = new JPanel();
 
-        /* Construction PanelSalle */
+        /* Construction Panel Salle */
 
         GridLayout grille = new GridLayout(1,4,70,50);
         JLabel nomSalle = new JLabel("Salle " + salle.getId() + " :");
@@ -265,8 +277,6 @@ public class RoomManagement extends JPanel{
         /* Configuration panelSalle */
 
         panelSalle.setBorder(BorderFactory.createLineBorder(Color.BLACK,3));
-
-        /* Ajout à la liste des salles */
 
        return panelSalle;
 

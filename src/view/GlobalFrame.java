@@ -18,6 +18,7 @@ public class GlobalFrame extends JFrame {
 
 
 
+
     public GlobalFrame() throws IOException {
 
         File fichier = new File(".\\src\\view\\image\\logo.png");
