@@ -8,6 +8,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.File;
 import java.util.ArrayList;
 
 public class RoomManagement extends JPanel{
@@ -87,6 +88,9 @@ public class RoomManagement extends JPanel{
         /* Déclaration Boutons */
 
         returnButton = new JButton("Retour");
+       /* File fichier = new File(".\\src\\view\\font\\ABEAKRG.TTF");
+        Font font = Font.createFont(Font.TRUETYPE_FONT, fichier).deriveFont(0,30);
+        returnButton.setFont(font);*/
         returnButton.setBackground(ColorPerso.retour);
         returnButton.setForeground(Color.white);
 
