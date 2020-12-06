@@ -48,9 +48,9 @@ public class MenuPrincipal extends JPanel implements ActionListener {
 
         /*création des boutons de choix de menu*/
 
-        creation = new JButtonRedimension("C:\\Users\\alans\\Pictures\\test\\creation.png");
+        creation = new JButtonRedimension(".\\src\\view\\image\\creation.png");
 
-        gestion = new JButtonRedimension("C:\\Users\\alans\\Pictures\\test\\gestion.png");
+        gestion = new JButtonRedimension(".\\src\\view\\image\\gestion.png");
 
         /*création du conteneur des menus*/
         conteneurmenus = new JPanel();
