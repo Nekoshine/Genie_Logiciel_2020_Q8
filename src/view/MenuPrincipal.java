@@ -39,7 +39,7 @@ public class MenuPrincipal extends JPanel implements ActionListener {
         conteneurdeconnexion.setLayout(new FlowLayout(0));
 
         /*création du titre*/
-        JLabel titre = new JLabel("ceci est le titre de ce test");
+        JLabel titre = new JLabel("MJ - Menu Principal");
 
         /*création du conteneur pour le titre*/
         conteneurtitre = new JPanel();
