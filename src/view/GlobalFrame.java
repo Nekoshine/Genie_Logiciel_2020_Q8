@@ -30,11 +30,13 @@ public class GlobalFrame extends JFrame {
 
 
 
+
         menu = new RoomManagement();
         this.setContentPane(menu);
 
 
         this.setSize(windowSize);
+        this.setMinimumSize(new Dimension(720,480));
         this.setLocationRelativeTo(null);
         this.setResizable(true);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
