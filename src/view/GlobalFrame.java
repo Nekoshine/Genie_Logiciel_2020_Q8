@@ -17,8 +17,6 @@ public class GlobalFrame extends JFrame {
     RoomManagement menu;
 
 
-
-
     public GlobalFrame() throws IOException {
 
         File fichier = new File(".\\src\\view\\image\\logo.png");
@@ -29,16 +27,17 @@ public class GlobalFrame extends JFrame {
         windowSize = new Dimension(1280,720);
 
 
-
-
         menu = new RoomManagement();
         this.setContentPane(menu);
+
+
 
 
         this.setSize(windowSize);
         this.setLocationRelativeTo(null);
         this.setResizable(true);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+
 
         this.addComponentListener(new ComponentAdapter() {
             @Override
@@ -52,7 +51,6 @@ public class GlobalFrame extends JFrame {
 
             }
         });
-
 
 
 

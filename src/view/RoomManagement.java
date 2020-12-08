@@ -141,7 +141,6 @@ public class RoomManagement extends JPanel{
                 JButton boutonJeu = new JButton("Choisir Jeu");
                 boutonJeu.setBackground(ColorPerso.choixJeu);
 
-
                 JButton boutonLancer = new JButton("Lancer");
                 boutonLancer.setBackground(ColorPerso.lancement);
 
