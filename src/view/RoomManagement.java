@@ -8,10 +8,11 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 
-public class RoomManagement extends JPanel{
+public class RoomManagement extends JPanel implements ActionListener {
 
     /* Test */
 
@@ -38,16 +39,18 @@ public class RoomManagement extends JPanel{
 
     /* Déclaration boutons */
 
-    private final JButton returnButton;
-    private final JButton newButton;
+    public final JButton returnButton;
+    public final JButton newButton;
 
-
+    private GlobalFrame frame;
 
     private final JLabel titre;
     private int compteur = 0;
 
 
-    public RoomManagement(){
+    public RoomManagement(GlobalFrame frame){
+
+        this.frame = frame;
 
         /* Remplissage ArrayList */
 
@@ -154,6 +157,7 @@ public class RoomManagement extends JPanel{
 
                 JButton boutonJeu = new JButton("Choisir Jeu");
                 boutonJeu.setBackground(ColorPerso.choixJeu);
+                System.out.println(boutonJeu.getName());
 
                 JButton boutonLancer = new JButton("Lancer");
                 boutonLancer.setBackground(ColorPerso.lancement);
@@ -215,6 +219,8 @@ public class RoomManagement extends JPanel{
         decoPanel.setLayout(decoLayout);
         decoPanel.setBackground(ColorPerso.gris);
         decoPanel.add(returnButton);
+
+        returnButton.addActionListener(this);
 
         /* Setup Fenêtre gestion des salles */
 
@@ -293,8 +299,20 @@ public class RoomManagement extends JPanel{
 
        return panelSalle;
 
+    }
+
+    public void actionPerformed(ActionEvent e)
+    {
+        if(e.getSource() == returnButton){
+
+            frame.roomManagementDisplay(frame);
+
+        }
 
     }
+
+
+
 
 
 }

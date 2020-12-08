@@ -27,19 +27,20 @@ public class GlobalFrame extends JFrame {
         windowSize = new Dimension(1280,720);
 
 
-        menu = new RoomManagement();
-        this.setContentPane(menu);
-
+        //menu = new RoomManagement();
+        //this.setContentPane(menu);
+        roomManagementDisplay(this);
 
 
 
         this.setSize(windowSize);
         this.setLocationRelativeTo(null);
+        this.setMaximumSize(new Dimension(720,480));
         this.setResizable(true);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 
-        this.addComponentListener(new ComponentAdapter() {
+        /*this.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
                 super.componentResized(e);
@@ -50,7 +51,7 @@ public class GlobalFrame extends JFrame {
                 repaint();
 
             }
-        });
+        });*/
 
 
 
@@ -60,5 +61,17 @@ public class GlobalFrame extends JFrame {
         GlobalFrame test = new GlobalFrame();
 
     }
+
+
+    public void roomManagementDisplay(GlobalFrame frame){
+
+        menu = new RoomManagement(frame);
+        setContentPane(menu);
+        frame.revalidate();
+        frame.repaint();
+
+    }
+
+
 
 }
