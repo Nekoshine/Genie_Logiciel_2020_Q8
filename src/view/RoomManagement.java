@@ -329,7 +329,7 @@ public class RoomManagement extends JPanel implements ActionListener {
     {
         if(e.getSource() == returnButton) {
 
-            frame.mainManagementDisplay(frame);
+            frame.mainMenuDisplay(frame);
         }
 
     }

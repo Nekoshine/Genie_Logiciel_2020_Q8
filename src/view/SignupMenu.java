@@ -2,7 +2,6 @@
 
 package view;
 
-import sun.nio.cs.ext.GB18030;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
