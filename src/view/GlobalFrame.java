@@ -1,5 +1,7 @@
 package view;
 
+import sun.applet.Main;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -15,6 +17,7 @@ public class GlobalFrame extends JFrame {
     public static Dimension windowSize;
     private BorderLayout mainLayout;
     RoomManagement menu;
+    MainMenu mainmenu;
 
 
     public GlobalFrame() throws IOException {
@@ -29,7 +32,7 @@ public class GlobalFrame extends JFrame {
 
         //menu = new RoomManagement();
         //this.setContentPane(menu);
-        roomManagementDisplay(this);
+        MainMenuDisplay(this);
 
 
 
@@ -72,6 +75,13 @@ public class GlobalFrame extends JFrame {
 
     }
 
+    public void MainMenuDisplay(GlobalFrame frame){
 
+        mainmenu = new MainMenu(frame);
+        setContentPane(mainmenu);
+        frame.revalidate();
+        frame.repaint();
+
+    }
 
 }

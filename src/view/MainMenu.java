@@ -21,7 +21,11 @@ public class MainMenu extends JPanel implements ActionListener {
     private JButtonRedimension management;
     private JButtonRedimension creation;
 
-    public MainMenu() {
+    private GlobalFrame frame;
+
+    public MainMenu(GlobalFrame frame) {
+
+        this.frame = frame;
 
         /*Création de la fenetre principale*/
 
@@ -75,12 +79,12 @@ public class MainMenu extends JPanel implements ActionListener {
 
     }
 
-    public class JButtonRedimension extends JButton { // !!! on doit étendre le composant dans lequel on veut insérer une image de fond
+    public class JButtonRedimension extends JButton {
 
         private Image img;
         private String imageName;
 
-        //Un constructeur pour choisir plus simplement l'image
+
         public JButtonRedimension(String path) {
             img = new ImageIcon(path).getImage();
         }
