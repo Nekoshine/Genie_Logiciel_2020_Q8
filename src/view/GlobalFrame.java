@@ -16,8 +16,10 @@ public class GlobalFrame extends JFrame {
 
     public static Dimension windowSize;
     private BorderLayout mainLayout;
-    RoomManagement menu;
+    RoomManagement roommanagement;
     MainMenu mainmenu;
+    ConnectionMenu connectionmenu;
+    SignupMenu signupmenu;
 
 
     public GlobalFrame() throws IOException {
@@ -68,8 +70,8 @@ public class GlobalFrame extends JFrame {
 
     public void roomManagementDisplay(GlobalFrame frame){
 
-        menu = new RoomManagement(frame);
-        setContentPane(menu);
+        roommanagement = new RoomManagement(frame);
+        setContentPane(roommanagement);
         frame.revalidate();
         frame.repaint();
 
@@ -84,4 +86,20 @@ public class GlobalFrame extends JFrame {
 
     }
 
+    public void ConnectionMenuDisplay(GlobalFrame frame){
+
+        connectionmenu = new ConnectionMenu(frame);
+        setContentPane(connectionmenu);
+        frame.revalidate();
+        frame.repaint();
+
+    }
+
+    public void SignupMenuDisplay(GlobalFrame frame){
+
+        signupmenu = new SignupMenu(frame);
+        setContentPane(signupmenu);
+        frame.revalidate();
+        frame.repaint();
+    }
 }
