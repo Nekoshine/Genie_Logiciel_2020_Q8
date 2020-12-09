@@ -21,7 +21,11 @@ public class MenuPrincipal extends JPanel implements ActionListener {
     private JButtonRedimension gestion;
     private JButtonRedimension creation;
 
-    public MenuPrincipal() {
+    private GlobalFrame frame;
+
+    public MenuPrincipal(GlobalFrame frame) {
+
+        this.frame = frame;
 
         /*Création de la fenetre principale*/
 

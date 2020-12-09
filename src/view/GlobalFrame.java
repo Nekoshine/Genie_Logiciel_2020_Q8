@@ -65,7 +65,26 @@ public class GlobalFrame extends JFrame {
 
     public void roomManagementDisplay(GlobalFrame frame){
 
-        menu = new RoomManagement(frame);
+        RoomManagement menu = new RoomManagement(frame);
+        setContentPane(menu);
+        frame.revalidate();
+        frame.repaint();
+
+    }
+
+
+    public void gameManagementDisplay(GlobalFrame frame){
+
+        GameManagement menu = new GameManagement(frame);
+        setContentPane(menu);
+        frame.revalidate();
+        frame.repaint();
+
+    }
+
+    public void mainManagementDisplay(GlobalFrame frame){
+
+        MenuPrincipal menu = new MenuPrincipal(frame);
         setContentPane(menu);
         frame.revalidate();
         frame.repaint();

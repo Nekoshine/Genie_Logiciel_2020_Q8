@@ -157,10 +157,21 @@ public class RoomManagement extends JPanel implements ActionListener {
 
                 JButton boutonJeu = new JButton("Choisir Jeu");
                 boutonJeu.setBackground(ColorPerso.choixJeu);
-                System.out.println(boutonJeu.getName());
+                boutonJeu.addActionListener(new AbstractAction() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        frame.gameManagementDisplay(frame);
+                    }
+                });
 
                 JButton boutonLancer = new JButton("Lancer");
                 boutonLancer.setBackground(ColorPerso.lancement);
+                boutonLancer.addActionListener(new AbstractAction() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        System.out.println(salle.getId());
+                    }
+                });
 
                 /* Ajout Éléments au panel Salle */
 
@@ -182,7 +193,6 @@ public class RoomManagement extends JPanel implements ActionListener {
                 roomPanel.add(panelSalle,gbc);
                 listPanel.add(newButtonPanel,BorderLayout.SOUTH);
                 ajoutListeRoom(salle,getRoom);
-                System.out.println(getRoom.get(4).getId());
                 listPanel.revalidate();
                 listPanel.repaint();
 
@@ -280,10 +290,24 @@ public class RoomManagement extends JPanel implements ActionListener {
 
         JButton boutonJeu = new JButton("Choisir Jeu");
         boutonJeu.setBackground(ColorPerso.choixJeu);
+        boutonJeu.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                System.out.println(salle.getId());
+
+            }
+        });
 
 
         JButton boutonLancer = new JButton("Lancer");
         boutonLancer.setBackground(ColorPerso.lancement);
+        boutonLancer.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println(salle.getId());
+            }
+        });
 
         /* Ajout Éléments au panel Salle */
 
@@ -303,10 +327,9 @@ public class RoomManagement extends JPanel implements ActionListener {
 
     public void actionPerformed(ActionEvent e)
     {
-        if(e.getSource() == returnButton){
+        if(e.getSource() == returnButton) {
 
-            frame.roomManagementDisplay(frame);
-
+            frame.mainManagementDisplay(frame);
         }
 
     }
