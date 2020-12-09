@@ -72,6 +72,7 @@ public class GlobalFrame extends JFrame {
 
         roommanagement = new RoomManagement(frame);
         setContentPane(roommanagement);
+        frame.setSize(1280,720);
         frame.revalidate();
         frame.repaint();
 
@@ -81,6 +82,7 @@ public class GlobalFrame extends JFrame {
 
         mainmenu = new MainMenu(frame);
         setContentPane(mainmenu);
+        frame.setSize(1280,720);
         frame.revalidate();
         frame.repaint();
 
@@ -109,6 +111,7 @@ public class GlobalFrame extends JFrame {
 
         gamemanagement = new GameManagement(frame);
         setContentPane(gamemanagement);
+        frame.setSize(1280,720);
         frame.revalidate();
         frame.repaint();
     }
