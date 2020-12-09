@@ -20,6 +20,7 @@ public class GlobalFrame extends JFrame {
     MainMenu mainmenu;
     ConnectionMenu connectionmenu;
     SignupMenu signupmenu;
+    GameManagement gamemanagement;
 
 
     public GlobalFrame() throws IOException {
@@ -99,6 +100,14 @@ public class GlobalFrame extends JFrame {
 
         signupmenu = new SignupMenu(frame);
         setContentPane(signupmenu);
+        frame.revalidate();
+        frame.repaint();
+    }
+
+    public void GameManagementDisplay(GlobalFrame frame){
+
+        gamemanagement = new GameManagement(frame);
+        setContentPane(gamemanagement);
         frame.revalidate();
         frame.repaint();
     }

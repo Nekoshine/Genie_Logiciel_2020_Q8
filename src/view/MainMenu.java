@@ -76,7 +76,15 @@ public class MainMenu extends JPanel implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent event) {
+        if(event.getSource() == management ){
+            frame.roomManagementDisplay(frame);
+        }
+        else if(event.getSource() == creation){
 
+        }
+        else if(event.getSource() == deconnection){
+            frame.ConnectionMenuDisplay(frame);
+        }
     }
 
     public class JButtonRedimension extends JButton {
