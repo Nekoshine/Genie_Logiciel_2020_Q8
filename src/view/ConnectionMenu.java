@@ -2,11 +2,11 @@
 
 package view;
 
+import model.DBUser;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.*;
 
 
@@ -14,16 +14,16 @@ public class ConnectionMenu extends JPanel implements ActionListener {
 
     private JPanel login;
     private JPanel mdp;
-    private JPanel conteneurinscription;
+    private JPanel conteneurboutons;
 
-    private JButton connexion;
+    private JButton connection;
+    private JButton inscription;
 
     private JTextField saisieidentifiant;
     private JTextField saisiemotdepasse;
 
     private JLabel identifiant;
     private JLabel motdepasse;
-    private JLabel inscription;
 
     private GlobalFrame frame;
 
@@ -57,17 +57,18 @@ public class ConnectionMenu extends JPanel implements ActionListener {
 
         //creation du bouton de connexion
 
-        connexion = new JButton("Connexion");
-        connexion.setBackground(Color.GREEN);
+        connection = new JButton("Connexion");
+        connection.setBackground(Color.GREEN);
+
+        inscription = new JButton("s'inscrire");
+        inscription.setBackground(Color.YELLOW);
 
         //création du lien vers l'inscription
-        conteneurinscription = new JPanel();
-        conteneurinscription.setLayout(new FlowLayout());
+        conteneurboutons = new JPanel();
+        conteneurboutons.setLayout(new FlowLayout(FlowLayout.CENTER));
 
-        inscription = new JLabel("s'inscrire");
-        inscription.setForeground(Color.BLUE);
-
-
+        conteneurboutons.add(connection);
+        conteneurboutons.add(inscription);
 
 
 
@@ -75,17 +76,26 @@ public class ConnectionMenu extends JPanel implements ActionListener {
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         login.setMaximumSize(new Dimension(800,50));
         this.add(login);
+        this.add(Box.createRigidArea(new Dimension(0, 20)));
         mdp.setMaximumSize(new Dimension(800,30));
         this.add(mdp);
-        this.add(inscription);
         this.add(Box.createRigidArea(new Dimension(0, 10)));
-        this.add(connexion);
+        this.add(conteneurboutons);
         this.setVisible(true);
 
     }
 
     public void actionPerformed(ActionEvent event) {
-        
+        if (event.getSource() == connection){
+            String idinput = saisieidentifiant.getText();
+            String mdpinput = saisiemotdepasse.getText();
+            if (DBUser.connectUser(idinput,mdpinput)){
+                frame.mainMenuDisplay(frame);
+            }
+        }
+        else if (event.getSource() == inscription){
+            frame.signupMenuDisplay(frame);
+        }
     }
 }
 
