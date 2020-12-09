@@ -34,6 +34,7 @@ public class MainMenu extends JPanel implements ActionListener {
 
         /*création du bouton deconnexion*/
         deconnection = new JButton("Deconnexion");
+        deconnection.addActionListener(this);
         deconnection.setBackground(Color.red);
         deconnection.setForeground(Color.BLACK);
         deconnection.setPreferredSize(new Dimension(150,60));
@@ -53,9 +54,10 @@ public class MainMenu extends JPanel implements ActionListener {
         /*création des boutons de choix de menu*/
 
         creation = new JButtonRedimension(".\\src\\view\\image\\creation.png");
+        creation.addActionListener(this);
 
         management = new JButtonRedimension(".\\src\\view\\image\\gestion.png");
-
+        management.addActionListener(this);
         /*création du conteneur des menus*/
         menucontainer = new JPanel();
         menucontainer.setLayout(new GridLayout(1, 2, 30, 5));
