@@ -58,9 +58,11 @@ public class ConnectionMenu extends JPanel implements ActionListener {
         //creation du bouton de connexion
 
         connection = new JButton("Connexion");
+        connection.addActionListener(this);
         connection.setBackground(Color.GREEN);
 
         inscription = new JButton("s'inscrire");
+        inscription.addActionListener(this);
         inscription.setBackground(Color.YELLOW);
 
         //création du lien vers l'inscription
@@ -92,6 +94,10 @@ public class ConnectionMenu extends JPanel implements ActionListener {
             if (DBUser.connectUser(idinput,mdpinput)){
                 frame.mainMenuDisplay(frame);
             }
+            else{
+                JOptionPane.showMessageDialog(frame,"l'identifiant ou le mot de passe ne correspond pas");
+            }
+
         }
         else if (event.getSource() == inscription){
             frame.signupMenuDisplay(frame);
