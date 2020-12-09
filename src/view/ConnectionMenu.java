@@ -20,7 +20,7 @@ public class ConnectionMenu extends JPanel implements ActionListener {
     private JButton inscription;
 
     private JTextField saisieidentifiant;
-    private JTextField saisiemotdepasse;
+    private JPasswordField saisiemotdepasse;
 
     private JLabel identifiant;
     private JLabel motdepasse;
@@ -49,7 +49,7 @@ public class ConnectionMenu extends JPanel implements ActionListener {
         mdp = new JPanel();
         mdp.setLayout(new FlowLayout(FlowLayout.CENTER,10,0));
         motdepasse = new JLabel("Mot de passe :");
-        saisiemotdepasse = new JTextField();
+        saisiemotdepasse = new JPasswordField();
         saisiemotdepasse.setColumns(30);
 
         mdp.add(motdepasse);

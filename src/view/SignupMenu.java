@@ -3,6 +3,8 @@
 package view;
 
 
+import model.DBUser;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,16 +17,17 @@ public class SignupMenu extends JPanel implements ActionListener {
 
     private JPanel login;
     private JPanel mdp;
-    private JPanel conteneurinscription;
+    private JPanel conteneurretour;
 
     private JButton confirmation;
+    private JButton retour;
 
     private JTextField saisieidentifiant;
-    private JTextField saisiemotdepasse;
+    private JPasswordField saisiemotdepasse;
 
     private JLabel identifiant;
     private JLabel motdepasse;
-    private JLabel inscription;
+
 
     private GlobalFrame frame;
 
@@ -50,30 +53,61 @@ public class SignupMenu extends JPanel implements ActionListener {
         mdp = new JPanel();
         mdp.setLayout(new FlowLayout(FlowLayout.CENTER,10,0));
         motdepasse = new JLabel("Mot de passe :");
-        saisiemotdepasse = new JTextField();
+        saisiemotdepasse = new JPasswordField();
         saisiemotdepasse.setColumns(30);
 
         mdp.add(motdepasse);
         mdp.add(saisiemotdepasse);
 
-        //creation du bouton de connexion
+        //creation du bouton de confirmation
 
         confirmation= new JButton("Confirmation");
+        confirmation.addActionListener(this);
         confirmation.setBackground(Color.GREEN);
 
+        //creation du bouton de retour
+
+        retour = new JButton("Retour");
+        retour.addActionListener(this);
+        retour.setBackground(Color.RED);
+
+        conteneurretour = new JPanel();
+        conteneurretour.setLayout(new FlowLayout(FlowLayout.LEFT));
+        conteneurretour.add(retour);
 
         this.add(Box.createRigidArea(new Dimension(0, 150)));
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         login.setMaximumSize(new Dimension(800,50));
         this.add(login);
+        this.add(Box.createRigidArea(new Dimension(0, 20)));
         mdp.setMaximumSize(new Dimension(800,30));
         this.add(mdp);
         this.add(Box.createRigidArea(new Dimension(0, 10)));
         this.add(confirmation);
+        this.add(Box.createRigidArea(new Dimension(0, 150)));
+        this.add(conteneurretour);
         this.setVisible(true);
 
     }
 
     public void actionPerformed(ActionEvent event) {
+        if (event.getSource() == confirmation){
+            String idinput = saisieidentifiant.getText();
+            String mdpinput = saisiemotdepasse.getText();
+
+            if (idinput.isEmpty() || mdpinput.isEmpty() ){
+                JOptionPane.showMessageDialog(frame,"Un ou plusieurs champs n'ont pas été remplis");
+            }
+            else if (DBUser.insertUser(idinput,mdpinput)){
+                frame.connectionMenuDisplay(frame);
+            }
+            else{
+                JOptionPane.showMessageDialog(frame,"l'identifiant n'est pas disponible");
+            }
+
+        }
+        else if (event.getSource() == retour){
+            frame.connectionMenuDisplay(frame);
+        }
     }
 }
