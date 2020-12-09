@@ -41,7 +41,7 @@ public class GlobalFrame extends JFrame {
         this.setSize(windowSize);
         this.setLocationRelativeTo(null);
         this.setMinimumSize(new Dimension(720,480));
-        this.setResizable(true);
+        this.setResizable(false);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 
@@ -73,6 +73,8 @@ public class GlobalFrame extends JFrame {
         roommanagement = new RoomManagement(frame);
         setContentPane(roommanagement);
         frame.setSize(1280,720);
+        frame.setResizable(true);
+        this.setLocationRelativeTo(null);
         frame.revalidate();
         frame.repaint();
 
@@ -83,6 +85,8 @@ public class GlobalFrame extends JFrame {
         mainmenu = new MainMenu(frame);
         setContentPane(mainmenu);
         frame.setSize(1280,720);
+        frame.setResizable(true);
+        this.setLocationRelativeTo(null);
         frame.revalidate();
         frame.repaint();
 
@@ -93,6 +97,8 @@ public class GlobalFrame extends JFrame {
         connectionmenu = new ConnectionMenu(frame);
         setContentPane(connectionmenu);
         frame.setSize(720,480);
+        frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
         frame.revalidate();
         frame.repaint();
 
@@ -103,6 +109,8 @@ public class GlobalFrame extends JFrame {
         signupmenu = new SignupMenu(frame);
         setContentPane(signupmenu);
         frame.setSize(720,480);
+        frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
         frame.revalidate();
         frame.repaint();
     }
@@ -112,6 +120,8 @@ public class GlobalFrame extends JFrame {
         gamemanagement = new GameManagement(frame);
         setContentPane(gamemanagement);
         frame.setSize(1280,720);
+        frame.setResizable(true);
+        frame.setLocationRelativeTo(null);
         frame.revalidate();
         frame.repaint();
     }
