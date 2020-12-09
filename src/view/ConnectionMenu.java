@@ -10,7 +10,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.*;
 
 
-public class MenuConnexion extends JPanel implements ActionListener {
+public class ConnectionMenu extends JPanel implements ActionListener {
 
     private JPanel login;
     private JPanel mdp;
@@ -25,7 +25,11 @@ public class MenuConnexion extends JPanel implements ActionListener {
     private JLabel motdepasse;
     private JLabel inscription;
 
-    public MenuConnexion() {
+    private GlobalFrame frame;
+
+    public ConnectionMenu(GlobalFrame frame) {
+
+        this.frame = frame;
 
         //creation de la partie login
 
