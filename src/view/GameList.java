@@ -14,29 +14,22 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 
-import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
-
 public class GameList implements ActionListener, MouseListener {
 
-    JFrame frame;
-    JPanel listPanel;
-    JPanel titlePanel;
-    JPanel buttonPanel;
-    JPanel globlaPanel;
-    JScrollPane scrollPane;
-    JButton returnButton;
-    JButton validateButton;
-    JList liste;
+    private JFrame frame;
+    private JButton returnButton;
+    private JButton validateButton;
+    private JList liste;
 
     // Constructor
     GameList(String[] jeuDispo) throws IOException, FontFormatException {
         //UIManager.put("Button.background",Color.PINK);
         this.frame=new JFrame();
-        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         /* Création des fonts */
         File fichierfont = new File(".\\src\\view\\font\\ABEAKRG.TTF");
-        Font font = Font.createFont(Font.TRUETYPE_FONT, fichierfont).deriveFont(0,15);
+        Font font = Font.createFont(Font.TRUETYPE_FONT, fichierfont).deriveFont(Font.PLAIN,15);
 
         /* Mise en place de la fenetre */
         File fichier = new File(".\\src\\view\\image\\logo.png");
@@ -45,13 +38,12 @@ public class GameList implements ActionListener, MouseListener {
         frame.setTitle("E-Scape Game");
         frame.setLocationRelativeTo(null);
         frame.setMinimumSize(new Dimension(300,500));
-        //frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         /* Création des Panel*/
-        titlePanel = new JPanel();
-        globlaPanel = new JPanel();
-        buttonPanel = new JPanel();
-        listPanel = new JPanel();
+        JPanel titlePanel = new JPanel();
+        JPanel globlaPanel = new JPanel();
+        JPanel buttonPanel = new JPanel();
+        JPanel listPanel = new JPanel();
 
         /* Mise en place du titre*/
         JLabel titre = new JLabel("Liste des jeux");
@@ -70,15 +62,15 @@ public class GameList implements ActionListener, MouseListener {
         titlePanel.add(titre);
         listPanel.add(liste);
 
-        scrollPane =new JScrollPane(listPanel,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        JScrollPane scrollPane = new JScrollPane(listPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
         scrollPane.getVerticalScrollBar().setUnitIncrement(10);
 
 
         globlaPanel.setLayout(new BorderLayout(10,10));
-        globlaPanel.add(titlePanel, BorderLayout.NORTH);
+        globlaPanel.add(titlePanel, BorderLayout.PAGE_START);
         globlaPanel.add(scrollPane,BorderLayout.CENTER);
-        globlaPanel.add(buttonPanel,BorderLayout.SOUTH);
+        globlaPanel.add(buttonPanel, BorderLayout.PAGE_END);
         frame.add(globlaPanel);
 
         /* Mise en place du style */
@@ -93,10 +85,10 @@ public class GameList implements ActionListener, MouseListener {
         validateButton.setForeground(Color.white);
 
         /* Ajout de Listener */
-        returnButton.addActionListener((ActionListener) this);
-        returnButton.addMouseListener((MouseListener) this);
-        validateButton.addMouseListener((MouseListener) this);
-        validateButton.addActionListener((ActionListener) this);
+        returnButton.addActionListener(this);
+        returnButton.addMouseListener(this);
+        validateButton.addMouseListener(this);
+        validateButton.addActionListener(this);
         liste.addMouseListener(this);
 
         frame.setSize(300, 500);
@@ -106,7 +98,7 @@ public class GameList implements ActionListener, MouseListener {
 
     // Driver  method
     public static void main(String[] args) throws IOException, FontFormatException {
-        String jeuDispo[] = {
+        String[] jeuDispo = {
                 "Jeu 1 : Titre du jeu 1",
                 "Jeu 2 : LE TITRE",
                 "Jeu 3 : éàè@êï",
@@ -129,7 +121,7 @@ public class GameList implements ActionListener, MouseListener {
         new GameList(jeuDispo);
     }
 
-    public void actionPerformed(ActionEvent e)
+    public final void actionPerformed(ActionEvent e)
     {
         if(e.getSource() == returnButton){
             System.out.println("retour");
@@ -142,7 +134,7 @@ public class GameList implements ActionListener, MouseListener {
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
+    public final void mouseClicked(MouseEvent e) {
         if(e.getSource()==liste){
             liste.setSelectionBackground(new Color(5, 111, 127));
             liste.setSelectionForeground(Color.WHITE);
@@ -150,7 +142,7 @@ public class GameList implements ActionListener, MouseListener {
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {
+    public final void mousePressed(MouseEvent e) {
         if(e.getSource()==liste){
             liste.setSelectionBackground(new Color(5, 111, 127, 128));
             liste.setSelectionForeground(Color.BLACK);
@@ -158,7 +150,7 @@ public class GameList implements ActionListener, MouseListener {
     }
 
     @Override
-    public void mouseReleased(MouseEvent e) {
+    public final void mouseReleased(MouseEvent e) {
         if(e.getSource()==liste){
             liste.setSelectionBackground(new Color(5, 111, 127));
             liste.setSelectionForeground(Color.WHITE);
@@ -166,7 +158,7 @@ public class GameList implements ActionListener, MouseListener {
     }
 
     @Override
-    public void mouseEntered(MouseEvent e) {
+    public final void mouseEntered(MouseEvent e) {
         if(e.getSource() == returnButton) {
             returnButton.setBackground(new Color(212, 99, 104));
             returnButton.setForeground(Color.BLACK);
@@ -178,7 +170,7 @@ public class GameList implements ActionListener, MouseListener {
     }
 
     @Override
-    public void mouseExited(MouseEvent e) {
+    public final void mouseExited(MouseEvent e) {
         if(e.getSource() == returnButton) {
         returnButton.setBackground(ColorPerso.retour);
         returnButton.setForeground(Color.WHITE);
