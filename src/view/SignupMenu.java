@@ -2,6 +2,8 @@
 
 package view;
 
+import sun.nio.cs.ext.GB18030;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,13 +12,13 @@ import java.awt.event.MouseEvent;
 import javax.swing.*;
 
 
-public class MenuConnexion extends JPanel implements ActionListener {
+public class SignupMenu extends JPanel implements ActionListener {
 
     private JPanel login;
     private JPanel mdp;
     private JPanel conteneurinscription;
 
-    private JButton connexion;
+    private JButton confirmation;
 
     private JTextField saisieidentifiant;
     private JTextField saisiemotdepasse;
@@ -25,7 +27,11 @@ public class MenuConnexion extends JPanel implements ActionListener {
     private JLabel motdepasse;
     private JLabel inscription;
 
-    public MenuConnexion() {
+    private GlobalFrame frame;
+
+    public SignupMenu(GlobalFrame frame) {
+
+        this.frame = frame;
 
         //creation de la partie login
 
@@ -53,18 +59,8 @@ public class MenuConnexion extends JPanel implements ActionListener {
 
         //creation du bouton de connexion
 
-        connexion = new JButton("Connexion");
-        connexion.setBackground(Color.GREEN);
-
-        //création du lien vers l'inscription
-        conteneurinscription = new JPanel();
-        conteneurinscription.setLayout(new FlowLayout());
-
-        inscription = new JLabel("s'inscrire");
-        inscription.setForeground(Color.BLUE);
-
-
-
+        confirmation= new JButton("Confirmation");
+        confirmation.setBackground(Color.GREEN);
 
 
         this.add(Box.createRigidArea(new Dimension(0, 150)));
@@ -73,16 +69,12 @@ public class MenuConnexion extends JPanel implements ActionListener {
         this.add(login);
         mdp.setMaximumSize(new Dimension(800,30));
         this.add(mdp);
-        this.add(inscription);
         this.add(Box.createRigidArea(new Dimension(0, 10)));
-        this.add(connexion);
+        this.add(confirmation);
         this.setVisible(true);
 
     }
 
     public void actionPerformed(ActionEvent event) {
-        
     }
 }
-
-

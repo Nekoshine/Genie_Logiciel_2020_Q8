@@ -1,5 +1,7 @@
 package view;
 
+import sun.applet.Main;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +16,11 @@ public class GlobalFrame extends JFrame {
 
     public static Dimension windowSize;
     private BorderLayout mainLayout;
-    RoomManagement menu;
+    RoomManagement roommanagement;
+    MainMenu mainmenu;
+    ConnectionMenu connectionmenu;
+    SignupMenu signupmenu;
+    GameManagement gamemanagement;
 
 
     public GlobalFrame() throws IOException {
@@ -29,7 +35,7 @@ public class GlobalFrame extends JFrame {
 
         //menu = new RoomManagement();
         //this.setContentPane(menu);
-        roomManagementDisplay(this);
+        MainMenuDisplay(this);
 
 
 
@@ -65,32 +71,44 @@ public class GlobalFrame extends JFrame {
 
     public void roomManagementDisplay(GlobalFrame frame){
 
-        RoomManagement menu = new RoomManagement(frame);
-        setContentPane(menu);
+        roommanagement = new RoomManagement(frame);
+        setContentPane(roommanagement);
         frame.revalidate();
         frame.repaint();
 
     }
 
+    public void MainMenuDisplay(GlobalFrame frame){
 
-    public void gameManagementDisplay(GlobalFrame frame){
-
-        GameManagement menu = new GameManagement(frame);
-        setContentPane(menu);
+        mainmenu = new MainMenu(frame);
+        setContentPane(mainmenu);
         frame.revalidate();
         frame.repaint();
 
     }
 
-    public void mainManagementDisplay(GlobalFrame frame){
+    public void ConnectionMenuDisplay(GlobalFrame frame){
 
-        MenuPrincipal menu = new MenuPrincipal(frame);
-        setContentPane(menu);
+        connectionmenu = new ConnectionMenu(frame);
+        setContentPane(connectionmenu);
         frame.revalidate();
         frame.repaint();
 
     }
 
+    public void SignupMenuDisplay(GlobalFrame frame){
 
+        signupmenu = new SignupMenu(frame);
+        setContentPane(signupmenu);
+        frame.revalidate();
+        frame.repaint();
+    }
 
+    public void GameManagementDisplay(GlobalFrame frame){
+
+        gamemanagement = new GameManagement(frame);
+        setContentPane(gamemanagement);
+        frame.revalidate();
+        frame.repaint();
+    }
 }

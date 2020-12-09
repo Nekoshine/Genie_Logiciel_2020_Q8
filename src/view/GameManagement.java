@@ -16,7 +16,8 @@ public class GameManagement extends JPanel implements ActionListener {
     public JPanel buttonReturnPanel = new JPanel();
     public JScrollPane scrollGameListPanel = new JScrollPane(gameListPanel,
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-    public GlobalFrame frame;
+
+    private GlobalFrame frame;
 
     public GameManagement(GlobalFrame frame){
 

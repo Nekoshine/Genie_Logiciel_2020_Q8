@@ -10,13 +10,13 @@ import java.awt.event.MouseEvent;
 import javax.swing.*;
 
 
-public class MenuInscription extends JPanel implements ActionListener {
+public class ConnectionMenu extends JPanel implements ActionListener {
 
     private JPanel login;
     private JPanel mdp;
     private JPanel conteneurinscription;
 
-    private JButton confirmation;
+    private JButton connexion;
 
     private JTextField saisieidentifiant;
     private JTextField saisiemotdepasse;
@@ -25,7 +25,11 @@ public class MenuInscription extends JPanel implements ActionListener {
     private JLabel motdepasse;
     private JLabel inscription;
 
-    public MenuInscription() {
+    private GlobalFrame frame;
+
+    public ConnectionMenu(GlobalFrame frame) {
+
+        this.frame = frame;
 
         //creation de la partie login
 
@@ -53,8 +57,18 @@ public class MenuInscription extends JPanel implements ActionListener {
 
         //creation du bouton de connexion
 
-        confirmation= new JButton("Confirmation");
-        confirmation.setBackground(Color.GREEN);
+        connexion = new JButton("Connexion");
+        connexion.setBackground(Color.GREEN);
+
+        //création du lien vers l'inscription
+        conteneurinscription = new JPanel();
+        conteneurinscription.setLayout(new FlowLayout());
+
+        inscription = new JLabel("s'inscrire");
+        inscription.setForeground(Color.BLUE);
+
+
+
 
 
         this.add(Box.createRigidArea(new Dimension(0, 150)));
@@ -63,12 +77,16 @@ public class MenuInscription extends JPanel implements ActionListener {
         this.add(login);
         mdp.setMaximumSize(new Dimension(800,30));
         this.add(mdp);
+        this.add(inscription);
         this.add(Box.createRigidArea(new Dimension(0, 10)));
-        this.add(confirmation);
+        this.add(connexion);
         this.setVisible(true);
 
     }
 
     public void actionPerformed(ActionEvent event) {
+        
     }
 }
+
+
