@@ -35,7 +35,7 @@ public class GlobalFrame extends JFrame {
 
         //menu = new RoomManagement();
         //this.setContentPane(menu);
-        MainMenuDisplay(this);
+        mainMenuDisplay(this);
 
 
 
@@ -78,7 +78,7 @@ public class GlobalFrame extends JFrame {
 
     }
 
-    public void MainMenuDisplay(GlobalFrame frame){
+    public void mainMenuDisplay(GlobalFrame frame){
 
         mainmenu = new MainMenu(frame);
         setContentPane(mainmenu);
@@ -87,7 +87,7 @@ public class GlobalFrame extends JFrame {
 
     }
 
-    public void ConnectionMenuDisplay(GlobalFrame frame){
+    public void connectionMenuDisplay(GlobalFrame frame){
 
         connectionmenu = new ConnectionMenu(frame);
         setContentPane(connectionmenu);
@@ -96,7 +96,7 @@ public class GlobalFrame extends JFrame {
 
     }
 
-    public void SignupMenuDisplay(GlobalFrame frame){
+    public void signupMenuDisplay(GlobalFrame frame){
 
         signupmenu = new SignupMenu(frame);
         setContentPane(signupmenu);
@@ -104,7 +104,7 @@ public class GlobalFrame extends JFrame {
         frame.repaint();
     }
 
-    public void GameManagementDisplay(GlobalFrame frame){
+    public void gameManagementDisplay(GlobalFrame frame){
 
         gamemanagement = new GameManagement(frame);
         setContentPane(gamemanagement);
