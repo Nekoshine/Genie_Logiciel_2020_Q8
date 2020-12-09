@@ -29,12 +29,12 @@ public class GlobalFrame extends JFrame {
         this.setIconImage(logo);
         this.setTitle("E-Scape Game");
         this.setVisible(true);
-        windowSize = new Dimension(1280,720);
+        windowSize = new Dimension(720,480);
 
 
         //menu = new RoomManagement();
         //this.setContentPane(menu);
-        mainMenuDisplay(this);
+        connectionMenuDisplay(this);
 
 
 
