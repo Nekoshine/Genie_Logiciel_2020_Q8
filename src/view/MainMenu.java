@@ -80,6 +80,7 @@ public class MainMenu extends JPanel implements ActionListener {
             frame.roomManagementDisplay(frame);
         }
         else if(event.getSource() == creation){
+            frame.gameManagementDisplay(frame);
 
         }
         else if(event.getSource() == deconnection){
