@@ -40,7 +40,7 @@ public class GlobalFrame extends JFrame {
 
         this.setSize(windowSize);
         this.setLocationRelativeTo(null);
-        this.setMaximumSize(new Dimension(720,480));
+        this.setMinimumSize(new Dimension(720,480));
         this.setResizable(true);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -90,6 +90,7 @@ public class GlobalFrame extends JFrame {
 
         connectionmenu = new ConnectionMenu(frame);
         setContentPane(connectionmenu);
+        frame.setSize(720,480);
         frame.revalidate();
         frame.repaint();
 
@@ -99,6 +100,7 @@ public class GlobalFrame extends JFrame {
 
         signupmenu = new SignupMenu(frame);
         setContentPane(signupmenu);
+        frame.setSize(720,480);
         frame.revalidate();
         frame.repaint();
     }
