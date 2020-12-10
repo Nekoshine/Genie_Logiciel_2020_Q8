@@ -20,9 +20,12 @@ public class GameManagement extends JPanel implements ActionListener {
     private GlobalFrame frame;
     private JButton buttonReturn;
 
+    private int roomNumber;
+
     public GameManagement(GlobalFrame frame, int roomNumber){
 
         this.frame = frame;
+        this.roomNumber = roomNumber;
 
         /*WindowNamePanel set up*/
         JLabel windowName = new JLabel("MJ - Gestion des Jeux");
@@ -57,6 +60,7 @@ public class GameManagement extends JPanel implements ActionListener {
             JLabel gameNbLabel = new JLabel("Jeu " + i + " :");
             JLabel gameTitleLabel = new JLabel("Titre"); //fonction pour récupérer le titre du jeu i
             JButton buttonChose = new JButton("Choisir jeu " + i);
+            //fonction jeu i ready ?
             buttonChose.setBackground(Color.green);
             buttonChose.setOpaque(true);
             JButton buttonModify = new JButton("Modifier jeu " + i);
@@ -118,14 +122,20 @@ public class GameManagement extends JPanel implements ActionListener {
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         this.add(windowNamePanel);
         this.add(scrollGameListPanel);
-        this.add(buttonAddGamePanel);
+        if(roomNumber==-1) {
+            this.add(buttonAddGamePanel);
+        }
         this.add(buttonReturnPanel);
 
     }
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == buttonReturn){
-            frame.mainMenuDisplay(frame);
+            if(roomNumber==-1) {
+                frame.mainMenuDisplay(frame);
+            }else{
+                frame.roomManagementDisplay(frame);
+            }
         }
     }
 }
