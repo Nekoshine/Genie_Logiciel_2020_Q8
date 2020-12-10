@@ -2,16 +2,11 @@
 
 package view;
 
-import model.Game;
-import model.DBGame;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-
-import static model.DBGame.getGames;
 
 public class GameManagement extends JPanel implements ActionListener {
     /*Final JPanel*/
@@ -25,16 +20,12 @@ public class GameManagement extends JPanel implements ActionListener {
     private GlobalFrame frame;
     private JButton buttonReturn;
 
-    private int roomNumber;
-
     public GameManagement(GlobalFrame frame, int roomNumber){
 
         this.frame = frame;
-        this.roomNumber = roomNumber;
 
         /*WindowNamePanel set up*/
         JLabel windowName = new JLabel("MJ - Gestion des Jeux");
-        windowName.setFont(FontPerso.ArialBold);
         JPanel windowNameInsidePanel = new JPanel();
         windowNameInsidePanel.add(windowName);
         windowNameInsidePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
@@ -46,14 +37,9 @@ public class GameManagement extends JPanel implements ActionListener {
 
         gameListPanel.setLayout(new BoxLayout(gameListPanel, BoxLayout.PAGE_AXIS));
 
-        ArrayList<Game> games = getGames();
+        int nbGames = 14; //fonction pour récupérer nombre de Jeux enregistrés dans BdD
 
-
-        int nbGames = games.size(); //fonction pour récupérer nombre de Jeux enregistrés dans BdD
-        System.out.println("Le nombre de jeux est de " + nbGames);
-
-        for(int i = 0; i<nbGames; i++){
-            int j = i+1;
+        for(int i = 1; i<=nbGames; i++){
             JPanel gameInsidePanel = new JPanel();
             JPanel gameOutsidePanel = new JPanel();
             JPanel gameNbPanel = new JPanel();
@@ -68,26 +54,15 @@ public class GameManagement extends JPanel implements ActionListener {
             gameOutsidePanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
             gameOutsidePanel.setLayout((new BoxLayout(gameOutsidePanel, BoxLayout.LINE_AXIS)));
 
-            Game game = games.get(i);
-            String titre = game.getTitre();
-            boolean isReady = game.getReady();
-
-            JLabel gameNbLabel = new JLabel("Jeu " + j + " :");
-            JLabel gameTitleLabel = new JLabel(titre); //fonction pour récupérer le titre du jeu i
-            JButton buttonChose = new JButton("Choisir jeu " + j);
-            //fonction jeu i ready ?
-            if(isReady){
-                buttonChose.setBackground(ColorPerso.vert);
-                buttonChose.setOpaque(true);
-            }
-            else{
-                buttonChose.setBackground(Color.gray);
-                buttonChose.setOpaque(true);
-            }
-            JButton buttonModify = new JButton("Modifier jeu " + j);
+            JLabel gameNbLabel = new JLabel("Jeu " + i + " :");
+            JLabel gameTitleLabel = new JLabel("Titre"); //fonction pour récupérer le titre du jeu i
+            JButton buttonChose = new JButton("Choisir jeu " + i);
+            buttonChose.setBackground(ColorPerso.vert);
+            buttonChose.setOpaque(true);
+            JButton buttonModify = new JButton("Modifier jeu " + i);
             buttonModify.setBackground(Color.orange);
             buttonModify.setOpaque(true);
-            JButton buttonDelete = new JButton("Supprimer jeu " + j);
+            JButton buttonDelete = new JButton("Supprimer jeu " + i);
             buttonDelete.setBackground(ColorPerso.rouge);
             buttonDelete.setForeground(Color.WHITE);
             buttonDelete.setOpaque(true);
@@ -145,20 +120,14 @@ public class GameManagement extends JPanel implements ActionListener {
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         this.add(windowNamePanel);
         this.add(scrollGameListPanel);
-        if(roomNumber==-1) {
-            this.add(buttonAddGamePanel);
-        }
+        this.add(buttonAddGamePanel);
         this.add(buttonReturnPanel);
 
     }
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == buttonReturn){
-            if(roomNumber==-1) {
-                frame.mainMenuDisplay(frame);
-            }else{
-                frame.roomManagementDisplay(frame);
-            }
+            frame.mainMenuDisplay(frame);
         }
     }
 }
