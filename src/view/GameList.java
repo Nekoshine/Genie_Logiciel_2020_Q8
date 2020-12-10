@@ -23,13 +23,14 @@ public class GameList implements ActionListener, MouseListener {
 
     // Constructor
     GameList(String[] jeuDispo) throws IOException, FontFormatException {
-        //UIManager.put("Button.background",Color.PINK);
+        //
         this.frame=new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         /* Création des fonts */
-        File fichierfont = new File(".\\src\\view\\font\\ABEAKRG.TTF");
+        File fichierfont = new File(".\\src\\view\\font\\Oxanium.ttf");
         Font font = Font.createFont(Font.TRUETYPE_FONT, fichierfont).deriveFont(Font.PLAIN,15);
+        Font fontBasic = new Font("Arial",Font.BOLD,15);
 
         /* Mise en place de la fenetre */
         File fichier = new File(".\\src\\view\\image\\logo.png");
@@ -83,6 +84,9 @@ public class GameList implements ActionListener, MouseListener {
         returnButton.setForeground(Color.white);
         validateButton.setBackground(ColorPerso.lancement);
         validateButton.setForeground(Color.white);
+        UIManager.put("Button.font",fontBasic);
+        UIManager.put("Label.font",fontBasic);
+
 
         /* Ajout de Listener */
         returnButton.addActionListener(this);
@@ -146,6 +150,10 @@ public class GameList implements ActionListener, MouseListener {
         if(e.getSource()==liste){
             liste.setSelectionBackground(new Color(5, 111, 127, 128));
             liste.setSelectionForeground(Color.BLACK);
+            if(e.getClickCount()==2){
+                System.out.println((String)liste.getSelectedValue());
+                frame.dispose();
+            }
         }
     }
 

@@ -96,13 +96,13 @@ public class SignupMenu extends JPanel implements ActionListener {
             String mdpinput = saisiemotdepasse.getText();
 
             if (idinput.isEmpty() || mdpinput.isEmpty() ){
-                JOptionPane.showMessageDialog(frame,"Un ou plusieurs champs n'ont pas été remplis");
+                JOptionPane.showMessageDialog(frame,"Un ou plusieurs champs n'ont pas été remplis","Informations incomplètes", JOptionPane.WARNING_MESSAGE);
             }
             else if (DBUser.insertUser(idinput,mdpinput)){
                 frame.connectionMenuDisplay(frame);
             }
             else{
-                JOptionPane.showMessageDialog(frame,"l'identifiant n'est pas disponible");
+                JOptionPane.showMessageDialog(frame,"L'identifiant demandé n'est pas disponible","Attention", JOptionPane.WARNING_MESSAGE);
             }
 
         }

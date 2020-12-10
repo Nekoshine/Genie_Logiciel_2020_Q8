@@ -7,7 +7,7 @@ class DBUserTest {
 
     private static final String GOOD_LOGIN = "GoodLogin";
     private static final String WRONG_LOGIN = "WrongLogin";
-    private static final String GOOD_PASSWORD = "GoodPassword";
+        private static final String GOOD_PASSWORD = "GoodPassword";
     private static final String WRONG_PASSWORD = "WrongPassword";
 
     @Test
@@ -41,17 +41,8 @@ class DBUserTest {
     }
 
     @Test
-    final void testInjectionCodeAveugle(){
+    final void testInjectionCode(){
         //fait par Yann
-        String login = "GoodLogin' AND 1; -- ";
-        String password ="*/GoodLogin";
-        boolean test = DBUser.connectUser(login, password);
-        Assertions.assertFalse(test, "L'injection à l'aveugle a fonctionné");
-    }
-
-    @Test
-    final void testInjectionCodeAvecConnaissance(){
-        //pas fait par Yann
         String login = "GoodLogin' AND 1; -- ";
         String password ="*/GoodLogin";
         boolean test = DBUser.connectUser(login, password);

@@ -18,6 +18,7 @@ public class GameManagement extends JPanel implements ActionListener {
             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
     private GlobalFrame frame;
+    private JButton buttonReturn;
 
     public GameManagement(GlobalFrame frame){
 
@@ -96,7 +97,8 @@ public class GameManagement extends JPanel implements ActionListener {
         buttonAddGamePanel.add(buttonAddGameInsidePanel);
 
 
-        JButton buttonReturn = new JButton("Retour");
+        buttonReturn = new JButton("Retour");
+        buttonReturn.addActionListener(this);
         buttonReturn.setBackground(ColorPerso.retour);
         buttonReturn.setForeground(Color.white);
         buttonReturn.setOpaque(true);
@@ -119,6 +121,8 @@ public class GameManagement extends JPanel implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-
+        if (e.getSource() == buttonReturn){
+            frame.mainMenuDisplay(frame);
+        }
     }
 }
