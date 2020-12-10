@@ -86,22 +86,8 @@ public class RoomManagement extends JPanel implements ActionListener {
         /* Déclaration Boutons */
 
         returnButton = new JButton("Retour");
-       /* File fichier = new File(".\\src\\view\\font\\ABEAKRG.TTF");
-        Font font = Font.createFont(Font.TRUETYPE_FONT, fichier).deriveFont(0,30);
-        returnButton.setFont(font);*/
         returnButton.setBackground(ColorPerso.retour);
         returnButton.setForeground(Color.white);
-
-        /*returnButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                returnButton.setBackground(Color.GREEN);
-            }
-
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                returnButton.setBackground(ColorPerso.retour);
-            }
-        });*/
-
 
         newButton = new JButton();
         newButton.setBackground(Color.GRAY);
