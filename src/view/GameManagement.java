@@ -20,7 +20,7 @@ public class GameManagement extends JPanel implements ActionListener {
     private GlobalFrame frame;
     private JButton buttonReturn;
 
-    public GameManagement(GlobalFrame frame){
+    public GameManagement(GlobalFrame frame, int roomNumber){
 
         this.frame = frame;
 
@@ -78,9 +78,12 @@ public class GameManagement extends JPanel implements ActionListener {
 
             gameInsidePanel.add(gameNbPanel);
             gameInsidePanel.add(gameTitlePanel);
-            gameInsidePanel.add(buttonChosePanel);
-            gameInsidePanel.add(buttonModifyPanel);
-            gameInsidePanel.add(buttonDeletePanel);
+            if(roomNumber==-1){
+                gameInsidePanel.add(buttonModifyPanel);
+                gameInsidePanel.add(buttonDeletePanel);
+            }else {
+                gameInsidePanel.add(buttonChosePanel);
+            }
 
             gameOutsidePanel.add(gameInsidePanel);
 

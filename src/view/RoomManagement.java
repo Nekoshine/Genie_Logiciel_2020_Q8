@@ -145,7 +145,7 @@ public class RoomManagement extends JPanel implements ActionListener {
                 boutonJeu.addActionListener(new AbstractAction() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        frame.gameManagementDisplay(frame);
+                        frame.gameManagementDisplay(frame, salle.getId());
                     }
                 });
 

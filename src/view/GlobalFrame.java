@@ -23,7 +23,7 @@ public class GlobalFrame extends JFrame {
 
     public GlobalFrame() throws IOException {
 
-        File fichier = new File(".\\src\\view\\image\\logo.png");
+        File fichier = new File("./src/view/image/logo.png");
         Image logo = ImageIO.read(fichier);
         this.setIconImage(logo);
         this.setTitle("E-Scape Game");
@@ -114,9 +114,9 @@ public class GlobalFrame extends JFrame {
         frame.repaint();
     }
 
-    public void gameManagementDisplay(GlobalFrame frame){
+    public void gameManagementDisplay(GlobalFrame frame, int roomNumber){
 
-        gamemanagement = new GameManagement(frame);
+        gamemanagement = new GameManagement(frame, roomNumber);
         setContentPane(gamemanagement);
         frame.setSize(1280,720);
         frame.setResizable(true);
