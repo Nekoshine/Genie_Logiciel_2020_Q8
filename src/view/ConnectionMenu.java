@@ -4,10 +4,10 @@ package view;
 
 import model.DBUser;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.*;
 
 
 public class ConnectionMenu extends JPanel implements ActionListener {
@@ -61,7 +61,7 @@ public class ConnectionMenu extends JPanel implements ActionListener {
         connection.addActionListener(this);
         connection.setBackground(Color.GREEN);
 
-        inscription = new JButton("s'inscrire");
+        inscription = new JButton("S'inscrire");
         inscription.addActionListener(this);
         inscription.setBackground(Color.YELLOW);
 
@@ -95,7 +95,12 @@ public class ConnectionMenu extends JPanel implements ActionListener {
                 frame.mainMenuDisplay(frame);
             }
             else{
-                JOptionPane.showMessageDialog(frame,"l'identifiant ou le mot de passe ne correspond pas");
+                JOptionPane.showMessageDialog(frame,"Les informations ne correspondent pas\nMerci de vérifiez l'identifiant et/ou le mot de passe\n","Erreur", JOptionPane.ERROR_MESSAGE);
+                /*
+                ERROR_MESSAGE
+                WARNING_MESSAGE
+                PLAIN_MESSAGE
+                */
             }
 
         }
