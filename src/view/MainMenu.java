@@ -53,10 +53,10 @@ public class MainMenu extends JPanel implements ActionListener {
 
         /*création des boutons de choix de menu*/
 
-        creation = new JButtonRedimension(".\\src\\view\\image\\creation.png");
+        creation = new JButtonRedimension("./src/view/image/creation.png");
         creation.addActionListener(this);
 
-        management = new JButtonRedimension(".\\src\\view\\image\\gestion.png");
+        management = new JButtonRedimension("./src/view/image/gestion.png");
         management.addActionListener(this);
         /*création du conteneur des menus*/
         menucontainer = new JPanel();
@@ -82,7 +82,7 @@ public class MainMenu extends JPanel implements ActionListener {
             frame.roomManagementDisplay(frame);
         }
         else if(event.getSource() == creation){
-            frame.gameManagementDisplay(frame);
+            frame.gameManagementDisplay(frame, -1);
 
         }
         else if(event.getSource() == deconnection){
