@@ -63,7 +63,7 @@ public class SignupMenu extends JPanel implements ActionListener {
 
         confirmation= new JButton("Confirmation");
         confirmation.addActionListener(this);
-        confirmation.setBackground(Color.GREEN);
+        confirmation.setBackground(ColorPerso.vert);
 
         //creation du bouton de retour
 
