@@ -26,7 +26,7 @@ public class GlobalFrame extends JFrame {
         /*Font*/
         UIManager.put("Label.font",FontPerso.Oxanimum);
         UIManager.put("Button.font",FontPerso.Arial);
-        UIManager.put("Button.background",Color.GRAY);
+        UIManager.put("Button.background",ColorPerso.grisOriginal);
 
         File fichier = new File("./src/view/image/logo.png");
         Image logo = ImageIO.read(fichier);

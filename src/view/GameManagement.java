@@ -21,7 +21,6 @@ public class GameManagement extends JPanel implements ActionListener {
     private JButton buttonReturn;
 
     public GameManagement(GlobalFrame frame, int roomNumber){
-
         this.frame = frame;
 
         /*WindowNamePanel set up*/
@@ -34,6 +33,7 @@ public class GameManagement extends JPanel implements ActionListener {
         windowNamePanel.add(windowNameInsidePanel);
 
         scrollGameListPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+        scrollGameListPanel.getVerticalScrollBar().setUnitIncrement(10);
 
         gameListPanel.setLayout(new BoxLayout(gameListPanel, BoxLayout.PAGE_AXIS));
 
