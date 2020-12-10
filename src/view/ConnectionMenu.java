@@ -95,12 +95,7 @@ public class ConnectionMenu extends JPanel implements ActionListener {
                 frame.mainMenuDisplay(frame);
             }
             else{
-                JOptionPane.showMessageDialog(frame,"Les informations ne correspondent pas\nMerci de vérifiez l'identifiant et/ou le mot de passe\n","Erreur", JOptionPane.ERROR_MESSAGE);
-                /*
-                ERROR_MESSAGE
-                WARNING_MESSAGE
-                PLAIN_MESSAGE
-                */
+                JOptionPane.showMessageDialog(frame,"Merci de vérifiez l'identifiant et/ou le mot de passe\n","Informations invalides", JOptionPane.WARNING_MESSAGE);
             }
 
         }
