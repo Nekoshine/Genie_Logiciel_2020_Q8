@@ -77,7 +77,7 @@ public class GameManagement extends JPanel implements ActionListener {
             JButton buttonChose = new JButton("Choisir jeu " + j);
             //fonction jeu i ready ?
             if(isReady){
-                buttonChose.setBackground(Color.green);
+                buttonChose.setBackground(ColorPerso.vert);
                 buttonChose.setOpaque(true);
             }
             else{
@@ -117,6 +117,7 @@ public class GameManagement extends JPanel implements ActionListener {
         }
 
         JButton buttonAddGame = new JButton("Créer un nouveau jeu");
+        buttonAddGame.setOpaque(false);
         buttonAddGame.addActionListener(this);
         JPanel buttonAddGameInsidePanel = new JPanel();
         buttonAddGameInsidePanel.setBorder(BorderFactory.createLineBorder(Color.black, 2));
