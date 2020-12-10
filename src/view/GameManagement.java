@@ -49,8 +49,9 @@ public class GameManagement extends JPanel implements ActionListener {
 
 
         int nbGames = games.size(); //fonction pour récupérer nombre de Jeux enregistrés dans BdD
+        System.out.println("Le nombre de jeux est de " + nbGames);
 
-        for(int i = 0; i<=nbGames; i++){
+        for(int i = 0; i<nbGames; i++){
             int j = i+1;
             JPanel gameInsidePanel = new JPanel();
             JPanel gameOutsidePanel = new JPanel();
