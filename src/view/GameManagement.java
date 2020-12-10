@@ -29,6 +29,7 @@ public class GameManagement extends JPanel implements ActionListener {
 
         /*WindowNamePanel set up*/
         JLabel windowName = new JLabel("MJ - Gestion des Jeux");
+        windowName.setFont(FontPerso.ArialBold);
         JPanel windowNameInsidePanel = new JPanel();
         windowNameInsidePanel.add(windowName);
         windowNameInsidePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
@@ -67,7 +68,8 @@ public class GameManagement extends JPanel implements ActionListener {
             buttonModify.setBackground(Color.orange);
             buttonModify.setOpaque(true);
             JButton buttonDelete = new JButton("Supprimer jeu " + i);
-            buttonDelete.setBackground(Color.red);
+            buttonDelete.setBackground(ColorPerso.rouge);
+            buttonDelete.setForeground(Color.WHITE);
             buttonDelete.setOpaque(true);
 
             gameNbPanel.add(gameNbLabel, BorderLayout.CENTER);
@@ -95,6 +97,7 @@ public class GameManagement extends JPanel implements ActionListener {
         }
 
         JButton buttonAddGame = new JButton("Créer un nouveau jeu");
+        buttonAddGame.setOpaque(false);
         buttonAddGame.addActionListener(this);
         JPanel buttonAddGameInsidePanel = new JPanel();
         buttonAddGameInsidePanel.setBorder(BorderFactory.createLineBorder(Color.black, 2));
@@ -106,7 +109,7 @@ public class GameManagement extends JPanel implements ActionListener {
 
         buttonReturn = new JButton("Retour");
         buttonReturn.addActionListener(this);
-        buttonReturn.setBackground(ColorPerso.retour);
+        buttonReturn.setBackground(ColorPerso.rouge);
         buttonReturn.setForeground(Color.white);
         buttonReturn.setOpaque(true);
         buttonReturn.addActionListener(this);
