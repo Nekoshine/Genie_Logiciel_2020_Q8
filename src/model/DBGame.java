@@ -48,7 +48,7 @@ public class DBGame {
     try{
       PreparedStatement requete = DBGame.getConnexion().prepareStatement("Select * from Game");
       ResultSet resultat = requete.executeQuery();
-      if (resultat.next()) { // On itère chaque résultat
+      while (resultat.next() != false) { // On itère chaque résultat
         if(resultat.getInt("ready")==1){ // On convertit le booleen car il est stocké comme un entier dans la base
           boolGame=true;
         }else{
@@ -57,6 +57,7 @@ public class DBGame {
         gameList.add(new Game(resultat.getInt("id"), resultat.getString("titre"),
         resultat.getInt("score"), resultat.getInt("idUser"),resultat.getInt("timer"),boolGame)); // On crée l'objet model.Game et on l'ajoute dans la liste
       }
+      for (int i=0;i<gameList.size() ;i++ ) {         System.out.println(gameList.get(i).getTitre());       }
       requete.close();
       resultat.close();
     } catch(SQLException e ){

@@ -75,8 +75,14 @@ public class GameManagement extends JPanel implements ActionListener {
             JLabel gameTitleLabel = new JLabel(titre); //fonction pour récupérer le titre du jeu i
             JButton buttonChose = new JButton("Choisir jeu " + j);
             //fonction jeu i ready ?
-            buttonChose.setBackground(Color.green);
-            buttonChose.setOpaque(true);
+            if(isReady){
+                buttonChose.setBackground(Color.green);
+                buttonChose.setOpaque(true);
+            }
+            else{
+                buttonChose.setBackground(Color.gray);
+                buttonChose.setOpaque(true);
+            }
             JButton buttonModify = new JButton("Modifier jeu " + j);
             buttonModify.setBackground(Color.orange);
             buttonModify.setOpaque(true);
