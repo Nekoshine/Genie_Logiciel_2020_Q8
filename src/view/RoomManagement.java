@@ -1,7 +1,6 @@
 /* Interface développée par Cédric Plantet */
 
 package view;
-
 import model.Room;
 
 import javax.swing.*;
