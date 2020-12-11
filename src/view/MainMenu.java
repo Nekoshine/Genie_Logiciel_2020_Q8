@@ -18,8 +18,8 @@ public class MainMenu extends JPanel implements ActionListener {
     private JPanel menucontainer;
 
     private JButton deconnection;
-    private JButtonRedimension management;
-    private JButtonRedimension creation;
+    private JButton management;
+    private JButton creation;
 
     private GlobalFrame frame;
 
@@ -54,10 +54,10 @@ public class MainMenu extends JPanel implements ActionListener {
 
         /*création des boutons de choix de menu*/
 
-        creation = new JButtonRedimension("./src/view/image/creation.png");
+        creation = new JButtonImage("./src/view/image/creation.png");
         creation.addActionListener(this);
 
-        management = new JButtonRedimension("./src/view/image/gestion.png");
+        management = new JButtonImage("./src/view/image/gestion.png");
         management.addActionListener(this);
         /*création du conteneur des menus*/
         menucontainer = new JPanel();
@@ -88,25 +88,6 @@ public class MainMenu extends JPanel implements ActionListener {
         }
         else if(event.getSource() == deconnection){
             frame.connectionMenuDisplay(frame);
-        }
-    }
-
-    public class JButtonRedimension extends JButton {
-
-        private Image img;
-        private String imageName;
-
-
-        public JButtonRedimension(String path) {
-            img = new ImageIcon(path).getImage();
-        }
-
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            if (img == null) return;
-            g.drawImage(img, 0, 0, getWidth(), getHeight(), this);
-
         }
     }
 
