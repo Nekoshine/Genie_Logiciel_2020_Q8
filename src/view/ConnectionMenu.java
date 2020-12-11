@@ -59,11 +59,11 @@ public class ConnectionMenu extends JPanel implements ActionListener {
 
         connection = new JButton("Connexion");
         connection.addActionListener(this);
-        connection.setBackground(Color.GREEN);
+        connection.setBackground(ColorPerso.vert);
 
         inscription = new JButton("s'inscrire");
         inscription.addActionListener(this);
-        inscription.setBackground(Color.YELLOW);
+        inscription.setBackground(ColorPerso.jaune);
 
         //création du lien vers l'inscription
         conteneurboutons = new JPanel();

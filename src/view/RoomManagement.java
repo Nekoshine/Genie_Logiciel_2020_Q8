@@ -85,7 +85,7 @@ public class RoomManagement extends JPanel implements ActionListener {
         /* Déclaration Boutons */
 
         returnButton = new JButton("Retour");
-        returnButton.setBackground(ColorPerso.retour);
+        returnButton.setBackground(ColorPerso.rouge);
         returnButton.setForeground(Color.white);
 
         newButton = new JButton();
@@ -141,7 +141,7 @@ public class RoomManagement extends JPanel implements ActionListener {
                 nomJeu.setHorizontalAlignment(SwingConstants.CENTER);
 
                 JButton boutonJeu = new JButton("Choisir Jeu");
-                boutonJeu.setBackground(ColorPerso.choixJeu);
+                boutonJeu.setBackground(ColorPerso.jaune);
                 boutonJeu.addActionListener(new AbstractAction() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -150,7 +150,7 @@ public class RoomManagement extends JPanel implements ActionListener {
                 });
 
                 JButton boutonLancer = new JButton("Lancer");
-                boutonLancer.setBackground(ColorPerso.lancement);
+                boutonLancer.setBackground(ColorPerso.vert);
                 boutonLancer.addActionListener(new AbstractAction() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -206,6 +206,7 @@ public class RoomManagement extends JPanel implements ActionListener {
         /* Setup Titre */
 
         titre = new JLabel("MJ - Gestion des salles");
+        titre.setFont(FontPerso.ArialBold);
         titlePanel.setBorder(BorderFactory.createLineBorder(Color.black,2));
         titlePanel.add(titre);
 
@@ -274,7 +275,7 @@ public class RoomManagement extends JPanel implements ActionListener {
         nomJeu.setHorizontalAlignment(SwingConstants.CENTER);
 
         JButton boutonJeu = new JButton("Choisir Jeu");
-        boutonJeu.setBackground(ColorPerso.choixJeu);
+        boutonJeu.setBackground(ColorPerso.jaune);
         boutonJeu.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -286,7 +287,7 @@ public class RoomManagement extends JPanel implements ActionListener {
 
 
         JButton boutonLancer = new JButton("Lancer");
-        boutonLancer.setBackground(ColorPerso.lancement);
+        boutonLancer.setBackground(ColorPerso.vert);
         boutonLancer.addActionListener(new AbstractAction() {
             @Override
 

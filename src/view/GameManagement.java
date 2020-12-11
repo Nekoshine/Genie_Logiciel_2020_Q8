@@ -20,12 +20,8 @@ public class GameManagement extends JPanel implements ActionListener {
     private GlobalFrame frame;
     private JButton buttonReturn;
 
-    private int roomNumber;
-
     public GameManagement(GlobalFrame frame, int roomNumber){
-
         this.frame = frame;
-        this.roomNumber = roomNumber;
 
         /*WindowNamePanel set up*/
         JLabel windowName = new JLabel("MJ - Gestion des Jeux");
@@ -37,6 +33,7 @@ public class GameManagement extends JPanel implements ActionListener {
         windowNamePanel.add(windowNameInsidePanel);
 
         scrollGameListPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+        scrollGameListPanel.getVerticalScrollBar().setUnitIncrement(10);
 
         gameListPanel.setLayout(new BoxLayout(gameListPanel, BoxLayout.PAGE_AXIS));
 
@@ -60,14 +57,14 @@ public class GameManagement extends JPanel implements ActionListener {
             JLabel gameNbLabel = new JLabel("Jeu " + i + " :");
             JLabel gameTitleLabel = new JLabel("Titre"); //fonction pour récupérer le titre du jeu i
             JButton buttonChose = new JButton("Choisir jeu " + i);
-            //fonction jeu i ready ?
-            buttonChose.setBackground(Color.green);
+            buttonChose.setBackground(ColorPerso.vert);
             buttonChose.setOpaque(true);
             JButton buttonModify = new JButton("Modifier jeu " + i);
             buttonModify.setBackground(Color.orange);
             buttonModify.setOpaque(true);
             JButton buttonDelete = new JButton("Supprimer jeu " + i);
-            buttonDelete.setBackground(Color.red);
+            buttonDelete.setBackground(ColorPerso.rouge);
+            buttonDelete.setForeground(Color.WHITE);
             buttonDelete.setOpaque(true);
 
             gameNbPanel.add(gameNbLabel, BorderLayout.CENTER);
@@ -95,6 +92,7 @@ public class GameManagement extends JPanel implements ActionListener {
         }
 
         JButton buttonAddGame = new JButton("Créer un nouveau jeu");
+        buttonAddGame.setOpaque(false);
         buttonAddGame.addActionListener(this);
         JPanel buttonAddGameInsidePanel = new JPanel();
         buttonAddGameInsidePanel.setBorder(BorderFactory.createLineBorder(Color.black, 2));
@@ -106,7 +104,7 @@ public class GameManagement extends JPanel implements ActionListener {
 
         buttonReturn = new JButton("Retour");
         buttonReturn.addActionListener(this);
-        buttonReturn.setBackground(ColorPerso.retour);
+        buttonReturn.setBackground(ColorPerso.rouge);
         buttonReturn.setForeground(Color.white);
         buttonReturn.setOpaque(true);
         buttonReturn.addActionListener(this);
@@ -122,20 +120,14 @@ public class GameManagement extends JPanel implements ActionListener {
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         this.add(windowNamePanel);
         this.add(scrollGameListPanel);
-        if(roomNumber==-1) {
-            this.add(buttonAddGamePanel);
-        }
+        this.add(buttonAddGamePanel);
         this.add(buttonReturnPanel);
 
     }
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == buttonReturn){
-            if(roomNumber==-1) {
-                frame.mainMenuDisplay(frame);
-            }else{
-                frame.roomManagementDisplay(frame);
-            }
+            frame.mainMenuDisplay(frame);
         }
     }
 }

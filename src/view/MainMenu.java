@@ -35,8 +35,8 @@ public class MainMenu extends JPanel implements ActionListener {
         /*création du bouton deconnexion*/
         deconnection = new JButton("Deconnexion");
         deconnection.addActionListener(this);
-        deconnection.setBackground(Color.red);
-        deconnection.setForeground(Color.BLACK);
+        deconnection.setBackground(ColorPerso.rouge);
+        deconnection.setForeground(Color.WHITE);
         deconnection.setPreferredSize(new Dimension(150,60));
 
         /*création du conteneur pour le bouton deconnexion*/
@@ -45,11 +45,12 @@ public class MainMenu extends JPanel implements ActionListener {
 
         /*création du titre*/
         JLabel titre = new JLabel("MJ - Menu Principal");
+        titre.setFont(FontPerso.ArialBold);
 
         /*création du conteneur pour le titre*/
         titlecontainer = new JPanel();
         titlecontainer.setLayout(new FlowLayout());
-        titlecontainer.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        titlecontainer.setBorder(BorderFactory.createLineBorder(Color.black,2));
 
         /*création des boutons de choix de menu*/
 
