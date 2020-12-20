@@ -9,6 +9,7 @@ class ColorPerso extends Color {
     static Color gris = new Color(211,211,211);
     static  Color rouge = new Color(180,40,20);
     static Color grisOriginal = new Color(238,238,238);
+    static Color azur = new Color(30,127,203);
 
     ColorPerso(int r, int g, int b) {
         super(r, g, b);
