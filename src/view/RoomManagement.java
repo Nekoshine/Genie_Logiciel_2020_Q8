@@ -2,21 +2,21 @@
 
 package view;
 
-import model.Room;
+import controller.RoomController;
+import model.RoomModel;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.ArrayList;
 
 public class RoomManagement extends JPanel implements ActionListener {
 
     /* Test */
-
-    public ArrayList<Room> getRoom = new ArrayList<Room>();
+    public RoomController R = new RoomController();
+    public ArrayList<RoomModel> getRoomModel = new ArrayList<RoomModel>();
     ArrayList<JPanel> getPanel = new ArrayList<JPanel>();
 
 
@@ -52,12 +52,9 @@ public class RoomManagement extends JPanel implements ActionListener {
 
         this.frame = frame;
 
-        /* Remplissage ArrayList */
+        /* Rcuperation des Salle */
 
-        getRoom.add(new Room(1,1));
-        getRoom.add(new Room(2,1));
-        getRoom.add(new Room(3,1));
-        getRoom.add(new Room(4,1));
+        getRoomModel = R.getRoomList();
 
         /* Déclaration JPanel - JScrollPane */
 
@@ -89,103 +86,18 @@ public class RoomManagement extends JPanel implements ActionListener {
         returnButton.setBackground(ColorPerso.rouge);
         returnButton.setForeground(Color.white);
 
-        newButton = new JButton();
+        newButton = new JButton("Nouvelle Salle");
         newButton.setBackground(Color.GRAY);
         newButton.setOpaque(false);
         newButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        /* Chargement des salles */
-
-
-        for (int i=0;i<getRoom.size();i++){
-            listPanel.remove(newButtonPanel);
-            JPanel panelSalle = ajoutSalle(getRoom.get(i), gbc);
-            panelSalle.setPreferredSize(new Dimension(listPanel.getWidth()-45,75));
-            roomPanel.add(panelSalle,gbc);
-            listPanel.add(newButtonPanel,BorderLayout.SOUTH);
-            listPanel.revalidate();
-            listPanel.repaint();
-        }
+        this.CreateList();
 
 
         /* Ajout d'une nouvelle salle */
 
 
-        newButton.setAction(new AbstractAction("Nouvelle Salle") {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                Room salle = new Room(getRoom.size()+1,1);
-
-
-                /* Contraintes GridBag */
-
-                gbc.fill = GridBagConstraints.HORIZONTAL;
-                gbc.weightx = 1;
-                gbc.gridy = salle.getId()-1;
-                gbc.gridx = 0;
-
-
-                /* Ajout Panel */
-
-                listPanel.remove(newButtonPanel);
-                JPanel panelSalle = new JPanel();
-
-                /* Construction PanelSalle */
-
-                GridLayout grille = new GridLayout(1,4,70,0);
-                JLabel nomSalle = new JLabel("Salle " + salle.getId() + " :");
-                nomSalle.setHorizontalAlignment(SwingConstants.CENTER);
-
-                JLabel nomJeu = new JLabel("Jeu " + salle.getIdGame());
-                nomJeu.setHorizontalAlignment(SwingConstants.CENTER);
-
-                JButton boutonJeu = new JButton("Choisir Jeu");
-                boutonJeu.setBackground(ColorPerso.jaune);
-                boutonJeu.addActionListener(new AbstractAction() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        frame.gameManagementDisplay(frame, salle.getId());
-                    }
-                });
-
-                JButton boutonLancer = new JButton("Lancer");
-                boutonLancer.setBackground(ColorPerso.vert);
-                boutonLancer.addActionListener(new AbstractAction() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        System.out.println(salle.getId());
-                    }
-                });
-
-                /* Ajout Éléments au panel Salle */
-
-                panelSalle.add(nomSalle);
-                panelSalle.add(nomJeu);
-                panelSalle.add(boutonJeu);
-                panelSalle.add(boutonLancer);
-                panelSalle.setLayout(grille);
-
-                /* Configuration panelSalle */
-
-                panelSalle.setBorder(BorderFactory.createLineBorder(Color.BLACK,3));
-                panelSalle.setPreferredSize(new Dimension(listPanel.getWidth()-45,75));
-                panelSalle.setBounds(0,0+(salle.getId()*75),listPanel.getWidth()-45,75);
-
-
-                /* Ajout à la liste des salles */
-
-                roomPanel.add(panelSalle,gbc);
-                listPanel.add(newButtonPanel,BorderLayout.SOUTH);
-                ajoutListeRoom(salle,getRoom);
-                listPanel.revalidate();
-                listPanel.repaint();
-
-
-
-            }
-        });
+        newButton.addActionListener(this);
 
         /* Setup Marges */
 
@@ -231,17 +143,6 @@ public class RoomManagement extends JPanel implements ActionListener {
 
     }
 
-    /**
-     * La méthode ajoutListeRoom permet l'ajout d'une nouvelle salle au sein de la base de données
-     * @param salle
-     * @param getRoom
-     */
-
-    void ajoutListeRoom(Room salle,ArrayList<Room> getRoom){
-
-        getRoom.add(salle);
-    }
-
 
     /**
      * La méthode ajoutSalle() permet l'ajout d'une salle à l'interface de gestion des salles.
@@ -252,7 +153,7 @@ public class RoomManagement extends JPanel implements ActionListener {
      * @return
      */
 
-    JPanel ajoutSalle(Room salle,GridBagConstraints gbc){
+    JPanel ajoutSalle(RoomModel salle, GridBagConstraints gbc){
 
         /* Contraintes GridBag */
 
@@ -272,7 +173,7 @@ public class RoomManagement extends JPanel implements ActionListener {
         JLabel nomSalle = new JLabel("Salle " + salle.getId() + " :");
         nomSalle.setHorizontalAlignment(SwingConstants.CENTER);
 
-        JLabel nomJeu = new JLabel("Jeu " + salle.getIdGame());
+        JLabel nomJeu = new JLabel(salle.getGame().toString());
         nomJeu.setHorizontalAlignment(SwingConstants.CENTER);
 
         JButton boutonJeu = new JButton("Choisir Jeu");
@@ -319,11 +220,33 @@ public class RoomManagement extends JPanel implements ActionListener {
 
             frame.mainMenuDisplay(frame);
         }
+        else if(e.getSource()==newButton){
+            this.majRoom();
+        }
 
     }
 
+    private void majRoom() {
+        R.addRoom(getRoomModel.size()+1,"Titre du jeu");
+        this.CreateList();
+    }
 
+    public void CreateList() {
+        /* Chargement des salles */
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(7,15,7,30);
 
+        for (int i = 0; i < getRoomModel.size(); i++) {
+            listPanel.remove(newButtonPanel);
+            JPanel panelSalle = ajoutSalle(getRoomModel.get(i), gbc);
+            panelSalle.setPreferredSize(new Dimension(listPanel.getWidth() - 45, 75));
+            roomPanel.add(panelSalle, gbc);
+            listPanel.add(newButtonPanel, BorderLayout.SOUTH);
+            listPanel.revalidate();
+            listPanel.repaint();
+        }
+
+    }
 
 
 }

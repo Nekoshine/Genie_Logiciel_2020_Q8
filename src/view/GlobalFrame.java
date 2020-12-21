@@ -66,12 +66,6 @@ public class GlobalFrame extends JFrame {
 
     }
 
-    public static void main(String[] args) throws IOException{
-        GlobalFrame test = new GlobalFrame();
-
-    }
-
-
     public void roomManagementDisplay(GlobalFrame frame){
 
         roommanagement = new RoomManagement(frame);
