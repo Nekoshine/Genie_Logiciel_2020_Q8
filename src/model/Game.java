@@ -35,4 +35,9 @@ public class Game{
   public Boolean getReady(){
     return this.ready;
   }
+
+  @Override
+  public String toString() {
+    return titre;
+  }
 }
