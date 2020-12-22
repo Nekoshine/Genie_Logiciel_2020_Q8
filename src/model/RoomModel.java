@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 
 /**
-* * Codé par Esteban
+* * Codé par Yann
 */
 public class RoomModel {
   
@@ -13,7 +13,7 @@ public class RoomModel {
     List = new ArrayList<>();
   }
 
-  public void addRoom(int id, String Game){
+  public void addRoom(int id, Game Game){
     List.add(new Room(id,Game));
   }
 
@@ -29,11 +29,4 @@ public class RoomModel {
     return List.get(i);
   }
 
-  public String toString(){
-    for(int i=0;i<this.getSize();i++){
-      System.out.println(this.getRoom(i).getId());
-      System.out.println(this.getRoom(i).getGame());
-    }
-    return "-------";
-  }
 }

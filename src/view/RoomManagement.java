@@ -3,6 +3,7 @@
 package view;
 
 import controller.RoomController;
+import model.Game;
 import model.Room;
 import model.RoomModel;
 
@@ -17,7 +18,6 @@ public class RoomManagement extends JPanel implements ActionListener {
 
     /* Test */
     public RoomModel ListRoom;
-    ArrayList<JPanel> getPanel = new ArrayList<JPanel>();
 
 
     /* Déclarations JPanel */
@@ -252,7 +252,7 @@ public class RoomManagement extends JPanel implements ActionListener {
         JLabel nomSalle = new JLabel("Salle " + salle.getId() + " :");
         nomSalle.setHorizontalAlignment(SwingConstants.CENTER);
 
-        JLabel nomJeu = new JLabel(salle.getGame().toString());
+        JLabel nomJeu = new JLabel(salle.getGame().getTitre());
         nomJeu.setHorizontalAlignment(SwingConstants.CENTER);
 
         JButton boutonJeu = new JButton("Choisir Jeu");
@@ -306,7 +306,7 @@ public class RoomManagement extends JPanel implements ActionListener {
     }
 
     private void majRoom() {
-        ListRoom.addRoom(ListRoom.getSize()+1,"Titre du jeu");
+        ListRoom.addRoom(ListRoom.getSize()+1,new Game(0,"Titre du jeu "+(ListRoom.getSize()+1),0,0,0,true));
         this.CreateList();
         System.out.println(ListRoom);
     }

@@ -3,9 +3,9 @@ package model;
 public class Room {
 
     private int id;
-    private String Game;
+    private Game Game;
 
-    public Room(int id, String Game){
+    public Room(int id, Game Game){
         this.id = id;
         this.Game = Game;
     }
@@ -13,7 +13,7 @@ public class Room {
     public int getId(){
         return this.id;
     }
-    public String getGame(){
+    public Game getGame(){
         return this.Game;
     }
 }
