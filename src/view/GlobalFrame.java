@@ -37,7 +37,7 @@ public class GlobalFrame extends JFrame {
 
         //menu = new RoomManagement();
         //this.setContentPane(menu);
-        gameCreationDisplay(this);
+        mainMenuDisplay(this);
 
 
 

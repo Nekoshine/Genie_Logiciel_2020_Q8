@@ -42,8 +42,8 @@ public class DBGame {
   * Fonction qui va récupérer les jeux dans la base de données et le stocker dans un ArrayList
   * @return Liste de jeux
   */
-  public static ArrayList<Game> getGames(){
-    ArrayList<Game> gameList = new ArrayList<Game>();
+  public static GameList getGames(){
+    GameList gameList = new GameList();
     Boolean boolGame=false;
     try{
       PreparedStatement requete = DBGame.getConnexion().prepareStatement("Select * from Game");
@@ -54,10 +54,10 @@ public class DBGame {
         }else{
           boolGame=false;
         }
-        gameList.add(new Game(resultat.getInt("id"), resultat.getString("titre"),
+        gameList.addGame(new Game(resultat.getInt("id"), resultat.getString("titre"),
         resultat.getInt("score"), resultat.getInt("idUser"),resultat.getInt("timer"),boolGame)); // On crée l'objet model.Game et on l'ajoute dans la liste
       }
-      for (int i=0;i<gameList.size() ;i++ ) {         System.out.println(gameList.get(i).getTitre());       }
+      for (int i=0;i<gameList.getSize() ;i++ ) {         System.out.println(gameList.getGame(i).getTitre());       }
       requete.close();
       resultat.close();
     } catch(SQLException e ){
