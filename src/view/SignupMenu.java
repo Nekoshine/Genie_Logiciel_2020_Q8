@@ -17,17 +17,19 @@ public class SignupMenu extends JPanel implements ActionListener {
 
     private JPanel login;
     private JPanel mdp;
+    private JPanel key;
     private JPanel conteneurretour;
 
     private JButton confirmation;
     private JButton retour;
 
     private JTextField saisieidentifiant;
+    private JTextField saisiecle;
     private JPasswordField saisiemotdepasse;
 
     private JLabel identifiant;
     private JLabel motdepasse;
-
+    private JLabel cleadmin;
 
     private GlobalFrame frame;
 
@@ -59,6 +61,17 @@ public class SignupMenu extends JPanel implements ActionListener {
         mdp.add(motdepasse);
         mdp.add(saisiemotdepasse);
 
+        //creation de la partie clé admin
+
+        key = new JPanel();
+        key.setLayout(new FlowLayout(FlowLayout.CENTER,10,0));
+        cleadmin = new JLabel("Clé (compte admin) :");
+        saisiecle = new JTextField();
+        saisiecle.setColumns(27);
+
+        key.add(cleadmin);
+        key.add(saisiecle);
+
         //creation du bouton de confirmation
 
         confirmation= new JButton("Confirmation");
@@ -83,9 +96,12 @@ public class SignupMenu extends JPanel implements ActionListener {
         this.add(Box.createRigidArea(new Dimension(0, 20)));
         mdp.setMaximumSize(new Dimension(800,30));
         this.add(mdp);
+        this.add(Box.createRigidArea(new Dimension(0, 20)));
+        //key.setMaximumSize(new Dimension(1000,30));
+        this.add(key);
         this.add(Box.createRigidArea(new Dimension(0, 10)));
         this.add(confirmation);
-        this.add(Box.createRigidArea(new Dimension(0, 150)));
+        this.add(Box.createRigidArea(new Dimension(0, 100)));
         this.add(conteneurretour);
         this.setVisible(true);
 
@@ -95,17 +111,19 @@ public class SignupMenu extends JPanel implements ActionListener {
         if (event.getSource() == confirmation){
             String idinput = saisieidentifiant.getText();
             String mdpinput = saisiemotdepasse.getText();
+            String cleinmput = saisiecle.getText();
 
             if (idinput.isEmpty() || mdpinput.isEmpty() ){
                 JOptionPane.showMessageDialog(frame,"Un ou plusieurs champs n'ont pas été remplis","Informations incomplètes", JOptionPane.WARNING_MESSAGE);
             }
-            else if (DBUser.insertUser(idinput,mdpinput)){
-                frame.connectionMenuDisplay(frame);
+            else if (cleinmput.isEmpty()) {
+                if (DBUser.insertUser(idinput, mdpinput)) {
+                    frame.connectionMenuDisplay(frame);
+                } else {
+                    JOptionPane.showMessageDialog(frame, "L'identifiant demandé n'est pas disponible", "Attention", JOptionPane.WARNING_MESSAGE);
+                }
             }
-            else{
-                JOptionPane.showMessageDialog(frame,"L'identifiant demandé n'est pas disponible","Attention", JOptionPane.WARNING_MESSAGE);
-            }
-
+            else if (!(cleinmput.isEmpty())){}
         }
         else if (event.getSource() == retour){
             frame.connectionMenuDisplay(frame);
