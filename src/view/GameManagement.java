@@ -2,8 +2,7 @@
 
 package view;
 
-import model.GameModel;
-import model.RoomModel;
+import model.GameList;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -13,7 +12,7 @@ import java.awt.event.ActionListener;
 
 public class GameManagement extends JPanel implements ActionListener {
 
-    public GameModel ListGame;
+    public GameList ListGame;
 
     /*Final JPanel*/
     public JPanel windowNamePanel = new JPanel();
@@ -26,7 +25,7 @@ public class GameManagement extends JPanel implements ActionListener {
     private GlobalFrame frame;
     private JButton buttonReturn;
 
-    public GameManagement(GlobalFrame frame, int roomNumber, GameModel list){
+    public GameManagement(GlobalFrame frame, int roomNumber, GameList list){
         this.frame = frame;
         this.ListGame=list;
         /*WindowNamePanel set up*/
