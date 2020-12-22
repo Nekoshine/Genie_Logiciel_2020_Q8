@@ -20,6 +20,7 @@ public class GlobalFrame extends JFrame {
     ConnectionMenu connectionmenu;
     SignupMenu signupmenu;
     GameManagement gamemanagement;
+    GameCreation gameCreation;
 
 
     public GlobalFrame() throws IOException {
@@ -38,14 +39,14 @@ public class GlobalFrame extends JFrame {
 
         //menu = new RoomManagement();
         //this.setContentPane(menu);
-        connectionMenuDisplay(this);
+        gameCreationDisplay(this);
 
 
 
-        this.setSize(windowSize);
+        //this.setSize(windowSize);
         this.setLocationRelativeTo(null);
-        this.setMinimumSize(new Dimension(720,480));
-        this.setResizable(false);
+        //this.setMinimumSize(new Dimension(720,480));
+        //this.setResizable(false);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 
@@ -123,6 +124,17 @@ public class GlobalFrame extends JFrame {
 
         gamemanagement = new GameManagement(frame, roomNumber);
         setContentPane(gamemanagement);
+        frame.setSize(1280,720);
+        frame.setResizable(true);
+        frame.setLocationRelativeTo(null);
+        frame.revalidate();
+        frame.repaint();
+    }
+
+    public void gameCreationDisplay(GlobalFrame frame){
+
+        gameCreation = new GameCreation(frame);
+        setContentPane(gameCreation);
         frame.setSize(1280,720);
         frame.setResizable(true);
         frame.setLocationRelativeTo(null);
