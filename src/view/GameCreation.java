@@ -3,7 +3,7 @@
 package view;
 
 import model.Enigma;
-import model.Room;
+import model.RoomModel;
 
 import javax.swing.*;
 import javax.swing.border.Border;
