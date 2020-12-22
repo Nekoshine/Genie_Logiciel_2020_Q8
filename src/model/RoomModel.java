@@ -1,7 +1,6 @@
 package model;
 /**
 * * Codé par Esteban
-* * Modifié par Yann
 */
 public class RoomModel {
   
