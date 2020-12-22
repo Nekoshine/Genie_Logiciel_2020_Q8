@@ -21,4 +21,4 @@ Pour exécuter ce logiciel, il faut posséder :
 - mysql-connector
 - Java 15
 
-Ensuite il faut lancer le fichier ***Main.java***
+Ensuite il faut lancer le fichier ***launcher.Main.java***
