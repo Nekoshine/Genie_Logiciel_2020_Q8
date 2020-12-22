@@ -2,26 +2,38 @@
 
 package view;
 
+import model.Enigma;
+import model.Room;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.plaf.BorderUIResource;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 
 public class GameCreation extends JPanel{
 
     private BorderLayout mainLayout;
     private BorderLayout titleLayout;
+    private BorderLayout centerLayout;
+    private BorderLayout enigmaInfoLayout;
 
     private GridBagLayout buttonLayout;
 
     private GridBagLayout gridInfo;
+    private GridBagLayout gridEnigma;
+
+
     private GridLayout grid;
     private GridLayout gridHint;
+
+    private GridBagConstraints gbcEnigma;
 
     private JScrollPane scrollStory;
     private JScrollPane scrollEnigmas;
 
-    private JPanel centerPanel;
+
     private JPanel titlePanel;
     private JPanel buttonPanel;
     private JPanel infoPanel;
@@ -29,7 +41,15 @@ public class GameCreation extends JPanel{
     private JPanel defaultScorePanel;
     private JPanel pointsPanel;
 
+    private JPanel centerPanel;
+    private JPanel storyPanel;
+    private JPanel enigmasPanel;
     private JPanel newPanel;
+    private JPanel answerPanel;
+    private JPanel hint1Panel;
+    private JPanel hint2Panel;
+    private JPanel hint3Panel;
+
 
 
     private JButton exitButton;
@@ -43,32 +63,37 @@ public class GameCreation extends JPanel{
     private JTextField points;
     private JTextField title;
 
-    private JTextField story;
-    private JTextField hint1;
-    private JTextField hint2;
-    private JTextField hint3;
-    private JTextField answer;
-    private JTextField time1;
-    private JTextField time2;
-    private JTextField time3;
+
 
     private GlobalFrame frame;
+
+    public ArrayList<Enigma> getEnigma;
 
 
     public GameCreation(GlobalFrame frame){
 
         this.frame = frame;
 
+        getEnigma = new ArrayList<Enigma>();
+        //getEnigma.add(new Enigma(1,1,"","","",0,"",0,"",0));
+        //getEnigma.add(new Enigma(2,1,"","","",0,"",0,"",0));
+
         mainLayout = new BorderLayout(10,10);
         titleLayout= new BorderLayout(10,10);
-        buttonLayout = new GridBagLayout();
+        enigmaInfoLayout = new BorderLayout(10,10);
+        centerLayout = new BorderLayout(30,30);
 
-        gridInfo = new GridBagLayout();
         GridBagConstraints gbcTitle = new GridBagConstraints();
         GridBagConstraints gbcScores = new GridBagConstraints();
+        gbcEnigma = new GridBagConstraints();
+
+
+        gridEnigma = new GridBagLayout();
+        buttonLayout = new GridBagLayout();
+        gridInfo = new GridBagLayout();
 
         grid = new GridLayout(1,0);
-        gridHint = new GridLayout(2,0);
+        gridHint = new GridLayout(2,0,10,10);
 
         centerPanel = new JPanel();
         titlePanel = new JPanel();
@@ -77,35 +102,185 @@ public class GameCreation extends JPanel{
         titleNamePanel = new JPanel();
         defaultScorePanel = new JPanel();
         pointsPanel = new JPanel();
+        newPanel = new JPanel();
+        enigmasPanel = new JPanel();
 
         saveButton = new JButton("Enregistrer");
         exitButton = new JButton("Quitter");
         deleteButton = new JButton("Supprimer");
+        newButton = new JButton();
 
-        title = new JTextField("Titre");
-        initialScore = new JTextField("Score Initial");
-        points = new JTextField("Points (Si désiré)");
+        title = new JTextField("Titre",45);
+        initialScore = new JTextField("Score Initial",7);
+        points = new JTextField("Points (Si désiré)",7);
 
-        story = new JTextField("Enigme");
-        hint1 = new JTextField("Indice 1");
-        hint2 = new JTextField("Indice 2");
-        hint3 = new JTextField("Indice 3");
-        time1 = new JTextField("Timer");
-        time2 = new JTextField("Timer");
-        time3 = new JTextField("Timer");
-        answer = new JTextField("Réponse");
 
         windowName = new JLabel("MJ - Création/Modification de Jeux",JLabel.CENTER);
 
-        scrollStory = new JScrollPane();
-        scrollEnigmas = new JScrollPane();
+
+
 
 
         //Center
 
+        newButton.setOpaque(false);
+        newButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        newPanel.add(newButton);
+
+        centerPanel.setLayout(centerLayout);
+
+        enigmasPanel.setLayout(gridEnigma);
+
+        scrollEnigmas = new JScrollPane(enigmasPanel,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        //scrollEnigmas.setBorder(BorderFactory.createLineBorder(Color.red));
+        scrollEnigmas.getVerticalScrollBar().setUnitIncrement(20);
+        scrollEnigmas.setBorder(BorderFactory.createEmptyBorder());
+
+
+        centerPanel.add(newPanel,BorderLayout.SOUTH);
 
 
 
+        /* Chargement des énigmes */
+
+        for (int i=0;i<getEnigma.size();i++){
+            centerPanel.remove(newPanel);
+            JPanel enigmaPan = ajoutEnigme(getEnigma.get(i), gbcEnigma);
+            //panelSalle.setPreferredSize(new Dimension(listPanel.getWidth()-45,75));
+            enigmasPanel.add(enigmaPan,gbcEnigma);
+            centerPanel.add(newPanel,BorderLayout.SOUTH);
+            centerPanel.revalidate();
+            centerPanel.repaint();
+        }
+
+
+
+        newButton.setAction(new AbstractAction("Nouvelle Enigme") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                System.out.println(getEnigma.size());
+
+                Enigma enigme = new Enigma(getEnigma.size()+1,1,"","","",0,"",0,"",0);
+
+                /* Gridbag Constraints */
+
+                gbcEnigma.gridy = enigme.getId()-1;
+                gbcEnigma.fill = GridBagConstraints.HORIZONTAL;
+                gbcEnigma.weightx = 1;
+                gbcEnigma.gridx = 0;
+                gbcEnigma.insets = new Insets(7,15,30,30);
+
+                /* Ajout Panel */
+
+                JPanel enigmaPan = new JPanel();
+
+                JPanel storyPanel = new JPanel();
+                JPanel infoEngimaPanel = new JPanel();
+                JPanel answerPanel = new JPanel();
+                JPanel hint1Panel = new JPanel();
+                JPanel hint2Panel = new JPanel();
+                JPanel hint3Panel = new JPanel();
+
+                JTextArea story = new JTextArea("Enigme");
+                JTextField hint1 = new JTextField("Indice 1");
+                JTextField hint2 = new JTextField("Indice 2");
+                JTextField hint3 = new JTextField("Indice 3");
+                JTextField answer = new JTextField("Réponse");
+                JTextField time1 = new JTextField("Timer");
+                JTextField time2 = new JTextField("Timer");
+                JTextField time3 = new JTextField("Timer");
+
+                hint1.setAlignmentX(Component.CENTER_ALIGNMENT);
+                hint2.setAlignmentX(Component.CENTER_ALIGNMENT);
+                hint3.setAlignmentX(Component.CENTER_ALIGNMENT);
+                time1.setAlignmentX(Component.CENTER_ALIGNMENT);
+                time2.setAlignmentX(Component.CENTER_ALIGNMENT);
+                time3.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+                /* Layout PanelEnigme */
+
+                GridBagConstraints gbcEnigmaStory = new GridBagConstraints();
+                GridBagConstraints gbcEnigmaInfo = new GridBagConstraints();
+
+
+
+
+                GridLayout grille = new GridLayout(1,4,20,0);
+                /* Construction Panel */
+
+                story.setLineWrap(true);
+                story.setWrapStyleWord(true);
+                story.setMargin(new Insets(5,5,5,5));
+
+                storyPanel.add(story);
+                storyPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE,2));
+
+
+                answerPanel.add(answer);
+                answer.setBorder(BorderFactory.createLineBorder(Color.black,2));
+                answerPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+
+                hint1.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+                hint1Panel.add(hint1);
+                hint1Panel.add(time1);
+                hint1Panel.setLayout(gridHint);
+                time1.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+                //hint1Panel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+
+                hint2.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+                hint2Panel.add(hint2);
+                hint2Panel.add(time2);
+                hint2Panel.setLayout(gridHint);
+                time2.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+                //hint2Panel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+
+                hint3.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+                hint3Panel.add(hint3);
+                hint3Panel.add(time3);
+                hint3Panel.setLayout(gridHint);
+                time3.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+                //hint3Panel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+
+
+                infoEngimaPanel.add(answer);
+                infoEngimaPanel.add(hint1Panel);
+                infoEngimaPanel.add(hint2Panel);
+                infoEngimaPanel.add(hint3Panel);
+                infoEngimaPanel.setLayout(grille);
+
+                scrollStory = new JScrollPane(story,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+                scrollStory.setBorder(BorderFactory.createLineBorder(Color.black,2));
+
+                enigmaPan.setLayout(enigmaInfoLayout);
+                enigmaPan.add(scrollStory,BorderLayout.CENTER);
+                enigmaPan.add(infoEngimaPanel,BorderLayout.SOUTH);
+
+
+                //enigmaPan.setBorder(BorderFactory.createLineBorder(Color.green,1));
+
+                enigmaPan.setPreferredSize(new Dimension(centerPanel.getWidth()-45,300));
+                //enigmaPan.setBounds(0,0+(enigme.getId()*300),centerPanel.getWidth()-45,300);
+
+                enigmasPanel.add(enigmaPan,gbcEnigma);
+                ajoutListeEnigma(enigme,getEnigma);
+                centerPanel.revalidate();
+                centerPanel.repaint();
+
+
+
+
+            }
+        });
+
+        /* Setup Marges */
+
+        Border listPadding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
+
+
+        centerPanel.setBorder(BorderFactory.createLineBorder(Color.black,2));
+        centerPanel.add(scrollEnigmas,BorderLayout.CENTER);
 
 
         title.setBorder(BorderFactory.createEmptyBorder());
@@ -167,10 +342,6 @@ public class GameCreation extends JPanel{
         titlePanel.add(infoPanel,BorderLayout.SOUTH);
 
 
-
-
-
-
         this.setLayout(mainLayout);
         this.add(centerPanel,BorderLayout.CENTER);
         this.add(titlePanel,BorderLayout.NORTH);
@@ -179,5 +350,102 @@ public class GameCreation extends JPanel{
         this.setVisible(true);
 
 
+    }
+
+
+    JPanel ajoutEnigme(Enigma enigme, GridBagConstraints gbcEnigma){
+
+        gbcEnigma.gridy = enigme.getId()-1;
+        gbcEnigma.fill = GridBagConstraints.HORIZONTAL;
+        gbcEnigma.weightx = 1;
+        gbcEnigma.gridx = 0;
+        gbcEnigma.insets = new Insets(7,15,7,30);
+
+        /* Ajout Panel */
+
+        JPanel enigmaPan = new JPanel();
+
+        JPanel storyPanel = new JPanel();
+        JPanel infoEngimaPanel = new JPanel();
+        JPanel answerPanel = new JPanel();
+        JPanel hint1Panel = new JPanel();
+        JPanel hint2Panel = new JPanel();
+        JPanel hint3Panel = new JPanel();
+
+        JTextArea story = new JTextArea("Enigme");
+        JTextField hint1 = new JTextField("Indice 1");
+        JTextField hint2 = new JTextField("Indice 2");
+        JTextField hint3 = new JTextField("Indice 3");
+        JTextField answer = new JTextField("Réponse");
+        JTextField time1 = new JTextField("Timer");
+        JTextField time2 = new JTextField("Timer");
+        JTextField time3 = new JTextField("Timer");
+
+        /* Layout PanelEnigme */
+
+        GridBagConstraints gbcEnigmaStory = new GridBagConstraints();
+        GridBagConstraints gbcEnigmaInfo = new GridBagConstraints();
+
+
+
+
+        GridLayout grille = new GridLayout(1,4,20,0);
+        /* Construction Panel */
+
+        story.setLineWrap(true);
+        story.setWrapStyleWord(true);
+        storyPanel.add(story);
+        storyPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE,2));
+
+
+        answerPanel.add(answer);
+        answerPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+
+        hint1Panel.add(hint1);
+        hint1Panel.add(time1);
+        hint1Panel.setLayout(gridHint);
+        time1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        hint1Panel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+
+        hint2Panel.add(hint2);
+        hint2Panel.add(time2);
+        hint2Panel.setLayout(gridHint);
+        time2.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        hint2Panel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+
+
+        hint3Panel.add(hint3);
+        hint3Panel.add(time3);
+        hint3Panel.setLayout(gridHint);
+        time3.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        hint3Panel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+
+
+        infoEngimaPanel.add(answer);
+        infoEngimaPanel.add(hint1Panel);
+        infoEngimaPanel.add(hint2Panel);
+        infoEngimaPanel.add(hint3Panel);
+        infoEngimaPanel.setLayout(grille);
+
+        scrollStory = new JScrollPane(story,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollStory.setBorder(BorderFactory.createEmptyBorder());
+
+        enigmaPan.setLayout(enigmaInfoLayout);
+        enigmaPan.add(scrollStory,BorderLayout.CENTER);
+        enigmaPan.add(infoEngimaPanel,BorderLayout.SOUTH);
+
+
+        enigmaPan.setBorder(BorderFactory.createLineBorder(Color.green,1));
+        enigmaPan.setPreferredSize(new Dimension(centerPanel.getWidth()-45,300));
+        enigmaPan.setBounds(0,0+(enigme.getId()*300),centerPanel.getWidth()-45,300);
+
+        return enigmaPan;
+
+
+    }
+
+    void ajoutListeEnigma(Enigma enigma,ArrayList<Enigma> getEnigma){
+
+        getEnigma.add(enigma);
     }
 }
