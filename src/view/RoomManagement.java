@@ -5,7 +5,7 @@ package view;
 import controller.RoomController;
 import model.Game;
 import model.Room;
-import model.RoomModel;
+import model.RoomList;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class RoomManagement extends JPanel implements ActionListener {
 
     /* Test */
-    public RoomModel ListRoom;
+    public RoomList ListRoom;
 
 
     /* Déclarations JPanel */
@@ -48,7 +48,7 @@ public class RoomManagement extends JPanel implements ActionListener {
     private int compteur = 0;
 
 
-    public RoomManagement(GlobalFrame frame,RoomModel list){
+    public RoomManagement(GlobalFrame frame,RoomList list){
 
         this.frame = frame;
 
