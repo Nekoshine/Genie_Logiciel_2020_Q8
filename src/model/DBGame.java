@@ -10,34 +10,12 @@ import java.util.ArrayList;
 * Classe qui va contenir toutes les méthodes liées a la DB pour un jeu
 * Codé par Esteban
 */
-public class DBGame {
-  private static Connection connexion;
-  
+public class DBGame extends DBConnexion{
+
   public DBGame(){
-    getConnexion();
+    super.getConnexion();
   }
-  /**
-  * Fonction qui va initialiser la connexion avec la BDD
-  * @return La connexion établie avec la bdd
-  */
-  public static Connection getConnexion(){
-    if (connexion==null){
-      try{
-        Class.forName("com.mysql.jdbc.Driver");
-        System.out.println("Initialising connection to Q8 Database");
-        DBGame.connexion = DriverManager.getConnection("jdbc:mysql://mysql-nekoshine.alwaysdata.net/nekoshine_gl2020q8",
-        "nekoshine_user", "Q82020GL");
-        System.out.println("Connection to Q8 Database complete");
-        return connexion;
-      } catch ( SQLException e){
-        System.out.println("Couldn't connect to Q8 DB :" + e.getMessage());
-      }catch ( ClassNotFoundException e){
-        System.out.println("Couldn't connect to Q8 DB :" + e.getMessage());
-      }
-    }
-    System.out.println("Getting connexion to Q8 DB");
-    return connexion;
-  }
+
   /**
   * Fonction qui va récupérer les jeux dans la base de données et le stocker dans un ArrayList
   * @return Liste de jeux
