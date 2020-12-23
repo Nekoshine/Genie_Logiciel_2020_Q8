@@ -1,5 +1,6 @@
 package launcher;
 
+import database.DBGame;
 import model.*;
 import view.GlobalFrame;
 

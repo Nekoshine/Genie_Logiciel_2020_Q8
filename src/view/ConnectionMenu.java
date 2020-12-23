@@ -2,7 +2,7 @@
 
 package view;
 
-import model.DBUser;
+import database.DBUser;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,16 +1,16 @@
-package model;
-import java.sql.Connection;
-import java.sql.DriverManager;
+package database;
+import model.Game;
+import model.GameList;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 /**
 * Classe qui va contenir toutes les méthodes liées a la DB pour un jeu
 * Codé par Esteban
 */
-public class DBGame extends DBConnexion{
+public class DBGame extends DBConnexion {
 
   public DBGame(){
     super.getConnexion();

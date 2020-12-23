@@ -1,6 +1,5 @@
-package model;
-import java.sql.Connection;
-import java.sql.DriverManager;
+package database;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,7 +10,7 @@ import javax.xml.bind.DatatypeConverter;
 * Classe qui va contenir toutes les méthodes liées a la DB pour le user
 * Codé par Esteban
 */
-public class DBUser extends DBConnexion{
+public class DBUser extends DBConnexion {
 
   public DBUser(){
     super.getConnexion();
