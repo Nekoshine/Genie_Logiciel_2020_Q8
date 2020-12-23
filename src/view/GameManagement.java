@@ -25,6 +25,10 @@ public class GameManagement extends JPanel implements ActionListener {
     private GlobalFrame frame;
     private JButton buttonReturn;
 
+    public  JButton buttonChose;
+    public  JButton buttonDelete;
+    public  JButton buttonModify;
+
     public GameManagement(GlobalFrame frame, int roomNumber, GameList list){
         this.frame = frame;
         this.ListGame=list;
@@ -69,11 +73,11 @@ public class GameManagement extends JPanel implements ActionListener {
                 JPanel buttonModifyPanel = new JPanel();
                 JPanel buttonDeletePanel = new JPanel();
 
-                JButton buttonModify = new JButton("Modifier");
+                buttonModify = new JButton("Modifier");
                 buttonModify.setBackground(Color.orange);
                 buttonModify.setOpaque(true);
 
-                JButton buttonDelete = new JButton("Supprimer");
+                buttonDelete = new JButton("Supprimer");
                 buttonDelete.setBackground(ColorPerso.rouge);
                 buttonDelete.setForeground(Color.WHITE);
                 buttonDelete.setOpaque(true);
@@ -90,7 +94,7 @@ public class GameManagement extends JPanel implements ActionListener {
             }else {
                 JPanel buttonChosePanel = new JPanel();
 
-                JButton buttonChose = new JButton("Choisir");
+                buttonChose = new JButton("Choisir");
                 buttonChose.setBackground(ColorPerso.vert);
                 buttonChose.setOpaque(true);
 
