@@ -252,7 +252,13 @@ public class RoomManagement extends JPanel implements ActionListener {
         JLabel nomSalle = new JLabel("Salle " + salle.getId() + " :");
         nomSalle.setHorizontalAlignment(SwingConstants.CENTER);
 
-        JLabel nomJeu = new JLabel(salle.getGame().getTitre());
+        JLabel nomJeu;
+        if (salle.getGame()!=null){
+            nomJeu = new JLabel(salle.getGame().getTitre());
+        }
+        else{
+            nomJeu = new JLabel("Pas de jeu");
+        }
         nomJeu.setHorizontalAlignment(SwingConstants.CENTER);
 
         JButton boutonJeu = new JButton("Choisir Jeu");
@@ -273,7 +279,7 @@ public class RoomManagement extends JPanel implements ActionListener {
              *
              */
             public void actionPerformed(ActionEvent e) {
-                System.out.println(salle.getId());
+                System.out.println("Bouton lancer " +salle.getId());
             }
         });
 
@@ -306,9 +312,8 @@ public class RoomManagement extends JPanel implements ActionListener {
     }
 
     private void majRoom() {
-        ListRoom.addRoom(ListRoom.getSize()+1,new Game(0,"Titre du jeu "+(ListRoom.getSize()+1),0,0,0,true));
+        ListRoom.addRoom(ListRoom.getSize()+1,null);
         this.CreateList();
-        System.out.println(ListRoom);
     }
 
     public void CreateList() {
