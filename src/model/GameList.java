@@ -54,4 +54,12 @@ public class GameList {
         return List.get(i);
     }
 
+    public Game findByID(int i){
+        for(int j = 0; j<this.getSize(); j++){
+            if (this.getGame(j).getId()==i){
+                return this.getGame(j);
+            }
+        }
+        return null;
+    }
 }
