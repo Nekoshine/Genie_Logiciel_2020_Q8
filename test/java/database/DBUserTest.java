@@ -1,4 +1,4 @@
-package model;
+package database;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -7,7 +7,7 @@ class DBUserTest {
 
     private static final String GOOD_LOGIN = "GoodLogin";
     private static final String WRONG_LOGIN = "WrongLogin";
-        private static final String GOOD_PASSWORD = "GoodPassword";
+    private static final String GOOD_PASSWORD = "GoodPassword";
     private static final String WRONG_PASSWORD = "WrongPassword";
 
     @Test

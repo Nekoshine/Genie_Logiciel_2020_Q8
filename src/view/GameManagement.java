@@ -2,6 +2,8 @@
 
 package view;
 
+import model.GameList;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -9,6 +11,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GameManagement extends JPanel implements ActionListener {
+
+    public GameList ListGame;
+
     /*Final JPanel*/
     public JPanel windowNamePanel = new JPanel();
     public JPanel gameListPanel = new JPanel();
@@ -20,9 +25,13 @@ public class GameManagement extends JPanel implements ActionListener {
     private GlobalFrame frame;
     private JButton buttonReturn;
 
-    public GameManagement(GlobalFrame frame, int roomNumber){
-        this.frame = frame;
+    public  JButton buttonChose;
+    public  JButton buttonDelete;
+    public  JButton buttonModify;
 
+    public GameManagement(GlobalFrame frame, int roomNumber, GameList list){
+        this.frame = frame;
+        this.ListGame=list;
         /*WindowNamePanel set up*/
         JLabel windowName = new JLabel("MJ - Gestion des Jeux");
         JPanel windowNameInsidePanel = new JPanel();
@@ -37,16 +46,13 @@ public class GameManagement extends JPanel implements ActionListener {
 
         gameListPanel.setLayout(new BoxLayout(gameListPanel, BoxLayout.PAGE_AXIS));
 
-        int nbGames = 14; //fonction pour récupérer nombre de Jeux enregistrés dans BdD
+        int nbGames = ListGame.getSize(); //fonction pour récupérer nombre de Jeux enregistrés dans BdD
 
-        for(int i = 1; i<=nbGames; i++){
+        for(int i = 0; i<nbGames; i++){
             JPanel gameInsidePanel = new JPanel();
             JPanel gameOutsidePanel = new JPanel();
             JPanel gameNbPanel = new JPanel();
             JPanel gameTitlePanel = new JPanel();
-            JPanel buttonChosePanel = new JPanel();
-            JPanel buttonModifyPanel = new JPanel();
-            JPanel buttonDeletePanel = new JPanel();
 
             gameInsidePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
             gameInsidePanel.setLayout(new BoxLayout(gameInsidePanel,BoxLayout.LINE_AXIS));
@@ -54,35 +60,48 @@ public class GameManagement extends JPanel implements ActionListener {
             gameOutsidePanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
             gameOutsidePanel.setLayout((new BoxLayout(gameOutsidePanel, BoxLayout.LINE_AXIS)));
 
-            JLabel gameNbLabel = new JLabel("Jeu " + i + " :");
-            JLabel gameTitleLabel = new JLabel("Titre"); //fonction pour récupérer le titre du jeu i
-            JButton buttonChose = new JButton("Choisir jeu " + i);
-            buttonChose.setBackground(ColorPerso.vert);
-            buttonChose.setOpaque(true);
-            JButton buttonModify = new JButton("Modifier jeu " + i);
-            buttonModify.setBackground(Color.orange);
-            buttonModify.setOpaque(true);
-            JButton buttonDelete = new JButton("Supprimer jeu " + i);
-            buttonDelete.setBackground(ColorPerso.rouge);
-            buttonDelete.setForeground(Color.WHITE);
-            buttonDelete.setOpaque(true);
+            JLabel gameNbLabel = new JLabel("Jeu " +ListGame.getGame(i).getId()+" :");
+            JLabel gameTitleLabel = new JLabel(ListGame.getGame(i).getTitre()); //fonction pour récupérer le titre du jeu i
 
             gameNbPanel.add(gameNbLabel, BorderLayout.CENTER);
             gameTitlePanel.add(gameTitleLabel, BorderLayout.CENTER);
-            buttonChosePanel.add(buttonChose, BorderLayout.CENTER);
-            buttonModifyPanel.add(buttonModify, BorderLayout.CENTER);
-            buttonDeletePanel.add(buttonDelete, BorderLayout.CENTER);
 
-            buttonChose.addActionListener(this);
-            buttonModify.addActionListener(this);
-            buttonDelete.addActionListener(this);
 
             gameInsidePanel.add(gameNbPanel);
             gameInsidePanel.add(gameTitlePanel);
             if(roomNumber==-1){
+                JPanel buttonModifyPanel = new JPanel();
+                JPanel buttonDeletePanel = new JPanel();
+
+                buttonModify = new JButton("Modifier");
+                buttonModify.setBackground(Color.orange);
+                buttonModify.setOpaque(true);
+
+                buttonDelete = new JButton("Supprimer");
+                buttonDelete.setBackground(ColorPerso.rouge);
+                buttonDelete.setForeground(Color.WHITE);
+                buttonDelete.setOpaque(true);
+
+
+                buttonModify.addActionListener(this);
+                buttonDelete.addActionListener(this);
+
+                buttonModifyPanel.add(buttonModify, BorderLayout.CENTER);
+                buttonDeletePanel.add(buttonDelete, BorderLayout.CENTER);
+
                 gameInsidePanel.add(buttonModifyPanel);
                 gameInsidePanel.add(buttonDeletePanel);
             }else {
+                JPanel buttonChosePanel = new JPanel();
+
+                buttonChose = new JButton("Choisir");
+                buttonChose.setBackground(ColorPerso.vert);
+                buttonChose.setOpaque(true);
+
+                buttonChose.addActionListener(this);
+
+                buttonChosePanel.add(buttonChose, BorderLayout.CENTER);
+
                 gameInsidePanel.add(buttonChosePanel);
             }
 
