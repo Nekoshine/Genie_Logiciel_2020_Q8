@@ -14,6 +14,7 @@ public class GlobalFrame extends JFrame {
 
     public static Dimension windowSize;
     private BorderLayout mainLayout;
+    GlobalFrame frame;
     RoomManagement roommanagement;
     MainMenu mainmenu;
     ConnectionMenu connectionmenu;
@@ -27,6 +28,8 @@ public class GlobalFrame extends JFrame {
         UIManager.put("Label.font",FontPerso.Oxanimum);
         UIManager.put("Button.font",FontPerso.Arial);
         UIManager.put("Button.background",ColorPerso.grisOriginal);
+
+        frame = this;
 
         File fichier = new File("./src/view/image/logo.png");
         Image logo = ImageIO.read(fichier);
@@ -49,18 +52,20 @@ public class GlobalFrame extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 
-        /*this.addComponentListener(new ComponentAdapter() {
+        this.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
                 super.componentResized(e);
                 windowSize = getSize();
-                menu = new RoomManagement();
-                setContentPane(menu);
+                if (getContentPane() instanceof GameCreation) {
+                    GameCreation gameCreation = new GameCreation(frame);
+                    setContentPane(gameCreation);
+                }
                 revalidate();
                 repaint();
 
             }
-        });*/
+        });
 
 
 

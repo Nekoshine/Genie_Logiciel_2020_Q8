@@ -14,4 +14,5 @@ class ColorPerso extends Color {
     ColorPerso(int r, int g, int b) {
         super(r, g, b);
     }
+
 }
