@@ -1,12 +1,12 @@
 package view;
 
+import launcher.Main;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.image.ImageObserver;
-import java.awt.image.ImageProducer;
 import java.io.File;
 import java.io.IOException;
 
@@ -73,7 +73,7 @@ public class GlobalFrame extends JFrame {
 
     public void roomManagementDisplay(GlobalFrame frame){
 
-        roommanagement = new RoomManagement(frame);
+        roommanagement = new RoomManagement(frame, Main.ListRoom);
         setContentPane(roommanagement);
         frame.setSize(1280,720);
         frame.setResizable(true);
@@ -120,7 +120,7 @@ public class GlobalFrame extends JFrame {
 
     public void gameManagementDisplay(GlobalFrame frame, int roomNumber){
 
-        gamemanagement = new GameManagement(frame, roomNumber);
+        gamemanagement = new GameManagement(frame, roomNumber,Main.ListGame);
         setContentPane(gamemanagement);
         frame.setSize(1280,720);
         frame.setResizable(true);

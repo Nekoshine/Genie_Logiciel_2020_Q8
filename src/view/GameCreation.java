@@ -3,11 +3,9 @@
 package view;
 
 import model.Enigma;
-import model.RoomModel;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.plaf.BorderUIResource;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
