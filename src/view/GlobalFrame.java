@@ -1,12 +1,12 @@
 package view;
 
+import launcher.Main;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.image.ImageObserver;
-import java.awt.image.ImageProducer;
 import java.io.File;
 import java.io.IOException;
 
@@ -22,11 +22,13 @@ public class GlobalFrame extends JFrame {
     GameManagement gamemanagement;
     GameCreation gameCreation;
 
+    public int roomNumber;
+
 
     public GlobalFrame() throws IOException {
         /*Font*/
         UIManager.put("Label.font",FontPerso.Oxanimum);
-        UIManager.put("Button.font",FontPerso.Arial);
+        UIManager.put("Button.font",FontPerso.SirensDEMO);
         UIManager.put("Button.background",ColorPerso.grisOriginal);
 
         frame = this;
@@ -41,7 +43,7 @@ public class GlobalFrame extends JFrame {
 
         //menu = new RoomManagement();
         //this.setContentPane(menu);
-        gameCreationDisplay(this);
+        connectionMenuDisplay(this);
 
 
 
@@ -58,7 +60,7 @@ public class GlobalFrame extends JFrame {
                 super.componentResized(e);
                 windowSize = getSize();
                 if (getContentPane() instanceof GameCreation) {
-                    GameCreation gameCreation = new GameCreation(frame);
+                    GameCreation gameCreation = new GameCreation(frame,roomNumber);
                     setContentPane(gameCreation);
                 }
                 revalidate();
@@ -73,7 +75,7 @@ public class GlobalFrame extends JFrame {
 
     public void roomManagementDisplay(GlobalFrame frame){
 
-        roommanagement = new RoomManagement(frame);
+        roommanagement = new RoomManagement(frame, Main.ListRoom);
         setContentPane(roommanagement);
         frame.setSize(1280,720);
         frame.setResizable(true);
@@ -120,7 +122,7 @@ public class GlobalFrame extends JFrame {
 
     public void gameManagementDisplay(GlobalFrame frame, int roomNumber){
 
-        gamemanagement = new GameManagement(frame, roomNumber);
+        gamemanagement = new GameManagement(frame, roomNumber,Main.ListGame);
         setContentPane(gamemanagement);
         frame.setSize(1280,720);
         frame.setResizable(true);
@@ -129,9 +131,9 @@ public class GlobalFrame extends JFrame {
         frame.repaint();
     }
 
-    public void gameCreationDisplay(GlobalFrame frame){
+    public void gameCreationDisplay(GlobalFrame frame,int roomNumber){
 
-        gameCreation = new GameCreation(frame);
+        gameCreation = new GameCreation(frame,roomNumber);
         setContentPane(gameCreation);
         frame.setSize(1280,720);
         frame.setResizable(true);
