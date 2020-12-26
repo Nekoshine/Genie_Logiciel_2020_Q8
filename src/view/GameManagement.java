@@ -28,6 +28,7 @@ public class GameManagement extends JPanel implements ActionListener {
     public  JButton buttonChose;
     public  JButton buttonDelete;
     public  JButton buttonModify;
+    public JButton buttonAddGame;
 
     public GameManagement(GlobalFrame frame, int roomNumber, GameList list){
         this.frame = frame;
@@ -110,7 +111,7 @@ public class GameManagement extends JPanel implements ActionListener {
             gameListPanel.add(gameOutsidePanel);
         }
 
-        JButton buttonAddGame = new JButton("Créer un nouveau jeu");
+        buttonAddGame = new JButton("Créer un nouveau jeu");
         buttonAddGame.setOpaque(false);
         buttonAddGame.addActionListener(this);
         JPanel buttonAddGameInsidePanel = new JPanel();
@@ -147,6 +148,9 @@ public class GameManagement extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == buttonReturn){
             frame.mainMenuDisplay(frame);
+        }
+        else if (e.getSource() == buttonAddGame){
+            frame.gameCreationDisplay(frame);
         }
     }
 }
