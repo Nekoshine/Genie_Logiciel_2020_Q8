@@ -243,7 +243,6 @@ public class RoomManagement extends JPanel implements ActionListener {
 
         /* Ajout Panel */
 
-
         JPanel panelSalle = new JPanel();
 
         /* Construction Panel Salle */
