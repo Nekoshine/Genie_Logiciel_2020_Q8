@@ -11,7 +11,6 @@ import javax.swing.plaf.BorderUIResource;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class GameCreation extends JPanel{
 
@@ -78,7 +77,6 @@ public class GameCreation extends JPanel{
         getEnigma = new ArrayList<Enigma>();
         getEnigma.add(new Enigma(1,1,"Enigme1","","",0,"",0,"",0));
         getEnigma.add(new Enigma(2,1,"Enig2","","",0,"",0,"",0));
-        getEnigma.add(new Enigma(3,1,"Enig3","","",0,"",0,"",0));
 
         mainLayout = new BorderLayout(10,10);
         titleLayout= new BorderLayout(10,10);
@@ -139,6 +137,8 @@ public class GameCreation extends JPanel{
         scrollEnigmas.setBorder(BorderFactory.createEmptyBorder());
 
 
+        gbcEnigma.insets = new Insets(7,15,30,30);
+
         centerPanel.add(newPanel,BorderLayout.SOUTH);
 
 
@@ -149,16 +149,19 @@ public class GameCreation extends JPanel{
             ajoutEnigme(getEnigma.get(i), Color.black, gbcEnigma);
         }
 
+
+
         newButton.setAction(new AbstractAction("Nouvelle Enigme") {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                System.out.println(getEnigma.size());
 
                 Enigma enigme = new Enigma(getEnigma.size()+1,1,"","","",0,"",0,"",0);
 
                 /*
 
-                // Gridbag Constraint
+                // Gridbag Constraints
 
                 gbcEnigma.gridy = enigme.getId()-1;
                 gbcEnigma.fill = GridBagConstraints.HORIZONTAL;
@@ -436,6 +439,8 @@ public class GameCreation extends JPanel{
         enigmaPan.add(scrollStory,BorderLayout.CENTER);
         enigmaPan.add(infoEngimaPanel,BorderLayout.SOUTH);
 
+
+
         enigmaPan.setPreferredSize(new Dimension(centerPanel.getWidth()-45,300));
         enigmaPan.setBounds(0,0+(enigme.getId()*300),centerPanel.getWidth()-45,300);
 
@@ -443,6 +448,7 @@ public class GameCreation extends JPanel{
         centerPanel.revalidate();
         centerPanel.repaint();
 
+        System.out.println("yo le rap");
 
 
     }
