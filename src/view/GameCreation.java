@@ -3,16 +3,17 @@
 package view;
 
 import model.Enigma;
-import model.RoomModel;
+import model.Room;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.plaf.BorderUIResource;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class GameCreation extends JPanel{
+public class GameCreation extends JPanel implements ActionListener {
 
     private BorderLayout mainLayout;
     private BorderLayout titleLayout;
@@ -146,6 +147,7 @@ public class GameCreation extends JPanel{
 
         for (int i = 0; i < getEnigma.size(); i++) {
             ajoutEnigme(getEnigma.get(i), gbcEnigma);
+
         }
 
 
@@ -308,6 +310,7 @@ public class GameCreation extends JPanel{
 
         exitButton.setBackground(ColorPerso.azur);
         exitButton.setForeground(Color.white);
+        exitButton.addActionListener(this);
         saveButton.setBackground(ColorPerso.vert);
         saveButton.setForeground(Color.white);
         deleteButton.setBackground(ColorPerso.rouge);
@@ -362,7 +365,7 @@ public class GameCreation extends JPanel{
         JPanel hint2Panel = new JPanel();
         JPanel hint3Panel = new JPanel();
 
-        JTextArea story = new JTextArea("Enigme");
+        JTextArea story = new JTextArea(enigme.getText());
         JTextField hint1 = new JTextField("Indice 1");
         JTextField hint2 = new JTextField("Indice 2");
         JTextField hint3 = new JTextField("Indice 3");
@@ -440,7 +443,7 @@ public class GameCreation extends JPanel{
         centerPanel.revalidate();
         centerPanel.repaint();
 
-        System.out.println("yo le rap");
+        System.out.println(getEnigma.size());
 
 
     }
@@ -448,5 +451,18 @@ public class GameCreation extends JPanel{
     void ajoutListeEnigma(Enigma enigma,ArrayList<Enigma> getEnigma){
 
         getEnigma.add(enigma);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+        if (e.getSource()== exitButton){
+            frame.gameManagementDisplay(frame,-1);
+        }
+        if (e.getSource() == deleteButton){
+            getEnigma.remove(getEnigma.size()-1);
+            frame.revalidate();
+            frame.repaint();
+        }
     }
 }
