@@ -3,7 +3,7 @@
 package view;
 
 import model.Enigma;
-import model.RoomModel;
+import model.Room;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -11,6 +11,7 @@ import javax.swing.plaf.BorderUIResource;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class GameCreation extends JPanel{
 
@@ -28,7 +29,6 @@ public class GameCreation extends JPanel{
     private GridLayout grid;
     private GridLayout gridHint;
 
-    private GridBagConstraints gbcEnigma;
 
     private JScrollPane scrollStory;
     private JScrollPane scrollEnigmas;
@@ -70,6 +70,7 @@ public class GameCreation extends JPanel{
     public ArrayList<Enigma> getEnigma;
 
 
+
     public GameCreation(GlobalFrame frame){
 
         this.frame = frame;
@@ -77,6 +78,7 @@ public class GameCreation extends JPanel{
         getEnigma = new ArrayList<Enigma>();
         getEnigma.add(new Enigma(1,1,"Enigme1","","",0,"",0,"",0));
         getEnigma.add(new Enigma(2,1,"Enig2","","",0,"",0,"",0));
+        getEnigma.add(new Enigma(3,1,"Enig3","","",0,"",0,"",0));
 
         mainLayout = new BorderLayout(10,10);
         titleLayout= new BorderLayout(10,10);
@@ -85,7 +87,8 @@ public class GameCreation extends JPanel{
 
         GridBagConstraints gbcTitle = new GridBagConstraints();
         GridBagConstraints gbcScores = new GridBagConstraints();
-        gbcEnigma = new GridBagConstraints();
+        GridBagConstraints gbcEnigma = new GridBagConstraints();
+
 
 
         gridEnigma = new GridBagLayout();
@@ -136,29 +139,26 @@ public class GameCreation extends JPanel{
         scrollEnigmas.setBorder(BorderFactory.createEmptyBorder());
 
 
-        gbcEnigma.insets = new Insets(7,15,30,30);
-
         centerPanel.add(newPanel,BorderLayout.SOUTH);
 
 
 
         /* Chargement des énigmes */
 
-        for (int i = 0; i < getEnigma.size(); i++) {
-            ajoutEnigme(getEnigma.get(i), gbcEnigma);
+        for(int i = 0;i<getEnigma.size();i++) {
+            ajoutEnigme(getEnigma.get(i), Color.black, gbcEnigma);
         }
-
-
 
         newButton.setAction(new AbstractAction("Nouvelle Enigme") {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                System.out.println(getEnigma.size());
 
                 Enigma enigme = new Enigma(getEnigma.size()+1,1,"","","",0,"",0,"",0);
 
-                /* Gridbag Constraints */
+                /*
+
+                // Gridbag Constraint
 
                 gbcEnigma.gridy = enigme.getId()-1;
                 gbcEnigma.fill = GridBagConstraints.HORIZONTAL;
@@ -166,7 +166,7 @@ public class GameCreation extends JPanel{
                 gbcEnigma.gridx = 0;
 
 
-                /* Ajout Panel */
+                // Ajout Panel
 
                 JPanel enigmaPan = new JPanel();
 
@@ -193,11 +193,11 @@ public class GameCreation extends JPanel{
                 time2.setAlignmentX(Component.CENTER_ALIGNMENT);
                 time3.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-                /* Layout PanelEnigme */
+                // Layout PanelEnigme
 
 
                 GridLayout grille = new GridLayout(1,4,20,0);
-                /* Construction Panel */
+                // Construction Panel
 
                 story.setLineWrap(true);
                 story.setWrapStyleWord(true);
@@ -256,7 +256,9 @@ public class GameCreation extends JPanel{
                 centerPanel.revalidate();
                 centerPanel.repaint();
 
-
+                */
+                ajoutListeEnigma(enigme,getEnigma);
+                ajoutEnigme(enigme,Color.BLACK,gbcEnigma);
 
 
             }
@@ -341,11 +343,14 @@ public class GameCreation extends JPanel{
     }
 
 
-    void ajoutEnigme(Enigma enigme, GridBagConstraints gbcEnigma){
+    void ajoutEnigme(Enigma enigme,Color color,GridBagConstraints gbcEnigma){
 
         /* Gridbag Constraints */
 
-        gbcEnigma.gridy = enigme.getId()-1;
+
+        gbcEnigma.insets = new Insets(7,15,30,30);
+        gbcEnigma.gridy = GridBagConstraints.RELATIVE;
+        System.out.println(gbcEnigma.gridy);
         gbcEnigma.fill = GridBagConstraints.HORIZONTAL;
         gbcEnigma.weightx = 1;
         gbcEnigma.gridx = 0;
@@ -425,13 +430,11 @@ public class GameCreation extends JPanel{
         infoEngimaPanel.setLayout(grille);
 
         scrollStory = new JScrollPane(story,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollStory.setBorder(BorderFactory.createLineBorder(Color.black,2));
+        scrollStory.setBorder(BorderFactory.createLineBorder(color,2));
 
         enigmaPan.setLayout(enigmaInfoLayout);
         enigmaPan.add(scrollStory,BorderLayout.CENTER);
         enigmaPan.add(infoEngimaPanel,BorderLayout.SOUTH);
-
-
 
         enigmaPan.setPreferredSize(new Dimension(centerPanel.getWidth()-45,300));
         enigmaPan.setBounds(0,0+(enigme.getId()*300),centerPanel.getWidth()-45,300);
@@ -440,7 +443,6 @@ public class GameCreation extends JPanel{
         centerPanel.revalidate();
         centerPanel.repaint();
 
-        System.out.println("yo le rap");
 
 
     }
