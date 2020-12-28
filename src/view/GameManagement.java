@@ -138,8 +138,6 @@ public class GameManagement extends JPanel implements ActionListener {
         Border mainEdge = BorderFactory.createEmptyBorder(10,10,10,10);
         this.setBorder(mainEdge);
 
-
-
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         this.add(windowNamePanel);
         this.add(scrollGameListPanel);
