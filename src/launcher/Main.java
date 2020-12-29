@@ -13,13 +13,22 @@ public class Main {
     public static EnigmaList ListEnigma = new EnigmaList();
     public static void main(String[] args) throws IOException {
 
-        /* Recuperation dans la BDD */
-            ListGame= DBGame.getGames();
-            ListRoom = DBRoom.getRooms(ListGame);
-            ListEnigma=new EnigmaList();
+    /* Recuperation dans la BDD */
+        ListGame= DBGame.getGames();
+        ListRoom = DBRoom.getRooms(ListGame);
+        ListEnigma=new EnigmaList();
 
-            ListEnigma.addEnigma(new Enigma(1,1,"Enigme1","","c'est un l'indice 1",0,"c'est un l'indice 2",0,"c'est un l'indice 3",0));
-            ListEnigma.addEnigma(new Enigma(2,1,"Enigme2","","indice n°1",0,"indice n°2",0,"indice n°3",0));
+        Hint h1 = new Hint("c'est pas une durée",10);
+        Hint h2 = new Hint("predateur",20);
+        Hint h3 = new Hint("debrouille toi",30);
+        Enigma e1 = new Enigma(1," Combien de temps peut vivre une souris ?","Cela dépend des chats !!!",h1,h2,h3);
+        ListEnigma.addEnigma(e1);
+
+        h1 = new Hint("homonyme",10);
+        h2 = new Hint("suivre et être",20);
+        h3 = new Hint("debrouille toi",30);
+        e1 = new Enigma(1,"Je suis Sophie, mais je ne suis pas Sophie. Qui suis-je ?","Son chien",h1,h2,h3);
+        ListEnigma.addEnigma(e1);
 
         /* Création de la vue */
             new GlobalFrame();
