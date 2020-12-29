@@ -2,6 +2,8 @@
 
 package view;
 
+import database.DBRoom;
+import launcher.Main;
 import model.Room;
 import model.RoomList;
 
@@ -27,12 +29,12 @@ public class RoomManagement extends JPanel implements ActionListener {
 
     private GlobalFrame frame;
 
-    RoomManagement(GlobalFrame frame, RoomList list){
+    RoomManagement(GlobalFrame frame){
 
         this.frame = frame;
 
         /* Récuperation des salles */
-        ListRoom = list;
+        ListRoom = DBRoom.getRooms(Main.idUser);
 
         /* Déclaration JPanel - JScrollPane */
         listPanel = new JPanel();

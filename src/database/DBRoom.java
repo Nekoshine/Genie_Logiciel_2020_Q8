@@ -28,13 +28,21 @@ public class DBRoom extends DBConnexion{
      * Fonction qui va récupérer les jeux dans la base de données et le stocker dans un ArrayList
      * @return Liste de jeux
      */
-    public static RoomList getRooms(GameList ListGame){
+    public static RoomList getRooms(int idUser){
         RoomList roomList = new RoomList();
         try{
-            PreparedStatement requete = DBGame.getConnexion().prepareStatement("Select * from Room");
+            PreparedStatement requete = DBGame.getConnexion().prepareStatement("Select * from Room, Game WHERE Room.idGame=Game.id AND Game.idUser = ?");
+            requete.setString(1, String.valueOf(idUser));
             ResultSet resultat = requete.executeQuery();
             while (resultat.next() != false) { // On itère chaque résultat
-                roomList.addRoom(new Room(resultat.getInt("id"),ListGame.findByID(resultat.getInt("idGame"))));
+//                roomList.addRoom(new Room(resultat.getInt("id"),ListGame.findByID(resultat.getInt("idGame"))));
+                roomList.addRoom(new Room(resultat.getInt("Room.id"),resultat.getInt("Game.id"),resultat.getString("titre")
+                        ,resultat.getInt("score")
+                        ,idUser
+                        ,resultat.getInt("timer")
+                        , Boolean.valueOf(resultat.getString("ready"))));
+
+                //(int id, int idGame,String titre,int score,int idUser,int timer,Boolean ready){
                          // On crée l'objet model.Game et on l'ajoute dans la liste
             }
             //for (int i=0;i<roomList.getSize() ;i++ ) {         System.out.println(roomList.getRoom(i).getId()); System.out.println(roomList.getRoom(i).getGame());       }

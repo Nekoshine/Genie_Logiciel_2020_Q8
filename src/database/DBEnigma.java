@@ -1,5 +1,6 @@
 package database;
 
+import launcher.Main;
 import model.Enigma;
 import model.EnigmaList;
 import model.Room;
@@ -17,8 +18,9 @@ public class DBEnigma extends DBConnexion{
     public  static EnigmaList getEnigmas(int idGame){
         EnigmaList enigmaList = new EnigmaList();
         try{
-            PreparedStatement requete = DBGame.getConnexion().prepareStatement("Select * from Enigma WHERE idGame = ?");
+            PreparedStatement requete = DBGame.getConnexion().prepareStatement("Select * from Enigma,Game WHERE Enigma.idGame = Game.id AND Enigma.idGame = ? AND Game.idUser = ?");
             requete.setString(1, String.valueOf(idGame));
+            requete.setString(2, String.valueOf(Main.idUser));
             ResultSet resultat = requete.executeQuery();
             while (resultat.next() != false) { // On itère chaque résultat
                 enigmaList.addEnigma(

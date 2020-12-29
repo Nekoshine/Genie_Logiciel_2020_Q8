@@ -81,7 +81,7 @@ public class GlobalFrame extends JFrame {
 
     public void roomManagementDisplay(GlobalFrame frame){
 
-        roommanagement = new RoomManagement(frame, Main.ListRoom);
+        roommanagement = new RoomManagement(frame);
         setContentPane(roommanagement);
         frame.setSize(1280,720);
         frame.setResizable(true);
