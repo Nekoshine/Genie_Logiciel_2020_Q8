@@ -21,6 +21,7 @@ public class GlobalFrame extends JFrame {
     SignupMenu signupmenu;
     GameManagement gamemanagement;
     GameCreation gameCreation;
+    CurrentGame currentGame;
 
     public int roomNumber;
 
@@ -43,7 +44,9 @@ public class GlobalFrame extends JFrame {
 
         //menu = new RoomManagement();
         //this.setContentPane(menu);
-        connectionMenuDisplay(this);
+        mainMenuDisplay(this);
+
+
 
         //this.setSize(windowSize);
         this.setLocationRelativeTo(null);
@@ -58,8 +61,12 @@ public class GlobalFrame extends JFrame {
                 super.componentResized(e);
                 windowSize = getSize();
                 if (getContentPane() instanceof GameCreation) {
-                    GameCreation gameCreation = new GameCreation(frame,roomNumber,Main.ListEnigma);
+                    GameCreation gameCreation = new GameCreation(frame,roomNumber);
                     setContentPane(gameCreation);
+                }
+                if (getContentPane() instanceof CurrentGame) {
+                    CurrentGame currentGame = new CurrentGame(frame);
+                    setContentPane(currentGame);
                 }
 
                 revalidate();
@@ -67,6 +74,7 @@ public class GlobalFrame extends JFrame {
 
             }
         });
+
 
 
     }
@@ -131,12 +139,24 @@ public class GlobalFrame extends JFrame {
 
     public void gameCreationDisplay(GlobalFrame frame,int roomNumber){
 
-        gameCreation = new GameCreation(frame,roomNumber,Main.ListEnigma);
+        gameCreation = new GameCreation(frame,roomNumber);
         setContentPane(gameCreation);
         frame.setSize(1280,720);
         frame.setResizable(true);
         frame.setLocationRelativeTo(null);
         frame.revalidate();
         frame.repaint();
+    }
+
+    public void currentGameDisplay(GlobalFrame frame){
+
+        currentGame = new CurrentGame(frame);
+        setContentPane(currentGame);
+        frame.setSize(1280,720);
+        frame.setResizable(true);
+        this.setLocationRelativeTo(null);
+        frame.revalidate();
+        frame.repaint();
+
     }
 }

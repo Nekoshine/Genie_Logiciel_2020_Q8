@@ -31,5 +31,7 @@ public class EnigmaList {
         return List.size();
     }
 
-
+    public Enigma getEnigma(int i){
+        return List.get(i);
+    }
 }
