@@ -28,6 +28,15 @@ public class Enigma {
     this.clue3 = new Hint(clue3,timer3);
   }
 
+  public Enigma(int id, String question, String answer, String clue1, int timer1,String clue2, int timer2,String clue3, int timer3) {
+    this.id = id;
+    this.question = question;
+    this.answer = answer;
+    this.clue1 = new Hint(clue1,timer1);
+    this.clue2 = new Hint(clue2,timer2);
+    this.clue3 = new Hint(clue3,timer3);
+  }
+
   public String getText(){
     return this.question;
   }
@@ -58,5 +67,9 @@ public class Enigma {
 
   public String getAnswer() {
     return this.answer;
+  }
+
+  public int getId() {
+    return this.id;
   }
 }
