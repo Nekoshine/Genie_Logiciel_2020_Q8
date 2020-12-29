@@ -9,19 +9,18 @@ import java.io.File;
 import java.io.IOException;
 
 public class JButtonImage extends JButton {
-    BufferedImage img;
-    float ratio;
-    AffineTransform aTransform;
+    private BufferedImage img;
+    private float ratio;
+    private AffineTransform aTransform;
 
-    public JButtonImage(String path) {
-        super("");
+    JButtonImage(String path) {
+        super();
         aTransform = new AffineTransform();
         try {
             img = ImageIO.read(new File(path));
             ratio = (float)img.getWidth(null)/(float)img.getHeight(null);
-        }
-        catch (Exception e){
-            System.out.println(e);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         this.setOpaque(true);

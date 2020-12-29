@@ -13,11 +13,6 @@ import javax.swing.*;
 
 public class SignupMenu extends JPanel implements ActionListener {
 
-    private JPanel logincontainer;
-    private JPanel passwordcontainer;
-    private JPanel keycontainer;
-    private JPanel backcontainer;
-
     private JButton confirm;
     private JButton back;
 
@@ -25,23 +20,19 @@ public class SignupMenu extends JPanel implements ActionListener {
     private JTextField keytextfield;
     private JPasswordField passwordtextfield;
 
-    private JLabel id;
-    private JLabel password;
-    private JLabel key;
-
     private GlobalFrame frame;
 
-    public SignupMenu(GlobalFrame frame) {
+    SignupMenu(GlobalFrame frame) {
 
         this.frame = frame;
 
         //creation de la partie login
 
 
-        logincontainer = new JPanel();
+        JPanel logincontainer = new JPanel();
         logincontainer.setLayout(new FlowLayout(FlowLayout.CENTER,30,0));
 
-        id = new JLabel("Identifiant :");
+        JLabel id = new JLabel("Identifiant :");
         idtextfiled = new JTextField();
         idtextfiled.setColumns(30);
 
@@ -50,9 +41,9 @@ public class SignupMenu extends JPanel implements ActionListener {
 
         //creation de la partie motdepasse
 
-        passwordcontainer = new JPanel();
+        JPanel passwordcontainer = new JPanel();
         passwordcontainer.setLayout(new FlowLayout(FlowLayout.CENTER,10,0));
-        password = new JLabel("Mot de passe :");
+        JLabel password = new JLabel("Mot de passe :");
         passwordtextfield = new JPasswordField();
         passwordtextfield.setColumns(30);
 
@@ -61,9 +52,9 @@ public class SignupMenu extends JPanel implements ActionListener {
 
         //creation de la partie clé admin
 
-        keycontainer = new JPanel();
+        JPanel keycontainer = new JPanel();
         keycontainer.setLayout(new FlowLayout(FlowLayout.CENTER,25,0));
-        key = new JLabel("Clé (compte admin) :");
+        JLabel key = new JLabel("Clé (compte admin) :");
         keytextfield = new JTextField();
         keytextfield.setColumns(25);
 
@@ -83,8 +74,8 @@ public class SignupMenu extends JPanel implements ActionListener {
         back.setBackground(ColorPerso.rouge);
         back.setForeground(Color.WHITE);
 
-        backcontainer = new JPanel();
-        backcontainer.setLayout(new FlowLayout(FlowLayout.LEFT));
+        JPanel backcontainer = new JPanel();
+        backcontainer.setLayout(new FlowLayout(FlowLayout.LEADING));
         backcontainer.add(back);
 
         //ajout des composants
@@ -107,10 +98,10 @@ public class SignupMenu extends JPanel implements ActionListener {
 
     }
 
-    public void actionPerformed(ActionEvent event) {
-        if (event.getSource() == confirm){
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == confirm){
             String idinput = idtextfiled.getText();
-            String mdpinput = passwordtextfield.getText();
+            String mdpinput = String.valueOf(passwordtextfield.getPassword());
             String cleinmput = keytextfield.getText();
 
             if (idinput.isEmpty() || mdpinput.isEmpty() ){
@@ -123,9 +114,8 @@ public class SignupMenu extends JPanel implements ActionListener {
                     JOptionPane.showMessageDialog(frame, "L'identifiant demandé n'est pas disponible", "Attention", JOptionPane.WARNING_MESSAGE);
                 }
             }
-            else if (!(cleinmput.isEmpty())){}
         }
-        else if (event.getSource() == back){
+        else if (e.getSource() == back){
             frame.connectionMenuDisplay(frame);
         }
     }

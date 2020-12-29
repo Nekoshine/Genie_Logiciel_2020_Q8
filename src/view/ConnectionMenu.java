@@ -12,32 +12,25 @@ import javax.swing.*;
 
 public class ConnectionMenu extends JPanel implements ActionListener {
 
-    private JPanel login;
-    private JPanel mdp;
-    private JPanel conteneurboutons;
-
     private JButton connection;
     private JButton inscription;
 
     private JTextField saisieidentifiant;
     private JPasswordField saisiemotdepasse;
 
-    private JLabel identifiant;
-    private JLabel motdepasse;
-
     private GlobalFrame frame;
 
-    public ConnectionMenu(GlobalFrame frame) {
+    ConnectionMenu(GlobalFrame frame) {
 
         this.frame = frame;
 
         //creation de la partie login
 
 
-        login = new JPanel();
+        JPanel login = new JPanel();
         login.setLayout(new FlowLayout(FlowLayout.CENTER,30,0));
 
-        identifiant = new JLabel("Identifiant :");
+        JLabel identifiant = new JLabel("Identifiant :");
         saisieidentifiant = new JTextField();
         saisieidentifiant.setColumns(30);
 
@@ -46,9 +39,9 @@ public class ConnectionMenu extends JPanel implements ActionListener {
 
         //creation de la partie motdepasse
 
-        mdp = new JPanel();
+        JPanel mdp = new JPanel();
         mdp.setLayout(new FlowLayout(FlowLayout.CENTER,10,0));
-        motdepasse = new JLabel("Mot de passe :");
+        JLabel motdepasse = new JLabel("Mot de passe :");
         saisiemotdepasse = new JPasswordField();
         saisiemotdepasse.setColumns(30);
 
@@ -66,7 +59,7 @@ public class ConnectionMenu extends JPanel implements ActionListener {
         inscription.setBackground(ColorPerso.jaune);
 
         //création du lien vers l'inscription
-        conteneurboutons = new JPanel();
+        JPanel conteneurboutons = new JPanel();
         conteneurboutons.setLayout(new FlowLayout(FlowLayout.CENTER));
 
         conteneurboutons.add(connection);
@@ -87,10 +80,10 @@ public class ConnectionMenu extends JPanel implements ActionListener {
 
     }
 
-    public void actionPerformed(ActionEvent event) {
-        if (event.getSource() == connection){
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == connection){
             String idinput = saisieidentifiant.getText();
-            String mdpinput = saisiemotdepasse.getText();
+            String mdpinput = String.valueOf(saisiemotdepasse.getPassword());
             if (DBUser.connectUser(idinput,mdpinput)){
                 frame.mainMenuDisplay(frame);
             }
@@ -99,7 +92,7 @@ public class ConnectionMenu extends JPanel implements ActionListener {
             }
 
         }
-        else if (event.getSource() == inscription){
+        else if (e.getSource() == inscription){
             frame.signupMenuDisplay(frame);
         }
     }

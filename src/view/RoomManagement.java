@@ -32,15 +32,15 @@ public class RoomManagement extends JPanel implements ActionListener {
         this.frame = frame;
 
         /* Récuperation des salles */
-        this.ListRoom = list;
+        ListRoom = list;
 
         /* Déclaration JPanel - JScrollPane */
-        this.listPanel = new JPanel();
-        this.roomPanel = new JPanel();
+        listPanel = new JPanel();
+        roomPanel = new JPanel();
         JPanel titlePanel = new JPanel();
         JPanel decoPanel = new JPanel();
-        this.newButtonPanel = new JPanel();
-        JScrollPane scrollPane = new JScrollPane(this.roomPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        newButtonPanel = new JPanel();
+        JScrollPane scrollPane = new JScrollPane(roomPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
         scrollPane.getVerticalScrollBar().setUnitIncrement(10);
 
@@ -49,22 +49,22 @@ public class RoomManagement extends JPanel implements ActionListener {
         BorderLayout centerLayout = new BorderLayout(4, 4);
         FlowLayout decoLayout = new FlowLayout(FlowLayout.LEADING);
         GridBagLayout listLayout = new GridBagLayout();
-        this.roomPanel.setLayout(listLayout);
+        roomPanel.setLayout(listLayout);
 
         /* Contraintes GridBag */
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(7,15,7,30);
 
         /* Déclaration Boutons */
-        this.returnButton = new JButton("Retour");
-        this.returnButton.setBackground(ColorPerso.rouge);
-        this.returnButton.setForeground(Color.white);
+        returnButton = new JButton("Retour");
+        returnButton.setBackground(ColorPerso.rouge);
+        returnButton.setForeground(Color.white);
 
-        this.newButton = new JButton("Nouvelle Salle");
-        this.newButton.setBackground(Color.GRAY);
-        this.newButton.setOpaque(false);
-        this.newButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        this.newButton.addActionListener(this);
+        newButton = new JButton("Nouvelle Salle");
+        newButton.setBackground(Color.GRAY);
+        newButton.setOpaque(false);
+        newButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        newButton.addActionListener(this);
 
         /* Affichage des salles */
         this.CreateList();
@@ -150,15 +150,15 @@ public class RoomManagement extends JPanel implements ActionListener {
         Border mainPadding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
         Border listPadding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
         this.setBorder(mainPadding);
-        this.listPanel.setBorder(listPadding);
+        listPanel.setBorder(listPadding);
 
         /* Setup listPanel */
-        this.listPanel.setLayout(centerLayout);
-        this.listPanel.add(scrollPane,BorderLayout.CENTER);
-        this.listPanel.add(this.newButtonPanel, BorderLayout.PAGE_END);
-        this.listPanel.setBorder(BorderFactory.createLineBorder(Color.black,2));
+        listPanel.setLayout(centerLayout);
+        listPanel.add(scrollPane,BorderLayout.CENTER);
+        listPanel.add(newButtonPanel, BorderLayout.PAGE_END);
+        listPanel.setBorder(BorderFactory.createLineBorder(Color.black,2));
 
-        this.newButtonPanel.add(this.newButton);
+        newButtonPanel.add(newButton);
         //roomPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
 
         /* Setup Titre */
@@ -170,13 +170,13 @@ public class RoomManagement extends JPanel implements ActionListener {
         /* Setup bouton retour */
         decoPanel.setLayout(decoLayout);
         decoPanel.setBackground(ColorPerso.gris);
-        decoPanel.add(this.returnButton);
-        this.returnButton.addActionListener(this);
+        decoPanel.add(returnButton);
+        returnButton.addActionListener(this);
 
         /* Setup Fenêtre gestion des salles */
         this.setLayout(mainLayout);
         this.setBackground(ColorPerso.gris);
-        this.add(this.listPanel, BorderLayout.CENTER);
+        this.add(listPanel, BorderLayout.CENTER);
         this.add(titlePanel, BorderLayout.PAGE_START);
         this.add(decoPanel, BorderLayout.PAGE_END);
         this.setVisible(true);
@@ -253,18 +253,18 @@ public class RoomManagement extends JPanel implements ActionListener {
 
     public void actionPerformed(ActionEvent e)
     {
-        if(e.getSource() == this.returnButton) {
+        if(e.getSource() == returnButton) {
 
-            this.frame.mainMenuDisplay(this.frame);
+            frame.mainMenuDisplay(frame);
         }
-        else if(e.getSource()== this.newButton){
+        else if(e.getSource()== newButton){
             this.majRoom();
         }
 
     }
 
     private void majRoom() {
-        this.ListRoom.addRoom(this.ListRoom.getSize()+1,null);
+        ListRoom.addRoom(ListRoom.getSize()+1,null);
         this.CreateList();
     }
 
@@ -272,19 +272,19 @@ public class RoomManagement extends JPanel implements ActionListener {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(7,15,7,30);
 
-        for (int i = 0; i < this.ListRoom.getSize(); i++) {
-            this.listPanel.remove(this.newButtonPanel);
-            JPanel panelSalle = this.ajoutSalle(this.ListRoom.getRoom(i), gbc);
-            panelSalle.setPreferredSize(new Dimension(this.listPanel.getWidth() - 45, 75));
-            this.roomPanel.add(panelSalle, gbc);
-            this.listPanel.add(this.newButtonPanel, BorderLayout.PAGE_END);
-            this.listPanel.revalidate();
-            this.listPanel.repaint();
+        for (int i = 0; i < ListRoom.getSize(); i++) {
+            listPanel.remove(newButtonPanel);
+            JPanel panelSalle = this.ajoutSalle(ListRoom.getRoom(i), gbc);
+            panelSalle.setPreferredSize(new Dimension(listPanel.getWidth() - 45, 75));
+            roomPanel.add(panelSalle, gbc);
+            listPanel.add(newButtonPanel, BorderLayout.PAGE_END);
+            listPanel.revalidate();
+            listPanel.repaint();
         }
 
-        this.listPanel.revalidate();
-        this.listPanel.repaint();
-        this.frame.repaint();
+        listPanel.revalidate();
+        listPanel.repaint();
+        frame.repaint();
 
     }
 

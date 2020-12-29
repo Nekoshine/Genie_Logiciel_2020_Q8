@@ -2,20 +2,12 @@
 
 package view;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSeparator;
-import javax.swing.ImageIcon;
 
 public class MainMenu extends JPanel implements ActionListener {
-    private JPanel deconnectioncontainer;
-    private JPanel titlecontainer;
-    private JPanel menucontainer;
 
     private JButton deconnection;
     private JButton management;
@@ -23,7 +15,7 @@ public class MainMenu extends JPanel implements ActionListener {
 
     private GlobalFrame frame;
 
-    public MainMenu(GlobalFrame frame) {
+    MainMenu(GlobalFrame frame) {
 
         this.frame = frame;
 
@@ -40,15 +32,15 @@ public class MainMenu extends JPanel implements ActionListener {
         deconnection.setPreferredSize(new Dimension(150,60));
 
         /*création du conteneur pour le bouton deconnexion*/
-        deconnectioncontainer = new JPanel();
-        deconnectioncontainer.setLayout(new FlowLayout(0));
+        JPanel deconnectionPanel = new JPanel();
+        deconnectionPanel.setLayout(new FlowLayout(0));
 
         /*création du titre*/
         JLabel titre = new JLabel("MJ - Menu Principal");
         titre.setFont(FontPerso.ArialBold);
 
         /*création du conteneur pour le titre*/
-        titlecontainer = new JPanel();
+        JPanel titlecontainer = new JPanel();
         titlecontainer.setLayout(new FlowLayout());
         titlecontainer.setBorder(BorderFactory.createLineBorder(Color.black,2));
 
@@ -60,33 +52,33 @@ public class MainMenu extends JPanel implements ActionListener {
         management = new JButtonImage("./src/view/image/gestion.png");
         management.addActionListener(this);
         /*création du conteneur des menus*/
-        menucontainer = new JPanel();
+        JPanel menucontainer = new JPanel();
         menucontainer.setLayout(new GridLayout(1, 2, 30, 5));
         menucontainer.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 
         /*intégration*/
 
-        deconnectioncontainer.add(deconnection);
+        deconnectionPanel.add(deconnection);
         titlecontainer.add(titre);
         menucontainer.add(creation);
         menucontainer.add(management);
 
-        this.add("South", deconnectioncontainer);
+        this.add("South", deconnectionPanel);
         this.add("North", titlecontainer);
         this.add("Center", new JSeparator());
         this.add("Center", menucontainer);
         this.setVisible(true);
     }
 
-    public void actionPerformed(ActionEvent event) {
-        if(event.getSource() == management ){
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == management ){
             frame.roomManagementDisplay(frame);
         }
-        else if(event.getSource() == creation){
+        else if(e.getSource() == creation){
             frame.gameManagementDisplay(frame, -1);
 
         }
-        else if(event.getSource() == deconnection){
+        else if(e.getSource() == deconnection){
             frame.connectionMenuDisplay(frame);
         }
     }
