@@ -24,11 +24,39 @@ public class Enigma {
     this.question = question;
     this.answer = answer;
     this.clue1 = new Hint(clue1,timer1);
-    this.clue1 = new Hint(clue2,timer2);
-    this.clue1 = new Hint(clue3,timer3);
+    this.clue2 = new Hint(clue2,timer2);
+    this.clue3 = new Hint(clue3,timer3);
   }
 
-  public changeHint1(Hint h1){
+  public String getText(){
+    return this.question;
+  }
 
+  public String getClue1(){
+    return this.clue1.getClue();
+  }
+
+  public int getTimer1() {
+    return this.clue1.getTimer();
+  }
+
+  public String getClue2(){
+    return this.clue2.getClue();
+  }
+
+  public int getTimer2() {
+    return this.clue2.getTimer();
+  }
+
+  public String getClue3(){
+    return this.clue3.getClue();
+  }
+
+  public int getTimer3() {
+    return this.clue3.getTimer();
+  }
+
+  public String getAnswer() {
+    return this.answer;
   }
 }

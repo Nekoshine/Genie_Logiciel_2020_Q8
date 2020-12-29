@@ -8,4 +8,12 @@ public class Hint {
         this.clue=clue;
         this.timer=timer;
     }
+
+    public String getClue() {
+        return this.clue;
+    }
+
+    public int getTimer() {
+        return this.timer;
+    }
 }
