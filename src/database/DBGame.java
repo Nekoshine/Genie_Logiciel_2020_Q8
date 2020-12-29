@@ -20,11 +20,12 @@ public class DBGame extends DBConnexion {
   * Fonction qui va récupérer les jeux dans la base de données et le stocker dans un ArrayList
   * @return Liste de jeux
   */
-  public static GameList getGames(){
+  public static GameList getGames(int idUser){
     GameList gameList = new GameList();
     Boolean boolGame=false;
     try{
-      PreparedStatement requete = DBGame.getConnexion().prepareStatement("Select * from Game");
+      PreparedStatement requete = DBGame.getConnexion().prepareStatement("Select * from Game WHERE idUser=?");
+      requete.setString(1, String.valueOf(idUser));
       ResultSet resultat = requete.executeQuery();
       while (resultat.next() != false) { // On itère chaque résultat
         if(resultat.getInt("ready")==1){ // On convertit le booleen car il est stocké comme un entier dans la base
