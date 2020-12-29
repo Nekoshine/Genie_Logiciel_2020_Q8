@@ -37,7 +37,7 @@ public class DBRoom extends DBConnexion{
                 roomList.addRoom(new Room(resultat.getInt("id"),ListGame.findByID(resultat.getInt("idGame"))));
                          // On crée l'objet model.Game et on l'ajoute dans la liste
             }
-            for (int i=0;i<roomList.getSize() ;i++ ) {         System.out.println(roomList.getRoom(i).getId()); System.out.println(roomList.getRoom(i).getGame());       }
+            //for (int i=0;i<roomList.getSize() ;i++ ) {         System.out.println(roomList.getRoom(i).getId()); System.out.println(roomList.getRoom(i).getGame());       }
             requete.close();
             resultat.close();
         } catch(SQLException e ){

@@ -35,7 +35,7 @@ public class DBGame extends DBConnexion {
         gameList.addGame(new Game(resultat.getInt("id"), resultat.getString("titre"),
         resultat.getInt("score"), resultat.getInt("idUser"),resultat.getInt("timer"),boolGame)); // On crée l'objet model.Game et on l'ajoute dans la liste
       }
-      for (int i=0;i<gameList.getSize() ;i++ ) {         System.out.println(gameList.getGame(i).getTitre());       }
+     // for (int i=0;i<gameList.getSize() ;i++ ) {         System.out.println(gameList.getGame(i).getTitre());       }
       requete.close();
       resultat.close();
     } catch(SQLException e ){

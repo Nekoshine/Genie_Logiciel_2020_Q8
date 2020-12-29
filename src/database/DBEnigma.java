@@ -28,11 +28,11 @@ public class DBEnigma extends DBConnexion{
                                 resultat.getString("clue3"),resultat.getInt("timer3")));
                 // On crée l'objet model.Game et on l'ajoute dans la liste
             }
-            for (int i=0;i<enigmaList.getSize() ;i++ ) {
+            /*for (int i=0;i<enigmaList.getSize() ;i++ ) {
                 System.out.println(enigmaList.getEnigma(i).getId());
                 System.out.println(enigmaList.getEnigma(i).getText());
                 System.out.println(enigmaList.getEnigma(i).getAnswer());
-            }
+            }*/
             requete.close();
             resultat.close();
         } catch(SQLException e ){
