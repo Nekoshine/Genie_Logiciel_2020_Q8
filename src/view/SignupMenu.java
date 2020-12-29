@@ -62,10 +62,10 @@ public class SignupMenu extends JPanel implements ActionListener {
         //creation de la partie clé admin
 
         keycontainer = new JPanel();
-        keycontainer.setLayout(new FlowLayout(FlowLayout.CENTER,10,0));
+        keycontainer.setLayout(new FlowLayout(FlowLayout.CENTER,25,0));
         key = new JLabel("Clé (compte admin) :");
         keytextfield = new JTextField();
-        keytextfield.setColumns(27);
+        keytextfield.setColumns(25);
 
         keycontainer.add(key);
         keycontainer.add(keytextfield);
