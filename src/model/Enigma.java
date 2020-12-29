@@ -3,57 +3,60 @@ package model;
 * * Codé par Esteban
 */
 
-public class Enigma{
+public class Enigma {
   private int id;
-  private int idUser;
-  private String text;
+  private String question;
   private String answer;
-  private String clue1;
-  private int timer1;
-  private String clue2;
-  private int timer2;
-  private String clue3;
-  private int timer3;
-  public Enigma(int id,int idUser,String text,String answer,String clue1,int timer1,String clue2,int timer2,String clue3,int timer3){
+  private Hint clue1;
+  private Hint clue2;
+  private Hint clue3;
+
+  public Enigma(int id, String question, String answer, Hint clue1, Hint clue2, Hint clue3) {
     this.id = id;
-    this.idUser = idUser;
-    this.text = text;
-    this.answer =answer;
+    this.question = question;
+    this.answer = answer;
     this.clue1 = clue1;
-    this.timer1 = timer1;
     this.clue2 = clue2;
-    this.timer2 = timer2;
     this.clue3 = clue3;
-    this.timer3 = timer3;
   }
-  public int getId(){
-    return this.id;
+  public Enigma(int id,int tampon, String question, String answer, String clue1, int timer1,String clue2, int timer2,String clue3, int timer3) {
+    this.id = id;
+    this.question = question;
+    this.answer = answer;
+    this.clue1 = new Hint(clue1,timer1);
+    this.clue2 = new Hint(clue2,timer2);
+    this.clue3 = new Hint(clue3,timer3);
   }
-  public int getIdUSer(){
-    return this.idUser;
-  }
+
   public String getText(){
-    return this.text;
+    return this.question;
   }
-  public String getAnswer(){
-    return this.answer;
-  }
+
   public String getClue1(){
-    return this.clue1;
+    return this.clue1.getClue();
   }
-  public int getTimer1(){
-    return this.timer1;
+
+  public int getTimer1() {
+    return this.clue1.getTimer();
   }
+
   public String getClue2(){
-    return this.clue2;
+    return this.clue2.getClue();
   }
-  public int getTimer2(){
-    return this.timer2;
+
+  public int getTimer2() {
+    return this.clue2.getTimer();
   }
+
   public String getClue3(){
-    return this.clue3;
+    return this.clue3.getClue();
   }
-  public int getTimer3(){
-    return this.timer3;
+
+  public int getTimer3() {
+    return this.clue3.getTimer();
+  }
+
+  public String getAnswer() {
+    return this.answer;
   }
 }
