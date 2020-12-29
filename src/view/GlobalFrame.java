@@ -45,8 +45,6 @@ public class GlobalFrame extends JFrame {
         //this.setContentPane(menu);
         connectionMenuDisplay(this);
 
-
-
         //this.setSize(windowSize);
         this.setLocationRelativeTo(null);
         //this.setMinimumSize(new Dimension(720,480));
@@ -60,15 +58,15 @@ public class GlobalFrame extends JFrame {
                 super.componentResized(e);
                 windowSize = getSize();
                 if (getContentPane() instanceof GameCreation) {
-                    GameCreation gameCreation = new GameCreation(frame,roomNumber);
+                    GameCreation gameCreation = new GameCreation(frame,roomNumber,Main.ListEnigma);
                     setContentPane(gameCreation);
                 }
+
                 revalidate();
                 repaint();
 
             }
         });
-
 
 
     }
@@ -133,7 +131,7 @@ public class GlobalFrame extends JFrame {
 
     public void gameCreationDisplay(GlobalFrame frame,int roomNumber){
 
-        gameCreation = new GameCreation(frame,roomNumber);
+        gameCreation = new GameCreation(frame,roomNumber,Main.ListEnigma);
         setContentPane(gameCreation);
         frame.setSize(1280,720);
         frame.setResizable(true);

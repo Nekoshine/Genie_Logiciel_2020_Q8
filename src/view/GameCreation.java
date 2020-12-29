@@ -3,6 +3,7 @@
 package view;
 
 import model.Enigma;
+import model.EnigmaList;
 import model.Room;
 
 import javax.swing.*;
@@ -15,10 +16,11 @@ import java.util.ArrayList;
 
 public class GameCreation extends JPanel implements ActionListener {
 
+    public EnigmaList listEnigma;
+
     private BorderLayout mainLayout;
     private BorderLayout titleLayout;
     private BorderLayout centerLayout;
-    private BorderLayout enigmaInfoLayout;
 
     private GridBagLayout buttonLayout;
 
@@ -31,7 +33,6 @@ public class GameCreation extends JPanel implements ActionListener {
     private GridLayout gridHint;
 
 
-    private JScrollPane scrollStory;
     private JScrollPane scrollEnigmas;
 
 
@@ -66,21 +67,15 @@ public class GameCreation extends JPanel implements ActionListener {
 
     private GlobalFrame frame;
 
-    public ArrayList<Enigma> getEnigma;
 
-
-
-    public GameCreation(GlobalFrame frame,int roomNumber){
+    public GameCreation(GlobalFrame frame, int roomNumber, EnigmaList listEnigma){
 
         this.frame = frame;
-
-        getEnigma = new ArrayList<Enigma>();
-        getEnigma.add(new Enigma(1,1,"Enigme1","","",0,"",0,"",0));
-        getEnigma.add(new Enigma(2,1,"Enig2","","",0,"",0,"",0));
+        this.listEnigma = listEnigma;
 
         mainLayout = new BorderLayout(10,10);
         titleLayout= new BorderLayout(10,10);
-        enigmaInfoLayout = new BorderLayout(10,10);
+
         centerLayout = new BorderLayout(30,30);
 
         GridBagConstraints gbcTitle = new GridBagConstraints();
@@ -107,14 +102,13 @@ public class GameCreation extends JPanel implements ActionListener {
         saveButton = new JButton("Enregistrer");
         exitButton = new JButton("Quitter");
         deleteButton = new JButton("Supprimer");
-        newButton = new JButton();
+        newButton = new JButton("Nouvelle Enigme");
 
         title = new JTextField("Titre",45);
         initialScore = new JTextField("Score Initial",7);
         points = new JTextField("Points (Si désiré)",7);
 
         windowName = new JLabel("MJ - Création/Modification de Jeux",JLabel.CENTER);
-
 
         //Center
 
@@ -141,17 +135,24 @@ public class GameCreation extends JPanel implements ActionListener {
 
         this.createList();
 
+        newButton.addActionListener(this);
 
-        newButton.setAction(new AbstractAction("Nouvelle Enigme") {
+       /* newButton.setAction(new AbstractAction("Nouvelle Enigme") {
             @Override
             public void actionPerformed(ActionEvent e) {
 
                 System.out.println(getEnigma.size());
 
+                gbcEnigma.insets = new Insets(7,15,7,30);
                 Enigma enigme = new Enigma(getEnigma.size()+1,1,"Enigme","Réponse","Indice 1",-1,"Indice 2",-1,"Indice 3",-1);
 
                 ajoutListeEnigma(enigme,getEnigma);
-                createList();
+                JPanel panelEnigme = ajoutEnigme(enigme,gbcEnigma);
+                panelEnigme.setPreferredSize(new Dimension(centerPanel.getWidth()-45, 300));
+                enigmasPanel.add(panelEnigme,gbcEnigma);
+                centerPanel.add(newPanel, BorderLayout.SOUTH);
+                centerPanel.revalidate();
+                centerPanel.repaint();
 
 
             }
@@ -257,10 +258,13 @@ public class GameCreation extends JPanel implements ActionListener {
 
         JPanel storyPanel = new JPanel();
         JPanel infoEngimaPanel = new JPanel();
-        JPanel answerPanel = new JPanel();
         JPanel hint1Panel = new JPanel();
         JPanel hint2Panel = new JPanel();
         JPanel hint3Panel = new JPanel();
+
+        JScrollPane scrollStory;
+
+        BorderLayout enigmaInfoLayout = new BorderLayout(10,10);
 
         JTextArea story = new JTextArea(enigme.getText());
         story.setLineWrap(true);
@@ -290,7 +294,7 @@ public class GameCreation extends JPanel implements ActionListener {
         JTextField time1;
 
         if (enigme.getTimer1()==-1){
-            time1 = new JTextField("Timer 1");
+            time1 = new JTextField("Timer 1 (en s)");
         }
         else{
             time1 = new JTextField(enigme.getTimer1());
@@ -299,7 +303,7 @@ public class GameCreation extends JPanel implements ActionListener {
         JTextField time2;
 
         if (enigme.getTimer2()==-1){
-            time2 = new JTextField("Timer 2");
+            time2 = new JTextField("Timer 2 (en s)");
         }
         else{
             time2 = new JTextField(enigme.getTimer2());
@@ -308,7 +312,7 @@ public class GameCreation extends JPanel implements ActionListener {
         JTextField time3;
 
         if (enigme.getTimer3()==-1){
-            time3 = new JTextField("Timer 3");
+            time3 = new JTextField("Timer 3 (en s)");
         }
         else{
             time3 = new JTextField(enigme.getTimer3());
@@ -324,11 +328,6 @@ public class GameCreation extends JPanel implements ActionListener {
 
         storyPanel.add(story);
         storyPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE,2));
-
-
-        answerPanel.add(answer);
-
-        answerPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
 
 
         hint1Panel.add(hint1);
@@ -364,7 +363,7 @@ public class GameCreation extends JPanel implements ActionListener {
         enigmaPan.setLayout(enigmaInfoLayout);
         enigmaPan.add(scrollStory,BorderLayout.CENTER);
         enigmaPan.add(infoEngimaPanel,BorderLayout.SOUTH);
-        enigmaPan.setBorder(BorderFactory.createLineBorder(Color.green));
+
 
 
         return enigmaPan;
@@ -372,40 +371,46 @@ public class GameCreation extends JPanel implements ActionListener {
 
     }
 
-    void ajoutListeEnigma(Enigma enigma,ArrayList<Enigma> getEnigma){
 
-        getEnigma.add(enigma);
+    private void majEnigma() {
+        listEnigma.addEnigma(listEnigma.getSize()+1,1,"Enigme","Réponse","indice 1",-1,"indice 2",-1,"indice 3",-1);
+        this.createList();
+        frame.gameCreationDisplay(frame,frame.roomNumber);
     }
 
     public void createList(){
 
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(7,15,7,30);
+        gbc.insets = new Insets(15,15,20,30);
 
-        for (int i = 0; i < getEnigma.size(); i++) {
+        for (int i = 0; i < listEnigma.getSize(); i++) {
             centerPanel.remove(newPanel);
-            JPanel panelEnigme = ajoutEnigme(getEnigma.get(i), gbc);
+            JPanel panelEnigme = ajoutEnigme(listEnigma.getEnigma(i), gbc);
             panelEnigme.setPreferredSize(new Dimension(centerPanel.getWidth()-45, 300));
             enigmasPanel.add(panelEnigme, gbc);
-            centerPanel.add(newPanel, BorderLayout.SOUTH);
+            centerPanel.add(newPanel,BorderLayout.SOUTH);
             centerPanel.revalidate();
             centerPanel.repaint();
         }
 
         centerPanel.revalidate();
         centerPanel.repaint();
-        frame.repaint();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+
+        if (e.getSource()==newButton){
+            this.majEnigma();
+            System.out.println(listEnigma.getSize());
+        }
         if (e.getSource()== exitButton){
             frame.gameManagementDisplay(frame,frame.roomNumber);
         }
         if (e.getSource()==deleteButton){
-            getEnigma.remove(getEnigma.size()-1);
-            frame.revalidate();
-            frame.repaint();
+            listEnigma.removeEnigma(listEnigma.getSize()-1);
+            centerPanel.revalidate();
+            centerPanel.repaint();
         }
     }
 }

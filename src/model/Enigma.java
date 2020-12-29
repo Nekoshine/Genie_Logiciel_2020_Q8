@@ -14,11 +14,12 @@ public class Enigma{
   private int timer2;
   private String clue3;
   private int timer3;
+
   public Enigma(int id,int idUser,String text,String answer,String clue1,int timer1,String clue2,int timer2,String clue3,int timer3){
     this.id = id;
     this.idUser = idUser;
     this.text = text;
-    this.answer =answer;
+    this.answer = answer;
     this.clue1 = clue1;
     this.timer1 = timer1;
     this.clue2 = clue2;
