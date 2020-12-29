@@ -1,5 +1,7 @@
 package database;
 
+import launcher.Main;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,6 +27,7 @@ public class DBUser extends DBConnexion {
   public static boolean connectUser(String login, String password){
     boolean connected = false;
     String pwd;
+    int idUser = 0;
     try{
       MessageDigest md = MessageDigest.getInstance("MD5"); // Création de la classe qui va hash en MD5
       byte[] byteChaine = password.getBytes("UTF-8"); // On convertit la chaine en octets
@@ -35,6 +38,7 @@ public class DBUser extends DBConnexion {
       ResultSet resultat = requete.executeQuery();
       resultat.next();
       pwd = resultat.getString("pwd");
+      idUser = resultat.getInt("id");
       requete.close();
       resultat.close();
       System.out.println();
@@ -48,6 +52,7 @@ public class DBUser extends DBConnexion {
     }catch(NoSuchAlgorithmException e ){
       System.err.println("Erreur Algorithme: " + e.getMessage());
     }
+    Main.idUser=idUser;
     return connected;
   }
   /**
