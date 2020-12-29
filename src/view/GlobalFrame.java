@@ -61,7 +61,7 @@ public class GlobalFrame extends JFrame {
                 super.componentResized(e);
                 windowSize = getSize();
                 if (getContentPane() instanceof GameCreation) {
-                    GameCreation gameCreation = new GameCreation(frame,roomNumber);
+                    GameCreation gameCreation = new GameCreation(frame,roomNumber,Main.ListEnigma);
                     setContentPane(gameCreation);
                 }
                 if (getContentPane() instanceof CurrentGame) {
@@ -128,7 +128,7 @@ public class GlobalFrame extends JFrame {
 
     public void gameManagementDisplay(GlobalFrame frame, int roomNumber){
 
-        gamemanagement = new GameManagement(frame, roomNumber,Main.ListGame);
+        gamemanagement = new GameManagement(frame, roomNumber);
         setContentPane(gamemanagement);
         frame.setSize(1280,720);
         frame.setResizable(true);
@@ -139,7 +139,7 @@ public class GlobalFrame extends JFrame {
 
     public void gameCreationDisplay(GlobalFrame frame,int roomNumber){
 
-        gameCreation = new GameCreation(frame,roomNumber);
+        gameCreation = new GameCreation(frame,roomNumber,Main.ListEnigma);
         setContentPane(gameCreation);
         frame.setSize(1280,720);
         frame.setResizable(true);

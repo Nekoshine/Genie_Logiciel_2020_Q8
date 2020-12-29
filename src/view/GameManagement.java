@@ -2,6 +2,8 @@
 
 package view;
 
+import database.DBGame;
+import launcher.Main;
 import model.GameList;
 
 import javax.swing.*;
@@ -31,10 +33,13 @@ public class GameManagement extends JPanel implements ActionListener {
     public JButton buttonAddGame;
 
 
-    public GameManagement(GlobalFrame frame, int roomNumber, GameList list){
+    public GameManagement(GlobalFrame frame, int roomNumber){
         this.frame = frame;
         frame.roomNumber = roomNumber;
-        this.ListGame=list;
+
+        //recuperation des jeux du User
+        this.ListGame= DBGame.getGames(Main.idUser);
+
         /*WindowNamePanel set up*/
         JLabel windowName = new JLabel("MJ - Gestion des Jeux");
         JPanel windowNameInsidePanel = new JPanel();
