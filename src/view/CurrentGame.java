@@ -121,7 +121,7 @@ public class CurrentGame extends JPanel implements ActionListener {
 
         oldEnigmaPanel = new JPanel();
         oldEnigmaPanel.setLayout(new GridLayout(1,1));
-        oldEnigmaPanel.setMaximumSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.95),(int)((float) frame.windowSize.getHeight()*0.25)));
+        oldEnigmaPanel.setMaximumSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.95),(int)((float) frame.windowSize.getHeight()*0.35)));
         oldEnigmaPanel.add(oldEnigmaTextArea);
 
         // indices
@@ -184,7 +184,7 @@ public class CurrentGame extends JPanel implements ActionListener {
         this.add(thirdRawPanel);
         this.add(Box.createRigidArea(new Dimension(0, 20)));
         this.add(oldEnigmaPanel);
-        this.add(Box.createRigidArea(new Dimension(0, 20)));
+        this.add(Box.createRigidArea(new Dimension(0, 30)));
         this.add(hintRawPanel);
 
 
