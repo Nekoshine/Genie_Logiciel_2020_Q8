@@ -9,10 +9,12 @@ import view.style.ColorPerso;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.*;
 
 
-public class SignupMenu extends JPanel implements ActionListener {
+public class SignupMenu extends JPanel implements ActionListener, MouseListener {
 
     private JButton confirm;
     private JButton back;
@@ -66,12 +68,14 @@ public class SignupMenu extends JPanel implements ActionListener {
 
         confirm = new JButton("Confirmation");
         confirm.addActionListener(this);
+        confirm.addMouseListener(this);
         confirm.setBackground(ColorPerso.vert);
 
         //creation du bouton de retour
 
         back = new JButton("Retour");
         back.addActionListener(this);
+        back.addMouseListener(this);
         back.setBackground(ColorPerso.rouge);
         back.setForeground(Color.WHITE);
 
@@ -118,6 +122,35 @@ public class SignupMenu extends JPanel implements ActionListener {
         }
         else if (e.getSource() == back){
             frame.connectionMenuDisplay(frame);
+        }
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {}
+
+    @Override
+    public void mousePressed(MouseEvent e) {}
+
+    @Override
+    public void mouseReleased(MouseEvent e) {}
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        if(e.getSource()==back){
+            back.setBackground(ColorPerso.rougeHoover);
+        }
+        else if(e.getSource()==confirm){
+            confirm.setBackground(ColorPerso.vertHoover);
+        }
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        if(e.getSource()==back){
+            back.setBackground(ColorPerso.rouge);
+        }
+        else if(e.getSource()==confirm){
+            confirm.setBackground(ColorPerso.vert);
         }
     }
 }

@@ -70,6 +70,7 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
         newButton.setOpaque(false);
         newButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         newButton.addActionListener(this);
+        newButton.addMouseListener(this);
 
         /* Affichage des salles */
         this.CreateList();
@@ -234,6 +235,26 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
                 RoomManagement.this.frame.gameManagementDisplay(RoomManagement.this.frame, salle.getId());
             }
         });
+        boutonJeu.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {}
+
+            @Override
+            public void mousePressed(MouseEvent e) {}
+
+            @Override
+            public void mouseReleased(MouseEvent e) {}
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                boutonJeu.setBackground(ColorPerso.jauneHoover);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                boutonJeu.setBackground(ColorPerso.jaune);
+            }
+        });
 
         JButton boutonLancer = new JButton("Lancer");
         boutonLancer.setBackground(ColorPerso.vert);
@@ -241,6 +262,26 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Bouton lancer " + salle.getId());
+            }
+        });
+        boutonLancer.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {}
+
+            @Override
+            public void mousePressed(MouseEvent e) {}
+
+            @Override
+            public void mouseReleased(MouseEvent e) {}
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                boutonLancer.setBackground(ColorPerso.vertHoover);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                boutonLancer.setBackground(ColorPerso.vert);
             }
         });
 
@@ -297,27 +338,34 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
 
 
     @Override
-    public void mouseClicked(MouseEvent e) {
-
-    }
+    public void mouseClicked(MouseEvent e) {}
 
     @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
+    public void mousePressed(MouseEvent e) {}
 
     @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
+    public void mouseReleased(MouseEvent e) {}
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        returnButton.setBackground(ColorPerso.rougeHoover);
+        if (e.getSource()==returnButton) {
+            returnButton.setBackground(ColorPerso.rougeHoover);
+        }
+        else if(e.getSource()==newButton){
+            newButton.setBackground(Color.BLACK);
+            newButton.setOpaque(true);
+            newButton.setForeground(Color.white);
+        }
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        returnButton.setBackground(ColorPerso.rouge);
+        if (e.getSource()==returnButton) {
+            returnButton.setBackground(ColorPerso.rouge);
+        }
+        else if(e.getSource()==newButton){
+            newButton.setOpaque(false);
+            newButton.setForeground(Color.black);
+        }
     }
 }

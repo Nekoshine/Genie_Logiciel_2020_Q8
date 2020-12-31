@@ -10,10 +10,12 @@ import view.style.ColorPerso;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.*;
 
 
-public class ConnectionMenu extends JPanel implements ActionListener {
+public class ConnectionMenu extends JPanel implements ActionListener, MouseListener {
 
     private JButton connection;
     private JButton inscription;
@@ -55,10 +57,12 @@ public class ConnectionMenu extends JPanel implements ActionListener {
 
         connection = new JButton("Connexion");
         connection.addActionListener(this);
+        connection.addMouseListener(this);
         connection.setBackground(ColorPerso.vert);
 
         inscription = new JButton("S'inscrire");
         inscription.addActionListener(this);
+        inscription.addMouseListener(this);
         inscription.setBackground(ColorPerso.jaune);
 
         //création du lien vers l'inscription
@@ -98,6 +102,35 @@ public class ConnectionMenu extends JPanel implements ActionListener {
         }
         else if (e.getSource() == inscription){
             frame.signupMenuDisplay(frame);
+        }
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {}
+
+    @Override
+    public void mousePressed(MouseEvent e) {}
+
+    @Override
+    public void mouseReleased(MouseEvent e) {}
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        if(e.getSource()==inscription){
+            inscription.setBackground(ColorPerso.jauneHoover);
+        }
+        else if (e.getSource()==connection){
+            connection.setBackground(ColorPerso.vertHoover);
+        }
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        if(e.getSource()==inscription){
+            inscription.setBackground(ColorPerso.jaune);
+        }
+        else if (e.getSource()==connection){
+            connection.setBackground(ColorPerso.vert);
         }
     }
 }
