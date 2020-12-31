@@ -5,6 +5,7 @@ package view;
 import database.DBRoom;
 import database.DBUser;
 import launcher.Main;
+import view.style.ColorPerso;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -56,7 +57,7 @@ public class ConnectionMenu extends JPanel implements ActionListener {
         connection.addActionListener(this);
         connection.setBackground(ColorPerso.vert);
 
-        inscription = new JButton("s'inscrire");
+        inscription = new JButton("S'inscrire");
         inscription.addActionListener(this);
         inscription.setBackground(ColorPerso.jaune);
 

@@ -2,6 +2,9 @@
 
 package view;
 
+import view.style.ColorPerso;
+import view.style.FontPerso;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

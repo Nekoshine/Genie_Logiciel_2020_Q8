@@ -4,15 +4,13 @@ package view;
 
 import model.Enigma;
 import model.EnigmaList;
-import model.Room;
+import view.style.ColorPerso;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.plaf.BorderUIResource;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class GameCreation extends JPanel implements ActionListener {
 

@@ -3,10 +3,9 @@
 package view;
 
 import database.DBGame;
-import database.DBRoom;
 import launcher.Main;
 import model.GameList;
-import model.Room;
+import view.style.ColorPerso;
 
 import javax.swing.*;
 import javax.swing.border.Border;

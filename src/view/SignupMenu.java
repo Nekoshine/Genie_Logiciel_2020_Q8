@@ -4,6 +4,7 @@ package view;
 
 
 import database.DBUser;
+import view.style.ColorPerso;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

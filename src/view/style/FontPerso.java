@@ -1,14 +1,14 @@
-package view;
+package view.style;
 
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-class FontPerso {
-    static Font ArialBold = new Font("Arial",Font.BOLD,15);
-    static Font Arial = new Font("Arial",Font.PLAIN,15);
-    static Font Oxanimum;
-    static Font SirensDEMO;
+public class FontPerso {
+    public static Font ArialBold = new Font("Arial",Font.BOLD,15);
+    public static Font Arial = new Font("Arial",Font.PLAIN,15);
+    public static Font Oxanimum;
+    public static Font SirensDEMO;
 
     static {
         try {

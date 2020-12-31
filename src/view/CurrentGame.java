@@ -1,5 +1,7 @@
 package view;
 
+import view.style.ColorPerso;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

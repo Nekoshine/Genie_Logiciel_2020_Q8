@@ -1,6 +1,8 @@
 package view;
 
 import launcher.Main;
+import view.style.ColorPerso;
+import view.style.FontPerso;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -28,9 +30,9 @@ public class GlobalFrame extends JFrame {
 
     public GlobalFrame() throws IOException {
         /*Font*/
-        UIManager.put("Label.font",FontPerso.Oxanimum);
+        UIManager.put("Label.font", FontPerso.Oxanimum);
         UIManager.put("Button.font",FontPerso.SirensDEMO);
-        UIManager.put("Button.background",ColorPerso.grisOriginal);
+        UIManager.put("Button.background", ColorPerso.grisOriginal);
 
         frame = this;
 
