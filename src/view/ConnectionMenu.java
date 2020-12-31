@@ -2,7 +2,9 @@
 
 package view;
 
+import database.DBRoom;
 import database.DBUser;
+import launcher.Main;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -86,6 +88,7 @@ public class ConnectionMenu extends JPanel implements ActionListener {
             String mdpinput = String.valueOf(saisiemotdepasse.getPassword());
             if (DBUser.connectUser(idinput,mdpinput)){
                 frame.mainMenuDisplay(frame);
+                Main.ListRoom = DBRoom.getRooms(Main.idUser); // recherche des salles dans la BDD apres la connection
             }
             else{
                 JOptionPane.showMessageDialog(frame,"l'identifiant ou le mot de passe ne correspond pas");
