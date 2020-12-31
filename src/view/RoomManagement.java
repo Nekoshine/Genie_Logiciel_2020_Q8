@@ -34,7 +34,7 @@ public class RoomManagement extends JPanel implements ActionListener {
         this.frame = frame;
 
         /* Récuperation des salles */
-        ListRoom = DBRoom.getRooms(Main.idUser);
+        ListRoom = Main.ListRoom;
 
         /* Déclaration JPanel - JScrollPane */
         listPanel = new JPanel();
@@ -193,10 +193,11 @@ public class RoomManagement extends JPanel implements ActionListener {
      *
      * @param salle salle à ajouter
      * @param gbc GridBagConstraints
+     * @param i
      * @return un JPanel avec la salle
      */
 
-    private JPanel ajoutSalle(Room salle, GridBagConstraints gbc){
+    private JPanel ajoutSalle(Room salle, GridBagConstraints gbc, int i){
 
         /* Contraintes GridBag */
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -209,7 +210,7 @@ public class RoomManagement extends JPanel implements ActionListener {
 
         /* Construction Panel Salle */
         GridLayout grille = new GridLayout(1,4,70,50);
-        JLabel nomSalle = new JLabel("Salle " + salle.getId() + " :");
+        JLabel nomSalle = new JLabel("Salle " + i + " :");
         nomSalle.setHorizontalAlignment(SwingConstants.CENTER);
 
         JLabel nomJeu;
@@ -276,7 +277,7 @@ public class RoomManagement extends JPanel implements ActionListener {
 
         for (int i = 0; i < ListRoom.getSize(); i++) {
             listPanel.remove(newButtonPanel);
-            JPanel panelSalle = this.ajoutSalle(ListRoom.getRoom(i), gbc);
+            JPanel panelSalle = this.ajoutSalle(ListRoom.getRoom(i), gbc,i+1);
             panelSalle.setPreferredSize(new Dimension(listPanel.getWidth() - 45, 75));
             roomPanel.add(panelSalle, gbc);
             listPanel.add(newButtonPanel, BorderLayout.PAGE_END);
