@@ -18,7 +18,7 @@ public class DBEnigma extends DBConnexion{
     public  static EnigmaList getEnigmas(int idGame){
         EnigmaList enigmaList = new EnigmaList();
         try{
-            PreparedStatement requete = DBGame.getConnexion().prepareStatement("Select * from Enigma,Game WHERE Enigma.idGame = Game.id AND Enigma.idGame = ? AND Game.idUser = ?");
+            PreparedStatement requete = DBGame.getConnexion().prepareStatement("Select * from Enigma,Game WHERE Enigma.idGame = Game.id AND Enigma.idGame = ? AND Game.idUser = ? ORDER BY Enigma.id ASC");
             requete.setString(1, String.valueOf(idGame));
             requete.setString(2, String.valueOf(Main.idUser));
             ResultSet resultat = requete.executeQuery();

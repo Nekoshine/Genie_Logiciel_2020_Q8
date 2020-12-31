@@ -24,7 +24,7 @@ public class DBGame extends DBConnexion {
     GameList gameList = new GameList();
     Boolean boolGame=false;
     try{
-      PreparedStatement requete = DBGame.getConnexion().prepareStatement("Select * from Game WHERE idUser=?");
+      PreparedStatement requete = DBGame.getConnexion().prepareStatement("Select * from Game WHERE idUser=? ORDER BY id ASC");
       requete.setString(1, String.valueOf(idUser));
       ResultSet resultat = requete.executeQuery();
       while (resultat.next() != false) { // On itère chaque résultat
