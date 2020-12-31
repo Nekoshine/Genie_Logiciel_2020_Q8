@@ -3,8 +3,10 @@
 package view;
 
 import database.DBGame;
+import database.DBRoom;
 import launcher.Main;
 import model.GameList;
+import model.Room;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -68,7 +70,7 @@ public class GameManagement extends JPanel implements ActionListener {
             gameOutsidePanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
             gameOutsidePanel.setLayout((new BoxLayout(gameOutsidePanel, BoxLayout.LINE_AXIS)));
 
-            JLabel gameNbLabel = new JLabel("Jeu " +ListGame.getGame(i).getId()+" :");
+            JLabel gameNbLabel = new JLabel("Jeu " +(i+1)+" :");
             JLabel gameTitleLabel = new JLabel(ListGame.getGame(i).getTitre()); //fonction pour récupérer le titre du jeu i
 
             gameNbPanel.add(gameNbLabel, BorderLayout.CENTER);
@@ -155,8 +157,13 @@ public class GameManagement extends JPanel implements ActionListener {
         if (e.getSource() == buttonReturn){
             frame.mainMenuDisplay(frame);
         }
-        if (e.getSource() == buttonAddGame){
+        else if (e.getSource() == buttonAddGame){
             frame.gameCreationDisplay(frame,frame.roomNumber);
+        }
+        else if (e.getSource() == buttonChose){
+            //int jeuChoisi=0;
+            //DBRoom.insertRoom(frame.roomNumber,jeuChoisi);
+            //ajout de la salle a la BDD
         }
     }
 }
