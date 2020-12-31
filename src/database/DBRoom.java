@@ -31,19 +31,16 @@ public class DBRoom extends DBConnexion{
     public static RoomList getRooms(int idUser){
         RoomList roomList = new RoomList();
         try{
-            PreparedStatement requete = DBGame.getConnexion().prepareStatement("Select * from Room, Game WHERE Room.idGame=Game.id AND Game.idUser = ?");
+            PreparedStatement requete = DBGame.getConnexion().prepareStatement("SELECT * FROM Room, Game WHERE Room.idGame=Game.id AND Game.idUser = ? ORDER BY Room.id ASC");
             requete.setString(1, String.valueOf(idUser));
             ResultSet resultat = requete.executeQuery();
             while (resultat.next() != false) { // On itère chaque résultat
-//                roomList.addRoom(new Room(resultat.getInt("id"),ListGame.findByID(resultat.getInt("idGame"))));
                 roomList.addRoom(new Room(resultat.getInt("Room.id"),resultat.getInt("Game.id"),resultat.getString("titre")
                         ,resultat.getInt("score")
                         ,idUser
                         ,resultat.getInt("timer")
                         , Boolean.valueOf(resultat.getString("ready"))));
 
-                //(int id, int idGame,String titre,int score,int idUser,int timer,Boolean ready){
-                         // On crée l'objet model.Game et on l'ajoute dans la liste
             }
             //for (int i=0;i<roomList.getSize() ;i++ ) {         System.out.println(roomList.getRoom(i).getId()); System.out.println(roomList.getRoom(i).getGame());       }
             requete.close();
@@ -52,5 +49,42 @@ public class DBRoom extends DBConnexion{
             System.err.println("Erreur requete connectUser: " + e.getMessage());
         }
         return roomList;
+    }
+
+    public static boolean insertRoom(int id,int idGame) {
+        boolean inserted=false;
+        try{
+            PreparedStatement requetePresence = DBUser.getConnexion().prepareStatement("SELECT * FROM Room WHERE id=? AND idGame=?"); // On regarde si la salle n'est pas deja dans la BDD
+            requetePresence.setString(1, String.valueOf(id));
+            requetePresence.setString(2, String.valueOf(idGame));
+            ResultSet resultatPresence = requetePresence.executeQuery();
+            if(resultatPresence.next() != false){ // Si il est deja dans la bdd
+                inserted=false; //Alors on annule l'insertion
+                requetePresence.close();
+                resultatPresence.close();
+                return inserted;
+            }else{
+                requetePresence.close();
+                resultatPresence.close();
+                PreparedStatement requete = DBUser.getConnexion().prepareStatement("INSERT INTO Room VALUES (?,?)");
+                requete.setString(1, String.valueOf(id));
+                requete.setString(2, String.valueOf(idGame));
+                requete.executeUpdate();
+                requete.close();
+                PreparedStatement requeteVerif = DBUser.getConnexion().prepareStatement("SELECT * FROM Room WHERE id=? AND idGame=?");  // On regarde si l'insertion a fonctionné
+                requeteVerif.setString(1, String.valueOf(id));
+                requeteVerif.setString(2, String.valueOf(idGame));
+                ResultSet resultatVerif = requeteVerif.executeQuery();
+                if(resultatVerif.next() != false){ // Si il a été inséré
+                    inserted=true; // Alors on valide l insertion
+                }
+                resultatVerif.close();
+                requeteVerif.close();
+            }
+        }catch(SQLException e ){
+            System.err.println("Erreur requete insertRoom: " + e.getMessage());
+        }
+        return inserted;
+
     }
 }
