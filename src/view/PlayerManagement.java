@@ -1,10 +1,16 @@
 package view;
 
+import model.Enigma;
+import model.EnigmaList;
+import model.Hint;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import static database.DBEnigma.getEnigmas;
 
 public class PlayerManagement extends JPanel implements ActionListener{
 
@@ -71,6 +77,11 @@ public class PlayerManagement extends JPanel implements ActionListener{
         topPan.add(timerPan);
 
         //Baptiste fonction récupérer histoire en cours
+
+        EnigmaList allRiddles = getEnigmas(gameNb);
+        Enigma currentEnigma = allRiddles.getEnigma(riddleNb);
+
+
         currentStoryPanIn.add(currentStory);
         currentStoryPanIn.setBorder((BorderFactory.createLineBorder(Color.BLACK,2)));
         currentStoryPan.add(currentStoryPanIn);
@@ -89,6 +100,12 @@ public class PlayerManagement extends JPanel implements ActionListener{
         middlePan.add(buttonValidatePan);
 
         //Baptiste fonction récupérer toutes les anciennes énigmes
+
+        EnigmaList previousEnigma = new EnigmaList();
+        for(int index = 0; index <= riddleNb; index++){
+            previousEnigma.addEnigma(allRiddles.getEnigma(index));
+        }
+
         formerStoryPanIn.add(formerStory);
         formerStoryPanIn.setBorder((BorderFactory.createLineBorder(Color.BLACK,2)));
         formerStoryPan.add(formerStoryPanIn);
@@ -96,6 +113,9 @@ public class PlayerManagement extends JPanel implements ActionListener{
 
         if(boolHint1==true){
             //Baptiste fonction récupérer hint1
+
+            String currenthint1 = currentEnigma.getClue1();
+
         }else{
             hint1PanIn.setBackground(Color.GRAY);
         }
@@ -105,6 +125,9 @@ public class PlayerManagement extends JPanel implements ActionListener{
         hint1Pan.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
         if(boolHint2==true){
             //Baptiste fonction récupérer hint2
+
+            String currenthint1 = currentEnigma.getClue2();
+
         }else{
             hint2PanIn.setBackground(Color.GRAY);
         }
@@ -114,6 +137,9 @@ public class PlayerManagement extends JPanel implements ActionListener{
         hint2Pan.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
         if(boolHint3==true){
             //Baptiste fonction récupérer hint3
+
+            String currenthint1 = currentEnigma.getClue3();
+
         }else{
             hint3PanIn.setBackground(Color.GRAY);
         }
