@@ -13,19 +13,19 @@ import javax.xml.bind.DatatypeConverter;
 * Codé par Esteban
 */
 public class DBUser extends DBConnexion {
-
+  
   public DBUser(){
     super.getConnexion();
   }
-
+  
   /**
   * Fonction qui vérifie que les identifiants fournis dans la base correspondent bien a un user inscrit
   * @param  login    Login a tester
   * @param  password Password a tester
-  * @return          Booleen qui va attester si l'utilisateur peut se connecter
+  * @return           0 si c'est un utilisateur normal, 1 si cest un admin , 3 si la connexion échoue
   */
-  public static boolean connectUser(String login, String password){
-    boolean connected = false;
+  public static int connectUser(String login, String password){
+    int isAdmin = 0;
     String pwd;
     int idUser = 0;
     try{
@@ -39,11 +39,12 @@ public class DBUser extends DBConnexion {
       resultat.next();
       pwd = resultat.getString("pwd");
       idUser = resultat.getInt("id");
+      isAdmin0 = resultat.getInt("isAdmin");
       requete.close();
       resultat.close();
       System.out.println();
-      if(hashString.equals(pwd)){ //On vérifie que le pwd et le hash stocké correspondent
-        connected=true;
+      if(!hashString.equals(pwd)){ //On vérifie que le pwd et le hash stocké correspondent
+        return 3;
       }
     } catch(SQLException e ){
       System.err.println("Erreur requete connectUser: " + e.getMessage());
@@ -53,16 +54,21 @@ public class DBUser extends DBConnexion {
       System.err.println("Erreur Algorithme: " + e.getMessage());
     }
     Main.idUser=idUser;
-    return connected;
+    return isAdmin;
   }
   /**
   * Procédure qui insere un nouvel user dans la base en hachant son mdp
   * @param login Login a insérer dans la base
   * @param pwd   Mot de passe a hasher et insérer dans la base
+  * @param isAdmin Booleen qui indique quel type d'utilisateur on insère
   * @return      Booleen qui indique si l insert cest correctement déroulé
   */
-  public static boolean insertUser(String login,String pwd){
+  public static boolean insertUser(String login,String pwd,boolean isAdmin){
     boolean inserted=false;
+    int valueAdmin =0;
+    if(isAdmin){
+      valueAdmin=1;
+    }
     try{
       PreparedStatement requetePresence = DBUser.getConnexion().prepareStatement("Select * from User where login=?"); // On regarde si l'user n'est pas déja dans la BDD
       requetePresence.setString(1,login);
@@ -78,10 +84,11 @@ public class DBUser extends DBConnexion {
         MessageDigest md = MessageDigest.getInstance("MD5"); // Création de la classe qui va hash en MD5
         byte[] byteChaine = pwd.getBytes("UTF-8"); // On convertit la chaine en octets
         byte[] hash = md.digest(byteChaine); // On hash notre chaine en MD
-        PreparedStatement requete = DBUser.getConnexion().prepareStatement("INSERT INTO User VALUES (?,?,default)");
+        PreparedStatement requete = DBUser.getConnexion().prepareStatement("INSERT INTO User VALUES (?,?,?,default)");
         String hashString = DatatypeConverter.printHexBinary(hash); // On convertit le tableau d'octets en string
         requete.setString(1,login);
         requete.setString(2,hashString);
+        requete.setString(3,valueAdmin);
         requete.executeUpdate();
         requete.close();
         PreparedStatement requeteVerif = DBUser.getConnexion().prepareStatement("Select * from User where login=?");  // On regarde si l'user a bien été inséré
