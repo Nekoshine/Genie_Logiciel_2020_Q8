@@ -46,7 +46,7 @@ public class DBGame extends DBConnexion {
   }
   /**
   * V1 De l insertion de jeux, on insere un jeu donné en argument
-  * @param  Game Jeu à insérer
+  * @param  game Jeu à insérer
   * @return      insert correct ou non
   */
   public static boolean insertGame(Game game){
@@ -62,13 +62,13 @@ public class DBGame extends DBConnexion {
       if(game.getReady()){
         valueReady=1;
       }
-      requete.set(6,valueReady);
+      requete.setInt(6,valueReady);
       ResultSet resultat = requete.executeQuery();
       
       requete.close();
       resultat.close();
       PreparedStatement requeteVerif = DBUser.getConnexion().prepareStatement("Select * from Game where id=?");  // On regarde si l'user a bien été inséré
-      requeteVerif.setString(1,game.getId());
+      requeteVerif.setString(1, String.valueOf(game.getId()));
       ResultSet resultatVerif = requeteVerif.executeQuery();
       if(resultatVerif.next() != false){ // Si il a été inséré
         inserted=true; // Alors on valide l insertion
@@ -83,7 +83,7 @@ public class DBGame extends DBConnexion {
   
   /**
   * V2 De l insertion de jeux, on insere un jeu grace aux champs donnés en argument
-  * @param  champs a insérer
+  * @param  titreN a insérer
   * @return      insert correct ou non
   */
   public static boolean insertGame(String titreN,int scoreN,int idUserN,int timerN,Boolean readyN){
@@ -98,7 +98,7 @@ public class DBGame extends DBConnexion {
       if(readyN){
         valueReady=1;
       }
-      requete.set(5,valueReady);
+      requete.setInt(5,valueReady);
       ResultSet resultat = requete.executeQuery();
       
       requete.close();

@@ -91,7 +91,7 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
         if (e.getSource() == connection){
             String idinput = saisieidentifiant.getText();
             String mdpinput = String.valueOf(saisiemotdepasse.getPassword());
-            if (DBUser.connectUser(idinput,mdpinput)){
+            if (DBUser.connectUser(idinput,mdpinput,true)==0){
                 frame.mainMenuDisplay(frame);
                 Main.ListRoom = DBRoom.getRooms(Main.idUser); // recherche des salles dans la BDD apres la connection
             }

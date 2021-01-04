@@ -113,7 +113,7 @@ public class SignupMenu extends JPanel implements ActionListener, MouseListener 
                 JOptionPane.showMessageDialog(frame,"Un ou plusieurs champs n'ont pas été remplis","Informations incomplètes", JOptionPane.WARNING_MESSAGE);
             }
             else if (cleinmput.isEmpty()) {
-                if (DBUser.insertUser(idinput, mdpinput)) {
+                if (DBUser.insertUser(idinput, mdpinput,false)) {
                     frame.connectionMenuDisplay(frame);
                 } else {
                     JOptionPane.showMessageDialog(frame, "L'identifiant demandé n'est pas disponible", "Attention", JOptionPane.WARNING_MESSAGE);

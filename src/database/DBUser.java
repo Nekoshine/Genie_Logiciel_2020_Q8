@@ -22,9 +22,10 @@ public class DBUser extends DBConnexion {
   * Fonction qui vérifie que les identifiants fournis dans la base correspondent bien a un user inscrit
   * @param  login    Login a tester
   * @param  password Password a tester
-  * @return           0 si c'est un utilisateur normal, 1 si cest un admin , 3 si la connexion échoue
+  * @param b
+   * @return           0 si c'est un utilisateur normal, 1 si cest un admin , 3 si la connexion échoue
   */
-  public static int connectUser(String login, String password){
+  public static int connectUser(String login, String password, boolean b){
     int isAdmin = 0;
     String pwd;
     int idUser = 0;
@@ -39,7 +40,7 @@ public class DBUser extends DBConnexion {
       resultat.next();
       pwd = resultat.getString("pwd");
       idUser = resultat.getInt("id");
-      isAdmin0 = resultat.getInt("isAdmin");
+      isAdmin = resultat.getInt("isAdmin");
       requete.close();
       resultat.close();
       System.out.println();
@@ -88,7 +89,7 @@ public class DBUser extends DBConnexion {
         String hashString = DatatypeConverter.printHexBinary(hash); // On convertit le tableau d'octets en string
         requete.setString(1,login);
         requete.setString(2,hashString);
-        requete.setString(3,valueAdmin);
+        requete.setInt(3,valueAdmin);
         requete.executeUpdate();
         requete.close();
         PreparedStatement requeteVerif = DBUser.getConnexion().prepareStatement("Select * from User where login=?");  // On regarde si l'user a bien été inséré
