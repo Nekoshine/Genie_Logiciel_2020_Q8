@@ -3,6 +3,7 @@ package view;
 import launcher.Main;
 import model.Enigma;
 import model.EnigmaList;
+import model.User;
 import view.style.ColorPerso;
 import view.style.FontPerso;
 import view.style.ColorPerso;
@@ -28,8 +29,10 @@ public class GlobalFrame extends JFrame {
     GameManagement gamemanagement;
     GameCreation gameCreation;
     CurrentGame currentGame;
+    RoomAccess roomAccess;
 
     public int roomNumber;
+    public boolean insideRoom = false;
 
 
     public GlobalFrame() throws IOException {
@@ -50,13 +53,13 @@ public class GlobalFrame extends JFrame {
 
         //menu = new RoomManagement();
         //this.setContentPane(menu);
-        mainMenuDisplay(this);
+        roomAccessDisplay(this);
 
 
 
         //this.setSize(windowSize);
         this.setLocationRelativeTo(null);
-        //this.setMinimumSize(new Dimension(720,480));
+        this.setMinimumSize(new Dimension(720,480));
         //this.setResizable(false);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -163,5 +166,16 @@ public class GlobalFrame extends JFrame {
         frame.revalidate();
         frame.repaint();
 
+    }
+
+    public void roomAccessDisplay(GlobalFrame frame){
+
+        roomAccess = new RoomAccess(frame);
+        setContentPane(roomAccess);
+        frame.setSize(1280,720);
+        frame.setResizable(true);
+        this.setLocationRelativeTo(null);
+        frame.revalidate();
+        frame.repaint();
     }
 }

@@ -4,7 +4,7 @@ public class Room {
 
     private int id;
     private Game Game;
-    private Boolean occuped = false;
+    private int userInside = -1;
 
     public Room(int id, Game Game){
         this.id = id;
@@ -31,7 +31,11 @@ public class Room {
         this.id = id;
     }
 
-    public Boolean getOccuped() {
-        return occuped;
+    public int getUserInside() {
+        return userInside;
+    }
+
+    public void setUserInside(int userInside) {
+        this.userInside = userInside;
     }
 }

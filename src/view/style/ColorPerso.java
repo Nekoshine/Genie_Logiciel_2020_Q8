@@ -18,6 +18,7 @@ public class ColorPerso extends Color {
     public static Color grisOriginal = new Color(238,238,238);
 
     public static Color azur = new Color(30,127,203);
+    public static Color azurHoover = new Color(0, 0, 255);
 
     ColorPerso(int r, int g, int b) {
         super(r, g, b);

@@ -58,7 +58,7 @@ public class GameCreation extends JPanel implements ActionListener {
     private JPanel hint2Panel;
     private JPanel hint3Panel;
 
-
+    private CaretListener caretListener;
 
     private JButton exitButton;
     private JButton saveButton;
@@ -78,6 +78,8 @@ public class GameCreation extends JPanel implements ActionListener {
 
         this.frame = frame;
         this.listEnigma = listEnigma;
+
+
 
         mainLayout = new BorderLayout(10,10);
         titleLayout= new BorderLayout(10,10);
@@ -140,29 +142,8 @@ public class GameCreation extends JPanel implements ActionListener {
         /* Chargement des énigmes */
 
         this.createList();
-
         newButton.addActionListener(this);
 
-       /* newButton.setAction(new AbstractAction("Nouvelle Enigme") {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                System.out.println(getEnigma.size());
-
-                gbcEnigma.insets = new Insets(7,15,7,30);
-                Enigma enigme = new Enigma(getEnigma.size()+1,1,"Enigme","Réponse","Indice 1",-1,"Indice 2",-1,"Indice 3",-1);
-
-                ajoutListeEnigma(enigme,getEnigma);
-                JPanel panelEnigme = ajoutEnigme(enigme,gbcEnigma);
-                panelEnigme.setPreferredSize(new Dimension(centerPanel.getWidth()-45, 300));
-                enigmasPanel.add(panelEnigme,gbcEnigma);
-                centerPanel.add(newPanel, BorderLayout.SOUTH);
-                centerPanel.revalidate();
-                centerPanel.repaint();
-
-
-            }
-        });
 
         /* Setup Marges */
 
@@ -175,6 +156,7 @@ public class GameCreation extends JPanel implements ActionListener {
 
         title.setBorder(BorderFactory.createEmptyBorder());
         title.setHorizontalAlignment(JTextField.CENTER);
+
         initialScore.setBorder(BorderFactory.createEmptyBorder());
         initialScore.setHorizontalAlignment(JTextField.CENTER);
         points.setBorder(BorderFactory.createEmptyBorder());
@@ -320,7 +302,7 @@ public class GameCreation extends JPanel implements ActionListener {
         JTextField time3;
 
         if (enigme.getTimer3()==-1){
-            time3 = new JTextField();
+            time3 = new JTextField("Timer 3 (en s)");
 
         }
         else{
@@ -354,7 +336,7 @@ public class GameCreation extends JPanel implements ActionListener {
             public void caretUpdate(CaretEvent e) {
                 try{
                     int i = Integer.parseInt(time2.getText());
-                    listEnigma.getEnigma(enigme.getId() - 1).setClue1(new Hint(hint2.getText(), Integer.parseInt(time2.getText())));
+                    listEnigma.getEnigma(enigme.getId() - 1).setClue2(new Hint(hint2.getText(), Integer.parseInt(time2.getText())));
                 }
                 catch (Exception ex){
                     System.out.println("Le timer n'est pas un entier");
@@ -370,7 +352,7 @@ public class GameCreation extends JPanel implements ActionListener {
             public void caretUpdate(CaretEvent e) {
                 try{
                     int i = Integer.parseInt(time3.getText());
-                    listEnigma.getEnigma(enigme.getId() - 1).setClue1(new Hint(hint3.getText(), Integer.parseInt(time3.getText())));
+                    listEnigma.getEnigma(enigme.getId() - 1).setClue3(new Hint(hint3.getText(), Integer.parseInt(time3.getText())));
                 }
                 catch (Exception ex){
                     System.out.println("Le timer n'est pas un entier");
@@ -398,7 +380,7 @@ public class GameCreation extends JPanel implements ActionListener {
             public void caretUpdate(CaretEvent e) {
                 try{
                     int i = Integer.parseInt(time2.getText());
-                    listEnigma.getEnigma(enigme.getId() - 1).setClue1(new Hint(hint2.getText(), Integer.parseInt(time2.getText())));
+                    listEnigma.getEnigma(enigme.getId() - 1).setClue2(new Hint(hint2.getText(), Integer.parseInt(time2.getText())));
                 }
                 catch (Exception ex){
                     System.out.println("Le timer n'est pas un entier");
@@ -411,7 +393,7 @@ public class GameCreation extends JPanel implements ActionListener {
             public void caretUpdate(CaretEvent e) {
                 try{
                     int i = Integer.parseInt(time3.getText());
-                    listEnigma.getEnigma(enigme.getId() - 1).setClue1(new Hint(hint3.getText(), Integer.parseInt(time3.getText())));
+                    listEnigma.getEnigma(enigme.getId() - 1).setClue3(new Hint(hint3.getText(), Integer.parseInt(time3.getText())));
                 }
                 catch (Exception ex){
                     System.out.println("Le timer n'est pas un entier");
