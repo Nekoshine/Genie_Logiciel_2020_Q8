@@ -1,6 +1,8 @@
 package view;
 
 import launcher.Main;
+import model.Enigma;
+import model.EnigmaList;
 import view.style.ColorPerso;
 import view.style.FontPerso;
 
@@ -139,7 +141,7 @@ public class GlobalFrame extends JFrame {
         frame.repaint();
     }
 
-    public void gameCreationDisplay(GlobalFrame frame,int roomNumber){
+    public void gameCreationDisplay(GlobalFrame frame, int roomNumber, EnigmaList listEnigma){
 
         gameCreation = new GameCreation(frame,roomNumber,Main.ListEnigma);
         setContentPane(gameCreation);

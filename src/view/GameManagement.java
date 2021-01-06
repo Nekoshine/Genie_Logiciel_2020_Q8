@@ -157,7 +157,7 @@ public class GameManagement extends JPanel implements ActionListener {
             frame.mainMenuDisplay(frame);
         }
         else if (e.getSource() == buttonAddGame){
-            frame.gameCreationDisplay(frame,frame.roomNumber);
+            frame.gameCreationDisplay(frame,frame.roomNumber,Main.ListEnigma);
         }
         else if (e.getSource() == buttonChose){
             //int jeuChoisi=0;
