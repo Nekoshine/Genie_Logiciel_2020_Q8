@@ -22,10 +22,9 @@ public class DBUser extends DBConnexion {
   * Fonction qui vérifie que les identifiants fournis dans la base correspondent bien a un user inscrit
   * @param  login    Login a tester
   * @param  password Password a tester
-  * @param b
    * @return           0 si c'est un utilisateur normal, 1 si cest un admin , 3 si la connexion échoue
   */
-  public static int connectUser(String login, String password, boolean b){
+  public static int connectUser(String login, String password){
     int isAdmin = 0;
     String pwd;
     int idUser = 0;

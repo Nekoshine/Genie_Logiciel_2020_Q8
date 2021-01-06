@@ -14,8 +14,6 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-    ListEnigma= DBEnigma.getEnigmas(1);
-    ListRoom = DBRoom.getRooms(idUser);
         /* Création de la vue */
         new GlobalFrame();
 
