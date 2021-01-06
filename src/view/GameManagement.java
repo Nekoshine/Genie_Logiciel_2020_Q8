@@ -5,6 +5,7 @@ package view;
 import database.DBGame;
 import launcher.Main;
 import model.GameList;
+import model.Room;
 import view.style.ColorPerso;
 
 import javax.swing.*;
@@ -37,6 +38,7 @@ public class GameManagement extends JPanel implements ActionListener {
     public GameManagement(GlobalFrame frame, int roomNumber){
         this.frame = frame;
         frame.roomNumber = roomNumber;
+        this.ListGame= DBGame.getGames(Main.idUser);
 
         //recuperation des jeux du User
         this.ListGame= DBGame.getGames(Main.idUser);
@@ -58,6 +60,8 @@ public class GameManagement extends JPanel implements ActionListener {
         int nbGames = ListGame.getSize(); //fonction pour récupérer nombre de Jeux enregistrés dans BdD
 
         for(int i = 0; i<nbGames; i++){
+
+            final int y = i;
             JPanel gameInsidePanel = new JPanel();
             JPanel gameOutsidePanel = new JPanel();
             JPanel gameNbPanel = new JPanel();
@@ -107,7 +111,16 @@ public class GameManagement extends JPanel implements ActionListener {
                 buttonChose.setBackground(ColorPerso.vert);
                 buttonChose.setOpaque(true);
 
-                buttonChose.addActionListener(this);
+                int finalI = i;
+                buttonChose.addActionListener(new AbstractAction() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        Main.ListRoom.findByID(roomNumber).setGame(ListGame.findByID(y+1));
+
+                        System.out.println(roomNumber);
+                      frame.roomManagementDisplay(frame);
+                    }
+                });
 
                 buttonChosePanel.add(buttonChose, BorderLayout.CENTER);
 
@@ -156,8 +169,8 @@ public class GameManagement extends JPanel implements ActionListener {
         if (e.getSource() == buttonReturn){
             frame.mainMenuDisplay(frame);
         }
-        else if (e.getSource() == buttonAddGame){
-            frame.gameCreationDisplay(frame,frame.roomNumber);
+        if (e.getSource() == buttonAddGame){
+            frame.gameCreationDisplay(frame,frame.roomNumber, Main.ListEnigma);
         }
         else if (e.getSource() == buttonChose){
             //int jeuChoisi=0;

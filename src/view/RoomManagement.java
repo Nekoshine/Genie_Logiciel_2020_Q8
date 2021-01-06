@@ -2,6 +2,10 @@
 
 package view;
 
+import controller.RoomController;
+import database.DBUser;
+import launcher.Main;
+import model.Game;
 import launcher.Main;
 import model.Room;
 import model.RoomList;
@@ -258,32 +262,43 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
 
         JButton boutonLancer = new JButton("Lancer");
         boutonLancer.setBackground(ColorPerso.vert);
+        if(salle.getGame()== null || !salle.getOccuped()){
+            boutonLancer.setEnabled(false);
+            boutonLancer.setBackground(ColorPerso.darkGray);
+        }
+
         boutonLancer.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Bouton lancer " + salle.getId());
             }
         });
-        boutonLancer.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {}
 
-            @Override
-            public void mousePressed(MouseEvent e) {}
+        if(boutonLancer.isEnabled()) {
+            boutonLancer.addMouseListener(new MouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                }
 
-            @Override
-            public void mouseReleased(MouseEvent e) {}
+                @Override
+                public void mousePressed(MouseEvent e) {
+                }
 
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                boutonLancer.setBackground(ColorPerso.vertHoover);
-            }
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                }
 
-            @Override
-            public void mouseExited(MouseEvent e) {
-                boutonLancer.setBackground(ColorPerso.vert);
-            }
-        });
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    boutonLancer.setBackground(ColorPerso.vertHoover);
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    boutonLancer.setBackground(ColorPerso.vert);
+                }
+            });
+        }
 
         /* Ajout Éléments au panel Salle */
         panelSalle.add(nomSalle);
