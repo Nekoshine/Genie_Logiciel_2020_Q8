@@ -1,5 +1,9 @@
 package view;
 
+import database.DBConnexion;
+import database.DBEnigma;
+import model.EnigmaList;
+import model.Game;
 import view.style.ColorPerso;
 
 import java.awt.*;
@@ -42,17 +46,28 @@ public class CurrentGame extends JPanel implements ActionListener {
     private JLabel titleLabel;
     private JLabel countdownLabel;
 
+    private int enigmalistflag = 0;
+    private int timerclue1;
+    private int timerclue2;
+    private int timerclue3;
+
+    private EnigmaList allEnigmas;
 
 
 
-    private Timer countdown;
+    private Timer countdownenigma;
+    private Timer timeonenigma;
+
     private int time = 3600;
 
     private GlobalFrame frame;
 
-    public CurrentGame (GlobalFrame frame ){
+    public CurrentGame (GlobalFrame frame, Game partiechoisie ){
 
         this.frame = frame;
+        allEnigmas = DBEnigma.getEnigmas(partiechoisie.getId());
+
+
 
 
         //titre + timer
@@ -62,7 +77,7 @@ public class CurrentGame extends JPanel implements ActionListener {
         firstRawPanel.setMaximumSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.95),35));
         firstRawPanel.setBorder(BorderFactory.createEmptyBorder(10,10,5,5));
 
-        titleLabel = new JLabel("Titre de l'escape game a recuperer d'une maniere ou d'une autre");
+        titleLabel = new JLabel(partiechoisie.getTitre());
         titleLabel.setMaximumSize(new Dimension(300,20));
         titleLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
 
@@ -194,4 +209,5 @@ public class CurrentGame extends JPanel implements ActionListener {
 
 
     public void actionPerformed(ActionEvent event) {}
+
 }
