@@ -4,6 +4,8 @@ import launcher.Main;
 import model.EnigmaList;
 import view.style.ColorPerso;
 import view.style.FontPerso;
+import view.style.ColorPerso;
+import view.style.FontPerso;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -140,7 +142,7 @@ public class GlobalFrame extends JFrame {
         frame.repaint();
     }
 
-    public void gameCreationDisplay(GlobalFrame frame, int roomNumber, EnigmaList enigmaList){
+    public void gameCreationDisplay(GlobalFrame frame,int roomNumber){
 
         gameCreation = new GameCreation(frame,roomNumber,Main.ListEnigma);
         setContentPane(gameCreation);
