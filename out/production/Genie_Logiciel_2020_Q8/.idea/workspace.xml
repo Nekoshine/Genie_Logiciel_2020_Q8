@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="77eee0d4-fd11-4a7a-af27-bcf026d518f0" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/src/model/Enigma.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Enigma.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/EnigmaList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/EnigmaList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Hint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Hint.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/GameCreation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/GameCreation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/GameManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/GameManagement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/view/GlobalFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/GlobalFrame.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Pull.Settings">
+    <option name="BRANCH" value="main" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1kYLhPFBlj10VcWfZKBT9h4S4Kg" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Downloads/javax.xml.bind.jar" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Cedric\Desktop\ENSSAT\Info2\GL\Genie_Logiciel_2020_Q8\src\view\image" />
+      <recent name="C:\Users\Cedric\Desktop\ENSSAT\Info2\GL\Genie_Logiciel_2020_Q8\src\view" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.Main (1)">
+    <configuration name="ConnexionBDD" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ConnexionBDD" />
+      <module name="Genie_Logiciel_2020_Q8" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GlobalFrame" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="view.GlobalFrame" />
+      <module name="Genie_Logiciel_2020_Q8" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="view.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="launcher.Main" />
+      <module name="Genie_Logiciel_2020_Q8" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="launcher.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="Genie_Logiciel_2020_Q8" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MenuConnexion" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="view.MenuConnexion" />
+      <module name="Genie_Logiciel_2020_Q8" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="view.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main (1)" />
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.GlobalFrame" />
+        <item itemvalue="Application.MenuConnexion" />
+        <item itemvalue="Application.ConnexionBDD" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="77eee0d4-fd11-4a7a-af27-bcf026d518f0" name="Default Changelist" comment="" />
+      <created>1605872720028</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1605872720028</updated>
+      <workItem from="1605872731387" duration="1691000" />
+      <workItem from="1607014926959" duration="18678000" />
+      <workItem from="1607075188150" duration="19700000" />
+      <workItem from="1607442290139" duration="7206000" />
+      <workItem from="1607545464250" duration="6755000" />
+      <workItem from="1607605689350" duration="2574000" />
+      <workItem from="1607692816987" duration="2518000" />
+      <workItem from="1607722762872" duration="1526000" />
+      <workItem from="1608417804174" duration="414000" />
+      <workItem from="1608465229887" duration="1272000" />
+      <workItem from="1608647771239" duration="7211000" />
+      <workItem from="1608825238847" duration="1841000" />
+      <workItem from="1608991416620" duration="11268000" />
+      <workItem from="1609247562814" duration="20289000" />
+      <workItem from="1609419926905" duration="5107000" />
+      <workItem from="1609772080780" duration="1982000" />
+      <workItem from="1609845626624" duration="586000" />
+      <workItem from="1609918985072" duration="582000" />
+    </task>
+    <task id="LOCAL-00001" summary="Logo Logiciel">
+      <created>1607019215070</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1607019215070</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Amélioration Ajout des salles + Design&#10;Création d'une classe ColorPerso pour ajouter des couleurs personnalisées">
+      <created>1607034669339</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1607034669339</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Récupération sur l'interface des salles d'un ArrayList&#10;Interface resizable sans mise à l'échelle des éléments">
+      <created>1607091130133</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1607091130133</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Ajout dans un ArrayList des salles">
+      <created>1607098263293</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1607098263293</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Ajout dans un ArrayList des salles">
+      <created>1607442566981</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1607442566981</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Début Listener">
+      <created>1607444357097</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1607444357097</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Début Listener">
+      <created>1607545609640</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1607545609640</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Corrections mineures">
+      <created>1607545934120</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1607545934120</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Resize connexion">
+      <created>1607548423065</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1607548423065</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Resize connexion">
+      <created>1607551474302</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1607551474302</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Changements GlobalFrame">
+      <created>1607551675987</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1607551675987</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Location + resize">
+      <created>1607551920768</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1607551920768</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Few things">
+      <created>1607606425374</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1607606425374</updated>
+    </task>
+    <task id="LOCAL-00014" summary="GameCreation Liste d'énigmes chargement">
+      <created>1608825728491</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1608825728491</updated>
+    </task>
+    <task id="LOCAL-00015" summary="GameCreation Liste d'énigmes chargement 2">
+      <created>1609002935131</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1609002935131</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Mise à jour GameCreation avec createList()">
+      <created>1609019916538</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1609019916538</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Affichage Fonctionnel GameCreation">
+      <created>1609254305709</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1609254305709</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Logo Logiciel" />
+    <MESSAGE value="Amélioration Ajout des salles + Design&#10;Création d'une classe ColorPerso pour ajouter des couleurs personnalisées" />
+    <MESSAGE value="Récupération sur l'interface des salles d'un ArrayList&#10;Interface resizable sans mise à l'échelle des éléments" />
+    <MESSAGE value="Ajout dans un ArrayList des salles" />
+    <MESSAGE value="Début Listener" />
+    <MESSAGE value="Corrections mineures" />
+    <MESSAGE value="Resize connexion" />
+    <MESSAGE value="Changements GlobalFrame" />
+    <MESSAGE value="Location + resize" />
+    <MESSAGE value="Few things" />
+    <MESSAGE value="GameCreation Liste d'énigmes chargement" />
+    <MESSAGE value="GameCreation Liste d'énigmes chargement 2" />
+    <MESSAGE value="Mise à jour GameCreation avec createList()" />
+    <MESSAGE value="Affichage Fonctionnel GameCreation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Affichage Fonctionnel GameCreation" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="765" y="236" key="#com.intellij.ide.util.MemberChooser" timestamp="1609003928153">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="765" y="236" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1609003928153" />
+    <state x="597" y="444" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1608648937395">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="597" y="444" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1608648937395" />
+    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1607096242598">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1607096242598" />
+    <state x="494" y="88" key="CommitChangelistDialog2" timestamp="1609254303651">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="494" y="88" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1609254303651" />
+    <state x="112" y="93" key="DiffContextDialog" timestamp="1609002961811">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="112" y="93" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1609002961811" />
+    <state x="666" y="261" key="FileChooserDialogImpl" timestamp="1607016670306">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="666" y="261" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1607016670306" />
+    <state width="1877" height="117" key="GridCell.Tab.0.bottom" timestamp="1609798601022">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="295" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1366.728@0.0.1920.1040" timestamp="1608472350885" />
+    <state width="1877" height="117" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1609798601022" />
+    <state width="1877" height="117" key="GridCell.Tab.0.center" timestamp="1609798601022">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="295" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1366.728@0.0.1920.1040" timestamp="1608472350885" />
+    <state width="1877" height="117" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1609798601022" />
+    <state width="1877" height="117" key="GridCell.Tab.0.left" timestamp="1609798601022">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="295" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1366.728@0.0.1920.1040" timestamp="1608472350881" />
+    <state width="1877" height="117" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1609798601022" />
+    <state width="1877" height="117" key="GridCell.Tab.0.right" timestamp="1609798601022">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="295" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1366.728@0.0.1920.1040" timestamp="1608472350885" />
+    <state width="1877" height="117" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1609798601022" />
+    <state width="1877" height="346" key="GridCell.Tab.1.bottom" timestamp="1609346794277">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="346" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1609346794277" />
+    <state width="1877" height="346" key="GridCell.Tab.1.center" timestamp="1609346794277">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="346" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1609346794277" />
+    <state width="1877" height="346" key="GridCell.Tab.1.left" timestamp="1609346794277">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="346" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1609346794277" />
+    <state width="1877" height="346" key="GridCell.Tab.1.right" timestamp="1609346794277">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="346" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1609346794277" />
+    <state x="184" y="86" key="MergeDialog" timestamp="1609254385637">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="184" y="86" key="MergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1609254385637" />
+    <state x="598" y="281" key="MultipleFileMergeDialog" timestamp="1609254385649">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="598" y="281" key="MultipleFileMergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1609254385649" />
+    <state x="628" y="222" key="RollbackChangesDialog" timestamp="1609254238489">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="628" y="222" key="RollbackChangesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1609254238489" />
+    <state x="440" y="94" key="SettingsEditor" timestamp="1607016676694">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="440" y="94" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1607016676694" />
+    <state width="498" height="446" key="SwitcherDM" timestamp="1609251588627">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="498" height="446" key="SwitcherDM/0.0.1920.1040@0.0.1920.1040" timestamp="1609251588627" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1609255044285">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1609255044285" />
+    <state x="664" y="412" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1607016699804">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="664" y="412" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD/0.0.1920.1040@0.0.1920.1040" timestamp="1607016699804" />
+    <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1609423213229">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1609423213229" />
+    <state x="512" y="249" width="895" height="629" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1609252664802">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="512" y="249" width="895" height="629" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1920.1040@0.0.1920.1040" timestamp="1609252664802" />
+    <state x="616" y="240" key="run.anything.popup" timestamp="1609250808417">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="616" y="240" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1609250808417" />
+  </component>
+</project>
