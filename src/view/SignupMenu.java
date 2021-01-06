@@ -125,7 +125,7 @@ public class SignupMenu extends JPanel implements ActionListener, MouseListener 
           JOptionPane.showMessageDialog(frame, "L'identifiant demandé n'est pas disponible", "Attention", JOptionPane.WARNING_MESSAGE);
         }
       } else {
-        JOptionPane.showMessageDialog(frame, "La clé fournie est incorrecte", "Attention", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(frame, "Soit l'identifiant demandé n'est pas disponible , soit la clé fournie est incorrecte", "Attention", JOptionPane.WARNING_MESSAGE);
       }
       
     }
