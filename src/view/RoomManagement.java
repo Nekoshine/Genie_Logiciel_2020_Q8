@@ -271,12 +271,13 @@ public class RoomManagement extends JPanel implements ActionListener {
 
         JButton boutonLancer = new JButton("Lancer");
         boutonLancer.setBackground(ColorPerso.vert);
+        if(salle.getGame()== null){
+            boutonLancer.setEnabled(false);
+            boutonLancer.setBackground(ColorPerso.darkGray);
+        }
+
         boutonLancer.addActionListener(new AbstractAction() {
             @Override
-
-            /**
-             *
-             */
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Bouton lancer " +salle.getId());
             }
@@ -335,6 +336,5 @@ public class RoomManagement extends JPanel implements ActionListener {
         frame.repaint();
 
     }
-
 
 }

@@ -16,4 +16,12 @@ public class Hint {
     public int getTimer() {
         return this.timer;
     }
+
+    public void setClue(String clue) {
+        this.clue = clue;
+    }
+
+    public void setTimer(int timer) {
+        this.timer = timer;
+    }
 }

@@ -1,6 +1,7 @@
 package view;
 
 import launcher.Main;
+import model.EnigmaList;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -50,7 +51,7 @@ public class GlobalFrame extends JFrame {
 
         //this.setSize(windowSize);
         this.setLocationRelativeTo(null);
-        //this.setMinimumSize(new Dimension(720,480));
+        this.setMinimumSize(new Dimension(720,480));
         //this.setResizable(false);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -61,7 +62,7 @@ public class GlobalFrame extends JFrame {
                 super.componentResized(e);
                 windowSize = getSize();
                 if (getContentPane() instanceof GameCreation) {
-                    GameCreation gameCreation = new GameCreation(frame,roomNumber);
+                    GameCreation gameCreation = new GameCreation(frame,roomNumber,Main.ListEnigma);
                     setContentPane(gameCreation);
                 }
                 if (getContentPane() instanceof CurrentGame) {
@@ -137,11 +138,10 @@ public class GlobalFrame extends JFrame {
         frame.repaint();
     }
 
-    public void gameCreationDisplay(GlobalFrame frame,int roomNumber){
+    public void gameCreationDisplay(GlobalFrame frame, int roomNumber, EnigmaList listEnigma){
 
-        gameCreation = new GameCreation(frame,roomNumber);
+        gameCreation = new GameCreation(frame,roomNumber,listEnigma);
         setContentPane(gameCreation);
-        frame.setSize(1280,720);
         frame.setResizable(true);
         frame.setLocationRelativeTo(null);
         frame.revalidate();

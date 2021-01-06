@@ -72,4 +72,16 @@ public class Enigma {
   public int getId() {
     return this.id;
   }
+
+  public void setQuestion(String question) {
+    this.question = question;
+  }
+
+  public void setAnswer(String answer) {
+    this.answer = answer;
+  }
+
+  public void setClue1(Hint clue1) {
+    this.clue1 = clue1;
+  }
 }

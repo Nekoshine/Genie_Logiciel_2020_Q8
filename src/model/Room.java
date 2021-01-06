@@ -16,4 +16,8 @@ public class Room {
     public Game getGame(){
         return this.Game;
     }
+
+    public void setGame(model.Game game) {
+        Game = game;
+    }
 }

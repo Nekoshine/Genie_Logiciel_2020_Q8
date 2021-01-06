@@ -2,7 +2,9 @@
 
 package view;
 
+import launcher.Main;
 import model.GameList;
+import model.Room;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -52,6 +54,8 @@ public class GameManagement extends JPanel implements ActionListener {
         int nbGames = ListGame.getSize(); //fonction pour récupérer nombre de Jeux enregistrés dans BdD
 
         for(int i = 0; i<nbGames; i++){
+
+            final int y = i;
             JPanel gameInsidePanel = new JPanel();
             JPanel gameOutsidePanel = new JPanel();
             JPanel gameNbPanel = new JPanel();
@@ -101,7 +105,16 @@ public class GameManagement extends JPanel implements ActionListener {
                 buttonChose.setBackground(ColorPerso.vert);
                 buttonChose.setOpaque(true);
 
-                buttonChose.addActionListener(this);
+                int finalI = i;
+                buttonChose.addActionListener(new AbstractAction() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        //Main.ListRoom.getRoom(roomNumber).setGame(ListGame.getGame(y+1));
+                        System.out.println(y+1);
+                        System.out.println(roomNumber);
+                      frame.roomManagementDisplay(frame);
+                    }
+                });
 
                 buttonChosePanel.add(buttonChose, BorderLayout.CENTER);
 
@@ -151,7 +164,7 @@ public class GameManagement extends JPanel implements ActionListener {
             frame.mainMenuDisplay(frame);
         }
         if (e.getSource() == buttonAddGame){
-            frame.gameCreationDisplay(frame,frame.roomNumber);
+            frame.gameCreationDisplay(frame,frame.roomNumber, Main.ListEnigma);
         }
     }
 }
