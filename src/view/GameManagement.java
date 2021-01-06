@@ -2,8 +2,11 @@
 
 package view;
 
+import database.DBEnigma;
 import database.DBGame;
 import launcher.Main;
+import model.EnigmaList;
+import model.Game;
 import model.GameList;
 import view.style.ColorPerso;
 
@@ -156,12 +159,20 @@ public class GameManagement extends JPanel implements ActionListener {
             frame.mainMenuDisplay(frame);
         }
         else if (e.getSource() == buttonAddGame){
-            frame.gameCreationDisplay(frame,frame.roomNumber);
+            Main.ListEnigma= new EnigmaList();
+            frame.gameCreationDisplay(frame,frame.roomNumber,null);
         }
         else if (e.getSource() == buttonChose){
             //int jeuChoisi=0;
             //DBRoom.insertRoom(frame.roomNumber,jeuChoisi);
             //ajout de la salle a la BDD
+        }
+        else if (e.getSource()==buttonModify){
+            int jeuChoisi = 5;
+            Main.ListEnigma= DBEnigma.getEnigmas(jeuChoisi);
+            Game jeu= ListGame.findByID(jeuChoisi);
+            frame.gameCreationDisplay(frame,frame.roomNumber,jeu);
+
         }
     }
 }

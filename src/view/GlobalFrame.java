@@ -1,6 +1,9 @@
 package view;
 
 import launcher.Main;
+import model.Enigma;
+import model.EnigmaList;
+import model.Game;
 import view.style.ColorPerso;
 import view.style.FontPerso;
 
@@ -63,7 +66,7 @@ public class GlobalFrame extends JFrame {
                 super.componentResized(e);
                 windowSize = getSize();
                 if (getContentPane() instanceof GameCreation) {
-                    GameCreation gameCreation = new GameCreation(frame,roomNumber,Main.ListEnigma);
+                    GameCreation gameCreation = new GameCreation(frame,roomNumber,null);
                     setContentPane(gameCreation);
                 }
                 if (getContentPane() instanceof CurrentGame) {
@@ -139,9 +142,9 @@ public class GlobalFrame extends JFrame {
         frame.repaint();
     }
 
-    public void gameCreationDisplay(GlobalFrame frame,int roomNumber){
+    public void gameCreationDisplay(GlobalFrame frame, int roomNumber, Game game){
 
-        gameCreation = new GameCreation(frame,roomNumber,Main.ListEnigma);
+        gameCreation = new GameCreation(frame,roomNumber,game);
         setContentPane(gameCreation);
         frame.setSize(1280,720);
         frame.setResizable(true);

@@ -40,4 +40,8 @@ public class Game{
   public String toString() {
     return titre;
   }
+
+    public int getIdUser() {
+    return id;
+    }
 }

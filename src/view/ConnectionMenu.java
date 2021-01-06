@@ -91,11 +91,15 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
         if (e.getSource() == connection){
             String idinput = saisieidentifiant.getText();
             String mdpinput = String.valueOf(saisiemotdepasse.getPassword());
-            if (DBUser.connectUser(idinput,mdpinput)){
+            int isAdmin = DBUser.connectUser(idinput,mdpinput);
+            if (isAdmin==1){
                 frame.mainMenuDisplay(frame);
                 Main.ListRoom = DBRoom.getRooms(Main.idUser); // recherche des salles dans la BDD apres la connection
             }
-            else{
+            else if( isAdmin==0){
+                JOptionPane.showMessageDialog(frame,"Interface Joueur");
+            }
+            else {
                 JOptionPane.showMessageDialog(frame,"l'identifiant ou le mot de passe ne correspond pas");
             }
 
