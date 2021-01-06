@@ -2,10 +2,6 @@
 
 package view;
 
-import controller.RoomController;
-import database.DBUser;
-import launcher.Main;
-import model.Game;
 import launcher.Main;
 import model.Room;
 import model.RoomList;
@@ -206,27 +202,26 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
      * @return un JPanel avec la salle
      */
 
-    private JPanel ajoutSalle(Room salle, GridBagConstraints gbc, int i){
+    private JPanel ajoutSalle(Room salle, GridBagConstraints gbc, int i) {
 
         /* Contraintes GridBag */
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1.0;
-        gbc.gridy = salle.getId()-1;
+        gbc.gridy = salle.getId() - 1;
         gbc.gridx = 0;
 
         /* Ajout Panel */
         JPanel panelSalle = new JPanel();
 
         /* Construction Panel Salle */
-        GridLayout grille = new GridLayout(1,4,70,50);
+        GridLayout grille = new GridLayout(1, 4, 70, 50);
         JLabel nomSalle = new JLabel("Salle " + i + " :");
         nomSalle.setHorizontalAlignment(SwingConstants.CENTER);
 
         JLabel nomJeu;
-        if (salle.getGame()!=null){
+        if (salle.getGame() != null) {
             nomJeu = new JLabel(salle.getGame().getTitre());
-        }
-        else{
+        } else {
             nomJeu = new JLabel("Pas de jeu");
         }
         nomJeu.setHorizontalAlignment(SwingConstants.CENTER);
@@ -241,13 +236,16 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
         });
         boutonJeu.addMouseListener(new MouseListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {}
+            public void mouseClicked(MouseEvent e) {
+            }
 
             @Override
-            public void mousePressed(MouseEvent e) {}
+            public void mousePressed(MouseEvent e) {
+            }
 
             @Override
-            public void mouseReleased(MouseEvent e) {}
+            public void mouseReleased(MouseEvent e) {
+            }
 
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -262,7 +260,7 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
 
         JButton boutonLancer = new JButton("Lancer");
         boutonLancer.setBackground(ColorPerso.vert);
-        if(salle.getGame()== null || salle.getUserInside()==-1){
+        if (salle.getGame() == null || salle.getUserInside() == -1) {
             boutonLancer.setEnabled(false);
             boutonLancer.setBackground(ColorPerso.darkGray);
         }
@@ -274,7 +272,7 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
             }
         });
 
-        if(boutonLancer.isEnabled()) {
+        if (boutonLancer.isEnabled()) {
             boutonLancer.addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {

@@ -2,7 +2,6 @@ package database;
 import model.Game;
 import model.GameList;
 
-import javax.xml.bind.DatatypeConverter;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -90,9 +89,9 @@ public class DBGame extends DBConnexion {
     int valueReady=0;
     try{
       PreparedStatement requete = DBGame.getConnexion().prepareStatement("Insert into Game VALUES (default,?,?,?,?,?)");
-      requete.setString(1,titreN);
-      requete.setInt(2,scoreN);
-      requete.setInt(3,idUserN);
+      requete.setInt(1,idUserN);
+      requete.setString(2,titreN);
+      requete.setInt(3,scoreN);
       requete.setInt(4,timerN);
       if(readyN){
         valueReady=1;
@@ -113,5 +112,41 @@ public class DBGame extends DBConnexion {
       System.err.println("Erreur requete insertGame: " + e.getMessage());
     }
     return inserted;
+  }
+
+  public static int getIdGame(String titre) {
+    int idGame=0;
+    try {
+      PreparedStatement requete = DBGame.getConnexion().prepareStatement("Select id from Game where titre=?");
+      requete.setString(1, titre);
+      ResultSet resultat = requete.executeQuery();
+      if (resultat.next()!=false) {
+        idGame = resultat.getInt("id");
+      }
+      requete.close();
+      resultat.close();
+      return idGame;
+    } catch (SQLException e) {
+      System.err.println("Erreur requete getIdGame: " + e.getMessage());
+    }
+    return idGame;
+  }
+
+  public static String getTitleGame(int idGame) {
+    String titre = "Titre";
+    try {
+      PreparedStatement requete = DBGame.getConnexion().prepareStatement("Select id from Game where id=?");
+      requete.setInt(1, idGame);
+      ResultSet resultat = requete.executeQuery();
+      if (resultat.next()!=false) {
+        titre = resultat.getString("titre");
+      }
+      requete.close();
+      resultat.close();
+      return "Titre";
+    } catch (SQLException e) {
+      System.err.println("Erreur requete getIdGame: " + e.getMessage());
+    }
+    return titre;
   }
 }

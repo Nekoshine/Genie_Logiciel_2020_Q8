@@ -3,9 +3,7 @@ package view;
 import launcher.Main;
 import model.Enigma;
 import model.EnigmaList;
-import model.User;
-import view.style.ColorPerso;
-import view.style.FontPerso;
+import model.Game;
 import view.style.ColorPerso;
 import view.style.FontPerso;
 
@@ -29,10 +27,8 @@ public class GlobalFrame extends JFrame {
     GameManagement gamemanagement;
     GameCreation gameCreation;
     CurrentGame currentGame;
-    RoomAccess roomAccess;
 
     public int roomNumber;
-    public boolean insideRoom = false;
 
 
     public GlobalFrame() throws IOException {
@@ -53,13 +49,13 @@ public class GlobalFrame extends JFrame {
 
         //menu = new RoomManagement();
         //this.setContentPane(menu);
-        roomAccessDisplay(this);
+        mainMenuDisplay(this);
 
 
 
         //this.setSize(windowSize);
         this.setLocationRelativeTo(null);
-        this.setMinimumSize(new Dimension(720,480));
+        //this.setMinimumSize(new Dimension(720,480));
         //this.setResizable(false);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -70,7 +66,7 @@ public class GlobalFrame extends JFrame {
                 super.componentResized(e);
                 windowSize = getSize();
                 if (getContentPane() instanceof GameCreation) {
-                    GameCreation gameCreation = new GameCreation(frame,roomNumber,Main.ListEnigma);
+                    GameCreation gameCreation = new GameCreation(frame,roomNumber,null);
                     setContentPane(gameCreation);
                 }
                 if (getContentPane() instanceof CurrentGame) {
@@ -146,10 +142,11 @@ public class GlobalFrame extends JFrame {
         frame.repaint();
     }
 
-    public void gameCreationDisplay(GlobalFrame frame, int roomNumber, EnigmaList enigmaList){
+    public void gameCreationDisplay(GlobalFrame frame, int roomNumber, Game game){
 
-        gameCreation = new GameCreation(frame,roomNumber,Main.ListEnigma);
+        gameCreation = new GameCreation(frame,roomNumber,game);
         setContentPane(gameCreation);
+        frame.setSize(1280,720);
         frame.setResizable(true);
         frame.setLocationRelativeTo(null);
         frame.revalidate();
@@ -166,16 +163,5 @@ public class GlobalFrame extends JFrame {
         frame.revalidate();
         frame.repaint();
 
-    }
-
-    public void roomAccessDisplay(GlobalFrame frame){
-
-        roomAccess = new RoomAccess(frame);
-        setContentPane(roomAccess);
-        frame.setSize(1280,720);
-        frame.setResizable(true);
-        this.setLocationRelativeTo(null);
-        frame.revalidate();
-        frame.repaint();
     }
 }
