@@ -2,6 +2,7 @@ package database;
 import model.Game;
 import model.GameList;
 
+import javax.xml.bind.DatatypeConverter;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -40,7 +41,7 @@ public class DBGame extends DBConnexion {
       requete.close();
       resultat.close();
     } catch(SQLException e ){
-      System.err.println("Erreur requete connectUser: " + e.getMessage());
+      System.err.println("Erreur requete getGames: " + e.getMessage());
     }
     return gameList;
   }
@@ -63,10 +64,8 @@ public class DBGame extends DBConnexion {
         valueReady=1;
       }
       requete.setInt(6,valueReady);
-      ResultSet resultat = requete.executeQuery();
-      
+      requete.executeUpdate();
       requete.close();
-      resultat.close();
       PreparedStatement requeteVerif = DBUser.getConnexion().prepareStatement("Select * from Game where id=?");  // On regarde si l'user a bien été inséré
       requeteVerif.setString(1, String.valueOf(game.getId()));
       ResultSet resultatVerif = requeteVerif.executeQuery();
@@ -76,7 +75,7 @@ public class DBGame extends DBConnexion {
       resultatVerif.close();
       requeteVerif.close();
     } catch(SQLException e ){
-      System.err.println("Erreur requete connectUser: " + e.getMessage());
+      System.err.println("Erreur requete insertGame: " + e.getMessage());
     }
     return inserted;
   }
@@ -99,10 +98,8 @@ public class DBGame extends DBConnexion {
         valueReady=1;
       }
       requete.setInt(5,valueReady);
-      ResultSet resultat = requete.executeQuery();
-      
+      requete.executeUpdate();
       requete.close();
-      resultat.close();
       PreparedStatement requeteVerif = DBUser.getConnexion().prepareStatement("Select * from Game where titre=? and idUser=?");  // On regarde si l'user a bien été inséré
       requeteVerif.setString(1,titreN);
       requeteVerif.setInt(2,idUserN);
@@ -113,7 +110,7 @@ public class DBGame extends DBConnexion {
       resultatVerif.close();
       requeteVerif.close();
     } catch(SQLException e ){
-      System.err.println("Erreur requete connectUser: " + e.getMessage());
+      System.err.println("Erreur requete insertGame: " + e.getMessage());
     }
     return inserted;
   }
