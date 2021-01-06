@@ -3,6 +3,8 @@
 package view;
 
 import controller.RoomController;
+import database.DBUser;
+import launcher.Main;
 import model.Game;
 import model.Room;
 import model.RoomList;
@@ -48,7 +50,7 @@ public class RoomManagement extends JPanel implements ActionListener {
     private int compteur = 0;
 
 
-    public RoomManagement(GlobalFrame frame,RoomList list){
+    public RoomManagement(GlobalFrame frame){
 
         this.frame = frame;
 
@@ -58,7 +60,7 @@ public class RoomManagement extends JPanel implements ActionListener {
         ListRoom.addRoom(2,"Titre du jeu 2");
         ListRoom.addRoom(3,"Titre du jeu 3");
         ListRoom.addRoom(4,"Titre du jeu 4");*/
-        ListRoom = list;
+        ListRoom = Main.ListRoom;
 
         /* Déclaration JPanel - JScrollPane */
 

@@ -73,15 +73,27 @@ public class Enigma {
     return this.id;
   }
 
-  public void setQuestion(String question) {
-    this.question = question;
+  public void setClue1(Hint clue1) {
+    this.clue1 = clue1;
   }
 
   public void setAnswer(String answer) {
     this.answer = answer;
   }
 
-  public void setClue1(Hint clue1) {
-    this.clue1 = clue1;
+  public void setQuestion(String question) {
+    this.question = question;
+  }
+
+  public void setClue2(Hint clue2) {
+    this.clue2 = clue2;
+  }
+
+  public void setClue3(Hint clue3) {
+    this.clue3 = clue3;
+  }
+
+  public void setId(int id) {
+    this.id = id;
   }
 }

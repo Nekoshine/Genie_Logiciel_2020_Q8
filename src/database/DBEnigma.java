@@ -1,5 +1,6 @@
 package database;
 
+import launcher.Main;
 import model.Enigma;
 import model.EnigmaList;
 import model.Room;
@@ -17,8 +18,9 @@ public class DBEnigma extends DBConnexion{
     public  static EnigmaList getEnigmas(int idGame){
         EnigmaList enigmaList = new EnigmaList();
         try{
-            PreparedStatement requete = DBGame.getConnexion().prepareStatement("Select * from Enigma WHERE idGame = ?");
+            PreparedStatement requete = DBGame.getConnexion().prepareStatement("Select * from Enigma,Game WHERE Enigma.idGame = Game.id AND Enigma.idGame = ? AND Game.idUser = ? ORDER BY Enigma.id ASC");
             requete.setString(1, String.valueOf(idGame));
+            requete.setString(2, String.valueOf(Main.idUser));
             ResultSet resultat = requete.executeQuery();
             while (resultat.next() != false) { // On itère chaque résultat
                 enigmaList.addEnigma(
@@ -28,11 +30,11 @@ public class DBEnigma extends DBConnexion{
                                 resultat.getString("clue3"),resultat.getInt("timer3")));
                 // On crée l'objet model.Game et on l'ajoute dans la liste
             }
-            for (int i=0;i<enigmaList.getSize() ;i++ ) {
+            /*for (int i=0;i<enigmaList.getSize() ;i++ ) {
                 System.out.println(enigmaList.getEnigma(i).getId());
                 System.out.println(enigmaList.getEnigma(i).getText());
                 System.out.println(enigmaList.getEnigma(i).getAnswer());
-            }
+            }*/
             requete.close();
             resultat.close();
         } catch(SQLException e ){
