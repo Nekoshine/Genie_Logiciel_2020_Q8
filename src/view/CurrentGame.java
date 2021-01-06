@@ -50,6 +50,8 @@ public class CurrentGame extends JPanel implements ActionListener {
     private int timerclue1;
     private int timerclue2;
     private int timerclue3;
+    private boolean ishint2present;
+    private boolean ishint3present;
 
     private EnigmaList allEnigmas;
 
@@ -67,7 +69,13 @@ public class CurrentGame extends JPanel implements ActionListener {
         this.frame = frame;
         allEnigmas = DBEnigma.getEnigmas(partiechoisie.getId());
 
+        timerclue1 = allEnigmas.getEnigma(enigmalistflag).getTimer1();
 
+        ishint2present = allEnigmas.getEnigma(enigmalistflag).getClue2().isEmpty();
+        if(ishint2present){timerclue2 = allEnigmas.getEnigma(enigmalistflag).getTimer2();}
+
+        ishint3present = allEnigmas.getEnigma(enigmalistflag).getClue3().isEmpty();
+        if(ishint3present){timerclue3 = allEnigmas.getEnigma(enigmalistflag).getTimer3();};
 
 
         //titre + timer
@@ -91,7 +99,7 @@ public class CurrentGame extends JPanel implements ActionListener {
 
         //Enigme en cours
 
-        currentEnigmaTextArea = new JTextArea("Recuperer le texte de l'énigme en cours");
+        currentEnigmaTextArea = new JTextArea(allEnigmas.getEnigma(enigmalistflag).getText());
         currentEnigmaTextArea.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         currentEnigmaTextArea.setLineWrap(true);
         currentEnigmaTextArea.setWrapStyleWord(true);
@@ -127,7 +135,7 @@ public class CurrentGame extends JPanel implements ActionListener {
 
         //anciennes enigmes
 
-        oldEnigmaTextArea = new JTextArea("Recuperer le texte de l'énigme en cours");
+        oldEnigmaTextArea = new JTextArea("Texte des enigmes deja traitées");
         oldEnigmaTextArea.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         oldEnigmaTextArea.setLineWrap(true);
         oldEnigmaTextArea.setWrapStyleWord(true);
@@ -154,7 +162,8 @@ public class CurrentGame extends JPanel implements ActionListener {
         hintContainer1.add(hint1Button);
 
         hint2Button = new JButton("hint2");
-        hint2Button.setEnabled(false);
+        if(ishint2present){hint2Button.setEnabled(true);}
+        else{hint2Button.setEnabled(false);}
         hint2Button.setBackground(ColorPerso.GRAY);
         hint2Button.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
 
@@ -164,7 +173,8 @@ public class CurrentGame extends JPanel implements ActionListener {
         hintContainer2.add(hint2Button);
 
         hint3Button = new JButton("hint3");
-        hint3Button.setEnabled(true);
+        if(ishint3present){hint3Button.setEnabled(true);}
+        else{hint3Button.setEnabled(false);}
         hint3Button.setBackground(ColorPerso.GRAY);
         hint3Button.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
 
@@ -208,6 +218,78 @@ public class CurrentGame extends JPanel implements ActionListener {
     }
 
 
-    public void actionPerformed(ActionEvent event) {}
+    public void actionPerformed(ActionEvent event) {
+        if (event.getSource() == hint1Button){
+            hint1TextArea = new JTextArea(allEnigmas.getEnigma(enigmalistflag).getClue1());
+            hintContainer1.remove(hint1Button);
+            hintContainer1.add(hint1TextArea);
+            frame.revalidate();
+            frame.repaint();
+        }
+
+        if (event.getSource() == hint2Button){
+            if(ishint2present){
+                hint2TextArea = new JTextArea(allEnigmas.getEnigma(enigmalistflag).getClue2());
+                hintContainer2.remove(hint2Button);
+                hintContainer2.add(hint2TextArea);
+                frame.revalidate();
+                frame.repaint();
+            }
+        }
+
+        if (event.getSource() == hint1Button){
+            if(ishint3present) {
+                hint3TextArea = new JTextArea(allEnigmas.getEnigma(enigmalistflag).getClue3());
+                hintContainer3.remove(hint3Button);
+                hintContainer3.add(hint3TextArea);
+                frame.revalidate();
+                frame.repaint();
+            }
+        }
+
+        if (event.getSource() == confirmButton){
+            String answer = answerTextField.getText();
+            if (answer.equals(allEnigmas.getEnigma(enigmalistflag).getAnswer())){
+                if(enigmalistflag < allEnigmas.getSize() - 1){
+
+                    //maj des champs relatifs aux enigmes
+
+                    oldEnigmaTextArea.append(allEnigmas.getEnigma(enigmalistflag).getText());
+                    enigmalistflag ++;
+                    currentEnigmaTextArea = new JTextArea(allEnigmas.getEnigma(enigmalistflag).getText());
+
+                    //maj hint 1
+                    hintContainer1.remove(hint1TextArea);
+                    hintContainer1.add(hint1Button);
+                    hint1Button.setEnabled(true);
+
+
+                    //maj hint 2
+
+                    if(ishint2present) {
+                        hintContainer2.remove(hint2TextArea);
+                        hintContainer2.add(hint2Button);
+                    }
+                    ishint2present = allEnigmas.getEnigma(enigmalistflag).getClue2().isEmpty();
+                    if (ishint2present) {hint2Button.setEnabled(true);}
+                    else {hint3Button.setEnabled(true);}
+
+                    //maj hint 3
+
+                    if(ishint3present) {
+                        hintContainer3.remove(hint3TextArea);
+                        hintContainer3.add(hint3Button);
+                    }
+
+                    ishint2present = allEnigmas.getEnigma(enigmalistflag).getClue2().isEmpty();
+                    if (ishint2present) {hint2Button.setEnabled(true);}
+                    else {hint3Button.setEnabled(true);}
+
+
+                }
+            }
+        }
+
+    }
 
 }
