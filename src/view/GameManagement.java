@@ -136,7 +136,6 @@ public class GameManagement extends JPanel implements ActionListener {
         buttonReturn.setBackground(ColorPerso.rouge);
         buttonReturn.setForeground(Color.white);
         buttonReturn.setOpaque(true);
-        buttonReturn.addActionListener(this);
         buttonReturnPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         buttonReturnPanel.add(buttonReturn);
 
