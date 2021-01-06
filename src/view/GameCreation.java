@@ -5,10 +5,7 @@ package view;
 import database.DBEnigma;
 import database.DBGame;
 import launcher.Main;
-import model.Enigma;
-import model.EnigmaList;
-import model.Hint;
-import model.Room;
+import model.*;
 import view.style.ColorPerso;
 import view.style.FontPerso;
 
@@ -21,10 +18,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class GameCreation extends JPanel implements ActionListener {
 
     public EnigmaList listEnigma;
+    public Game game;
 
     private BorderLayout mainLayout;
     private BorderLayout titleLayout;
@@ -76,10 +75,11 @@ public class GameCreation extends JPanel implements ActionListener {
     private GlobalFrame frame;
 
 
-    public GameCreation(GlobalFrame frame, int roomNumber, EnigmaList listEnigma){
+    public GameCreation(GlobalFrame frame, int roomNumber, Game game){
 
         this.frame = frame;
-        this.listEnigma = listEnigma;
+        this.game=game;
+        this.listEnigma = Main.ListEnigma;
 
         mainLayout = new BorderLayout(10,10);
         titleLayout= new BorderLayout(10,10);
@@ -112,8 +112,14 @@ public class GameCreation extends JPanel implements ActionListener {
         deleteButton = new JButton("Supprimer");
         newButton = new JButton("Nouvelle Enigme");
 
-        title = new JTextField("Titre",45);
-        initialScore = new JTextField("Score Initial",7);
+        if(game==null) {
+            title = new JTextField("Titre", 45);
+            initialScore = new JTextField("Score Initial", 7);
+        }
+        else {
+            title = new JTextField(game.getTitre(),45);
+            initialScore = new JTextField(String.valueOf(game.getScore()),7);
+        }
         points = new JTextField("Points (Si désiré)",7);
 
         windowName = new JLabel("MJ - Création/Modification de Jeux",JLabel.CENTER);
@@ -317,7 +323,7 @@ public class GameCreation extends JPanel implements ActionListener {
         JTextField time3;
 
         if (enigme.getTimer3()==-1){
-            time3 = new JTextField();
+            time3 = new JTextField("Timer 3 (en s)");
 
         }
         else{
@@ -351,7 +357,7 @@ public class GameCreation extends JPanel implements ActionListener {
             public void caretUpdate(CaretEvent e) {
                 try{
                     int i = Integer.parseInt(time2.getText());
-                    listEnigma.getEnigma(enigme.getId() - 1).setClue1(new Hint(hint2.getText(), Integer.parseInt(time2.getText())));
+                    listEnigma.getEnigma(enigme.getId() - 1).setClue2(new Hint(hint2.getText(), Integer.parseInt(time2.getText())));
                 }
                 catch (Exception ex){
                     System.out.println("Le timer n'est pas un entier");
@@ -367,7 +373,7 @@ public class GameCreation extends JPanel implements ActionListener {
             public void caretUpdate(CaretEvent e) {
                 try{
                     int i = Integer.parseInt(time3.getText());
-                    listEnigma.getEnigma(enigme.getId() - 1).setClue1(new Hint(hint3.getText(), Integer.parseInt(time3.getText())));
+                    listEnigma.getEnigma(enigme.getId() - 1).setClue3(new Hint(hint3.getText(), Integer.parseInt(time3.getText())));
                 }
                 catch (Exception ex){
                     System.out.println("Le timer n'est pas un entier");
@@ -395,7 +401,7 @@ public class GameCreation extends JPanel implements ActionListener {
             public void caretUpdate(CaretEvent e) {
                 try{
                     int i = Integer.parseInt(time2.getText());
-                    listEnigma.getEnigma(enigme.getId() - 1).setClue1(new Hint(hint2.getText(), Integer.parseInt(time2.getText())));
+                    listEnigma.getEnigma(enigme.getId() - 1).setClue2(new Hint(hint2.getText(), Integer.parseInt(time2.getText())));
                 }
                 catch (Exception ex){
                     System.out.println("Le timer n'est pas un entier");
@@ -408,7 +414,7 @@ public class GameCreation extends JPanel implements ActionListener {
             public void caretUpdate(CaretEvent e) {
                 try{
                     int i = Integer.parseInt(time3.getText());
-                    listEnigma.getEnigma(enigme.getId() - 1).setClue1(new Hint(hint3.getText(), Integer.parseInt(time3.getText())));
+                    listEnigma.getEnigma(enigme.getId() - 1).setClue3(new Hint(hint3.getText(), Integer.parseInt(time3.getText())));
                 }
                 catch (Exception ex){
                     System.out.println("Le timer n'est pas un entier");
@@ -474,20 +480,19 @@ public class GameCreation extends JPanel implements ActionListener {
     private void majEnigma() {
         listEnigma.addEnigma(listEnigma.getSize()+1,1,"Enigme","Réponse","indice 1",-1,"indice 2",-1,"indice 3",-1);
         this.createList();
-        frame.gameCreationDisplay(frame,frame.roomNumber,listEnigma);
+        frame.gameCreationDisplay(frame,frame.roomNumber,game);
     }
 
     public void createList(){
-
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(15,15,20,30);
 
         for (int i = 0; i < listEnigma.getSize(); i++) {
             centerPanel.remove(newPanel);
-            JPanel panelEnigme = ajoutEnigme(listEnigma.getEnigma(i), gbc);
+            JPanel panelEnigme = this.ajoutEnigme(listEnigma.getEnigma(i), gbc);
             panelEnigme.setPreferredSize(new Dimension(centerPanel.getWidth()-45, 300));
             enigmasPanel.add(panelEnigme, gbc);
-            centerPanel.add(newPanel,BorderLayout.SOUTH);
+            centerPanel.add(newPanel,BorderLayout.PAGE_END);
             centerPanel.revalidate();
             centerPanel.repaint();
         }
@@ -508,7 +513,7 @@ public class GameCreation extends JPanel implements ActionListener {
         }
         else if (e.getSource()==deleteButton){
             listEnigma.removeEnigma(listEnigma.getSize()-1);
-            frame.gameCreationDisplay(frame,frame.roomNumber,listEnigma);
+            frame.gameCreationDisplay(frame,frame.roomNumber,game);
 
         }
         else if (e.getSource()==saveButton){

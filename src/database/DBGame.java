@@ -2,7 +2,6 @@ package database;
 import model.Game;
 import model.GameList;
 
-import javax.xml.bind.DatatypeConverter;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -131,5 +130,23 @@ public class DBGame extends DBConnexion {
       System.err.println("Erreur requete getIdGame: " + e.getMessage());
     }
     return idGame;
+  }
+
+  public static String getTitleGame(int idGame) {
+    String titre = "Titre";
+    try {
+      PreparedStatement requete = DBGame.getConnexion().prepareStatement("Select id from Game where id=?");
+      requete.setInt(1, idGame);
+      ResultSet resultat = requete.executeQuery();
+      if (resultat.next()!=false) {
+        titre = resultat.getString("titre");
+      }
+      requete.close();
+      resultat.close();
+      return "Titre";
+    } catch (SQLException e) {
+      System.err.println("Erreur requete getIdGame: " + e.getMessage());
+    }
+    return titre;
   }
 }
