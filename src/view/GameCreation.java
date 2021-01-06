@@ -478,7 +478,7 @@ public class GameCreation extends JPanel implements ActionListener {
 
 
     private void majEnigma() {
-        listEnigma.addEnigma(listEnigma.getSize()+1,1,"Enigme","Réponse","indice 1",-1,"indice 2",-1,"indice 3",-1);
+        listEnigma.addEnigma(listEnigma.getSize()+1,"Enigme","Réponse","indice 1",-1,"indice 2",-1,"indice 3",-1);
         this.createList();
         frame.gameCreationDisplay(frame,frame.roomNumber,game);
     }
