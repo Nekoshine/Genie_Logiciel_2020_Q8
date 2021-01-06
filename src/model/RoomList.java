@@ -49,17 +49,4 @@ public class RoomList {
     return List.get(i);
   }
 
-  public Room findByID(int i) {
-    for (int j = 0; j < this.getSize(); j++) {
-      if (this.getRoom(j).getId() == i) {
-        return this.getRoom(j);
-      }
-    }
-    return null;
-  }
 }
-
-
-
-
-

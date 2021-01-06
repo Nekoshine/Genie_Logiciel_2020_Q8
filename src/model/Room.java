@@ -4,7 +4,6 @@ public class Room {
 
     private int id;
     private Game Game;
-    private Boolean occuped = false;
 
     public Room(int id, Game Game){
         this.id = id;
@@ -21,17 +20,5 @@ public class Room {
     }
     public Game getGame(){
         return this.Game;
-    }
-
-    public void setGame(model.Game game) {
-        Game = game;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Boolean getOccuped() {
-        return occuped;
     }
 }
