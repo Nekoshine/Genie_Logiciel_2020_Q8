@@ -55,6 +55,9 @@ public class DBUser extends DBConnexion {
       System.err.println("Erreur Algorithme: " + e.getMessage());
     }
     Main.idUser=idUser;
+    if(b){
+      isAdmin = 1;
+    }
     return isAdmin;
   }
   /**
