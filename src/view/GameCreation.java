@@ -7,6 +7,8 @@ import model.Enigma;
 import model.EnigmaList;
 import model.Hint;
 import model.Room;
+import view.style.ColorPerso;
+import view.style.FontPerso;
 
 import javax.swing.*;
 import javax.swing.border.Border;

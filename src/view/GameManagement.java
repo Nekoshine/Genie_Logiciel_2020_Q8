@@ -115,8 +115,8 @@ public class GameManagement extends JPanel implements ActionListener {
                 buttonChose.addActionListener(new AbstractAction() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        //Main.ListRoom.getRoom(roomNumber).setGame(ListGame.getGame(y+1));
-                        System.out.println(y+1);
+                        Main.ListRoom.findByID(roomNumber).setGame(ListGame.findByID(y+1));
+
                         System.out.println(roomNumber);
                       frame.roomManagementDisplay(frame);
                     }
