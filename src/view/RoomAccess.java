@@ -3,6 +3,7 @@
 package view;
 
 import controller.RoomController;
+import database.DBRoom;
 import database.DBUser;
 import launcher.Main;
 import model.Game;
@@ -43,8 +44,9 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
         this.frame = frame;
         user = new User(Main.idUser,"","",false);
 
+
         /* Récuperation des salles */
-        ListRoom = Main.ListRoom;
+        ListRoom = DBRoom.getRooms(3);
 
         /* Déclaration JPanel - JScrollPane */
         listPanel = new JPanel();
@@ -185,10 +187,7 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
                     frame.insideRoom = true;
                     salle.setUserInside(user.getId());
                     frame.roomAccessDisplay(frame);
-                    boutonJoin.setText("En Attente du MJ");
-                    boutonJoin.setBackground(ColorPerso.vert);
-                    panelSalle.revalidate();
-                    panelSalle.repaint();
+
 
 
                 }

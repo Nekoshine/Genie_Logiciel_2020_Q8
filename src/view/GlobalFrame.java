@@ -27,8 +27,10 @@ public class GlobalFrame extends JFrame {
     GameManagement gamemanagement;
     GameCreation gameCreation;
     CurrentGame currentGame;
+    RoomAccess roomAccess;
 
     public int roomNumber;
+    public boolean insideRoom;
 
 
     public GlobalFrame() throws IOException {
@@ -160,6 +162,17 @@ public class GlobalFrame extends JFrame {
         frame.setSize(1280,720);
         frame.setResizable(true);
         this.setLocationRelativeTo(null);
+        frame.revalidate();
+        frame.repaint();
+
+    }
+
+    public void roomAccessDisplay(GlobalFrame frame){
+
+        roomAccess = new RoomAccess(frame);
+        setContentPane(roomAccess);
+        frame.setSize(1280,720);
+        frame.setResizable(true);
         frame.revalidate();
         frame.repaint();
 
