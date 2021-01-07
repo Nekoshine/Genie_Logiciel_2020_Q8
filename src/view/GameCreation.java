@@ -181,6 +181,7 @@ public class GameCreation extends JPanel implements ActionListener {
         initialScore.setHorizontalAlignment(JTextField.CENTER);
         points.setBorder(BorderFactory.createEmptyBorder());
         points.setHorizontalAlignment(JTextField.CENTER);
+        points.setVisible(false);
 
         gbcTitle.weightx = 2;
         gbcTitle.insets = new Insets(0,0,0,20);
@@ -206,7 +207,8 @@ public class GameCreation extends JPanel implements ActionListener {
 
         titleNamePanel.setBorder(BorderFactory.createLineBorder(Color.black,2));
         defaultScorePanel.setBorder(BorderFactory.createLineBorder(Color.black,2));
-        pointsPanel.setBorder(BorderFactory.createLineBorder(Color.black,2));
+        //pointsPanel.setBorder(BorderFactory.createLineBorder(Color.black,2));
+        //pointsPanel.setOpaque(true);
 
         // Boutons
 
@@ -518,7 +520,13 @@ public class GameCreation extends JPanel implements ActionListener {
         }
         else if (e.getSource()==saveButton){
             String titre = title.getText();
-            int score = Integer.parseInt(initialScore.getText());
+            int score = 0;
+            try{
+                score = Integer.parseInt(initialScore.getText());
+            }
+            catch (Exception exception){
+                System.out.println("Le score n'est pas un entier");
+            }
             int idUser = Main.idUser;
             int timer = 0;
             boolean ready = true;
@@ -531,6 +539,15 @@ public class GameCreation extends JPanel implements ActionListener {
                 String clue1 = listEnigma.getEnigma(i).getClue1();
                 String clue2 = listEnigma.getEnigma(i).getClue2();
                 String clue3 = listEnigma.getEnigma(i).getClue3();
+                if (clue1=="indice 1"){
+                    clue1=null;
+                }
+                if (clue2=="indice 2"){
+                    clue3=null;
+                }
+                if (clue3=="indice 3"){
+                    clue3=null;
+                }
                 int timer1 = listEnigma.getEnigma(i).getTimer1();
                 int timer2 = listEnigma.getEnigma(i).getTimer2();
                 int timer3 = listEnigma.getEnigma(i).getTimer3();

@@ -4,10 +4,12 @@ package view;
 
 import database.DBEnigma;
 import database.DBGame;
+import database.DBRoom;
 import launcher.Main;
 import model.EnigmaList;
 import model.Game;
 import model.GameList;
+import model.Room;
 import view.style.ColorPerso;
 
 import javax.swing.*;
@@ -61,6 +63,8 @@ public class GameManagement extends JPanel implements ActionListener {
         int nbGames = ListGame.getSize(); //fonction pour récupérer nombre de Jeux enregistrés dans BdD
 
         for(int i = 0; i<nbGames; i++){
+
+            final int y = i;
             JPanel gameInsidePanel = new JPanel();
             JPanel gameOutsidePanel = new JPanel();
             JPanel gameNbPanel = new JPanel();
@@ -95,8 +99,24 @@ public class GameManagement extends JPanel implements ActionListener {
                 buttonDelete.setOpaque(true);
 
 
-                buttonModify.addActionListener(this);
-                buttonDelete.addActionListener(this);
+                buttonModify.addActionListener(new AbstractAction() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        Game jeuChoisi = ListGame.getGame(y);
+                        Main.ListEnigma=DBEnigma.getEnigmas(jeuChoisi.getId());
+                        frame.gameCreationDisplay(frame,frame.roomNumber,jeuChoisi);
+                    }
+                });
+
+                buttonDelete.addActionListener(new AbstractAction() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        Game jeuChoisi = ListGame.getGame(y);
+                        DBGame.deleteGame(jeuChoisi.getId());
+
+                        // il faut recharger l'affichage mais je sais pas comment on fait
+                    }
+                });
 
                 buttonModifyPanel.add(buttonModify, BorderLayout.CENTER);
                 buttonDeletePanel.add(buttonDelete, BorderLayout.CENTER);
@@ -110,7 +130,19 @@ public class GameManagement extends JPanel implements ActionListener {
                 buttonChose.setBackground(ColorPerso.vert);
                 buttonChose.setOpaque(true);
 
-                buttonChose.addActionListener(this);
+                buttonChose.addActionListener(new AbstractAction() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        Main.ListRoom.findByID(roomNumber).setGame(ListGame.getGame(y));
+                        frame.roomManagementDisplay(frame);
+
+                        //si ca existe pas
+                        boolean insert = DBRoom.insertRoom(Main.ListRoom.findByID(roomNumber).getId(), ListGame.getGame(y).getId());
+                        if (insert == false){
+                            DBRoom.majJeu(Main.ListRoom.findByID(roomNumber).getId(),ListGame.getGame(y).getId());
+                        }
+                    }
+                });
 
                 buttonChosePanel.add(buttonChose, BorderLayout.CENTER);
 
@@ -139,6 +171,7 @@ public class GameManagement extends JPanel implements ActionListener {
         buttonReturn.setBackground(ColorPerso.rouge);
         buttonReturn.setForeground(Color.white);
         buttonReturn.setOpaque(true);
+        buttonReturn.addActionListener(this);
         buttonReturnPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         buttonReturnPanel.add(buttonReturn);
 
@@ -161,18 +194,6 @@ public class GameManagement extends JPanel implements ActionListener {
         else if (e.getSource() == buttonAddGame){
             Main.ListEnigma= new EnigmaList();
             frame.gameCreationDisplay(frame,frame.roomNumber,null);
-        }
-        else if (e.getSource() == buttonChose){
-            //int jeuChoisi=0;
-            //DBRoom.insertRoom(frame.roomNumber,jeuChoisi);
-            //ajout de la salle a la BDD
-        }
-        else if (e.getSource()==buttonModify){
-            int jeuChoisi = 5;
-            Main.ListEnigma= DBEnigma.getEnigmas(jeuChoisi);
-            Game jeu= ListGame.findByID(jeuChoisi);
-            frame.gameCreationDisplay(frame,frame.roomNumber,jeu);
-
         }
     }
 }
