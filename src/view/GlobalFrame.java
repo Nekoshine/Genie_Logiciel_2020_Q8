@@ -4,6 +4,7 @@ import launcher.Main;
 import model.Enigma;
 import model.EnigmaList;
 import model.Game;
+import model.RoomList;
 import view.style.ColorPerso;
 import view.style.FontPerso;
 
@@ -167,9 +168,9 @@ public class GlobalFrame extends JFrame {
 
     }
 
-    public void roomAccessDisplay(GlobalFrame frame){
+    public void roomAccessDisplay(GlobalFrame frame, RoomList roomList){
 
-        roomAccess = new RoomAccess(frame);
+        roomAccess = new RoomAccess(frame,roomList);
         setContentPane(roomAccess);
         frame.setSize(1280,720);
         frame.setResizable(true);

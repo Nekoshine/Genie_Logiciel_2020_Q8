@@ -98,8 +98,8 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
             }
             else if( isAdmin==0){
                 JOptionPane.showMessageDialog(frame,"Interface Joueur");
-                frame.roomAccessDisplay(frame);
                 Main.ListRoom = DBRoom.getRooms(3);
+                frame.roomAccessDisplay(frame,Main.ListRoom);
             }
             else {
                 JOptionPane.showMessageDialog(frame,"l'identifiant ou le mot de passe ne correspond pas");

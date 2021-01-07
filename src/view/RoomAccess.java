@@ -39,20 +39,21 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
     public User user;
 
 
-    RoomAccess(GlobalFrame frame){
+    RoomAccess(GlobalFrame frame,RoomList roomList){
 
         this.frame = frame;
         user = new User(Main.idUser,"","",false);
 
 
         /* Récuperation des salles */
-        ListRoom = DBRoom.getRooms(3);
+        ListRoom = roomList;
 
         /* Déclaration JPanel - JScrollPane */
         listPanel = new JPanel();
         roomPanel = new JPanel();
         JPanel titlePanel = new JPanel();
         JPanel decoPanel = new JPanel();
+
 
         JScrollPane scrollPane = new JScrollPane(roomPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
@@ -137,6 +138,7 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
 
         /* Ajout Panel */
         JPanel panelSalle = new JPanel();
+        System.out.println(salle.getUserInside());
 
         /* Construction Panel Salle */
         GridLayout grille = new GridLayout(1,3,70,50);
@@ -160,7 +162,7 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
         }
 
         if (salle.getUserInside()==user.getId()){
-            boutonJoin.setText("En attente du MJ");
+            boutonJoin.setText("En attente du MJ . . .");
             boutonJoin.setBackground(ColorPerso.vert);
         }
 
@@ -183,23 +185,15 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
             public void actionPerformed(ActionEvent e) {
 
                 if(salle.getUserInside()==-1){
-
                     frame.insideRoom = true;
                     salle.setUserInside(user.getId());
-                    frame.roomAccessDisplay(frame);
-
-
-
+                    frame.roomAccessDisplay(frame,ListRoom);
                 }
 
                 else{
                     frame.insideRoom = false;
                     salle.setUserInside(-1);
-                    frame.roomAccessDisplay(frame);
-                    boutonJoin.setText("Rejoindre la salle");
-                    boutonJoin.setBackground(ColorPerso.azur);
-                    panelSalle.revalidate();
-                    panelSalle.repaint();
+                    frame.roomAccessDisplay(frame,ListRoom);
                 }
 
 
