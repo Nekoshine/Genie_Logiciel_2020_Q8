@@ -181,6 +181,7 @@ public class GameCreation extends JPanel implements ActionListener {
         initialScore.setHorizontalAlignment(JTextField.CENTER);
         points.setBorder(BorderFactory.createEmptyBorder());
         points.setHorizontalAlignment(JTextField.CENTER);
+        points.setVisible(false);
 
         gbcTitle.weightx = 2;
         gbcTitle.insets = new Insets(0,0,0,20);
@@ -206,7 +207,8 @@ public class GameCreation extends JPanel implements ActionListener {
 
         titleNamePanel.setBorder(BorderFactory.createLineBorder(Color.black,2));
         defaultScorePanel.setBorder(BorderFactory.createLineBorder(Color.black,2));
-        pointsPanel.setBorder(BorderFactory.createLineBorder(Color.black,2));
+        //pointsPanel.setBorder(BorderFactory.createLineBorder(Color.black,2));
+        //pointsPanel.setOpaque(true);
 
         // Boutons
 

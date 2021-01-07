@@ -29,6 +29,7 @@ public class GlobalFrame extends JFrame {
     GameCreation gameCreation;
     CurrentGame currentGame;
     RoomAccess roomAccess;
+    PlayerManagement playerManagement;
 
     public int roomNumber;
     public boolean insideRoom;
@@ -178,4 +179,17 @@ public class GlobalFrame extends JFrame {
         frame.repaint();
 
     }
+
+    public void playerManagement(GlobalFrame frame,int gameNb, int riddleNb, boolean boolHint1Revealed, boolean boolHint2Revealed,
+                                 boolean boolHint3Revealed){
+        playerManagement = new PlayerManagement(frame, gameNb, riddleNb, boolHint1Revealed, boolHint2Revealed, boolHint3Revealed);
+        setContentPane(playerManagement);
+        frame.setSize(1280,720);
+        frame.setResizable(true);
+        frame.revalidate();
+        frame.repaint();
+
+    }
+
+
 }
