@@ -151,21 +151,6 @@ public class GameCreation extends JPanel implements ActionListener {
 
         newButton.addActionListener(this);
 
-       /* newButton.setAction(new AbstractAction("Nouvelle Enigme") {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println(getEnigma.size());
-                gbcEnigma.insets = new Insets(7,15,7,30);
-                Enigma enigme = new Enigma(getEnigma.size()+1,1,"Enigme","Réponse","Indice 1",-1,"Indice 2",-1,"Indice 3",-1);
-                ajoutListeEnigma(enigme,getEnigma);
-                JPanel panelEnigme = ajoutEnigme(enigme,gbcEnigma);
-                panelEnigme.setPreferredSize(new Dimension(centerPanel.getWidth()-45, 300));
-                enigmasPanel.add(panelEnigme,gbcEnigma);
-                centerPanel.add(newPanel, BorderLayout.SOUTH);
-                centerPanel.revalidate();
-                centerPanel.repaint();
-            }
-        });
         /* Setup Marges */
 
         Border listPadding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
@@ -207,8 +192,6 @@ public class GameCreation extends JPanel implements ActionListener {
 
         titleNamePanel.setBorder(BorderFactory.createLineBorder(Color.black,2));
         defaultScorePanel.setBorder(BorderFactory.createLineBorder(Color.black,2));
-        //pointsPanel.setBorder(BorderFactory.createLineBorder(Color.black,2));
-        //pointsPanel.setOpaque(true);
 
         // Boutons
 

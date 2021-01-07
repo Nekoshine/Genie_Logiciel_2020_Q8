@@ -53,7 +53,7 @@ public class GlobalFrame extends JFrame {
 
         //menu = new RoomManagement();
         //this.setContentPane(menu);
-        mainMenuDisplay(this);
+        playerManagementDisplay(this,5,1,false,false,false);
 
 
 
@@ -174,13 +174,14 @@ public class GlobalFrame extends JFrame {
         roomAccess = new RoomAccess(frame,roomList);
         setContentPane(roomAccess);
         frame.setSize(1280,720);
+        frame.setLocationRelativeTo(null);
         frame.setResizable(true);
         frame.revalidate();
         frame.repaint();
 
     }
 
-    public void playerManagement(GlobalFrame frame,int gameNb, int riddleNb, boolean boolHint1Revealed, boolean boolHint2Revealed,
+    public void playerManagementDisplay(GlobalFrame frame,int gameNb, int riddleNb, boolean boolHint1Revealed, boolean boolHint2Revealed,
                                  boolean boolHint3Revealed){
         playerManagement = new PlayerManagement(frame, gameNb, riddleNb, boolHint1Revealed, boolHint2Revealed, boolHint3Revealed);
         setContentPane(playerManagement);
