@@ -52,7 +52,7 @@ public class GlobalFrame extends JFrame {
 
         //menu = new RoomManagement();
         //this.setContentPane(menu);
-        mainMenuDisplay(this);
+        connectionMenuDisplay(this);
 
 
 

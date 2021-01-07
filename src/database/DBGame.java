@@ -23,10 +23,11 @@ public class DBGame extends DBConnexion {
   public static boolean deleteGame(int idGame){
     boolean boolDelete=false;
     try{
-      PreparedStatement requete = DBGame.getConnexion().prepareStatement("Delete * from Game WHERE id=? ");
+      PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("Delete from Game WHERE id=? ");
       requete.setInt(1, idGame);
+      requete.executeUpdate();
       requete.close();
-      PreparedStatement requeteVerif = DBUser.getConnexion().prepareStatement("Select * from Game where id=?");  // On regarde si l'user a bien été supprimé
+      PreparedStatement requeteVerif = DBConnexion.getConnexion().prepareStatement("Select * from Game where id=?");  // On regarde si l'user a bien été supprimé
       requeteVerif.setInt(1, idGame);
       ResultSet resultatVerif = requeteVerif.executeQuery();
       if(!resultatVerif.next()){ // Si il a été supprimé
@@ -48,7 +49,7 @@ public class DBGame extends DBConnexion {
     GameList gameList = new GameList();
     Boolean boolGame=false;
     try{
-      PreparedStatement requete = DBGame.getConnexion().prepareStatement("Select * from Game WHERE idUser=? ORDER BY id ASC");
+      PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("Select * from Game WHERE idUser=? ORDER BY id ASC");
       requete.setString(1, String.valueOf(idUser));
       ResultSet resultat = requete.executeQuery();
       while (resultat.next() != false) { // On itère chaque résultat
@@ -77,7 +78,7 @@ public class DBGame extends DBConnexion {
     boolean inserted = false;
     int valueReady=0;
     try{
-      PreparedStatement requete = DBGame.getConnexion().prepareStatement("Insert into Game VALUES (?,?,?,?,?,?)");
+      PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("Insert into Game VALUES (?,?,?,?,?,?)");
       requete.setInt(1,game.getId());
       requete.setString(2,game.getTitre());
       requete.setInt(3,game.getScore());
@@ -89,7 +90,7 @@ public class DBGame extends DBConnexion {
       requete.setInt(6,valueReady);
       requete.executeUpdate();
       requete.close();
-      PreparedStatement requeteVerif = DBUser.getConnexion().prepareStatement("Select * from Game where id=?");  // On regarde si l'user a bien été inséré
+      PreparedStatement requeteVerif = DBConnexion.getConnexion().prepareStatement("Select * from Game where id=?");  // On regarde si l'user a bien été inséré
       requeteVerif.setString(1, String.valueOf(game.getId()));
       ResultSet resultatVerif = requeteVerif.executeQuery();
       if(resultatVerif.next() != false){ // Si il a été inséré
@@ -112,7 +113,7 @@ public class DBGame extends DBConnexion {
     boolean inserted = false;
     int valueReady=0;
     try{
-      PreparedStatement requete = DBGame.getConnexion().prepareStatement("Insert into Game VALUES (default,?,?,?,?,?)");
+      PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("Insert into Game VALUES (default,?,?,?,?,?)");
       requete.setInt(1,idUserN);
       requete.setString(2,titreN);
       requete.setInt(3,scoreN);
@@ -123,7 +124,7 @@ public class DBGame extends DBConnexion {
       requete.setInt(5,valueReady);
       requete.executeUpdate();
       requete.close();
-      PreparedStatement requeteVerif = DBUser.getConnexion().prepareStatement("Select * from Game where titre=? and idUser=?");  // On regarde si l'user a bien été inséré
+      PreparedStatement requeteVerif = DBConnexion.getConnexion().prepareStatement("Select * from Game where titre=? and idUser=?");  // On regarde si l'user a bien été inséré
       requeteVerif.setString(1,titreN);
       requeteVerif.setInt(2,idUserN);
       ResultSet resultatVerif = requeteVerif.executeQuery();
@@ -141,7 +142,7 @@ public class DBGame extends DBConnexion {
   public static int getIdGame(String titre) {
     int idGame=0;
     try {
-      PreparedStatement requete = DBGame.getConnexion().prepareStatement("Select id from Game where titre=?");
+      PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("Select id from Game where titre=?");
       requete.setString(1, titre);
       ResultSet resultat = requete.executeQuery();
       if (resultat.next()!=false) {
@@ -159,7 +160,7 @@ public class DBGame extends DBConnexion {
   public static String getTitleGame(int idGame) {
     String titre = "Titre";
     try {
-      PreparedStatement requete = DBGame.getConnexion().prepareStatement("Select id from Game where id=?");
+      PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("Select id from Game where id=?");
       requete.setInt(1, idGame);
       ResultSet resultat = requete.executeQuery();
       if (resultat.next()!=false) {
