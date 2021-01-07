@@ -28,6 +28,9 @@ public class CurrentGame extends JPanel implements ActionListener {
 
     private JScrollPane currentEnigmaScroll;
     private JScrollPane oldEnigmaScroll;
+    private JScrollPane hint1Scroll;
+    private JScrollPane hint2Scroll;
+    private JScrollPane hint3Scroll;
 
     private JTextField answerTextField;
 
@@ -245,6 +248,9 @@ public class CurrentGame extends JPanel implements ActionListener {
             hint1TextArea.setWrapStyleWord(true);
             hint1TextArea.setEditable(false);
             hint1TextArea.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+            hint1Scroll = new JScrollPane(hint1TextArea,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+            hint1Scroll.getVerticalScrollBar().setUnitIncrement(20);
+            hint1Scroll.setBorder(BorderFactory.createEmptyBorder());
             hintContainer1.remove(hint1Button);
             hintContainer1.add(hint1TextArea);
             isused1 = true;
