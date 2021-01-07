@@ -36,6 +36,10 @@ public class Game{
     return this.ready;
   }
 
+  public void setTitre(String titre) {
+    this.titre = titre;
+  }
+
   @Override
   public String toString() {
     return titre;
