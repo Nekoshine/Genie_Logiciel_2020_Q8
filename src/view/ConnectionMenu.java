@@ -97,8 +97,7 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
                 Main.ListRoom = DBRoom.getRooms(Main.idUser); // recherche des salles dans la BDD apres la connection
             }
             else if( isAdmin==0){
-                JOptionPane.showMessageDialog(frame,"Interface Joueur");
-                Main.ListRoom = DBRoom.getRooms(3);
+                Main.ListRoom = DBRoom.getRooms(3); //si le joueur est le numero
                 frame.roomAccessDisplay(frame,Main.ListRoom);
             }
             else {

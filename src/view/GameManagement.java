@@ -103,13 +103,20 @@ public class GameManagement extends JPanel implements ActionListener {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         Game jeuChoisi = ListGame.getGame(y);
-                        //System.out.println(ListGame.getGame(y));
                         Main.ListEnigma=DBEnigma.getEnigmas(jeuChoisi.getId());
                         frame.gameCreationDisplay(frame,frame.roomNumber,jeuChoisi);
                     }
                 });
 
-                buttonDelete.addActionListener(this);
+                buttonDelete.addActionListener(new AbstractAction() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        Game jeuChoisi = ListGame.getGame(y);
+                        DBGame.deleteGame(jeuChoisi.getId());
+
+                        // il faut recharger l'affichage mais je sais pas comment on fait
+                    }
+                });
 
                 buttonModifyPanel.add(buttonModify, BorderLayout.CENTER);
                 buttonDeletePanel.add(buttonDelete, BorderLayout.CENTER);
@@ -187,11 +194,6 @@ public class GameManagement extends JPanel implements ActionListener {
         else if (e.getSource() == buttonAddGame){
             Main.ListEnigma= new EnigmaList();
             frame.gameCreationDisplay(frame,frame.roomNumber,null);
-        }
-        else if (e.getSource() == buttonChose){
-            //int jeuChoisi=0;
-            //DBRoom.insertRoom(frame.roomNumber,jeuChoisi);
-            //ajout de la salle a la BDD
         }
     }
 }

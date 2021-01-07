@@ -1,5 +1,6 @@
 package view;
 
+import database.DBGame;
 import launcher.Main;
 import model.Enigma;
 import model.EnigmaList;
@@ -53,7 +54,7 @@ public class GlobalFrame extends JFrame {
 
         //menu = new RoomManagement();
         //this.setContentPane(menu);
-        playerManagementDisplay(this,5,1,false,false,false);
+        mainMenuDisplay(this);
 
 
 
@@ -73,10 +74,11 @@ public class GlobalFrame extends JFrame {
                     GameCreation gameCreation = new GameCreation(frame,roomNumber,null);
                     setContentPane(gameCreation);
                 }
-                if (getContentPane() instanceof CurrentGame) {
+
+                /*if (getContentPane() instanceof CurrentGame) {
                     CurrentGame currentGame = new CurrentGame(frame);
                     setContentPane(currentGame);
-                }
+                }*/
 
                 revalidate();
                 repaint();
@@ -157,9 +159,9 @@ public class GlobalFrame extends JFrame {
         frame.repaint();
     }
 
-    public void currentGameDisplay(GlobalFrame frame){
+    public void currentGameDisplay(GlobalFrame frame,Game partie){
 
-        currentGame = new CurrentGame(frame);
+        currentGame = new CurrentGame(frame,partie);
         setContentPane(currentGame);
         frame.setSize(1280,720);
         frame.setResizable(true);
@@ -181,7 +183,7 @@ public class GlobalFrame extends JFrame {
 
     }
 
-    public void playerManagementDisplay(GlobalFrame frame,int gameNb, int riddleNb, boolean boolHint1Revealed, boolean boolHint2Revealed,
+    public void playerManagement(GlobalFrame frame,int gameNb, int riddleNb, boolean boolHint1Revealed, boolean boolHint2Revealed,
                                  boolean boolHint3Revealed){
         playerManagement = new PlayerManagement(frame, gameNb, riddleNb, boolHint1Revealed, boolHint2Revealed, boolHint3Revealed);
         setContentPane(playerManagement);
