@@ -99,7 +99,16 @@ public class GameManagement extends JPanel implements ActionListener {
                 buttonDelete.setOpaque(true);
 
 
-                buttonModify.addActionListener(this);
+                buttonModify.addActionListener(new AbstractAction() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        Game jeuChoisi = ListGame.getGame(y);
+                        //System.out.println(ListGame.getGame(y));
+                        Main.ListEnigma=DBEnigma.getEnigmas(jeuChoisi.getId());
+                        frame.gameCreationDisplay(frame,frame.roomNumber,jeuChoisi);
+                    }
+                });
+
                 buttonDelete.addActionListener(this);
 
                 buttonModifyPanel.add(buttonModify, BorderLayout.CENTER);
@@ -183,12 +192,6 @@ public class GameManagement extends JPanel implements ActionListener {
             //int jeuChoisi=0;
             //DBRoom.insertRoom(frame.roomNumber,jeuChoisi);
             //ajout de la salle a la BDD
-        }
-        else if (e.getSource()==buttonModify) {
-            int jeuChoisi = 5;
-            Main.ListEnigma= DBEnigma.getEnigmas(jeuChoisi);
-            Game jeu= ListGame.findByID(jeuChoisi);
-            frame.gameCreationDisplay(frame,frame.roomNumber,jeu);
         }
     }
 }
