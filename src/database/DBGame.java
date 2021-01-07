@@ -20,6 +20,30 @@ public class DBGame extends DBConnexion {
   * Fonction qui va récupérer les jeux dans la base de données et le stocker dans un ArrayList
   * @return Liste de jeux
   */
+  public static boolean deleteGame(int idGame){
+    boolean boolDelete=false;
+    try{
+      PreparedStatement requete = DBGame.getConnexion().prepareStatement("Delete * from Game WHERE id=? ");
+      requete.setInt(1, idGame);
+      requete.close();
+      PreparedStatement requeteVerif = DBUser.getConnexion().prepareStatement("Select * from Game where id=?");  // On regarde si l'user a bien été supprimé
+      requeteVerif.setInt(1, idGame);
+      ResultSet resultatVerif = requeteVerif.executeQuery();
+      if(!resultatVerif.next()){ // Si il a été supprimé
+        boolDelete=true; // Alors on valide la suppression
+      }
+      resultatVerif.close();
+      requeteVerif.close();
+    } catch(SQLException e ){
+      System.err.println("Erreur requete deleteGame: " + e.getMessage());
+    }
+    return boolDelete;
+  }
+  
+  /**
+  * Fonction qui va récupérer les jeux dans la base de données et le stocker dans un ArrayList
+  * @return Liste de jeux
+  */
   public static GameList getGames(int idUser){
     GameList gameList = new GameList();
     Boolean boolGame=false;
@@ -113,7 +137,7 @@ public class DBGame extends DBConnexion {
     }
     return inserted;
   }
-
+  
   public static int getIdGame(String titre) {
     int idGame=0;
     try {
@@ -131,7 +155,7 @@ public class DBGame extends DBConnexion {
     }
     return idGame;
   }
-
+  
   public static String getTitleGame(int idGame) {
     String titre = "Titre";
     try {
