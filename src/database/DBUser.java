@@ -33,7 +33,7 @@ public class DBUser extends DBConnexion {
       byte[] byteChaine = password.getBytes("UTF-8"); // On convertit la chaine en octets
       byte[] hash = md.digest(byteChaine); // On hash notre chaine en MD5
       String hashString = DatatypeConverter.printHexBinary(hash); // On convertit le tableau d'octets en string
-      PreparedStatement requete = DBUser.getConnexion().prepareStatement("Select * from User where login=?");
+      PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("Select * from User where login=?");
       requete.setString(1,login);
       ResultSet resultat = requete.executeQuery();
       resultat.next();
@@ -70,7 +70,7 @@ public class DBUser extends DBConnexion {
       valueAdmin=1;
     }
     try{
-      PreparedStatement requetePresence = DBUser.getConnexion().prepareStatement("Select * from User where login=?"); // On regarde si l'user n'est pas déja dans la BDD
+      PreparedStatement requetePresence = DBConnexion.getConnexion().prepareStatement("Select * from User where login=?"); // On regarde si l'user n'est pas déja dans la BDD
       requetePresence.setString(1,login);
       ResultSet resultatPresence = requetePresence.executeQuery();
       if(resultatPresence.next() != false){ // Si il est deja dans la bdd

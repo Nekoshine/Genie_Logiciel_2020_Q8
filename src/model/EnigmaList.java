@@ -37,4 +37,12 @@ public class EnigmaList {
         return List.size();
     }
 
+    public Enigma findByID(int i){
+        for(int j = 0; j<this.getSize(); j++){
+            if (this.getEnigma(j).getId()==i){
+                return this.getEnigma(j);
+            }
+        }
+        return null;
+    }
 }

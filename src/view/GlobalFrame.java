@@ -4,6 +4,7 @@ import launcher.Main;
 import model.Enigma;
 import model.EnigmaList;
 import model.Game;
+import model.RoomList;
 import view.style.ColorPerso;
 import view.style.FontPerso;
 
@@ -27,8 +28,11 @@ public class GlobalFrame extends JFrame {
     GameManagement gamemanagement;
     GameCreation gameCreation;
     CurrentGame currentGame;
+    RoomAccess roomAccess;
+    PlayerManagement playerManagement;
 
     public int roomNumber;
+    public boolean insideRoom;
 
 
     public GlobalFrame() throws IOException {
@@ -49,7 +53,7 @@ public class GlobalFrame extends JFrame {
 
         //menu = new RoomManagement();
         //this.setContentPane(menu);
-        mainMenuDisplay(this);
+        connectionMenuDisplay(this);
 
 
 
@@ -164,4 +168,28 @@ public class GlobalFrame extends JFrame {
         frame.repaint();
 
     }
+
+    public void roomAccessDisplay(GlobalFrame frame, RoomList roomList){
+
+        roomAccess = new RoomAccess(frame,roomList);
+        setContentPane(roomAccess);
+        frame.setSize(1280,720);
+        frame.setResizable(true);
+        frame.revalidate();
+        frame.repaint();
+
+    }
+
+    public void playerManagement(GlobalFrame frame,int gameNb, int riddleNb, boolean boolHint1Revealed, boolean boolHint2Revealed,
+                                 boolean boolHint3Revealed){
+        playerManagement = new PlayerManagement(frame, gameNb, riddleNb, boolHint1Revealed, boolHint2Revealed, boolHint3Revealed);
+        setContentPane(playerManagement);
+        frame.setSize(1280,720);
+        frame.setResizable(true);
+        frame.revalidate();
+        frame.repaint();
+
+    }
+
+
 }

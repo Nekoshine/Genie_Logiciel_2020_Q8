@@ -31,7 +31,7 @@ public class DBRoom extends DBConnexion{
     public static RoomList getRooms(int idUser){
         RoomList roomList = new RoomList();
         try{
-            PreparedStatement requete = DBGame.getConnexion().prepareStatement("SELECT * FROM Room, Game WHERE Room.idGame=Game.id AND Game.idUser = ? ORDER BY Room.id ASC");
+            PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("SELECT * FROM Room, Game WHERE Room.idGame=Game.id AND Game.idUser = ? ORDER BY Room.id ASC");
             requete.setString(1, String.valueOf(idUser));
             ResultSet resultat = requete.executeQuery();
             while (resultat.next() != false) { // On itère chaque résultat
@@ -46,7 +46,7 @@ public class DBRoom extends DBConnexion{
             requete.close();
             resultat.close();
         } catch(SQLException e ){
-            System.err.println("Erreur requete connectUser: " + e.getMessage());
+            System.err.println("Erreur requete getRooms: " + e.getMessage());
         }
         return roomList;
     }
@@ -54,7 +54,7 @@ public class DBRoom extends DBConnexion{
     public static boolean insertRoom(int id,int idGame) {
         boolean inserted=false;
         try{
-            PreparedStatement requetePresence = DBUser.getConnexion().prepareStatement("SELECT * FROM Room WHERE id=? AND idGame=?"); // On regarde si la salle n'est pas deja dans la BDD
+            PreparedStatement requetePresence = DBConnexion.getConnexion().prepareStatement("SELECT * FROM Room WHERE id=? AND idGame=?"); // On regarde si la salle n'est pas deja dans la BDD
             requetePresence.setString(1, String.valueOf(id));
             requetePresence.setString(2, String.valueOf(idGame));
             ResultSet resultatPresence = requetePresence.executeQuery();
@@ -66,12 +66,13 @@ public class DBRoom extends DBConnexion{
             }else{
                 requetePresence.close();
                 resultatPresence.close();
-                PreparedStatement requete = DBUser.getConnexion().prepareStatement("INSERT INTO Room VALUES (?,?)");
+                PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("INSERT INTO Room VALUES (?,?)");
                 requete.setString(1, String.valueOf(id));
                 requete.setString(2, String.valueOf(idGame));
                 requete.executeUpdate();
                 requete.close();
-                PreparedStatement requeteVerif = DBUser.getConnexion().prepareStatement("SELECT * FROM Room WHERE id=? AND idGame=?");  // On regarde si l'insertion a fonctionné
+
+                PreparedStatement requeteVerif = DBConnexion.getConnexion().prepareStatement("SELECT * FROM Room WHERE id=? AND idGame=?");  // On regarde si l'insertion a fonctionné
                 requeteVerif.setString(1, String.valueOf(id));
                 requeteVerif.setString(2, String.valueOf(idGame));
                 ResultSet resultatVerif = requeteVerif.executeQuery();
@@ -87,4 +88,47 @@ public class DBRoom extends DBConnexion{
         return inserted;
 
     }
+
+    public static boolean majJeu(int id, int idGame){
+        boolean inserted = false;
+        try{
+            PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("UPDATE Room SET idGame=? WHERE id=?");
+            requete.setString(1, String.valueOf(idGame));
+            requete.setString(2, String.valueOf(id));
+            requete.executeUpdate();
+            requete.close();
+
+            PreparedStatement requeteVerif = DBConnexion.getConnexion().prepareStatement("SELECT * FROM Room WHERE id=? AND idGame=?");
+            requeteVerif.setString(1, String.valueOf(id));
+            requeteVerif.setString(2, String.valueOf(idGame));
+            ResultSet resultatVerif = requeteVerif.executeQuery();
+            if(resultatVerif.next() != false){ // Si il a été inséré
+                inserted=true; // Alors on valide l insertion
+            }
+            resultatVerif.close();
+            requeteVerif.close();
+
+        } catch(SQLException e ){
+            System.err.println("Erreur requete majJeu: " + e.getMessage());
+        }
+        return inserted;
+    }
+
+    public static int getMax() {
+        int max=0;
+        try {
+            PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("SELECT Max(id) FROM Room");
+            ResultSet resultat = requete.executeQuery();
+            if (resultat.next()!=false) {
+                max = resultat.getInt("max(id)");
+            }
+            requete.close();
+            resultat.close();
+            return max;
+        } catch (SQLException e) {
+            System.err.println("Erreur requete getMax: " + e.getMessage());
+        }
+        return max;
+    }
+
 }
