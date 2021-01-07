@@ -1,5 +1,6 @@
 package view;
 
+import database.DBGame;
 import launcher.Main;
 import model.Enigma;
 import model.EnigmaList;
@@ -53,7 +54,7 @@ public class GlobalFrame extends JFrame {
 
         //menu = new RoomManagement();
         //this.setContentPane(menu);
-        connectionMenuDisplay(this);
+        currentGameDisplay(this, DBGame.getGames(3).getGame(0));
 
 
 
@@ -73,10 +74,11 @@ public class GlobalFrame extends JFrame {
                     GameCreation gameCreation = new GameCreation(frame,roomNumber,null);
                     setContentPane(gameCreation);
                 }
-                if (getContentPane() instanceof CurrentGame) {
+
+                /*if (getContentPane() instanceof CurrentGame) {
                     CurrentGame currentGame = new CurrentGame(frame);
                     setContentPane(currentGame);
-                }
+                }*/
 
                 revalidate();
                 repaint();
@@ -157,9 +159,9 @@ public class GlobalFrame extends JFrame {
         frame.repaint();
     }
 
-    public void currentGameDisplay(GlobalFrame frame){
+    public void currentGameDisplay(GlobalFrame frame,Game partie){
 
-        currentGame = new CurrentGame(frame);
+        currentGame = new CurrentGame(frame,partie);
         setContentPane(currentGame);
         frame.setSize(1280,720);
         frame.setResizable(true);
