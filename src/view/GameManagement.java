@@ -121,7 +121,10 @@ public class GameManagement extends JPanel implements ActionListener {
                         frame.roomManagementDisplay(frame);
 
                         //si ca existe pas
-                        DBRoom.insertRoom(Main.ListRoom.findByID(roomNumber).getId(),ListGame.getGame(y).getId());
+                        boolean insert = DBRoom.insertRoom(Main.ListRoom.findByID(roomNumber).getId(), ListGame.getGame(y).getId());
+                        if (insert == false){
+                            DBRoom.majJeu(Main.ListRoom.findByID(roomNumber).getId(),ListGame.getGame(y).getId());
+                        }
                     }
                 });
 

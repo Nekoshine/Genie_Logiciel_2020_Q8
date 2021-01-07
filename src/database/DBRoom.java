@@ -46,7 +46,7 @@ public class DBRoom extends DBConnexion{
             requete.close();
             resultat.close();
         } catch(SQLException e ){
-            System.err.println("Erreur requete connectUser: " + e.getMessage());
+            System.err.println("Erreur requete getRooms: " + e.getMessage());
         }
         return roomList;
     }
@@ -71,6 +71,7 @@ public class DBRoom extends DBConnexion{
                 requete.setString(2, String.valueOf(idGame));
                 requete.executeUpdate();
                 requete.close();
+
                 PreparedStatement requeteVerif = DBConnexion.getConnexion().prepareStatement("SELECT * FROM Room WHERE id=? AND idGame=?");  // On regarde si l'insertion a fonctionné
                 requeteVerif.setString(1, String.valueOf(id));
                 requeteVerif.setString(2, String.valueOf(idGame));
@@ -88,6 +89,30 @@ public class DBRoom extends DBConnexion{
 
     }
 
+    public static boolean majJeu(int id, int idGame){
+        boolean inserted = false;
+        try{
+            PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("UPDATE Room SET idGame=? WHERE id=?");
+            requete.setString(1, String.valueOf(idGame));
+            requete.setString(2, String.valueOf(id));
+            requete.executeUpdate();
+            requete.close();
+
+            PreparedStatement requeteVerif = DBConnexion.getConnexion().prepareStatement("SELECT * FROM Room WHERE id=? AND idGame=?");
+            requeteVerif.setString(1, String.valueOf(id));
+            requeteVerif.setString(2, String.valueOf(idGame));
+            ResultSet resultatVerif = requeteVerif.executeQuery();
+            if(resultatVerif.next() != false){ // Si il a été inséré
+                inserted=true; // Alors on valide l insertion
+            }
+            resultatVerif.close();
+            requeteVerif.close();
+
+        } catch(SQLException e ){
+            System.err.println("Erreur requete majJeu: " + e.getMessage());
+        }
+        return inserted;
+    }
 
     public static int getMax() {
         int max=0;
@@ -101,8 +126,9 @@ public class DBRoom extends DBConnexion{
             resultat.close();
             return max;
         } catch (SQLException e) {
-            System.err.println("Erreur requete getIdGame: " + e.getMessage());
+            System.err.println("Erreur requete getMax: " + e.getMessage());
         }
         return max;
     }
+
 }
