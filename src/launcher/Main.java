@@ -13,7 +13,7 @@ public class Main {
     public static RoomList ListRoom = new RoomList();
 
     public static void main(String[] args) throws IOException {
-
+        System.out.println(DBRoom.getMax());
         /* Création de la vue */
         new GlobalFrame();
 

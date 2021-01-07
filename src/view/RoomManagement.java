@@ -2,6 +2,7 @@
 
 package view;
 
+import database.DBRoom;
 import launcher.Main;
 import model.Room;
 import model.RoomList;
@@ -325,7 +326,7 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
     }
 
     private void majRoom() {
-        ListRoom.addRoom(ListRoom.getSize()+1,null);
+        ListRoom.addRoom(DBRoom.getMax()+1,null);
         this.CreateList();
     }
 
