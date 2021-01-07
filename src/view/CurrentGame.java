@@ -112,7 +112,7 @@ public class CurrentGame extends JPanel implements ActionListener {
 
         currentEnigmaPanel = new JPanel();
         currentEnigmaPanel.setLayout(new GridLayout(1,1));
-        currentEnigmaPanel.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.95),(int)((float) frame.windowSize.getHeight()*0.25)));
+        currentEnigmaPanel.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.75),(int)((float) frame.windowSize.getHeight()*0.25)));
         currentEnigmaPanel.add(currentEnigmaTextArea);
 
 
@@ -240,6 +240,7 @@ public class CurrentGame extends JPanel implements ActionListener {
                 hintContainer2.remove(hint2Button);
                 hintContainer2.add(hint2TextArea);
                 isused2 = true;
+
                 frame.revalidate();
                 frame.repaint();
             }
@@ -274,7 +275,7 @@ public class CurrentGame extends JPanel implements ActionListener {
                     hintContainer1.remove(hint1TextArea);
                     hintContainer1.add(hint1Button);}
                     isused1 = false;
-
+                    timerclue1 = allEnigmas.getEnigma(enigmalistflag).getTimer1();
                     hint1Button.setEnabled(true);
 
 
@@ -290,6 +291,7 @@ public class CurrentGame extends JPanel implements ActionListener {
                     ishint2present = !(allEnigmas.getEnigma(enigmalistflag).getClue2().isEmpty());
                     if (ishint2present) {
                         hint2Button.setEnabled(true);
+                        timerclue2 = allEnigmas.getEnigma(enigmalistflag).getTimer2();
                     } else {
                         hint3Button.setEnabled(false);
                     }
@@ -307,6 +309,7 @@ public class CurrentGame extends JPanel implements ActionListener {
                     System.out.print(ishint3present);
                     if (ishint3present) {
                         hint3Button.setEnabled(true);
+                        timerclue3 = allEnigmas.getEnigma(enigmalistflag).getTimer3();
                     } else {
                         hint3Button.setEnabled(false);
                     }

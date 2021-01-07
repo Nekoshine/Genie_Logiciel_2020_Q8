@@ -28,21 +28,21 @@ public class DBEnigma extends DBConnexion{
       requete.setString(1, String.valueOf(idGame));
       ResultSet resultat = requete.executeQuery();
       while (resultat.next() != false) { // On itère chaque résultat
-        clue2= requete.getString("clue2");
-        if(requete.wasNull()){
+        clue2= resultat.getString("clue2");
+        if(resultat.wasNull()){
           clue2="";
         }
-        timer2= requete.getInt("timer2");
-        if(requete.wasNull()){
-          timer2="";
+        timer2= resultat.getInt("timer2");
+        if(resultat.wasNull()){
+          timer2= -1;
         }
-        clue3= requete.getString("clue3");
-        if(requete.wasNull()){
+        clue3= resultat.getString("clue3");
+        if(resultat.wasNull()){
           clue3="";
         }
-        timer3= requete.getInt("timer3");
-        if(requete.wasNull()){
-          timer3="";
+        timer3= resultat.getInt("timer3");
+        if(resultat.wasNull()){
+          timer3=-1;
         }
         enigmaList.addEnigma(
         new Enigma(resultat.getInt("id"),resultat.getString("text"),resultat.getString("answer"),
