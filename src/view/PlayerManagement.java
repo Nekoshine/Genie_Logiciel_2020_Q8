@@ -196,6 +196,15 @@ public class PlayerManagement extends JPanel implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==helpButtonGM){
             //Baptiste fonction envoyer le message aux joueurs
+        }else if(e.getSource() == buttonReturn){
+            frame.roomManagementDisplay(frame);
+        }else if(e.getSource()==buttonHint1){
+            //Baptiste fonction afficher indice 1 pour les joueurs
+
+        }else if(e.getSource()==buttonHint2){
+
+        }else if(e.getSource()==buttonHint3){
+
         }
     }
 }
