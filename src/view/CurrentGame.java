@@ -15,6 +15,8 @@ import javax.swing.Timer;
 public class CurrentGame extends JPanel implements ActionListener {
 
     private JPanel firstRawPanel ;
+    private JPanel firstRawPanelIn1;
+    private JPanel firstRawPanelIn2;
     private JPanel currentEnigmaPanel;
     private JPanel thirdRawPanel;
     private JPanel oldEnigmaPanel;
@@ -83,9 +85,13 @@ public class CurrentGame extends JPanel implements ActionListener {
         //titre + timer
 
         firstRawPanel = new JPanel();
-        firstRawPanel.setLayout(new FlowLayout(FlowLayout.CENTER,20,0));
+        firstRawPanel.setLayout(new FlowLayout(FlowLayout.LEFT,160,0));
         firstRawPanel.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.95),35));
         firstRawPanel.setBorder(BorderFactory.createEmptyBorder(10,10,5,5));
+
+        firstRawPanelIn1 = new JPanel();
+        firstRawPanelIn1.setLayout(new FlowLayout(FlowLayout.LEFT));
+        firstRawPanelIn1.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.95),30));
 
         titleLabel = new JLabel(partiechoisie.getTitre());
         titleLabel.setMaximumSize(new Dimension(300,20));
@@ -95,9 +101,15 @@ public class CurrentGame extends JPanel implements ActionListener {
         countdownLabel.setMaximumSize(new Dimension(75,20));
         countdownLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
 
-        firstRawPanel.add(titleLabel);
-        firstRawPanel.add(countdownLabel);
+        firstRawPanelIn2 = new JPanel();
+        firstRawPanelIn2.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        firstRawPanelIn2.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.20),30));
 
+
+        firstRawPanelIn1.add(titleLabel);
+        firstRawPanelIn2.add(countdownLabel);
+        firstRawPanel.add(firstRawPanelIn1);
+        firstRawPanel.add(firstRawPanelIn2);
 
         //Enigme en cours
 
@@ -112,7 +124,8 @@ public class CurrentGame extends JPanel implements ActionListener {
 
         currentEnigmaPanel = new JPanel();
         currentEnigmaPanel.setLayout(new GridLayout(1,1));
-        currentEnigmaPanel.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.75),(int)((float) frame.windowSize.getHeight()*0.25)));
+        currentEnigmaPanel.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.95),(int)((float) frame.windowSize.getHeight()*0.25)));
+        currentEnigmaPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         currentEnigmaPanel.add(currentEnigmaTextArea);
 
 
@@ -131,7 +144,7 @@ public class CurrentGame extends JPanel implements ActionListener {
         thirdRawPanel = new JPanel();
         thirdRawPanel.setLayout(new FlowLayout(FlowLayout.CENTER,20,0));
         thirdRawPanel.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.95),35));
-        thirdRawPanel.setBorder(BorderFactory.createEmptyBorder(10,10,5,5));
+        thirdRawPanel.setBorder(BorderFactory.createEmptyBorder(5,10,5,10));
 
         thirdRawPanel.add(answerTextField);
         thirdRawPanel.add(confirmButton);
@@ -150,6 +163,7 @@ public class CurrentGame extends JPanel implements ActionListener {
         oldEnigmaPanel = new JPanel();
         oldEnigmaPanel.setLayout(new GridLayout(1,1));
         oldEnigmaPanel.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.95),(int)((float) frame.windowSize.getHeight()*0.35)));
+        oldEnigmaPanel.setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
         oldEnigmaPanel.add(oldEnigmaTextArea);
 
         // indices
@@ -162,7 +176,7 @@ public class CurrentGame extends JPanel implements ActionListener {
 
         hintContainer1 = new JPanel();
         hintContainer1.setLayout(new GridLayout(1,1));
-        hintContainer1.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.15),(int)((float) frame.windowSize.getHeight()*0.15)));
+        hintContainer1.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.25),(int)((float) frame.windowSize.getHeight()*0.15)));
         hintContainer1.add(hint1Button);
 
         hint2Button = new JButton("hint2");
@@ -174,7 +188,7 @@ public class CurrentGame extends JPanel implements ActionListener {
 
         hintContainer2 = new JPanel();
         hintContainer2.setLayout(new GridLayout(1,1));
-        hintContainer2.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.15),(int)((float) frame.windowSize.getHeight()*0.15)));
+        hintContainer2.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.25),(int)((float) frame.windowSize.getHeight()*0.15)));
         hintContainer2.add(hint2Button);
 
         hint3Button = new JButton("hint3");
@@ -186,7 +200,7 @@ public class CurrentGame extends JPanel implements ActionListener {
 
         hintContainer3 = new JPanel();
         hintContainer3.setLayout(new GridLayout(1,1));
-        hintContainer3.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.15),(int)((float) frame.windowSize.getHeight()*0.15)));
+        hintContainer3.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.25),(int)((float) frame.windowSize.getHeight()*0.15)));
         hintContainer3.add(hint3Button);
 
         hintMJTextArea = new JTextArea("aide envoyée par le MJ");
@@ -197,7 +211,7 @@ public class CurrentGame extends JPanel implements ActionListener {
 
         hintMJContainer = new JPanel();
         hintMJContainer.setLayout(new GridLayout(1,1));
-        hintMJContainer.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.30),(int)((float) frame.windowSize.getHeight()*0.15)));
+        hintMJContainer.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.35),(int)((float) frame.windowSize.getHeight()*0.15)));
         hintMJContainer.add(hintMJTextArea);
 
         hintRawPanel = new JPanel();
@@ -227,6 +241,10 @@ public class CurrentGame extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent event) {
         if (event.getSource() == hint1Button){
             hint1TextArea = new JTextArea(allEnigmas.getEnigma(enigmalistflag).getClue1());
+            hint1TextArea.setLineWrap(true);
+            hint1TextArea.setWrapStyleWord(true);
+            hint1TextArea.setEditable(false);
+            hint1TextArea.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
             hintContainer1.remove(hint1Button);
             hintContainer1.add(hint1TextArea);
             isused1 = true;
@@ -237,6 +255,10 @@ public class CurrentGame extends JPanel implements ActionListener {
         if (event.getSource() == hint2Button){
             if(ishint2present){
                 hint2TextArea = new JTextArea(allEnigmas.getEnigma(enigmalistflag).getClue2());
+                hint2TextArea.setLineWrap(true);
+                hint2TextArea.setWrapStyleWord(true);
+                hint2TextArea.setEditable(false);
+                hint2TextArea.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
                 hintContainer2.remove(hint2Button);
                 hintContainer2.add(hint2TextArea);
                 isused2 = true;
@@ -249,6 +271,10 @@ public class CurrentGame extends JPanel implements ActionListener {
         if (event.getSource() == hint3Button){
             if(ishint3present) {
                 hint3TextArea = new JTextArea(allEnigmas.getEnigma(enigmalistflag).getClue3());
+                hint3TextArea.setLineWrap(true);
+                hint3TextArea.setWrapStyleWord(true);
+                hint3TextArea.setEditable(false);
+                hint3TextArea.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
                 hintContainer3.remove(hint3Button);
                 hintContainer3.add(hint3TextArea);
                 isused3 = true;
@@ -268,6 +294,10 @@ public class CurrentGame extends JPanel implements ActionListener {
                     enigmalistflag++;
                     currentEnigmaPanel.remove(currentEnigmaTextArea);
                     currentEnigmaTextArea = new JTextArea(allEnigmas.getEnigma(enigmalistflag).getText());
+                    currentEnigmaTextArea.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+                    currentEnigmaTextArea.setLineWrap(true);
+                    currentEnigmaTextArea.setWrapStyleWord(true);
+                    currentEnigmaTextArea.setEditable(false);
                     currentEnigmaPanel.add(currentEnigmaTextArea);
 
                     //maj hint 1
