@@ -1,6 +1,7 @@
 package database;
 
 import launcher.Main;
+import model.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -122,8 +123,9 @@ public class DBUser extends DBConnexion {
       user.setId(resultat.getInt("id"));
       user.setIsAdmin(resultat.getInt("isAdmin"));
       return user;
-    }catch(NoSuchAlgorithmException e ){
+    }catch(SQLException e ){
       System.err.println("Erreur Algorithme: " + e.getMessage());
     }
+    return user;
   }
 }
