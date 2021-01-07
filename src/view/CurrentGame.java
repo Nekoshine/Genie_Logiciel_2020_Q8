@@ -125,11 +125,12 @@ public class CurrentGame extends JPanel implements ActionListener {
         currentEnigmaScroll.getVerticalScrollBar().setUnitIncrement(20);
         currentEnigmaScroll.setBorder(BorderFactory.createEmptyBorder());
 
+
         currentEnigmaPanel = new JPanel();
         currentEnigmaPanel.setLayout(new GridLayout(1,1));
         currentEnigmaPanel.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.95),(int)((float) frame.windowSize.getHeight()*0.25)));
         currentEnigmaPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        currentEnigmaPanel.add(currentEnigmaTextArea);
+        currentEnigmaPanel.add(currentEnigmaScroll);
 
 
         // Champs de reponse + bouton de confirmation
@@ -167,7 +168,7 @@ public class CurrentGame extends JPanel implements ActionListener {
         oldEnigmaPanel.setLayout(new GridLayout(1,1));
         oldEnigmaPanel.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.95),(int)((float) frame.windowSize.getHeight()*0.35)));
         oldEnigmaPanel.setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
-        oldEnigmaPanel.add(oldEnigmaTextArea);
+        oldEnigmaPanel.add(oldEnigmaScroll);
 
         // indices
 
@@ -252,7 +253,7 @@ public class CurrentGame extends JPanel implements ActionListener {
             hint1Scroll.getVerticalScrollBar().setUnitIncrement(20);
             hint1Scroll.setBorder(BorderFactory.createEmptyBorder());
             hintContainer1.remove(hint1Button);
-            hintContainer1.add(hint1TextArea);
+            hintContainer1.add(hint1Scroll);
             isused1 = true;
             frame.revalidate();
             frame.repaint();
@@ -265,8 +266,11 @@ public class CurrentGame extends JPanel implements ActionListener {
                 hint2TextArea.setWrapStyleWord(true);
                 hint2TextArea.setEditable(false);
                 hint2TextArea.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+                hint2Scroll = new JScrollPane(hint2TextArea,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+                hint2Scroll.getVerticalScrollBar().setUnitIncrement(20);
+                hint2Scroll.setBorder(BorderFactory.createEmptyBorder());
                 hintContainer2.remove(hint2Button);
-                hintContainer2.add(hint2TextArea);
+                hintContainer2.add(hint2Scroll);
                 isused2 = true;
 
                 frame.revalidate();
@@ -281,8 +285,11 @@ public class CurrentGame extends JPanel implements ActionListener {
                 hint3TextArea.setWrapStyleWord(true);
                 hint3TextArea.setEditable(false);
                 hint3TextArea.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+                hint3Scroll = new JScrollPane(hint1TextArea,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+                hint3Scroll.getVerticalScrollBar().setUnitIncrement(20);
+                hint3Scroll.setBorder(BorderFactory.createEmptyBorder());
                 hintContainer3.remove(hint3Button);
-                hintContainer3.add(hint3TextArea);
+                hintContainer3.add(hint3Scroll);
                 isused3 = true;
                 frame.revalidate();
                 frame.repaint();
@@ -308,7 +315,7 @@ public class CurrentGame extends JPanel implements ActionListener {
 
                     //maj hint 1
                     if(isused1){
-                    hintContainer1.remove(hint1TextArea);
+                    hintContainer1.remove(hint1Scroll);
                     hintContainer1.add(hint1Button);}
                     isused1 = false;
                     timerclue1 = allEnigmas.getEnigma(enigmalistflag).getTimer1();
@@ -319,7 +326,7 @@ public class CurrentGame extends JPanel implements ActionListener {
 
                     if (ishint2present) {
                         if(isused2) {
-                            hintContainer2.remove(hint2TextArea);
+                            hintContainer2.remove(hint2Scroll);
                             hintContainer2.add(hint2Button);
                         }
                     }
@@ -336,7 +343,7 @@ public class CurrentGame extends JPanel implements ActionListener {
 
                     if (ishint3present) {
                         if (isused3) {
-                            hintContainer3.remove(hint3TextArea);
+                            hintContainer3.remove(hint3Scroll);
                             hintContainer3.add(hint3Button);
                         }
                     }
