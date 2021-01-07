@@ -1,6 +1,5 @@
 package view;
 
-import database.DBConnexion;
 import database.DBEnigma;
 import model.EnigmaList;
 import model.Game;
@@ -52,6 +51,9 @@ public class CurrentGame extends JPanel implements ActionListener {
     private int timerclue3;
     private boolean ishint2present;
     private boolean ishint3present;
+    private boolean isused1 = false;
+    private boolean isused2 = false;
+    private boolean isused3 = false;
 
     private EnigmaList allEnigmas;
 
@@ -71,10 +73,10 @@ public class CurrentGame extends JPanel implements ActionListener {
 
         timerclue1 = allEnigmas.getEnigma(enigmalistflag).getTimer1();
 
-        ishint2present = allEnigmas.getEnigma(enigmalistflag).getClue2().isEmpty();
+        ishint2present = !(allEnigmas.getEnigma(enigmalistflag).getClue2().isEmpty());
         if(ishint2present){timerclue2 = allEnigmas.getEnigma(enigmalistflag).getTimer2();}
 
-        ishint3present = allEnigmas.getEnigma(enigmalistflag).getClue3().isEmpty();
+        ishint3present = !(allEnigmas.getEnigma(enigmalistflag).getClue3().isEmpty());
         if(ishint3present){timerclue3 = allEnigmas.getEnigma(enigmalistflag).getTimer3();};
 
 
@@ -82,7 +84,7 @@ public class CurrentGame extends JPanel implements ActionListener {
 
         firstRawPanel = new JPanel();
         firstRawPanel.setLayout(new FlowLayout(FlowLayout.CENTER,20,0));
-        firstRawPanel.setMaximumSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.95),35));
+        firstRawPanel.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.95),35));
         firstRawPanel.setBorder(BorderFactory.createEmptyBorder(10,10,5,5));
 
         titleLabel = new JLabel(partiechoisie.getTitre());
@@ -110,7 +112,7 @@ public class CurrentGame extends JPanel implements ActionListener {
 
         currentEnigmaPanel = new JPanel();
         currentEnigmaPanel.setLayout(new GridLayout(1,1));
-        currentEnigmaPanel.setMaximumSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.95),(int)((float) frame.windowSize.getHeight()*0.25)));
+        currentEnigmaPanel.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.95),(int)((float) frame.windowSize.getHeight()*0.25)));
         currentEnigmaPanel.add(currentEnigmaTextArea);
 
 
@@ -124,10 +126,11 @@ public class CurrentGame extends JPanel implements ActionListener {
         confirmButton = new JButton("Confirmer");
         confirmButton.setBackground(ColorPerso.vert);
         confirmButton.setMaximumSize(new Dimension(30,15));
+        confirmButton.addActionListener(this);
 
         thirdRawPanel = new JPanel();
         thirdRawPanel.setLayout(new FlowLayout(FlowLayout.CENTER,20,0));
-        thirdRawPanel.setMaximumSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.95),35));
+        thirdRawPanel.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.95),35));
         thirdRawPanel.setBorder(BorderFactory.createEmptyBorder(10,10,5,5));
 
         thirdRawPanel.add(answerTextField);
@@ -135,7 +138,7 @@ public class CurrentGame extends JPanel implements ActionListener {
 
         //anciennes enigmes
 
-        oldEnigmaTextArea = new JTextArea("Texte des enigmes deja traitées");
+        oldEnigmaTextArea = new JTextArea();
         oldEnigmaTextArea.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         oldEnigmaTextArea.setLineWrap(true);
         oldEnigmaTextArea.setWrapStyleWord(true);
@@ -146,7 +149,7 @@ public class CurrentGame extends JPanel implements ActionListener {
 
         oldEnigmaPanel = new JPanel();
         oldEnigmaPanel.setLayout(new GridLayout(1,1));
-        oldEnigmaPanel.setMaximumSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.95),(int)((float) frame.windowSize.getHeight()*0.35)));
+        oldEnigmaPanel.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.95),(int)((float) frame.windowSize.getHeight()*0.35)));
         oldEnigmaPanel.add(oldEnigmaTextArea);
 
         // indices
@@ -155,6 +158,7 @@ public class CurrentGame extends JPanel implements ActionListener {
         hint1Button.setEnabled(true);
         hint1Button.setBackground(Color.GRAY);
         hint1Button.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+        hint1Button.addActionListener(this);
 
         hintContainer1 = new JPanel();
         hintContainer1.setLayout(new GridLayout(1,1));
@@ -166,6 +170,7 @@ public class CurrentGame extends JPanel implements ActionListener {
         else{hint2Button.setEnabled(false);}
         hint2Button.setBackground(ColorPerso.GRAY);
         hint2Button.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+        hint2Button.addActionListener(this);
 
         hintContainer2 = new JPanel();
         hintContainer2.setLayout(new GridLayout(1,1));
@@ -177,6 +182,7 @@ public class CurrentGame extends JPanel implements ActionListener {
         else{hint3Button.setEnabled(false);}
         hint3Button.setBackground(ColorPerso.GRAY);
         hint3Button.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+        hint3Button.addActionListener(this);
 
         hintContainer3 = new JPanel();
         hintContainer3.setLayout(new GridLayout(1,1));
@@ -197,7 +203,7 @@ public class CurrentGame extends JPanel implements ActionListener {
         hintRawPanel = new JPanel();
         hintRawPanel.setLayout(new FlowLayout(FlowLayout.CENTER,40,0));
 
-        hintRawPanel.setMaximumSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.95),(int)((float) frame.windowSize.getHeight()*0.18)));
+        hintRawPanel.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.95),(int)((float) frame.windowSize.getHeight()*0.18)));
         hintRawPanel.add(hintContainer1);
         hintRawPanel.add(hintContainer2);
         hintRawPanel.add(hintContainer3);
@@ -223,6 +229,7 @@ public class CurrentGame extends JPanel implements ActionListener {
             hint1TextArea = new JTextArea(allEnigmas.getEnigma(enigmalistflag).getClue1());
             hintContainer1.remove(hint1Button);
             hintContainer1.add(hint1TextArea);
+            isused1 = true;
             frame.revalidate();
             frame.repaint();
         }
@@ -232,16 +239,18 @@ public class CurrentGame extends JPanel implements ActionListener {
                 hint2TextArea = new JTextArea(allEnigmas.getEnigma(enigmalistflag).getClue2());
                 hintContainer2.remove(hint2Button);
                 hintContainer2.add(hint2TextArea);
+                isused2 = true;
                 frame.revalidate();
                 frame.repaint();
             }
         }
 
-        if (event.getSource() == hint1Button){
+        if (event.getSource() == hint3Button){
             if(ishint3present) {
                 hint3TextArea = new JTextArea(allEnigmas.getEnigma(enigmalistflag).getClue3());
                 hintContainer3.remove(hint3Button);
                 hintContainer3.add(hint3TextArea);
+                isused3 = true;
                 frame.revalidate();
                 frame.repaint();
             }
@@ -249,45 +258,65 @@ public class CurrentGame extends JPanel implements ActionListener {
 
         if (event.getSource() == confirmButton){
             String answer = answerTextField.getText();
-            if (answer.equals(allEnigmas.getEnigma(enigmalistflag).getAnswer())){
-                if(enigmalistflag < allEnigmas.getSize() - 1){
+            if (answer.equals(allEnigmas.getEnigma(enigmalistflag).getAnswer())) {
+                if (enigmalistflag < allEnigmas.getSize() - 1) {
 
                     //maj des champs relatifs aux enigmes
 
                     oldEnigmaTextArea.append(allEnigmas.getEnigma(enigmalistflag).getText());
-                    enigmalistflag ++;
+                    enigmalistflag++;
+                    currentEnigmaPanel.remove(currentEnigmaTextArea);
                     currentEnigmaTextArea = new JTextArea(allEnigmas.getEnigma(enigmalistflag).getText());
+                    currentEnigmaPanel.add(currentEnigmaTextArea);
 
                     //maj hint 1
+                    if(isused1){
                     hintContainer1.remove(hint1TextArea);
-                    hintContainer1.add(hint1Button);
+                    hintContainer1.add(hint1Button);}
+                    isused1 = false;
+
                     hint1Button.setEnabled(true);
 
 
                     //maj hint 2
 
-                    if(ishint2present) {
-                        hintContainer2.remove(hint2TextArea);
-                        hintContainer2.add(hint2Button);
+                    if (ishint2present) {
+                        if(isused2) {
+                            hintContainer2.remove(hint2TextArea);
+                            hintContainer2.add(hint2Button);
+                        }
                     }
-                    ishint2present = allEnigmas.getEnigma(enigmalistflag).getClue2().isEmpty();
-                    if (ishint2present) {hint2Button.setEnabled(true);}
-                    else {hint3Button.setEnabled(true);}
+                    isused2 = false;
+                    ishint2present = !(allEnigmas.getEnigma(enigmalistflag).getClue2().isEmpty());
+                    if (ishint2present) {
+                        hint2Button.setEnabled(true);
+                    } else {
+                        hint3Button.setEnabled(false);
+                    }
 
                     //maj hint 3
 
-                    if(ishint3present) {
-                        hintContainer3.remove(hint3TextArea);
-                        hintContainer3.add(hint3Button);
+                    if (ishint3present) {
+                        if (isused3) {
+                            hintContainer3.remove(hint3TextArea);
+                            hintContainer3.add(hint3Button);
+                        }
+                    }
+                    isused3 = false;
+                    ishint3present = !(allEnigmas.getEnigma(enigmalistflag).getClue3().isEmpty());
+                    System.out.print(ishint3present);
+                    if (ishint3present) {
+                        hint3Button.setEnabled(true);
+                    } else {
+                        hint3Button.setEnabled(false);
                     }
 
-                    ishint2present = allEnigmas.getEnigma(enigmalistflag).getClue2().isEmpty();
-                    if (ishint2present) {hint2Button.setEnabled(true);}
-                    else {hint3Button.setEnabled(true);}
-
-
+                    frame.revalidate();
+                    frame.repaint();
                 }
+                else{JOptionPane.showMessageDialog(frame, "Vous avez réussi !!!!", "Bravo", JOptionPane.WARNING_MESSAGE);}
             }
+            else{JOptionPane.showMessageDialog(frame, "Ce n'est pas la bonne reponse", "Raté", JOptionPane.WARNING_MESSAGE);}
         }
 
     }
