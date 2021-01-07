@@ -1,5 +1,6 @@
 package view;
 
+import model.EnigmaList;
 import view.style.ColorPerso;
 
 import javax.swing.*;
@@ -7,6 +8,9 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import static database.DBEnigma.getEnigmas;
+import static database.DBGame.getTitleGame;
 
 public class PlayerManagement extends JPanel implements ActionListener{
 
@@ -67,6 +71,8 @@ public class PlayerManagement extends JPanel implements ActionListener{
         this.boolHint2 = boolHint2Revealed;
         this.boolHint3 = boolHint3Revealed;
 
+        EnigmaList currentRiddles = getEnigmas(gameNb); // la liste des énigme du jeux
+
         helpButtonGM.addActionListener(this);
         helpButtonGM.setBackground(Color.white);
         helpButtonGM.setForeground(Color.black);
@@ -126,13 +132,35 @@ public class PlayerManagement extends JPanel implements ActionListener{
         topPan.add(timerPan);
 
         //Baptiste fonction récupérer le texte de l'histoire en cours
+
+        title.setText(getTitleGame(gameNb));
+        currentStory.setText((currentRiddles.getEnigma(riddleNb - 1)).getText());
+
+        // variante ou on prend toute l'histoire
+        /*
+        String currentStoryStr = "";
+        for(int i = 0; i < riddleNb; i++){
+            currentStoryStr = currentStoryStr + (currentRiddles.getEnigma(i)).getText();
+        }*/
+
+        // Fin fonction récupérer le texte de l'histoire en cours
+
         currentStoryPanIn.add(currentStory);
         scrollCurrentStoryPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         currentStoryPan.add(scrollCurrentStoryPanIn);
         currentStoryPan.setBorder(BorderFactory.createEmptyBorder(0,0,10,0));
 
         //Baptiste fonction récupérer les réponses déjà tentées
+
+
+        // Faire une action qui récupère les réponsse donné
+
         //Baptiste fonction récupérer la réponse attendue
+
+        answers.setText((currentRiddles.getEnigma(riddleNb -1)).getAnswer());
+
+        // Fin de fonction récupérer la réponse attendue
+
         answersPanIn.add(answers);
         scrollAnswersPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         answersPan.add(scrollAnswersPanIn);
@@ -151,8 +179,23 @@ public class PlayerManagement extends JPanel implements ActionListener{
         helpGMPan.setBorder(BorderFactory.createEmptyBorder(0,0,10,0));
 
         //Baptiste fonction récupérer hint1
+
+        if(boolHint1){
+            String hint1Str = (currentRiddles.getEnigma(riddleNb - 1)).getClue1();
+        }
+
         //Baptiste fonction récupérer hint2
+
+        if(boolHint2){
+            String hint2Str = (currentRiddles.getEnigma(riddleNb - 1)).getClue1();
+        }
+
         //Baptiste fonction récupérer hint3
+
+        if(boolHint3){
+            String hint3Str = (currentRiddles.getEnigma(riddleNb - 1)).getClue1();
+        }
+
         buttonReturnPanIn.add(buttonReturn);
         buttonReturnPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         buttonReturnPan.add(buttonReturnPanIn);
@@ -196,6 +239,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==helpButtonGM){
             //Baptiste fonction envoyer le message aux joueurs
+            String messageFromMJ = helpButtonGM.getText();
         }
     }
 }
