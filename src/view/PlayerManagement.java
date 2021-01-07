@@ -173,7 +173,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
         helpButtonGMPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         helpButtonGMPan.add(helpButtonGMPanIn);
         helpButtonGMPan.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-        helpGMPanIn.setLayout(new BoxLayout(topPan, BoxLayout.LINE_AXIS));
+        helpGMPanIn.setLayout(new BoxLayout(helpGMPanIn, BoxLayout.LINE_AXIS));
         helpGMPanIn.add(helpMessageGMPan);
         helpGMPanIn.add(helpButtonGMPan);
         helpGMPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
@@ -214,7 +214,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
         buttonHint3PanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         buttonHint3Pan.add(buttonHint3PanIn);
         buttonHint3Pan.setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
-        bottomPanIn.setLayout(new BoxLayout(topPan, BoxLayout.LINE_AXIS));
+        bottomPanIn.setLayout(new BoxLayout(bottomPanIn, BoxLayout.LINE_AXIS));
         bottomPanIn.add(buttonReturnPan);
         bottomPanIn.add(buttonHint1Pan);
         bottomPanIn.add(buttonHint2Pan);

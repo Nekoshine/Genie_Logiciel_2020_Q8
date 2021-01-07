@@ -31,6 +31,8 @@ public class User{
   public void setPwd(String pwd){
     this.pwd=pwd;
   }
+  public void setId(int id) {this.id = id;}
+
   public void setIsAdmin(int isAdm){
     if(isAdm==1){      
       this.isAdmin=true;

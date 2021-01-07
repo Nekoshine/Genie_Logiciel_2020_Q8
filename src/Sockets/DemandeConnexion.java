@@ -1,3 +1,5 @@
+package Sockets;
+
 import java.io.Serializable;
 import java.util.Random;
 
