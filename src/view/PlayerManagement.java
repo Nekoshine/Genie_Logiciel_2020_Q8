@@ -50,7 +50,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
     public JLabel answers = new JLabel();
     public JTextField helpMessageGM = new JTextField();
     public JButton helpButtonGM = new JButton("Envoyer");
-    public JButton buttonReturn = new JButton("Return");
+    public JButton buttonReturn = new JButton("Retour");
     public JButton buttonHint1;
     public JButton buttonHint2;
     public JButton buttonHint3;
@@ -71,8 +71,10 @@ public class PlayerManagement extends JPanel implements ActionListener{
         this.boolHint2 = boolHint2Revealed;
         this.boolHint3 = boolHint3Revealed;
 
-        int width = (int) ((float) frame.windowSize.getWidth());
-        int height = (int) ((float) frame.windowSize.getHeight());
+        //Dimension dim = new Dimension(1920,1080);
+
+        int width = (int) ((float) frame.getWidth());
+        int height = (int) ((float) frame.getHeight());
 
         EnigmaList currentRiddles = getEnigmas(gameNb); // la liste des énigmes du jeu
 
@@ -124,6 +126,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
         title.setText(getTitleGame(gameNb));
 
         title.setPreferredSize(new Dimension(width*70/100,height*12/100));
+        System.out.println(width*70/100 + "  " + height*12/100 );
         titlePanIn.add(title);
         titlePanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         titlePan.add(titlePanIn);
