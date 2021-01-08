@@ -291,7 +291,7 @@ public class CurrentGame extends JPanel implements ActionListener {
                 hint3TextArea.setLineWrap(true);
                 hint3TextArea.setWrapStyleWord(true);
                 hint3TextArea.setEditable(false);
-                hint3Scroll = new JScrollPane(hint1TextArea,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+                hint3Scroll = new JScrollPane(hint3TextArea,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
                 hint3Scroll.getVerticalScrollBar().setUnitIncrement(20);
                 hint3Scroll.setBorder(BorderFactory.createEmptyBorder());
                 hintContainer3.remove(hint3Button);
