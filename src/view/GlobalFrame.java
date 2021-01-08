@@ -188,6 +188,7 @@ public class GlobalFrame extends JFrame {
         playerManagement = new PlayerManagement(frame, gameNb, riddleNb, boolHint1Revealed, boolHint2Revealed, boolHint3Revealed);
         setContentPane(playerManagement);
         frame.setSize(1280,720);
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setResizable(true);
         frame.revalidate();
         frame.repaint();
