@@ -11,6 +11,7 @@ import static java.lang.Thread.sleep;
 
 public class Admin {
   private static int port = 1095;
+  private static String host = "127.0.0.1"; //localhost
   
   public static void setServerAdmin(){
     try{
@@ -50,4 +51,17 @@ public class Admin {
   }
 }
 
+public void envoiAdminInfo(int idUserAdmin){
+  try{
+    Socket socket = new Socket(host,port);
+    ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+    AdminInfo signal = new AdminInfo(idUserAdmin);
+    out.writeObject(signal);
+    socket.close();
+  }catch(ClassNotFoundException e){
+    System.out.println("ClassNotFoundException :"+ e.getMessage());
+  }catch(IOException e){
+    System.out.println("IOException :" + e.getMessage());
+  }
+}
 }
