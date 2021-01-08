@@ -123,12 +123,12 @@ public class PlayerManagement extends JPanel implements ActionListener{
 
         title.setText(getTitleGame(gameNb));
 
-        titlePanIn.setPreferredSize(new Dimension((int) (width*0.7),(int) (height*0.12)));
+        titlePanIn.setPreferredSize(new Dimension((int) ((width-30)*0.7),(int) (height*0.12)));
         titlePanIn.add(title);
         titlePanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         titlePan.add(titlePanIn);
         titlePan.setBorder(BorderFactory.createEmptyBorder(0,0,10,10));
-        timerPanIn.setPreferredSize(new Dimension((int)(width*0.3),(int) (height*0.12)));
+        timerPanIn.setPreferredSize(new Dimension((int)((width-30)*0.3),(int) (height*0.12)));
         timerPanIn.add(timer);
         timerPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         timerPan.add(timerPanIn);
