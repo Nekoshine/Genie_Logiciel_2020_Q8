@@ -2,6 +2,7 @@
 
 package view;
 
+import Sockets.Admin;
 import view.style.ColorPerso;
 import view.style.FontPerso;
 
@@ -71,6 +72,7 @@ public class MainMenu extends JPanel implements ActionListener {
         this.add("Center", new JSeparator());
         this.add("Center", menucontainer);
         this.setVisible(true);
+
     }
 
     public void actionPerformed(ActionEvent e) {

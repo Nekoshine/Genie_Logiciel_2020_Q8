@@ -2,6 +2,7 @@
 
 package view;
 
+import Sockets.Client;
 import controller.RoomController;
 import database.DBRoom;
 import database.DBUser;
@@ -107,6 +108,7 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
         returnButton.addMouseListener(this);
 
         /* Setup Fenêtre gestion des salles */
+
         this.setLayout(mainLayout);
         this.setBackground(ColorPerso.gris);
         this.add(listPanel, BorderLayout.CENTER);
