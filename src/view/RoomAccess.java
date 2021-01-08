@@ -2,6 +2,7 @@
 
 package view;
 
+import Sockets.Client;
 import controller.RoomController;
 import database.DBRoom;
 import database.DBUser;
@@ -187,6 +188,7 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
                 if(salle.getUserInside()==-1){
                     frame.insideRoom = true;
                     salle.setUserInside(user.getId());
+                    Client.connectToServer(user.getId(),salle.getId());
                     frame.roomAccessDisplay(frame,ListRoom);
                 }
 

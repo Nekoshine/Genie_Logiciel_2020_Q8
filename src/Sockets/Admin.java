@@ -19,7 +19,7 @@ public class Admin {
       
       ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
       Object oserver =  in.readObject();
-      DemandeConnexion user = new DemandeConnexion(0);
+      DemandeConnexion user = new DemandeConnexion(0,0);
       if(oserver instanceof DemandeConnexion){
         user = (DemandeConnexion) oserver;
         System.out.println("idUser : "+user.getIdUser());

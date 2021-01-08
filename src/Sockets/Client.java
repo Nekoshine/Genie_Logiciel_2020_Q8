@@ -12,11 +12,11 @@ public class Client {
   private static int port = 1095;
   private static String host = "127.0.0.1"; //localhost
   
-  public static void connectToServer(int idUser){
+  public static void connectToServer(int idUser,int idRoom){
     try{
       Socket socket = new Socket(host,port);
       ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-      DemandeConnexion signal = new DemandeConnexion(idUser);
+      DemandeConnexion signal = new DemandeConnexion(idUser,idRoom);
       out.writeObject(signal);
       ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
       Object oserver =  in.readObject();
