@@ -106,6 +106,7 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
                 //Client.connectToServer();
                 Main.ListRoom = DBRoom.getRooms(3); //si le joueur est le numero
                 frame.roomAccessDisplay(frame,Main.ListRoom);
+                //Client.recepAdminInfo()
             }
             else {
                 JOptionPane.showMessageDialog(frame,"l'identifiant ou le mot de passe ne correspond pas");

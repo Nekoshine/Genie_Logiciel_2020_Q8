@@ -4,15 +4,20 @@ import java.io.Serializable;
 import java.util.Random;
 
 public class DemandeConnexion implements Serializable {
-  
+
   private int idUser;
-  private int idRoom;
-  
-  public DemandeConnexion(int idUser,int idRoom){
+  private boolean firstConn;
+
+
+  public DemandeConnexion(int idUser,boolean firstConn){
     this.idUser=idUser;
-    this.idRoom=idRoom;
+    this.firstConn=firstConn;
+
   }
   public int getIdUser(){
     return idUser;
+  }
+  public boolean getFirstConn(){
+    return firstConn;
   }
 }
