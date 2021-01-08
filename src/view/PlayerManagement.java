@@ -123,7 +123,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
 
         title.setText(getTitleGame(gameNb));
 
-        titlePanIn.setPreferredSize(new Dimension(width*70/100,height*12/100));
+        title.setPreferredSize(new Dimension(width*70/100,height*12/100));
         titlePanIn.add(title);
         titlePanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         titlePan.add(titlePanIn);
