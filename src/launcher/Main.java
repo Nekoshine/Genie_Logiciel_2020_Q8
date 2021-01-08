@@ -9,8 +9,9 @@ import java.io.IOException;
 
 public class Main {
     public static EnigmaList ListEnigma = new EnigmaList();
-    public static int idUser=5;
+    public static int idUser=0;
     public static RoomList ListRoom = new RoomList();
+    public static int idAdmin;
 
     public static void main(String[] args) throws IOException {
 

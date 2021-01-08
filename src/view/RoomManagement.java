@@ -262,9 +262,12 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
 
         JButton boutonLancer = new JButton("Lancer");
         boutonLancer.setBackground(ColorPerso.vert);
-        if (salle.getGame() == null || salle.getUserInside() == -1) {
-            boutonLancer.setBackground(new Color(250,118,20));
-            boutonLancer.setText("Ouvrir la salle");
+
+
+        if (salle.getGame() == null /* || salle.getUserInside() == -1 */) {
+            boutonLancer.setEnabled(false);
+            boutonLancer.setBackground(Color.darkGray);
+            //boutonLancer.setText("Ouvrir la salle");
 
         }
 
@@ -272,13 +275,14 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Bouton lancer " + salle.getId());
+                frame.playerManagement(frame,salle.getId(),1,false,false,false);
 
-                if (boutonLancer.getText()=="Ouvrir la salle"){
+
+                /*if (boutonLancer.getText()=="Ouvrir la salle"){
                     boutonLancer.setText("En attente");
                     boutonLancer.repaint();
-                    Admin.setServerAdmin();
 
-                }
+                }*/
             }
         });
 
