@@ -58,9 +58,7 @@ public void envoiAdminInfo(int idUserAdmin){
     AdminInfo signal = new AdminInfo(idUserAdmin);
     out.writeObject(signal);
     socket.close();
-  }catch(ClassNotFoundException e){
-    System.out.println("ClassNotFoundException :"+ e.getMessage());
-  }catch(IOException e){
+  } catch(IOException e){
     System.out.println("IOException :" + e.getMessage());
   }
 }

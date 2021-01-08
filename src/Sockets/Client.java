@@ -39,7 +39,7 @@ public class Client {
   }
   
   public static int recepAdminInfo(){
-    int idUserAdmin;
+    int idUserAdmin=0;
     try{
       ServerSocket s = new ServerSocket(port);
       Socket socket = s.accept();
@@ -49,13 +49,15 @@ public class Client {
       AdminInfo user = new AdminInfo(0);
       if(oserver instanceof AdminInfo){
         user = (AdminInfo) oserver;
-        System.out.println("idUser : "+user.getIdUser());
+        System.out.println("idUser : "+user.getIdUserAdmin());
         idUserAdmin=user.getIdUserAdmin();
       }
+
     }catch(IOException e){
       System.out.println("IOException : "+ e.getMessage());
     }catch(ClassNotFoundException e){
       System.out.println("ClassNotFoundException : "+ e.getMessage());
     }
+    return idUserAdmin;
   }
 }

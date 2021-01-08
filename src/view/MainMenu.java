@@ -73,10 +73,6 @@ public class MainMenu extends JPanel implements ActionListener {
         this.add("Center", menucontainer);
         this.setVisible(true);
 
-        //Admin.setServerAdmin();
-
-
-
     }
 
     public void actionPerformed(ActionEvent e) {
