@@ -71,8 +71,8 @@ public class PlayerManagement extends JPanel implements ActionListener{
         this.boolHint2 = boolHint2Revealed;
         this.boolHint3 = boolHint3Revealed;
 
-        int width = (int) ((float) frame.windowSize.getWidth());
-        int height = (int) ((float) frame.windowSize.getHeight());
+        int width = (int) frame.windowSize.getWidth();
+        int height = (int) frame.windowSize.getHeight();
 
         EnigmaList currentRiddles = getEnigmas(gameNb); // la liste des énigmes du jeu
 
@@ -123,12 +123,12 @@ public class PlayerManagement extends JPanel implements ActionListener{
 
         title.setText(getTitleGame(gameNb));
 
-        title.setPreferredSize(new Dimension(width*70/100,height*12/100));
+        titlePanIn.setPreferredSize(new Dimension((int) (width*0.7),(int) (height*0.12)));
         titlePanIn.add(title);
         titlePanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         titlePan.add(titlePanIn);
         titlePan.setBorder(BorderFactory.createEmptyBorder(0,0,10,10));
-        timer.setPreferredSize(new Dimension(width*30/100,height*12/100));
+        timerPanIn.setPreferredSize(new Dimension((int)(width*0.3),(int) (height*0.12)));
         timerPanIn.add(timer);
         timerPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         timerPan.add(timerPanIn);
@@ -150,7 +150,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
 
         // Fin fonction récupérer le texte de l'histoire en cours
 
-        currentStory.setPreferredSize(new Dimension(width,height*22/100));
+        scrollCurrentStoryPanIn.setPreferredSize(new Dimension(width,height*22/100));
         currentStoryPanIn.add(currentStory);
         scrollCurrentStoryPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         currentStoryPan.add(scrollCurrentStoryPanIn);
@@ -166,7 +166,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
 
         // Fin de fonction récupérer la réponse attendue
 
-        answers.setPreferredSize(new Dimension(width-20,height*22/100));
+        scrollAnswersPanIn.setPreferredSize(new Dimension(width-20,height*22/100));
         answersPanIn.add(answers);
         scrollAnswersPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         answersPan.add(scrollAnswersPanIn);
@@ -250,11 +250,12 @@ public class PlayerManagement extends JPanel implements ActionListener{
         }else if(e.getSource()==buttonHint1){
             //Baptiste fonction afficher indice 1 pour les joueurs
 
+            frame.playerManagement(frame, gameNb, riddleNb, true, boolHint2, boolHint3);
         }else if(e.getSource()==buttonHint2){
+            frame.playerManagement(frame, gameNb, riddleNb, boolHint1, true, boolHint3);
 
         }else if(e.getSource()==buttonHint3){
-
-
+            frame.playerManagement(frame, gameNb, riddleNb, boolHint1, boolHint2, true);
         }
     }
 }
