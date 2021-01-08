@@ -15,7 +15,7 @@ public class DBGame extends DBConnexion {
   public DBGame(){
     super.getConnexion();
   }
-  
+
   /**
   * Fonction qui va récupérer les jeux dans la base de données et le stocker dans un ArrayList
   * @return Liste de jeux
@@ -69,41 +69,7 @@ public class DBGame extends DBConnexion {
     }
     return gameList;
   }
-  /**
-  * V1 De l insertion de jeux, on insere un jeu donné en argument
-  * @param  game Jeu à insérer
-  * @return      insert correct ou non
-  */
-  public static boolean insertGame(Game game){
-    boolean inserted = false;
-    int valueReady=0;
-    try{
-      PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("Insert into Game VALUES (?,?,?,?,?,?)");
-      requete.setInt(1,game.getId());
-      requete.setString(2,game.getTitre());
-      requete.setInt(3,game.getScore());
-      requete.setInt(4,game.getTimer());
-      requete.setInt(5,game.getIdUser());
-      if(game.getReady()){
-        valueReady=1;
-      }
-      requete.setInt(6,valueReady);
-      requete.executeUpdate();
-      requete.close();
-      PreparedStatement requeteVerif = DBConnexion.getConnexion().prepareStatement("Select * from Game where id=?");  // On regarde si l'user a bien été inséré
-      requeteVerif.setString(1, String.valueOf(game.getId()));
-      ResultSet resultatVerif = requeteVerif.executeQuery();
-      if(resultatVerif.next() != false){ // Si il a été inséré
-        inserted=true; // Alors on valide l insertion
-      }
-      resultatVerif.close();
-      requeteVerif.close();
-    } catch(SQLException e ){
-      System.err.println("Erreur requete insertGame: " + e.getMessage());
-    }
-    return inserted;
-  }
-  
+
   /**
   * V2 De l insertion de jeux, on insere un jeu grace aux champs donnés en argument
   * @param  titreN a insérer
@@ -139,11 +105,11 @@ public class DBGame extends DBConnexion {
     return inserted;
   }
   
-  public static int getIdGame(String titre) {
+  public static int getIdGame(String name) {
     int idGame=0;
     try {
-      PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("Select id from Game where titre=?");
-      requete.setString(1, titre);
+      PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("SELECT id FROM Game WHERE titre=?");
+      requete.setString(1, name);
       ResultSet resultat = requete.executeQuery();
       if (resultat.next()!=false) {
         idGame = resultat.getInt("id");
@@ -160,7 +126,7 @@ public class DBGame extends DBConnexion {
   public static String getTitleGame(int idGame) {
     String titre = "Titre";
     try {
-      PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("Select id from Game where id=?");
+      PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("Select titre from Game where id=?");
       requete.setInt(1, idGame);
       ResultSet resultat = requete.executeQuery();
       if (resultat.next()!=false) {
@@ -168,7 +134,7 @@ public class DBGame extends DBConnexion {
       }
       requete.close();
       resultat.close();
-      return "Titre";
+      return titre;
     } catch (SQLException e) {
       System.err.println("Erreur requete getIdGame: " + e.getMessage());
     }

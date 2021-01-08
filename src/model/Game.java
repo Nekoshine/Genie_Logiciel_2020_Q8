@@ -46,6 +46,6 @@ public class Game{
   }
 
     public int getIdUser() {
-    return id;
+    return idUser;
     }
 }

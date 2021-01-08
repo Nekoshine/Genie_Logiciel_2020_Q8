@@ -2,6 +2,7 @@
 
 package view;
 
+import Sockets.Admin;
 import database.DBRoom;
 import launcher.Main;
 import model.Room;
@@ -262,14 +263,22 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
         JButton boutonLancer = new JButton("Lancer");
         boutonLancer.setBackground(ColorPerso.vert);
         if (salle.getGame() == null || salle.getUserInside() == -1) {
-            boutonLancer.setEnabled(false);
-            boutonLancer.setBackground(ColorPerso.darkGray);
+            boutonLancer.setBackground(new Color(250,118,20));
+            boutonLancer.setText("Ouvrir la salle");
+
         }
 
         boutonLancer.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Bouton lancer " + salle.getId());
+
+                if (boutonLancer.getText()=="Ouvrir la salle"){
+                    boutonLancer.setText("En attente");
+                    boutonLancer.repaint();
+                    Admin.setServerAdmin();
+
+                }
             }
         });
 
@@ -289,12 +298,17 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
 
                 @Override
                 public void mouseEntered(MouseEvent e) {
-                    boutonLancer.setBackground(ColorPerso.vertHoover);
+
+                    if (boutonLancer.getText()=="Lancer") {
+                        boutonLancer.setBackground(ColorPerso.vertHoover);
+                    }
                 }
 
                 @Override
                 public void mouseExited(MouseEvent e) {
-                    boutonLancer.setBackground(ColorPerso.vert);
+                    if (boutonLancer.getText()=="Lancer") {
+                        boutonLancer.setBackground(ColorPerso.vert);
+                    }
                 }
             });
         }
