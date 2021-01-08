@@ -3,6 +3,7 @@ package Sockets;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import static java.lang.Thread.sleep;
@@ -34,6 +35,27 @@ public class Client {
       System.out.println("ClassNotFoundException :"+ e.getMessage());
     }catch(IOException e){
       System.out.println("IOException :" + e.getMessage());
+    }
+  }
+  
+  public static int recepAdminInfo(){
+    int idUserAdmin;
+    try{
+      ServerSocket s = new ServerSocket(port);
+      Socket socket = s.accept();
+      
+      ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+      Object oserver =  in.readObject();
+      AdminInfo user = new AdminInfo(0);
+      if(oserver instanceof AdminInfo){
+        user = (AdminInfo) oserver;
+        System.out.println("idUser : "+user.getIdUser());
+        idUserAdmin=user.getIdUserAdmin();
+      }
+    }catch(IOException e){
+      System.out.println("IOException : "+ e.getMessage());
+    }catch(ClassNotFoundException e){
+      System.out.println("ClassNotFoundException : "+ e.getMessage());
     }
   }
 }
