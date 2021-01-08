@@ -17,7 +17,7 @@ public class Client {
     try{
       Socket socket = new Socket(host,port);
       ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-      DemandeConnexion signal = new DemandeConnexion(idUser);
+      DemandeConnexion signal = new DemandeConnexion(idUser,false);
       out.writeObject(signal);
       ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
       Object oserver =  in.readObject();
@@ -41,8 +41,12 @@ public class Client {
   public static int recepAdminInfo(){
     int idUserAdmin;
     try{
+      
       ServerSocket s = new ServerSocket(port);
       Socket socket = s.accept();
+      ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+      DemandeConnexion signal = new DemandeConnexion(idUser,true);
+      out.writeObject(signal);
       
       ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
       Object oserver =  in.readObject();
@@ -57,5 +61,27 @@ public class Client {
     }catch(ClassNotFoundException e){
       System.out.println("ClassNotFoundException : "+ e.getMessage());
     }
+  }
+  
+  public static int recepGameInfo(){
+    Game gameRCV;
+    try{
+      
+      ServerSocket s = new ServerSocket(port);
+      Socket socket = s.accept();
+      
+      ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+      Object oserver =  in.readObject();
+      if(oserver instanceof GameInfo){
+        GameInfo  game = (GameInfo) oserver;
+        System.out.println("Titre du jeu recu : "+game.getgame().getTitre());
+        gameRCV=game.getgame();
+      }
+    }catch(IOException e){
+      System.out.println("IOException : "+ e.getMessage());
+    }catch(ClassNotFoundException e){
+      System.out.println("ClassNotFoundException : "+ e.getMessage());
+    }
+    return gameRCV;
   }
 }
