@@ -47,8 +47,7 @@ public class DBEnigma extends DBConnexion{
                         }
                         enigmaList.addEnigma(
                           new Enigma(resultat.getInt("id"),resultat.getString("text"),resultat.getString("answer"),
-                          resultat.getString("clue1"),resultat.getInt("timer1"),
-                          clue2,timer2,
+                          resultat.getString("clue1"),resultat.getInt("timer1"),clue2,timer2,
                           clue3,timer3));
                         // On crée l'objet model.Game et on l'ajoute dans la liste
                   }
