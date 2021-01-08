@@ -123,12 +123,12 @@ public class PlayerManagement extends JPanel implements ActionListener{
 
         title.setText(getTitleGame(gameNb));
 
-        title.setPreferredSize(new Dimension((width-30)*70/100,(height-60)*12/100));
+        title.setPreferredSize(new Dimension(width*70/100,height*12/100));
         titlePanIn.add(title);
         titlePanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         titlePan.add(titlePanIn);
         titlePan.setBorder(BorderFactory.createEmptyBorder(0,0,10,10));
-        timer.setPreferredSize(new Dimension((width-30)*30/100,(height-60)*12/100));
+        timer.setPreferredSize(new Dimension(width*30/100,height*12/100));
         timerPanIn.add(timer);
         timerPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         timerPan.add(timerPanIn);
@@ -150,7 +150,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
 
         // Fin fonction récupérer le texte de l'histoire en cours
 
-        currentStory.setPreferredSize(new Dimension(width-20,(height-60)*22/100));
+        currentStory.setPreferredSize(new Dimension(width,height*22/100));
         currentStoryPanIn.add(currentStory);
         scrollCurrentStoryPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         currentStoryPan.add(scrollCurrentStoryPanIn);
@@ -166,13 +166,13 @@ public class PlayerManagement extends JPanel implements ActionListener{
 
         // Fin de fonction récupérer la réponse attendue
 
-        answers.setPreferredSize(new Dimension(width-20,(height-60)*22/100));
+        answers.setPreferredSize(new Dimension(width-20,height*22/100));
         answersPanIn.add(answers);
         scrollAnswersPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         answersPan.add(scrollAnswersPanIn);
         answersPan.setBorder(BorderFactory.createEmptyBorder(0,0,10,0));
 
-        helpMessageGM.setPreferredSize(new Dimension(width-50, (height-60)*22/100));
+        helpMessageGM.setPreferredSize(new Dimension(width, height*22/100));
         helpMessageGMPan.add(helpMessageGM);
         helpButtonGMPanIn.add(helpButtonGM);
         helpButtonGMPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
@@ -219,7 +219,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
         buttonHint3PanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         buttonHint3Pan.add(buttonHint3PanIn);
         buttonHint3Pan.setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
-        bottomPanIn.setPreferredSize(new Dimension(width-20,(height-80)/4));
+        bottomPan.setPreferredSize(new Dimension(width,(height)*22/100));
         bottomPanIn.setLayout(new BoxLayout(bottomPanIn, BoxLayout.LINE_AXIS));
         bottomPanIn.add(buttonReturnPan);
         bottomPanIn.add(buttonHint1Pan);
