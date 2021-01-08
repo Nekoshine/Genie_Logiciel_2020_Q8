@@ -1,6 +1,7 @@
 package database;
 
 import launcher.Main;
+import model.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,7 +23,7 @@ public class DBUser extends DBConnexion {
   * Fonction qui vérifie que les identifiants fournis dans la base correspondent bien a un user inscrit
   * @param  login    Login a tester
   * @param  password Password a tester
-   * @return           0 si c'est un utilisateur normal, 1 si cest un admin , 3 si la connexion échoue
+  * @return           0 si c'est un utilisateur normal, 1 si cest un admin , 3 si la connexion échoue
   */
   public static int connectUser(String login, String password){
     int isAdmin = 0;
@@ -108,5 +109,23 @@ public class DBUser extends DBConnexion {
       System.err.println("Erreur Algorithme: " + e.getMessage());
     }
     return inserted;
+  }
+  
+  public static User getUser(int idUSer){
+    User user = null;
+    try{
+      PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("Select * from User where id=?"); // On regarde si l'user n'est pas déja dans la BDD
+      requete.setInt(1,idUSer);
+      ResultSet resultat = requete.executeQuery();
+      resultat.next();
+      user.setLogin(resultat.getString("login"));
+      user.setPwd(resultat.getString("pwd"));
+      user.setId(resultat.getInt("id"));
+      user.setIsAdmin(resultat.getInt("isAdmin"));
+      return user;
+    }catch(SQLException e ){
+      System.err.println("Erreur Algorithme: " + e.getMessage());
+    }
+    return user;
   }
 }

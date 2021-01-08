@@ -2,6 +2,7 @@
 
 package view;
 
+import Sockets.Client;
 import database.DBRoom;
 import database.DBUser;
 import launcher.Main;
@@ -95,10 +96,17 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
             if (isAdmin==1){
                 frame.mainMenuDisplay(frame);
                 Main.ListRoom = DBRoom.getRooms(Main.idUser); // recherche des salles dans la BDD apres la connection
+
+
+
+
+
             }
             else if( isAdmin==0){
+                //Client.connectToServer();
                 Main.ListRoom = DBRoom.getRooms(3); //si le joueur est le numero
                 frame.roomAccessDisplay(frame,Main.ListRoom);
+                //Client.recepAdminInfo()
             }
             else {
                 JOptionPane.showMessageDialog(frame,"l'identifiant ou le mot de passe ne correspond pas");

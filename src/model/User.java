@@ -25,4 +25,19 @@ public class User{
   public String getPwd(){
     return this.pwd;
   }
+  public void setLogin(String log){
+    this.login=log;
+  }
+  public void setPwd(String pwd){
+    this.pwd=pwd;
+  }
+  public void setId(int id) {this.id = id;}
+
+  public void setIsAdmin(int isAdm){
+    if(isAdm==1){      
+      this.isAdmin=true;
+    }else{
+      this.isAdmin=false;
+    }
+  }
 }

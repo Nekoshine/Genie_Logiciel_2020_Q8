@@ -54,7 +54,7 @@ public class GlobalFrame extends JFrame {
 
         //menu = new RoomManagement();
         //this.setContentPane(menu);
-        currentGameDisplay(this, DBGame.getGames(5).getGame(3));
+        mainMenuDisplay(this);
 
 
 
@@ -176,6 +176,7 @@ public class GlobalFrame extends JFrame {
         roomAccess = new RoomAccess(frame,roomList);
         setContentPane(roomAccess);
         frame.setSize(1280,720);
+        frame.setLocationRelativeTo(null);
         frame.setResizable(true);
         frame.revalidate();
         frame.repaint();

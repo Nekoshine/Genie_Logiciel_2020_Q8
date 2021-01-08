@@ -1,5 +1,6 @@
 package view;
 
+import model.EnigmaList;
 import view.style.ColorPerso;
 
 import javax.swing.*;
@@ -7,6 +8,9 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import static database.DBEnigma.getEnigmas;
+import static database.DBGame.getTitleGame;
 
 public class PlayerManagement extends JPanel implements ActionListener{
 
@@ -67,6 +71,11 @@ public class PlayerManagement extends JPanel implements ActionListener{
         this.boolHint2 = boolHint2Revealed;
         this.boolHint3 = boolHint3Revealed;
 
+        int width = (int) ((float) frame.windowSize.getWidth());
+        int height = (int) ((float) frame.windowSize.getHeight());
+
+        EnigmaList currentRiddles = getEnigmas(gameNb); // la liste des énigmes du jeu
+
         helpButtonGM.addActionListener(this);
         helpButtonGM.setBackground(Color.white);
         helpButtonGM.setForeground(Color.black);
@@ -77,46 +86,49 @@ public class PlayerManagement extends JPanel implements ActionListener{
         buttonReturn.setForeground(Color.white);
         buttonReturn.setOpaque(true);
 
-        if(boolHint1==false){
+        if(!boolHint1){
             buttonHint1 = new JButton("Afficher l'indice 1");
             buttonHint1.addActionListener(this);
             buttonHint1.setBackground(Color.white);
-            buttonHint1.setBackground(Color.black);
         }else{
             buttonHint1 = new JButton("Indice 1 déjà affiché");
             buttonHint1.setBackground(Color.gray);
-            buttonHint1.setForeground(Color.black);
         }
+        buttonHint1.setForeground(Color.black);
         buttonHint1.setOpaque(true);
 
-        if(boolHint2==false){
+        if(!boolHint2){
             buttonHint2 = new JButton("Afficher l'indice 2");
             buttonHint2.addActionListener(this);
             buttonHint2.setBackground(Color.white);
-            buttonHint2.setBackground(Color.black);
         }else{
             buttonHint2 = new JButton("Indice 2 déjà affiché");
             buttonHint2.setBackground(Color.gray);
-            buttonHint2.setForeground(Color.black);
         }
+        buttonHint2.setForeground(Color.black);
         buttonHint2.setOpaque(true);
 
-        if(boolHint3==false){
+        if(!boolHint3){
             buttonHint3 = new JButton("Afficher l'indice 3");
             buttonHint3.addActionListener(this);
             buttonHint3.setBackground(Color.white);
-            buttonHint3.setBackground(Color.black);
         }else{
             buttonHint3 = new JButton("Indice 3 déjà affiché");
             buttonHint3.setBackground(Color.gray);
-            buttonHint3.setForeground(Color.black);
         }
+        buttonHint3.setForeground(Color.black);
         buttonHint3.setOpaque(true);
 
+        //Baptiste fonction récupérer le titre du jeu
+
+        title.setText(getTitleGame(gameNb));
+
+        title.setPreferredSize(new Dimension(width*70/100,height*12/100));
         titlePanIn.add(title);
         titlePanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         titlePan.add(titlePanIn);
         titlePan.setBorder(BorderFactory.createEmptyBorder(0,0,10,10));
+        timer.setPreferredSize(new Dimension(width*30/100,height*12/100));
         timerPanIn.add(timer);
         timerPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         timerPan.add(timerPanIn);
@@ -126,24 +138,47 @@ public class PlayerManagement extends JPanel implements ActionListener{
         topPan.add(timerPan);
 
         //Baptiste fonction récupérer le texte de l'histoire en cours
+
+        currentStory.setText((currentRiddles.getEnigma(riddleNb - 1)).getText());
+
+        // variante ou on prend toute l'histoire
+        /*
+        String currentStoryStr = "";
+        for(int i = 0; i < riddleNb; i++){
+            currentStoryStr = currentStoryStr + (currentRiddles.getEnigma(i)).getText();
+        }*/
+
+        // Fin fonction récupérer le texte de l'histoire en cours
+
+        currentStory.setPreferredSize(new Dimension(width,height*22/100));
         currentStoryPanIn.add(currentStory);
         scrollCurrentStoryPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         currentStoryPan.add(scrollCurrentStoryPanIn);
         currentStoryPan.setBorder(BorderFactory.createEmptyBorder(0,0,10,0));
 
         //Baptiste fonction récupérer les réponses déjà tentées
+
+        // Faire une action qui récupère les réponses données
+
         //Baptiste fonction récupérer la réponse attendue
+
+        answers.setText((currentRiddles.getEnigma(riddleNb -1)).getAnswer());
+
+        // Fin de fonction récupérer la réponse attendue
+
+        answers.setPreferredSize(new Dimension(width-20,height*22/100));
         answersPanIn.add(answers);
         scrollAnswersPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         answersPan.add(scrollAnswersPanIn);
         answersPan.setBorder(BorderFactory.createEmptyBorder(0,0,10,0));
 
+        helpMessageGM.setPreferredSize(new Dimension(width, height*22/100));
         helpMessageGMPan.add(helpMessageGM);
         helpButtonGMPanIn.add(helpButtonGM);
         helpButtonGMPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         helpButtonGMPan.add(helpButtonGMPanIn);
         helpButtonGMPan.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-        helpGMPanIn.setLayout(new BoxLayout(topPan, BoxLayout.LINE_AXIS));
+        helpGMPanIn.setLayout(new BoxLayout(helpGMPanIn, BoxLayout.LINE_AXIS));
         helpGMPanIn.add(helpMessageGMPan);
         helpGMPanIn.add(helpButtonGMPan);
         helpGMPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
@@ -151,8 +186,23 @@ public class PlayerManagement extends JPanel implements ActionListener{
         helpGMPan.setBorder(BorderFactory.createEmptyBorder(0,0,10,0));
 
         //Baptiste fonction récupérer hint1
+
+        if(boolHint1){
+            String hint1Str = (currentRiddles.getEnigma(riddleNb - 1)).getClue1();
+        }
+
         //Baptiste fonction récupérer hint2
+
+        if(boolHint2){
+            String hint2Str = (currentRiddles.getEnigma(riddleNb - 1)).getClue1();
+        }
+
         //Baptiste fonction récupérer hint3
+
+        if(boolHint3){
+            String hint3Str = (currentRiddles.getEnigma(riddleNb - 1)).getClue1();
+        }
+
         buttonReturnPanIn.add(buttonReturn);
         buttonReturnPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         buttonReturnPan.add(buttonReturnPanIn);
@@ -169,7 +219,8 @@ public class PlayerManagement extends JPanel implements ActionListener{
         buttonHint3PanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         buttonHint3Pan.add(buttonHint3PanIn);
         buttonHint3Pan.setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
-        bottomPanIn.setLayout(new BoxLayout(topPan, BoxLayout.LINE_AXIS));
+        bottomPan.setPreferredSize(new Dimension(width,(height)*22/100));
+        bottomPanIn.setLayout(new BoxLayout(bottomPanIn, BoxLayout.LINE_AXIS));
         bottomPanIn.add(buttonReturnPan);
         bottomPanIn.add(buttonHint1Pan);
         bottomPanIn.add(buttonHint2Pan);
@@ -188,14 +239,22 @@ public class PlayerManagement extends JPanel implements ActionListener{
         this.add(helpGMPan);
         this.add(bottomPan);
 
-
-
-
     }
 
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==helpButtonGM){
             //Baptiste fonction envoyer le message aux joueurs
+            String messageFromMJ = helpButtonGM.getText();
+        }else if(e.getSource() == buttonReturn){
+            frame.roomManagementDisplay(frame);
+        }else if(e.getSource()==buttonHint1){
+            //Baptiste fonction afficher indice 1 pour les joueurs
+
+        }else if(e.getSource()==buttonHint2){
+
+        }else if(e.getSource()==buttonHint3){
+
+
         }
     }
 }
