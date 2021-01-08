@@ -54,7 +54,7 @@ public class GlobalFrame extends JFrame {
 
         //menu = new RoomManagement();
         //this.setContentPane(menu);
-        mainMenuDisplay(this);
+        connectionMenuDisplay(this);
 
 
 
@@ -163,7 +163,7 @@ public class GlobalFrame extends JFrame {
 
         currentGame = new CurrentGame(frame,partie);
         setContentPane(currentGame);
-        frame.setSize(1280,720);
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setResizable(true);
         this.setLocationRelativeTo(null);
         frame.revalidate();

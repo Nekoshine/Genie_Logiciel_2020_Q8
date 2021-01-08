@@ -97,16 +97,15 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
             if (isAdmin==1){
                 frame.mainMenuDisplay(frame);
                 Main.ListRoom = DBRoom.getRooms(Main.idUser); // recherche des salles dans la BDD apres la connection
-
-                ThreadAdmin threadAdmin = new ThreadAdmin(Main.idUser);
-                threadAdmin.start();
+                //ThreadAdmin threadAdmin = new ThreadAdmin(Main.idUser);
+                //threadAdmin.start();
 
             }
             else if( isAdmin==0){
 
-                Main.ListRoom = DBRoom.getRooms(3); //si le joueur est le numero
+                Main.ListRoom = DBRoom.getRooms(5); //si le joueur est le numero
                 frame.roomAccessDisplay(frame,Main.ListRoom);
-                Client.recepAdminInfo(Main.idUser);
+                //Client.recepAdminInfo(Main.idUser);
 
             }
             else {
