@@ -219,7 +219,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
         buttonHint3PanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         buttonHint3Pan.add(buttonHint3PanIn);
         buttonHint3Pan.setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
-        bottomPanIn.setPreferredSize(new Dimension(width-20,(height-80)/4));
+        bottomPanIn.setPreferredSize(new Dimension(width-20,(height-60)*22/100));
         bottomPanIn.setLayout(new BoxLayout(bottomPanIn, BoxLayout.LINE_AXIS));
         bottomPanIn.add(buttonReturnPan);
         bottomPanIn.add(buttonHint1Pan);
