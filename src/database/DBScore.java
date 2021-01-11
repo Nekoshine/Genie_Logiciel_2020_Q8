@@ -1,5 +1,8 @@
 package database;
+import model.Game;
+import model.GameList;
 import model.Score;
+import model.ScoreList;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -58,7 +61,7 @@ public class DBScore extends DBConnexion {
             requeteVerif.setInt(2,idUserN);
             requeteVerif.setInt(3,idGameN);
             ResultSet resultatVerif = requeteVerif.executeQuery();
-            if(resultatVerif.next() != false){ // Si il a été inséré
+            if(resultatVerif.next()){ // Si il a été inséré
                 inserted=true; // Alors on valide l insertion
             }
             resultatVerif.close();
@@ -67,6 +70,50 @@ public class DBScore extends DBConnexion {
             System.err.println("Erreur requete insertGame: " + e.getMessage());
         }
         return inserted;
+    }
+
+    /**
+     * Fonction qui va récupérer les scores d'un jeu dans la base de données et le stocker dans un ArrayList
+     * @return Liste de jeux
+     */
+    public static ScoreList getScoreFromGame(int idGame){
+        ScoreList scoreList = new ScoreList();
+        try{
+            PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("Select * from Score WHERE idGame=? ORDER BY id ASC");
+            requete.setString(1, String.valueOf(idGame));
+            ResultSet resultat = requete.executeQuery();
+            while (resultat.next()) { // On itère chaque résultat
+                scoreList.addScore(new Score(resultat.getInt("id"), resultat.getInt("idGame"),
+                        resultat.getInt("idUser"), resultat.getInt("score"))); // On crée l'objet model.Score et on l'ajoute dans la liste
+            }
+            requete.close();
+            resultat.close();
+        } catch(SQLException e ){
+            System.err.println("Erreur requete getGames: " + e.getMessage());
+        }
+        return scoreList;
+    }
+
+    /**
+     * Fonction qui va récupérer les scores d'un jeu dans la base de données et le stocker dans un ArrayList
+     * @return Liste de jeux
+     */
+    public static ScoreList getScoreFromUser(int idUser){
+        ScoreList scoreList = new ScoreList();
+        try{
+            PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("Select * from Score WHERE idUser=? ORDER BY id ASC");
+            requete.setString(1, String.valueOf(idUser));
+            ResultSet resultat = requete.executeQuery();
+            while (resultat.next()) { // On itère chaque résultat
+                scoreList.addScore(new Score(resultat.getInt("id"), resultat.getInt("idGame"),
+                        resultat.getInt("idUser"), resultat.getInt("score"))); // On crée l'objet model.Score et on l'ajoute dans la liste
+            }
+            requete.close();
+            resultat.close();
+        } catch(SQLException e ){
+            System.err.println("Erreur requete getGames: " + e.getMessage());
+        }
+        return scoreList;
     }
 
 }
