@@ -96,4 +96,9 @@ public class Enigma {
   public void setClue3(Hint clue3) {
     this.clue3 = clue3;
   }
+
+  public String[] getAnswers(){
+    String[] answers = this.getAnswer().split(" / ");
+    return answers;
+  }
 }
