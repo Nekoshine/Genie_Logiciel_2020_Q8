@@ -51,6 +51,25 @@ public class DBRoom extends DBConnexion{
         return roomList;
     }
 
+    public static boolean isInDB(int id, int idGame){
+        boolean isHere = false;
+        try {
+            PreparedStatement requetePresence = DBConnexion.getConnexion().prepareStatement("SELECT * FROM Room WHERE id=? AND idGame=?");
+            requetePresence.setString(1, String.valueOf(id));
+            requetePresence.setString(2, String.valueOf(idGame));
+            ResultSet resultatPresence = requetePresence.executeQuery();
+            if(resultatPresence.next() != false){ // Si il est deja dans la bdd
+                isHere=true; //Alors on annule l'insertion
+                requetePresence.close();
+                resultatPresence.close();
+            }
+        }
+        catch(SQLException e ){
+        System.err.println("Erreur requete insertRoom: " + e.getMessage());
+    }
+        return isHere;
+    }
+
     public static boolean insertRoom(int id,int idGame) {
         boolean inserted=false;
         try{
