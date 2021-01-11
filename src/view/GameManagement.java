@@ -9,7 +9,6 @@ import launcher.Main;
 import model.EnigmaList;
 import model.Game;
 import model.GameList;
-import model.Room;
 import view.style.ColorPerso;
 
 import javax.swing.*;
@@ -139,10 +138,12 @@ public class GameManagement extends JPanel implements ActionListener {
                         int idRoom = Main.ListRoom.findByID(roomNumber).getId();
                         int idGame =ListGame.getGame(y).getId();
                         if(DBRoom.isInDB(idRoom,idGame)) {
-                            DBRoom.insertRoom(Main.ListRoom.findByID(roomNumber).getId(), ListGame.getGame(y).getId());
+                            System.out.println("Mise a jour");
+                            DBRoom.majGame(Main.ListRoom.findByID(roomNumber).getId(),ListGame.getGame(y).getId());
                         }
                         else{
-                            DBRoom.majJeu(Main.ListRoom.findByID(roomNumber).getId(),ListGame.getGame(y).getId());
+                            System.out.println("Insertion");
+                            DBRoom.insertRoom(Main.ListRoom.findByID(roomNumber).getId(), ListGame.getGame(y).getId());
                         }
 
                     }

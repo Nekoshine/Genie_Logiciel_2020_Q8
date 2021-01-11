@@ -64,6 +64,24 @@ public class DBEnigma extends DBConnexion{
             return enigmaList;
       }
 
+      public static boolean isInDB(int id){
+            boolean isHere = false;
+            try {
+                  PreparedStatement requetePresence = DBConnexion.getConnexion().prepareStatement("SELECT * FROM Enigma WHERE id=?");
+                  requetePresence.setString(1, String.valueOf(id));
+                  ResultSet resultatPresence = requetePresence.executeQuery();
+                  if(resultatPresence.next() != false){ // Si il est deja dans la bdd
+                        isHere=true; //Alors on annule l'insertion
+                        requetePresence.close();
+                        resultatPresence.close();
+                  }
+            }
+            catch(SQLException e ){
+                  System.err.println("Erreur requete isInDB: " + e.getMessage());
+            }
+            return isHere;
+      }
+
       public static boolean insertEnigma(int idGame,String text,String answer, String clue1, int timer1,String clue2, int timer2,String clue3, int timer3){
             boolean inserted = false;
             try{
@@ -109,6 +127,37 @@ public class DBEnigma extends DBConnexion{
                   requeteVerif.close();
             } catch(SQLException e ){
                   System.err.println("Erreur requete insertEnigma: " + e.getMessage());
+            }
+            return inserted;
+      }
+
+      public static boolean majEnigma(String text,String answer, String clue1, int timer1,String clue2, int timer2,String clue3, int timer3, int id){
+            boolean inserted = false;
+            try{
+                  PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("UPDATE Enigma SET text = ?, answer = ?, clue1 = ?, timer1 = ?, clue2 = ? , timer2 = ?, clue3 = ?, timer3 = ? WHERE id=?");
+                  System.out.println(text);
+                  System.out.println(answer);
+                  System.out.println(clue1);
+                  System.out.println(timer1);
+                  System.out.println(clue2);
+                  System.out.println(timer2);
+                  System.out.println(clue3);
+                  System.out.println(timer3);
+                  requete.setString(1, text);
+                  requete.setString(2, answer);
+                  requete.setString(3, clue1);
+                  requete.setInt(4, timer1);
+                  requete.setString(5, clue2);
+                  requete.setInt(6, timer2);
+                  requete.setString(7, clue3);
+                  requete.setInt(8, timer3);
+                  requete.setInt(9, id);
+
+                  requete.executeUpdate();
+                  requete.close();
+
+            } catch(SQLException e ){
+                  System.err.println("Erreur requete majEnigma: " + e.getMessage());
             }
             return inserted;
       }

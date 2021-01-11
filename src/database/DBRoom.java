@@ -65,7 +65,7 @@ public class DBRoom extends DBConnexion{
             }
         }
         catch(SQLException e ){
-        System.err.println("Erreur requete insertRoom: " + e.getMessage());
+        System.err.println("Erreur requete isInDB: " + e.getMessage());
     }
         return isHere;
     }
@@ -108,7 +108,7 @@ public class DBRoom extends DBConnexion{
 
     }
 
-    public static boolean majJeu(int id, int idGame){
+    public static boolean majGame(int id, int idGame){
         boolean inserted = false;
         try{
             PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("UPDATE Room SET idGame=? WHERE id=?");
@@ -128,7 +128,7 @@ public class DBRoom extends DBConnexion{
             requeteVerif.close();
 
         } catch(SQLException e ){
-            System.err.println("Erreur requete majJeu: " + e.getMessage());
+            System.err.println("Erreur requete majGame: " + e.getMessage());
         }
         return inserted;
     }
