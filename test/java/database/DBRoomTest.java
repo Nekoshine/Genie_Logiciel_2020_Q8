@@ -52,7 +52,7 @@ class DBRoomTest {
         boolean test=false;
         boolean insert = DBRoom.insertRoom(id,idGame);
         if(insert) {
-            test = DBRoom.majJeu(id, 3);
+            test = DBRoom.majGame(id, 3);
             Assertions.assertTrue(test, "Echec de la mise a jour");
         }
         else {
