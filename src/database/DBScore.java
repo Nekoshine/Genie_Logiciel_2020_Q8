@@ -43,7 +43,7 @@ public class DBScore extends DBConnexion {
      * @param  scoreN a insérer
      * @return      insert correct ou non
      */
-    public static boolean insertScore(int scoreN ,int idUserN,int idGameN,Boolean readyN){
+    public static boolean insertScore(int scoreN ,int idUserN,int idGameN){
         boolean inserted = false;
         int valueReady=0;
         try{
@@ -51,10 +51,6 @@ public class DBScore extends DBConnexion {
             requete.setInt(1,idUserN);
             requete.setInt(2,idGameN);
             requete.setInt(3,scoreN);
-            if(readyN){
-                valueReady=1;
-            }
-            requete.setInt(5,valueReady);
             requete.executeUpdate();
             requete.close();
             PreparedStatement requeteVerif = DBConnexion.getConnexion().prepareStatement("Select * from Score where score=? and idUser=? and idGame=?");  // On regarde si le score à bien été inséré
