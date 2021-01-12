@@ -35,7 +35,7 @@ public class DBScore extends DBConnexion {
             resultatVerif.close();
             requeteVerif.close();
         } catch(SQLException e ){
-            System.err.println("Erreur requete deleteGame: " + e.getMessage());
+            System.err.println("Erreur requete deleteScore: " + e.getMessage());
         }
         return boolDelete;
     }
@@ -67,7 +67,7 @@ public class DBScore extends DBConnexion {
             resultatVerif.close();
             requeteVerif.close();
         } catch(SQLException e ){
-            System.err.println("Erreur requete insertGame: " + e.getMessage());
+            System.err.println("Erreur requete insertScore: " + e.getMessage());
         }
         return inserted;
     }
@@ -89,7 +89,7 @@ public class DBScore extends DBConnexion {
             requete.close();
             resultat.close();
         } catch(SQLException e ){
-            System.err.println("Erreur requete getGames: " + e.getMessage());
+            System.err.println("Erreur requete getScore: " + e.getMessage());
         }
         return scoreList;
     }
@@ -111,7 +111,7 @@ public class DBScore extends DBConnexion {
             requete.close();
             resultat.close();
         } catch(SQLException e ){
-            System.err.println("Erreur requete getGames: " + e.getMessage());
+            System.err.println("Erreur requete getScore: " + e.getMessage());
         }
         return scoreList;
     }
