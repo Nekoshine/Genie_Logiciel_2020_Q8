@@ -16,22 +16,30 @@ public class User{
   public boolean getIsAdmin(){
     return this.isAdmin;
   }
+
   public int getId(){
     return this.id;
   }
+
   public String getLogin(){
     return this.login;
   }
+
   public String getPwd(){
     return this.pwd;
   }
+
   public void setLogin(String log){
     this.login=log;
   }
+
   public void setPwd(String pwd){
     this.pwd=pwd;
   }
-  public void setId(int id) {this.id = id;}
+
+  public void setId(int id) {
+    this.id = id;
+  }
 
   public void setIsAdmin(int isAdm){
     if(isAdm==1){      
@@ -39,5 +47,13 @@ public class User{
     }else{
       this.isAdmin=false;
     }
+  }
+
+  public boolean isAdmin() {
+    return isAdmin;
+  }
+
+  public void setAdmin(boolean admin) {
+    isAdmin = admin;
   }
 }

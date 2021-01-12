@@ -4,6 +4,7 @@ package view;
 
 import database.DBEnigma;
 import database.DBGame;
+import database.DBRoom;
 import launcher.Main;
 import model.*;
 import view.style.ColorPerso;
@@ -520,28 +521,51 @@ public class GameCreation extends JPanel implements ActionListener {
             int idUser = Main.idUser;
             int timer = 0;
             boolean ready = true;
-            DBGame.insertGame(titre,score,idUser,timer,ready);
+            if(DBGame.isInDB(game.getId())){
+                System.out.println("Mise a jour");
+                DBGame. majGame(game.getId(), titre,score,timer,ready);
+                //DBEnigma.insertEnigma(DBGame.getIdGame(titre),text,answer, clue1, timer1,clue2, timer2,clue3, timer3);
+            }
+            else{
+                System.out.println("Insertion");
+                DBGame.insertGame(titre,score,idUser,timer,ready);
+            }
+
             System.out.println("insertion dans la BDD : "+titre+" "+score+" "+idUser+" "+timer+" "+ready);
+            Enigma enigme = null;
             for(int i=0;i<listEnigma.getSize();i++){
-                String text = listEnigma.getEnigma(i).getText();
+                enigme = listEnigma.getEnigma(i);
+                int id = enigme.getId();
+                String text = enigme.getText();
                 System.out.println();
-                String answer = listEnigma.getEnigma(i).getAnswer();
-                String clue1 = listEnigma.getEnigma(i).getClue1();
-                String clue2 = listEnigma.getEnigma(i).getClue2();
-                String clue3 = listEnigma.getEnigma(i).getClue3();
-                if (clue1=="indice 1"){
+                String answer = enigme.getAnswer();
+                String clue1 = enigme.getClue1();
+                String clue2 = enigme.getClue2();
+                String clue3 = enigme.getClue3();
+                if (clue1.equals("indice 1")){
                     clue1=null;
                 }
-                if (clue2=="indice 2"){
+                if (clue2==null ||clue2.equals("indice 2")){
+                    clue2=null;
+                }
+                if (clue3==null || clue3.equals("indice 3")){
                     clue3=null;
                 }
-                if (clue3=="indice 3"){
-                    clue3=null;
+                int timer1 = enigme.getTimer1();
+                int timer2 = enigme.getTimer2();
+                int timer3 = enigme.getTimer3();
+
+                System.out.println(id);
+                if(DBEnigma.isInDB(id)){
+                    System.out.println("Mise a jour");
+                    //Ce ne sont pas les bonnes valeurs qui sont récupérées
+                    DBEnigma.majEnigma(text,answer, clue1, timer1,clue2, timer2,clue3, timer3,id);
                 }
-                int timer1 = listEnigma.getEnigma(i).getTimer1();
-                int timer2 = listEnigma.getEnigma(i).getTimer2();
-                int timer3 = listEnigma.getEnigma(i).getTimer3();
-                DBEnigma.insertEnigma(DBGame.getIdGame(titre),text,answer, clue1, timer1,clue2, timer2,clue3, timer3);
+                else{
+                    System.out.println("Insertion");
+                    DBEnigma.insertEnigma(DBGame.getIdGame(titre),text,answer, clue1, timer1,clue2, timer2,clue3, timer3);
+                }
+
             }
         }
     }

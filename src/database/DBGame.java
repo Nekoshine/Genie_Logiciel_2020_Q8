@@ -104,7 +104,24 @@ public class DBGame extends DBConnexion {
     }
     return inserted;
   }
-  
+  public static boolean isInDB(int id){
+    boolean isHere = false;
+    try {
+      PreparedStatement requetePresence = DBConnexion.getConnexion().prepareStatement("SELECT * FROM Game WHERE id=?");
+      requetePresence.setInt(1, id);
+      ResultSet resultatPresence = requetePresence.executeQuery();
+      if(resultatPresence.next() != false){ // Si il est deja dans la bdd
+        isHere=true; //Alors on annule l'insertion
+        requetePresence.close();
+        resultatPresence.close();
+      }
+    }
+    catch(SQLException e ){
+      System.err.println("Erreur requete isInDB: " + e.getMessage());
+    }
+    return isHere;
+  }
+
   public static int getIdGame(String name) {
     int idGame=0;
     try {
@@ -140,4 +157,23 @@ public class DBGame extends DBConnexion {
     }
     return titre;
   }
+
+  public static boolean majGame(int idGame, String titreN,int scoreN,int timerN,Boolean readyN){
+    boolean inserted = false;
+    try{
+      PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("UPDATE Game SET titre=?, score=?, timer=?, ready=? WHERE id=?");
+      requete.setString(1, titreN);
+      requete.setInt(2, scoreN);
+      requete.setInt(3, timerN);
+      requete.setBoolean(4, readyN);
+      requete.setInt(5, idGame);
+      requete.executeUpdate();
+      requete.close();
+      /*reste la verif a faire*/
+    } catch(SQLException e ){
+      System.err.println("Erreur requete majGame: " + e.getMessage());
+    }
+    return inserted;
+  }
+
 }
