@@ -306,8 +306,15 @@ public class CurrentGame extends JPanel implements ActionListener {
         }
 
         if (event.getSource() == confirmButton){
-            String answer = answerTextField.getText();
-            if (answer.equals(allEnigmas.getEnigma(enigmalistflag).getAnswer())) {
+            String answer = answerTextField.getText().toLowerCase();
+            String[] possibility = allEnigmas.getEnigma(enigmalistflag).getAnswers();
+            boolean find = false;
+            for(int i=0;i<possibility.length;i++){
+                if(answer.equals(possibility[i].toLowerCase())){
+                    find = true;
+                }
+            }
+            if (find) {
                 if (enigmalistflag < allEnigmas.getSize() - 1) {
 
                     //maj des champs relatifs aux enigmes
