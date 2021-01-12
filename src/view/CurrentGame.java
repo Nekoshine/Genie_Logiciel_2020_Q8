@@ -304,7 +304,7 @@ public class CurrentGame extends JPanel implements ActionListener {
 
         if (event.getSource() == confirmButton){
             String answer = answerTextField.getText();
-            if (answer.equals(allEnigmas.getEnigma(enigmalistflag).getAnswer())) {
+            if (answer.equalsIgnoreCase(allEnigmas.getEnigma(enigmalistflag).getAnswer())) {
                 if (enigmalistflag < allEnigmas.getSize() - 1) {
 
                     //maj des champs relatifs aux enigmes
@@ -365,9 +365,12 @@ public class CurrentGame extends JPanel implements ActionListener {
                     frame.revalidate();
                     frame.repaint();
                 }
-                else{JOptionPane.showMessageDialog(frame, "Vous avez réussi !!!!", "Bravo", JOptionPane.WARNING_MESSAGE);}
+                else{JOptionPane.showMessageDialog(frame, "Vous avez réussi !!!!", "Bravo", JOptionPane.WARNING_MESSAGE);
+                    frame.connectionMenuDisplay(frame);
+                }
             }
-            else{JOptionPane.showMessageDialog(frame, "Ce n'est pas la bonne reponse", "Raté", JOptionPane.WARNING_MESSAGE);}
+            else{JOptionPane.showMessageDialog(frame, "Ce n'est pas la bonne reponse", "Raté", JOptionPane.WARNING_MESSAGE);
+            }
         }
 
     }

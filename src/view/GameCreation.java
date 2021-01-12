@@ -162,8 +162,10 @@ public class GameCreation extends JPanel implements ActionListener {
 
         title.setBorder(BorderFactory.createEmptyBorder());
         title.setHorizontalAlignment(JTextField.CENTER);
+        title.setFont(FontPerso.Oxanimum);
         initialScore.setBorder(BorderFactory.createEmptyBorder());
         initialScore.setHorizontalAlignment(JTextField.CENTER);
+        initialScore.setFont(FontPerso.Oxanimum);
         points.setBorder(BorderFactory.createEmptyBorder());
         points.setHorizontalAlignment(JTextField.CENTER);
         points.setVisible(false);
@@ -276,6 +278,7 @@ public class GameCreation extends JPanel implements ActionListener {
 
         JTextField answer = new JTextField(enigme.getAnswer());
         answer.setBorder(BorderFactory.createLineBorder(Color.black,2));
+        answer.setFont(FontPerso.Oxanimum);
         answer.addCaretListener(new CaretListener() {
             @Override
             public void caretUpdate(CaretEvent e) {
@@ -295,6 +298,7 @@ public class GameCreation extends JPanel implements ActionListener {
             time1 = new JTextField(String.valueOf(enigme.getTimer1()));
         }
 
+        time1.setFont(FontPerso.Oxanimum);
 
         JTextField time2;
 
@@ -304,6 +308,8 @@ public class GameCreation extends JPanel implements ActionListener {
         else{
             time2 = new JTextField(String.valueOf(enigme.getTimer2()));
         }
+
+        time2.setFont(FontPerso.Oxanimum);
 
         JTextField time3;
 
@@ -315,6 +321,7 @@ public class GameCreation extends JPanel implements ActionListener {
             time3 = new JTextField(String.valueOf(enigme.getTimer3()));
         }
 
+        time3.setFont(FontPerso.Oxanimum);
 
         // Clue Components
 
