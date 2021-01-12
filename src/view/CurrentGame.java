@@ -64,6 +64,7 @@ public class CurrentGame extends JPanel implements ActionListener {
 
     private EnigmaList allEnigmas;
 
+    public ImageIcon imageIconValide;
 
 
     private Timer countdownenigma;
@@ -74,6 +75,8 @@ public class CurrentGame extends JPanel implements ActionListener {
     private GlobalFrame frame;
 
     public CurrentGame (GlobalFrame frame, Game partiechoisie ){
+
+        imageIconValide = new ImageIcon(new ImageIcon("./src/view/image/valide.png").getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
 
         this.frame = frame;
         allEnigmas = DBEnigma.getEnigmas(partiechoisie.getId());
@@ -304,7 +307,7 @@ public class CurrentGame extends JPanel implements ActionListener {
 
         if (event.getSource() == confirmButton){
             String answer = answerTextField.getText();
-            if (answer.equalsIgnoreCase(allEnigmas.getEnigma(enigmalistflag).getAnswer())) {
+            if (answer.equals(allEnigmas.getEnigma(enigmalistflag).getAnswer())) {
                 if (enigmalistflag < allEnigmas.getSize() - 1) {
 
                     //maj des champs relatifs aux enigmes
@@ -365,7 +368,7 @@ public class CurrentGame extends JPanel implements ActionListener {
                     frame.revalidate();
                     frame.repaint();
                 }
-                else{JOptionPane.showMessageDialog(frame, "Vous avez réussi !!!!", "Bravo", JOptionPane.WARNING_MESSAGE);
+                else{JOptionPane.showMessageDialog(frame, "Vous avez réussi !!!!", "Bravo", JOptionPane.WARNING_MESSAGE,imageIconValide);
                     frame.connectionMenuDisplay(frame);
                 }
             }
