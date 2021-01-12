@@ -1,6 +1,4 @@
 package database;
-import model.Game;
-import model.GameList;
 import model.Score;
 import model.ScoreList;
 

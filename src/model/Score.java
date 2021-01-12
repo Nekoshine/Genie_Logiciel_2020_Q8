@@ -44,4 +44,19 @@ public class Score{
   public void setScore(int score) {
     this.score = score;
   }
+
+  /**
+   * Fonction qui permet de calculé le score en fonction du temps
+   * @param scoreInit le score initial d'un jeu
+   * @param timer le temps qu'a mis le joueur
+   * @param timerMax le temps maximal que peu mêtre un joueur
+   */
+  public void calculScore(int scoreInit, int timer, int timerMax){
+    int deltaScore = scoreInit/timerMax;
+    int newScore = scoreInit - deltaScore * timer;
+    if(newScore < 0){
+      newScore = 0;
+    }
+    this.score = newScore;
+  }
 }
