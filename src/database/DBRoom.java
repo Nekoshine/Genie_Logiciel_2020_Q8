@@ -39,7 +39,7 @@ public class DBRoom extends DBConnexion{
                         ,resultat.getInt("score")
                         ,idUser
                         ,resultat.getInt("timer")
-                        , Boolean.valueOf(resultat.getString("ready"))));
+                        , Boolean.valueOf(resultat.getString("ready")),resultat.getString("Game.messageFin")));
 
             }
             //for (int i=0;i<roomList.getSize() ;i++ ) {         System.out.println(roomList.getRoom(i).getId()); System.out.println(roomList.getRoom(i).getGame());       }

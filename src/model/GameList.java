@@ -24,8 +24,8 @@ public class GameList {
      * @param timer initial
      * @param ready je sais pas il faut demander a Esteban
      */
-    public void addGame(int id,String titre,int score,int idUser,int timer,Boolean ready){
-        List.add(new Game(id,titre,score,idUser,timer,ready));
+    public void addGame(int id,String titre,int score,int idUser,int timer,Boolean ready,String endMessage){
+        List.add(new Game(id,titre,score,idUser,timer,ready,endMessage));
         //faire un ajout a la bdd
     }
 

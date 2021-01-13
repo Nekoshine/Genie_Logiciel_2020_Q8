@@ -59,7 +59,7 @@ public class DBGame extends DBConnexion {
           boolGame=false;
         }
         gameList.addGame(new Game(resultat.getInt("id"), resultat.getString("titre"),
-        resultat.getInt("score"), resultat.getInt("idUser"),resultat.getInt("timer"),boolGame)); // On crée l'objet model.Game et on l'ajoute dans la liste
+        resultat.getInt("score"), resultat.getInt("idUser"),resultat.getInt("timer"),boolGame, resultat.getString("messageFin"))); // On crée l'objet model.Game et on l'ajoute dans la liste
       }
       // for (int i=0;i<gameList.getSize() ;i++ ) {         System.out.println(gameList.getGame(i).getTitre());       }
       requete.close();
@@ -175,5 +175,31 @@ public class DBGame extends DBConnexion {
     }
     return inserted;
   }
+
+  public static Game getGame(int id){
+    Game game = null;
+    Boolean boolGame=false;
+    try{
+      PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("Select * from Game WHERE id=?");
+      requete.setString(1, String.valueOf(id));
+      ResultSet resultat = requete.executeQuery();
+      while (resultat.next() != false) { // On itère chaque résultat
+        if(resultat.getInt("ready")==1){ // On convertit le booleen car il est stocké comme un entier dans la base
+          boolGame=true;
+        }else{
+          boolGame=false;
+        }
+        game = new Game(resultat.getInt("id"), resultat.getString("titre"),
+                resultat.getInt("score"), resultat.getInt("idUser"),resultat.getInt("timer"),boolGame, resultat.getString("messageFin")); // On crée l'objet model.Game et on l'ajoute dans la liste
+      }
+      // for (int i=0;i<gameList.getSize() ;i++ ) {         System.out.println(gameList.getGame(i).getTitre());       }
+      requete.close();
+      resultat.close();
+    } catch(SQLException e ){
+      System.err.println("Erreur requete getGames: " + e.getMessage());
+    }
+    return game;
+  }
+
 
 }

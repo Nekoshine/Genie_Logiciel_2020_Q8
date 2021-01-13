@@ -11,9 +11,9 @@ public class Room {
         this.Game = Game;
     }
 
-    public Room(int id, int idGame,String titre,int score,int idUser,int timer,Boolean ready){
+    public Room(int id, int idGame,String titre,int score,int idUser,int timer,Boolean ready,String endMessage){
         this.id = id;
-        this.Game = new Game(idGame,titre,score,idUser,timer,ready);
+        this.Game = new Game(idGame,titre,score,idUser,timer,ready,endMessage);
     }
 
     public int getId(){
