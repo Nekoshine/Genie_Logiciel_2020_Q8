@@ -1,32 +1,22 @@
 package database;
 
-import model.Game;
-import model.GameList;
 import model.Room;
 import model.RoomList;
 
-import javax.xml.bind.DatatypeConverter;
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-/*Codé par Yann, c'était pour tester le bon fonctionnement des visuels avec les données de la BDD
-* Code sujet à modification
-* */
-
 public class DBRoom extends DBConnexion{
 
-    public DBRoom(){
+    private DBRoom(){
         super.getConnexion();
     }
 
     /**
-     * Fonction qui va récupérer les jeux dans la base de données et le stocker dans un ArrayList
-     * @return Liste de jeux
+     * Fonction qui va récupérer les jeux d'un utilisateut dans la base de données
+     * @return Liste des jeux
      */
     public static RoomList getRooms(int idUser){
         RoomList roomList = new RoomList();
@@ -51,6 +41,12 @@ public class DBRoom extends DBConnexion{
         return roomList;
     }
 
+    /**
+     * Fonction qui va verifier si une salle est dans la BDD
+     * @param id l'identifiant de la salle
+     * @param idGame l'identifiant du jeu associé
+     * @return true si la salle est dans la BDD
+     */
     public static boolean isInDB(int id, int idGame){
         boolean isHere = false;
         try {
@@ -70,6 +66,12 @@ public class DBRoom extends DBConnexion{
         return isHere;
     }
 
+    /**
+     * Fonction qui va inserer une salle dans la BDD
+     * @param id l'identifiant de la salle
+     * @param idGame le jeu associé
+     * @return true si la salle a été inséré
+     */
     public static boolean insertRoom(int id,int idGame) {
         boolean inserted=false;
         try{
@@ -81,7 +83,6 @@ public class DBRoom extends DBConnexion{
                 inserted=false; //Alors on annule l'insertion
                 requetePresence.close();
                 resultatPresence.close();
-                return inserted;
             }else{
                 requetePresence.close();
                 resultatPresence.close();
@@ -108,6 +109,12 @@ public class DBRoom extends DBConnexion{
 
     }
 
+    /**
+     * Fonction qui change le jeu d'une salle dans la BDD
+     * @param id l'identifiant de la salle
+     * @param idGame le nouveau jeu
+     * @return true si la mise à jour a fonctionné
+     */
     public static boolean majGame(int id, int idGame){
         boolean inserted = false;
         try{
@@ -133,6 +140,10 @@ public class DBRoom extends DBConnexion{
         return inserted;
     }
 
+    /**
+     * Fonction qui renvoit l'id le plus grand dans la BDD
+     * @return le plus grand id
+     */
     public static int getMax() {
         int max=0;
         try {

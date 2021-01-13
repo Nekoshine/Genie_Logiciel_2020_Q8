@@ -1,9 +1,7 @@
 package database;
 
-import launcher.Main;
 import model.Enigma;
 import model.EnigmaList;
-import model.Room;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,11 +10,14 @@ import java.sql.Types;
 
 public class DBEnigma extends DBConnexion{
 
+      /**
+       * Connexion à la BDD ou récupération si elle existe déjà
+       */
       private DBEnigma(){
           super.getConnexion();
       }
 
-      public  static EnigmaList getEnigmas(int idGame){
+      public static EnigmaList getEnigmas(int idGame){
             EnigmaList enigmaList = new EnigmaList();
 
             String clue2;
@@ -51,11 +52,6 @@ public class DBEnigma extends DBConnexion{
                           clue3,timer3));
                         // On crée l'objet model.Game et on l'ajoute dans la liste
                   }
-                  /*for (int i=0;i<enigmaList.getSize() ;i++ ) {
-                  System.out.println(enigmaList.getEnigma(i).getId());
-                  System.out.println(enigmaList.getEnigma(i).getText());
-                  System.out.println(enigmaList.getEnigma(i).getAnswer());
-                  }*/
                   requete.close();
                   resultat.close();
             } catch(SQLException e ){
@@ -64,6 +60,11 @@ public class DBEnigma extends DBConnexion{
             return enigmaList;
       }
 
+      /**
+       * Détermine si une énigme est dans la BDD
+       * @param id l'identifiant de l'énigme recherché
+       * @return true si l'énigme est dans la BDD
+       */
       public static boolean isInDB(int id){
             boolean isHere = false;
             try {
@@ -82,6 +83,19 @@ public class DBEnigma extends DBConnexion{
             return isHere;
       }
 
+      /**
+       * Fonction qui ajoute une énigme à la BDD
+       * @param idGame l'identifiant du jeu auquel appartient l'énigme
+       * @param text la question de l'énigme
+       * @param answer la réponse à la question
+       * @param clue1 le 1er indice (ne peut pas être null)
+       * @param timer1 la durée en seconde au bout de laquel la 1er indice est débloqué (ne peut pas être null)
+       * @param clue2 le 1er indice
+       * @param timer2 la durée en seconde au bout de laquel la 1er indice est débloqué
+       * @param clue3 le 1er indice
+       * @param timer3 la durée en seconde au bout de laquel la 1er indice est débloqué
+       * @return true si l'ajout a fonctionné
+       */
       public static boolean insertEnigma(int idGame,String text,String answer, String clue1, int timer1,String clue2, int timer2,String clue3, int timer3){
             boolean inserted = false;
             try{
@@ -131,18 +145,23 @@ public class DBEnigma extends DBConnexion{
             return inserted;
       }
 
-      public static boolean majEnigma(String text,String answer, String clue1, int timer1,String clue2, int timer2,String clue3, int timer3, int id){
+      /**
+       * Fonction qui met à jour une énigme dans la BDD
+       * @param id l'identificant de l'énigme à modifier
+       * @param text la question de l'énigme
+       * @param answer la réponse à la question
+       * @param clue1 le 1er indice (ne peut pas être null)
+       * @param timer1 la durée en seconde au bout de laquel la 1er indice est débloqué (ne peut pas être null)
+       * @param clue2 le 1er indice
+       * @param timer2 la durée en seconde au bout de laquel la 1er indice est débloqué
+       * @param clue3 le 1er indice
+       * @param timer3 la durée en seconde au bout de laquel la 1er indice est débloqué
+       * @return true si la mise à jour a fonctionné (la vérification de la maj des timers n'est pas faites)
+       */
+      public static boolean majEnigma(int id, String text,String answer, String clue1, int timer1,String clue2, int timer2,String clue3, int timer3){
             boolean inserted = false;
             try{
                   PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("UPDATE Enigma SET text = ?, answer = ?, clue1 = ?, timer1 = ?, clue2 = ? , timer2 = ?, clue3 = ?, timer3 = ? WHERE id=?");
-                  System.out.println(text);
-                  System.out.println(answer);
-                  System.out.println(clue1);
-                  System.out.println(timer1);
-                  System.out.println(clue2);
-                  System.out.println(timer2);
-                  System.out.println(clue3);
-                  System.out.println(timer3);
                   requete.setString(1, text);
                   requete.setString(2, answer);
                   requete.setString(3, clue1);
@@ -155,6 +174,24 @@ public class DBEnigma extends DBConnexion{
 
                   requete.executeUpdate();
                   requete.close();
+
+                  PreparedStatement requeteVerif = DBConnexion.getConnexion().prepareStatement("Select * from Enigma where id=?");  // On regarde si l'user a bien été inséré
+                  requeteVerif.setInt(1,id);
+                  ResultSet resultatVerif = requeteVerif.executeQuery();
+                  if(resultatVerif.next() != false){ // Si on a bien 1 résultat
+
+                        //on vérifier tout les champs
+                        if(resultatVerif.getString("text").equals(text)&&
+                        resultatVerif.getString("answer").equals(answer)&&
+                        resultatVerif.getString("clue1").equals(clue1)&&
+                        resultatVerif.getString("clue2").equals(clue2)&&
+                        resultatVerif.getString("clue3").equals(clue3)){
+
+                              inserted=true; // Alors on valide l insertion
+                        }
+                  }
+                  resultatVerif.close();
+                  requeteVerif.close();
 
             } catch(SQLException e ){
                   System.err.println("Erreur requete majEnigma: " + e.getMessage());
