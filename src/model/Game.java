@@ -9,13 +9,15 @@ public class Game{
   private int idUser;
   private int timer;
   private Boolean ready;
-  public Game(int id,String titre,int score,int idUser,int timer,Boolean ready){
+  private String endMessage;
+  public Game(int id,String titre,int score,int idUser,int timer,Boolean ready,String endMessage){
     this.id = id;
     this.titre = titre;
     this.score = score;
     this.idUser = idUser;
     this.timer = timer;
     this.ready=ready;
+    this.endMessage=endMessage;
   }
   public int getId(){
     return this.id;
@@ -35,9 +37,19 @@ public class Game{
   public Boolean getReady(){
     return this.ready;
   }
+  public String getEndMessage() {
+    return this.endMessage;
+  }
+  public void setTitre(String titre) {
+    this.titre = titre;
+  }
 
   @Override
   public String toString() {
     return titre;
   }
+
+    public int getIdUser() {
+    return idUser;
+    }
 }

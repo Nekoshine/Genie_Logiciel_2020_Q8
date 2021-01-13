@@ -1,6 +1,13 @@
 package view;
 
+import database.DBGame;
 import launcher.Main;
+import model.Enigma;
+import model.EnigmaList;
+import model.Game;
+import model.RoomList;
+import view.style.ColorPerso;
+import view.style.FontPerso;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -21,15 +28,19 @@ public class GlobalFrame extends JFrame {
     SignupMenu signupmenu;
     GameManagement gamemanagement;
     GameCreation gameCreation;
+    CurrentGame currentGame;
+    RoomAccess roomAccess;
+    PlayerManagement playerManagement;
 
     public int roomNumber;
+    public boolean insideRoom;
 
 
     public GlobalFrame() throws IOException {
         /*Font*/
-        UIManager.put("Label.font",FontPerso.Oxanimum);
+        UIManager.put("Label.font", FontPerso.Oxanimum);
         UIManager.put("Button.font",FontPerso.SirensDEMO);
-        UIManager.put("Button.background",ColorPerso.grisOriginal);
+        UIManager.put("Button.background", ColorPerso.grisOriginal);
 
         frame = this;
 
@@ -43,7 +54,7 @@ public class GlobalFrame extends JFrame {
 
         //menu = new RoomManagement();
         //this.setContentPane(menu);
-        connectionMenuDisplay(this);
+        mainMenuDisplay(this);
 
 
 
@@ -60,9 +71,15 @@ public class GlobalFrame extends JFrame {
                 super.componentResized(e);
                 windowSize = getSize();
                 if (getContentPane() instanceof GameCreation) {
-                    GameCreation gameCreation = new GameCreation(frame,roomNumber);
+                    GameCreation gameCreation = new GameCreation(frame,roomNumber,null);
                     setContentPane(gameCreation);
                 }
+
+                /*if (getContentPane() instanceof CurrentGame) {
+                    CurrentGame currentGame = new CurrentGame(frame);
+                    setContentPane(currentGame);
+                }*/
+
                 revalidate();
                 repaint();
 
@@ -75,7 +92,7 @@ public class GlobalFrame extends JFrame {
 
     public void roomManagementDisplay(GlobalFrame frame){
 
-        roommanagement = new RoomManagement(frame, Main.ListRoom);
+        roommanagement = new RoomManagement(frame);
         setContentPane(roommanagement);
         frame.setSize(1280,720);
         frame.setResizable(true);
@@ -122,7 +139,7 @@ public class GlobalFrame extends JFrame {
 
     public void gameManagementDisplay(GlobalFrame frame, int roomNumber){
 
-        gamemanagement = new GameManagement(frame, roomNumber,Main.ListGame);
+        gamemanagement = new GameManagement(frame, roomNumber);
         setContentPane(gamemanagement);
         frame.setSize(1280,720);
         frame.setResizable(true);
@@ -131,9 +148,9 @@ public class GlobalFrame extends JFrame {
         frame.repaint();
     }
 
-    public void gameCreationDisplay(GlobalFrame frame,int roomNumber){
+    public void gameCreationDisplay(GlobalFrame frame, int roomNumber, Game game){
 
-        gameCreation = new GameCreation(frame,roomNumber);
+        gameCreation = new GameCreation(frame,roomNumber,game);
         setContentPane(gameCreation);
         frame.setSize(1280,720);
         frame.setResizable(true);
@@ -141,4 +158,41 @@ public class GlobalFrame extends JFrame {
         frame.revalidate();
         frame.repaint();
     }
+
+    public void currentGameDisplay(GlobalFrame frame,Game partie){
+
+        currentGame = new CurrentGame(frame,partie);
+        setContentPane(currentGame);
+        frame.setSize(1280,720);
+        frame.setResizable(true);
+        this.setLocationRelativeTo(null);
+        frame.revalidate();
+        frame.repaint();
+
+    }
+
+    public void roomAccessDisplay(GlobalFrame frame, RoomList roomList){
+
+        roomAccess = new RoomAccess(frame,roomList);
+        setContentPane(roomAccess);
+        frame.setSize(1280,720);
+        frame.setLocationRelativeTo(null);
+        frame.setResizable(true);
+        frame.revalidate();
+        frame.repaint();
+
+    }
+
+    public void playerManagement(GlobalFrame frame,int gameNb, int riddleNb, boolean boolHint1Revealed, boolean boolHint2Revealed,
+                                 boolean boolHint3Revealed){
+        playerManagement = new PlayerManagement(frame, gameNb, riddleNb, boolHint1Revealed, boolHint2Revealed, boolHint3Revealed);
+        setContentPane(playerManagement);
+        frame.setSize(1280,720);
+        frame.setResizable(true);
+        frame.revalidate();
+        frame.repaint();
+
+    }
+
+
 }

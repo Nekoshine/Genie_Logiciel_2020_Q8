@@ -2,7 +2,14 @@
 
 package view;
 
+import database.DBEnigma;
+import database.DBGame;
+import database.DBRoom;
+import launcher.Main;
+import model.EnigmaList;
+import model.Game;
 import model.GameList;
+import view.style.ColorPerso;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -31,10 +38,13 @@ public class GameManagement extends JPanel implements ActionListener {
     public JButton buttonAddGame;
 
 
-    public GameManagement(GlobalFrame frame, int roomNumber, GameList list){
+    public GameManagement(GlobalFrame frame, int roomNumber){
         this.frame = frame;
         frame.roomNumber = roomNumber;
-        this.ListGame=list;
+
+        //recuperation des jeux du User
+        this.ListGame= DBGame.getGames(Main.idUser);
+
         /*WindowNamePanel set up*/
         JLabel windowName = new JLabel("MJ - Gestion des Jeux");
         JPanel windowNameInsidePanel = new JPanel();
@@ -52,6 +62,8 @@ public class GameManagement extends JPanel implements ActionListener {
         int nbGames = ListGame.getSize(); //fonction pour récupérer nombre de Jeux enregistrés dans BdD
 
         for(int i = 0; i<nbGames; i++){
+
+            final int y = i;
             JPanel gameInsidePanel = new JPanel();
             JPanel gameOutsidePanel = new JPanel();
             JPanel gameNbPanel = new JPanel();
@@ -63,7 +75,7 @@ public class GameManagement extends JPanel implements ActionListener {
             gameOutsidePanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
             gameOutsidePanel.setLayout((new BoxLayout(gameOutsidePanel, BoxLayout.LINE_AXIS)));
 
-            JLabel gameNbLabel = new JLabel("Jeu " +ListGame.getGame(i).getId()+" :");
+            JLabel gameNbLabel = new JLabel("Jeu " +(i+1)+" :");
             JLabel gameTitleLabel = new JLabel(ListGame.getGame(i).getTitre()); //fonction pour récupérer le titre du jeu i
 
             gameNbPanel.add(gameNbLabel, BorderLayout.CENTER);
@@ -86,8 +98,24 @@ public class GameManagement extends JPanel implements ActionListener {
                 buttonDelete.setOpaque(true);
 
 
-                buttonModify.addActionListener(this);
-                buttonDelete.addActionListener(this);
+                buttonModify.addActionListener(new AbstractAction() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        Game jeuChoisi = ListGame.getGame(y);
+                        Main.ListEnigma=DBEnigma.getEnigmas(jeuChoisi.getId());
+                        frame.gameCreationDisplay(frame,frame.roomNumber,jeuChoisi);
+                    }
+                });
+
+                buttonDelete.addActionListener(new AbstractAction() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        Game jeuChoisi = ListGame.getGame(y);
+                        DBGame.deleteGame(jeuChoisi.getId());
+
+                        // il faut recharger l'affichage mais je sais pas comment on fait
+                    }
+                });
 
                 buttonModifyPanel.add(buttonModify, BorderLayout.CENTER);
                 buttonDeletePanel.add(buttonDelete, BorderLayout.CENTER);
@@ -101,7 +129,25 @@ public class GameManagement extends JPanel implements ActionListener {
                 buttonChose.setBackground(ColorPerso.vert);
                 buttonChose.setOpaque(true);
 
-                buttonChose.addActionListener(this);
+                buttonChose.addActionListener(new AbstractAction() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        Main.ListRoom.findByID(roomNumber).setGame(ListGame.getGame(y));
+                        frame.roomManagementDisplay(frame);
+
+                        int idRoom = Main.ListRoom.findByID(roomNumber).getId();
+                        int idGame =ListGame.getGame(y).getId();
+                        if(DBRoom.isInDB(idRoom,idGame)) {
+                            System.out.println("Mise a jour");
+                            DBRoom.majGame(Main.ListRoom.findByID(roomNumber).getId(),ListGame.getGame(y).getId());
+                        }
+                        else{
+                            System.out.println("Insertion");
+                            DBRoom.insertRoom(Main.ListRoom.findByID(roomNumber).getId(), ListGame.getGame(y).getId());
+                        }
+
+                    }
+                });
 
                 buttonChosePanel.add(buttonChose, BorderLayout.CENTER);
 
@@ -138,8 +184,6 @@ public class GameManagement extends JPanel implements ActionListener {
         Border mainEdge = BorderFactory.createEmptyBorder(10,10,10,10);
         this.setBorder(mainEdge);
 
-
-
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         this.add(windowNamePanel);
         this.add(scrollGameListPanel);
@@ -152,8 +196,9 @@ public class GameManagement extends JPanel implements ActionListener {
         if (e.getSource() == buttonReturn){
             frame.mainMenuDisplay(frame);
         }
-        if (e.getSource() == buttonAddGame){
-            frame.gameCreationDisplay(frame,frame.roomNumber);
+        else if (e.getSource() == buttonAddGame){
+            Main.ListEnigma= new EnigmaList();
+            frame.gameCreationDisplay(frame,frame.roomNumber,null);
         }
     }
 }
