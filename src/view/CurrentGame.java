@@ -1,6 +1,7 @@
 package view;
 
 import database.DBEnigma;
+import database.DBGame;
 import model.EnigmaList;
 import model.Game;
 import view.style.ColorPerso;
@@ -64,6 +65,7 @@ public class CurrentGame extends JPanel implements ActionListener {
 
     private EnigmaList allEnigmas;
 
+    private Game game;
 
 
     private Timer countdownenigma;
@@ -77,7 +79,7 @@ public class CurrentGame extends JPanel implements ActionListener {
 
         this.frame = frame;
         allEnigmas = DBEnigma.getEnigmas(partiechoisie.getId());
-
+        game = DBGame.getGame(partiechoisie.getId());
         timerclue1 = allEnigmas.getEnigma(enigmalistflag).getTimer1();
 
         ishint2present = !(allEnigmas.getEnigma(enigmalistflag).getClue2().isEmpty());
@@ -372,7 +374,11 @@ public class CurrentGame extends JPanel implements ActionListener {
                     frame.revalidate();
                     frame.repaint();
                 }
-                else{JOptionPane.showMessageDialog(frame, "Vous avez réussi !!!!", "Bravo", JOptionPane.WARNING_MESSAGE);}
+                else{
+                    String message = game.getEndMessage();
+                    JOptionPane.showMessageDialog(frame, message, "Bravo", JOptionPane.WARNING_MESSAGE);
+                }
+
             }
             else{JOptionPane.showMessageDialog(frame, "Ce n'est pas la bonne reponse", "Raté", JOptionPane.WARNING_MESSAGE);}
         }
