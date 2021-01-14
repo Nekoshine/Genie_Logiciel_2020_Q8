@@ -9,14 +9,11 @@ import launcher.Main;
 import view.style.ColorPerso;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import javax.swing.*;
 
 
-public class ConnectionMenu extends JPanel implements ActionListener, MouseListener {
+public class ConnectionMenu extends JPanel implements ActionListener, MouseListener, KeyListener {
 
     private JButton connection;
     private JButton inscription;
@@ -39,6 +36,7 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
         JLabel identifiant = new JLabel("Identifiant :");
         saisieidentifiant = new JTextField();
         saisieidentifiant.setColumns(30);
+        saisieidentifiant.addKeyListener(this);
 
         login.add(identifiant);
         login.add(saisieidentifiant);
@@ -50,6 +48,7 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
         JLabel motdepasse = new JLabel("Mot de passe :");
         saisiemotdepasse = new JPasswordField();
         saisiemotdepasse.setColumns(30);
+        saisiemotdepasse.addKeyListener(this);
 
         mdp.add(motdepasse);
         mdp.add(saisiemotdepasse);
@@ -88,29 +87,29 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
 
     }
 
+    private void connect(String idinput, String mdpinput) {
+        int isAdmin = DBUser.connectUser(idinput,mdpinput);
+        if (isAdmin==1){
+            frame.mainMenuDisplay(frame);
+            Main.ListRoom = DBRoom.getRooms(Main.idUser); // recherche des salles dans la BDD apres la connection
+        }
+        else if( isAdmin==0){
+            //Client.connectToServer();
+            Main.ListRoom = DBRoom.getRooms(3); //si le joueur est le numero
+            frame.roomAccessDisplay(frame,Main.ListRoom);
+            //Client.recepAdminInfo()
+        }
+        else {
+            Toolkit.getDefaultToolkit().beep();
+            JOptionPane.showMessageDialog(frame,"l'identifiant ou le mot de passe ne correspond pas");
+        }
+    }
+
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == connection){
             String idinput = saisieidentifiant.getText();
             String mdpinput = String.valueOf(saisiemotdepasse.getPassword());
-            int isAdmin = DBUser.connectUser(idinput,mdpinput);
-            if (isAdmin==1){
-                frame.mainMenuDisplay(frame);
-                Main.ListRoom = DBRoom.getRooms(Main.idUser); // recherche des salles dans la BDD apres la connection
-
-
-
-
-
-            }
-            else if( isAdmin==0){
-                //Client.connectToServer();
-                Main.ListRoom = DBRoom.getRooms(3); //si le joueur est le numero
-                frame.roomAccessDisplay(frame,Main.ListRoom);
-                //Client.recepAdminInfo()
-            }
-            else {
-                JOptionPane.showMessageDialog(frame,"l'identifiant ou le mot de passe ne correspond pas");
-            }
+            connect(idinput,mdpinput);
 
         }
         else if (e.getSource() == inscription){
@@ -145,6 +144,26 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
         else if (e.getSource()==connection){
             connection.setBackground(ColorPerso.vert);
         }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int key=e.getKeyCode();
+        if (key == KeyEvent.VK_ENTER) {
+            String idinput = saisieidentifiant.getText();
+            String mdpinput = String.valueOf(saisiemotdepasse.getPassword());
+            connect(idinput,mdpinput);
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
     }
 }
 
