@@ -26,9 +26,9 @@ public class DBUser extends DBConnexion {
     * @return 0 si c'est un utilisateur normal, 1 si cest un admin , 3 si la connexion échoue
     */
     public static int connectUser(String login, String password){
-        int isAdmin = 0;
+        int isAdmin = 3;
         String pwd;
-        int idUser = 0;
+        int idUser = -1;
         try{
             MessageDigest md = MessageDigest.getInstance("MD5"); // Création de la classe qui va hash en MD5
             byte[] byteChaine = password.getBytes("UTF-8"); // On convertit la chaine en octets
