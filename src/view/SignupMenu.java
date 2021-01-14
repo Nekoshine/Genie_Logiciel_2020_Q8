@@ -110,21 +110,25 @@ public class SignupMenu extends JPanel implements ActionListener, MouseListener 
       String mdpinput = String.valueOf(passwordtextfield.getPassword());
       String cleinmput = keytextfield.getText();
       if (idinput.isEmpty() || mdpinput.isEmpty() ){
+        Toolkit.getDefaultToolkit().beep();
         JOptionPane.showMessageDialog(frame,"Un ou plusieurs champs n'ont pas été remplis","Informations incomplètes", JOptionPane.WARNING_MESSAGE);
       }
       if(cleinmput.isEmpty()){
         if (DBUser.insertUser(idinput, mdpinput,false)) {
           frame.connectionMenuDisplay(frame);
         } else {
+          Toolkit.getDefaultToolkit().beep();
           JOptionPane.showMessageDialog(frame, "L'identifiant demandé n'est pas disponible", "Attention", JOptionPane.WARNING_MESSAGE);
         }
       } else if(cleinmput.equals(cleAdmin)){
         if (DBUser.insertUser(idinput, mdpinput,true)) {
           frame.connectionMenuDisplay(frame);
         } else {
+          Toolkit.getDefaultToolkit().beep();
           JOptionPane.showMessageDialog(frame, "L'identifiant demandé n'est pas disponible", "Attention", JOptionPane.WARNING_MESSAGE);
         }
       } else {
+        Toolkit.getDefaultToolkit().beep();
         JOptionPane.showMessageDialog(frame, "Soit l'identifiant demandé n'est pas disponible , soit la clé fournie est incorrecte", "Attention", JOptionPane.WARNING_MESSAGE);
       }
       
