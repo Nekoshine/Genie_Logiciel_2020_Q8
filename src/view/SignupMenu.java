@@ -7,14 +7,11 @@ import database.DBUser;
 import view.style.ColorPerso;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import javax.swing.*;
 
 
-public class SignupMenu extends JPanel implements ActionListener, MouseListener {
+public class SignupMenu extends JPanel implements ActionListener, MouseListener, KeyListener {
   
   private JButton confirm;
   private JButton back;
@@ -39,6 +36,7 @@ public class SignupMenu extends JPanel implements ActionListener, MouseListener 
     JLabel id = new JLabel("Identifiant :");
     idtextfiled = new JTextField();
     idtextfiled.setColumns(30);
+    idtextfiled.addKeyListener(this);
     
     logincontainer.add(id);
     logincontainer.add(idtextfiled);
@@ -50,6 +48,7 @@ public class SignupMenu extends JPanel implements ActionListener, MouseListener 
     JLabel password = new JLabel("Mot de passe :");
     passwordtextfield = new JPasswordField();
     passwordtextfield.setColumns(30);
+    passwordtextfield.addKeyListener(this);
     
     passwordcontainer.add(password);
     passwordcontainer.add(passwordtextfield);
@@ -61,6 +60,7 @@ public class SignupMenu extends JPanel implements ActionListener, MouseListener 
     JLabel key = new JLabel("Clé (compte admin) :");
     keytextfield = new JTextField();
     keytextfield.setColumns(25);
+    keytextfield.addKeyListener(this);
     
     keycontainer.add(key);
     keycontainer.add(keytextfield);
@@ -103,41 +103,44 @@ public class SignupMenu extends JPanel implements ActionListener, MouseListener 
     this.setVisible(true);
     
   }
+
+  private void signUp(String idinput, String mdpinput, String cleinmput) {
+    if (idinput.isEmpty() || mdpinput.isEmpty() ){
+      Toolkit.getDefaultToolkit().beep();
+      JOptionPane.showMessageDialog(frame,"Un ou plusieurs champs n'ont pas été remplis","Informations incomplètes", JOptionPane.WARNING_MESSAGE);
+    }
+    if(cleinmput.isEmpty()){
+      if (DBUser.insertUser(idinput, mdpinput,false)) {
+        frame.connectionMenuDisplay(frame);
+      } else {
+        Toolkit.getDefaultToolkit().beep();
+        JOptionPane.showMessageDialog(frame, "L'identifiant demandé n'est pas disponible", "Attention", JOptionPane.WARNING_MESSAGE);
+      }
+    } else if(cleinmput.equals(cleAdmin)){
+      if (DBUser.insertUser(idinput, mdpinput,true)) {
+        frame.connectionMenuDisplay(frame);
+      } else {
+        Toolkit.getDefaultToolkit().beep();
+        JOptionPane.showMessageDialog(frame, "L'identifiant demandé n'est pas disponible", "Attention", JOptionPane.WARNING_MESSAGE);
+      }
+    } else {
+      Toolkit.getDefaultToolkit().beep();
+      JOptionPane.showMessageDialog(frame, "Soit l'identifiant demandé n'est pas disponible , soit la clé fournie est incorrecte", "Attention", JOptionPane.WARNING_MESSAGE);
+    }
+  }
   
   public void actionPerformed(ActionEvent e) {
     if (e.getSource() == confirm){
       String idinput = idtextfiled.getText();
       String mdpinput = String.valueOf(passwordtextfield.getPassword());
       String cleinmput = keytextfield.getText();
-      if (idinput.isEmpty() || mdpinput.isEmpty() ){
-        Toolkit.getDefaultToolkit().beep();
-        JOptionPane.showMessageDialog(frame,"Un ou plusieurs champs n'ont pas été remplis","Informations incomplètes", JOptionPane.WARNING_MESSAGE);
-      }
-      if(cleinmput.isEmpty()){
-        if (DBUser.insertUser(idinput, mdpinput,false)) {
-          frame.connectionMenuDisplay(frame);
-        } else {
-          Toolkit.getDefaultToolkit().beep();
-          JOptionPane.showMessageDialog(frame, "L'identifiant demandé n'est pas disponible", "Attention", JOptionPane.WARNING_MESSAGE);
-        }
-      } else if(cleinmput.equals(cleAdmin)){
-        if (DBUser.insertUser(idinput, mdpinput,true)) {
-          frame.connectionMenuDisplay(frame);
-        } else {
-          Toolkit.getDefaultToolkit().beep();
-          JOptionPane.showMessageDialog(frame, "L'identifiant demandé n'est pas disponible", "Attention", JOptionPane.WARNING_MESSAGE);
-        }
-      } else {
-        Toolkit.getDefaultToolkit().beep();
-        JOptionPane.showMessageDialog(frame, "Soit l'identifiant demandé n'est pas disponible , soit la clé fournie est incorrecte", "Attention", JOptionPane.WARNING_MESSAGE);
-      }
-      
+      signUp(idinput,mdpinput,cleinmput);
     }
     else if (e.getSource() == back){
       frame.connectionMenuDisplay(frame);
     }
   }
-  
+
   @Override
   public void mouseClicked(MouseEvent e) {}
     
@@ -166,5 +169,26 @@ public class SignupMenu extends JPanel implements ActionListener, MouseListener 
             confirm.setBackground(ColorPerso.vert);
           }
         }
-      }
+
+  @Override
+  public void keyTyped(KeyEvent e) {
+
+  }
+
+  @Override
+  public void keyPressed(KeyEvent e) {
+    int key=e.getKeyCode();
+    if (key == KeyEvent.VK_ENTER) {
+      String idinput = idtextfiled.getText();
+      String mdpinput = String.valueOf(passwordtextfield.getPassword());
+      String cleinmput = keytextfield.getText();
+      signUp(idinput,mdpinput,cleinmput);
+    }
+  }
+
+  @Override
+  public void keyReleased(KeyEvent e) {
+
+  }
+}
       
