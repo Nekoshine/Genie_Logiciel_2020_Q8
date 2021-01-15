@@ -552,11 +552,11 @@ public class GameCreation extends JPanel implements ActionListener {
                 if(DBEnigma.isInDB(id)){
                     System.out.println("Mise a jour");
                     //Ce ne sont pas les bonnes valeurs qui sont récupérées
-                    DBEnigma.majEnigma(text,answer, clue1, timer1,clue2, timer2,clue3, timer3,id);
+                    DBEnigma.majEnigma(id, text,answer, clue1, timer1,clue2, timer2,clue3, timer3);
                 }
                 else{
                     System.out.println("Insertion");
-                    DBEnigma.insertEnigma(DBGame.getIdGame(titre),text,answer, clue1, timer1,clue2, timer2,clue3, timer3);
+                    DBEnigma.insertEnigma(game.getId(),text,answer, clue1, timer1,clue2, timer2,clue3, timer3);
                 }
 
             }
