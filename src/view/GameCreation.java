@@ -66,6 +66,7 @@ public class GameCreation extends JPanel implements ActionListener {
     private JButton saveButton;
     private JButton deleteButton;
     private JButton newButton;
+    private JButton rankingButton;
 
     private JLabel windowName;
 
@@ -112,6 +113,7 @@ public class GameCreation extends JPanel implements ActionListener {
         exitButton = new JButton("Quitter");
         deleteButton = new JButton("Supprimer");
         newButton = new JButton("Nouvelle Enigme");
+        rankingButton = new JButton("Classement");
 
         if(game==null) {
             title = new JTextField("Titre", 45);
@@ -167,9 +169,14 @@ public class GameCreation extends JPanel implements ActionListener {
         initialScore.setBorder(BorderFactory.createEmptyBorder());
         initialScore.setHorizontalAlignment(JTextField.CENTER);
         initialScore.setFont(FontPerso.Oxanimum);
-        points.setBorder(BorderFactory.createEmptyBorder());
-        points.setHorizontalAlignment(JTextField.CENTER);
-        points.setVisible(false);
+        rankingButton.setHorizontalAlignment(JButton.CENTER);
+        rankingButton.setBackground(ColorPerso.azur);
+        rankingButton.setForeground(Color.white);
+
+        if (listEnigma.List.isEmpty()){
+            rankingButton.setEnabled(false);
+            rankingButton.setBackground(Color.darkGray);
+        }
 
         gbcTitle.weightx = 2;
         gbcTitle.insets = new Insets(0,0,0,20);
@@ -177,8 +184,9 @@ public class GameCreation extends JPanel implements ActionListener {
 
 
         gbcScores.weightx =1;
-        gbcScores.insets = new Insets(0,10,0,0);
+        gbcScores.insets = new Insets(0,10,0,10);
         gbcScores.fill = GridBagConstraints.HORIZONTAL;
+
 
         titleNamePanel.setLayout(grid);
         defaultScorePanel.setLayout(grid);
@@ -186,7 +194,7 @@ public class GameCreation extends JPanel implements ActionListener {
 
         titleNamePanel.add(title);
         defaultScorePanel.add(initialScore);
-        pointsPanel.add(points);
+        pointsPanel.add(rankingButton);
 
         infoPanel.setLayout(gridInfo);
         infoPanel.add(titleNamePanel,gbcTitle);
@@ -225,6 +233,23 @@ public class GameCreation extends JPanel implements ActionListener {
         titlePanel.setLayout(titleLayout);
         titlePanel.add(windowName,BorderLayout.NORTH);
         titlePanel.add(infoPanel,BorderLayout.SOUTH);
+
+        title.addCaretListener(new CaretListener() {
+            @Override
+            public void caretUpdate(CaretEvent e) {
+                if (e.getSource()==title){
+                    game.setTitre(title.getText());
+                }
+                else
+                    try{
+                        game.setScore(Integer.parseInt(initialScore.getText()));
+                    }
+                    catch (Exception exception){
+                        System.out.println("Le score n'est pas un entier");
+                    }
+
+            }
+        });
 
 
         this.setLayout(mainLayout);
