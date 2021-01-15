@@ -65,6 +65,8 @@ public class CurrentGame extends JPanel implements ActionListener {
 
     private EnigmaList allEnigmas;
 
+    public ImageIcon imageIconValide;
+    public  ImageIcon imageIconRefus;
     private Game game;
 
 
@@ -76,6 +78,9 @@ public class CurrentGame extends JPanel implements ActionListener {
     private GlobalFrame frame;
 
     public CurrentGame (GlobalFrame frame, Game partiechoisie ){
+
+        imageIconValide = new ImageIcon(new ImageIcon("./src/view/image/valide.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+        imageIconRefus = new ImageIcon(new ImageIcon("./src/view/image/refus.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
 
         this.frame = frame;
         allEnigmas = DBEnigma.getEnigmas(partiechoisie.getId());
@@ -374,13 +379,17 @@ public class CurrentGame extends JPanel implements ActionListener {
                     frame.revalidate();
                     frame.repaint();
                 }
+                else{JOptionPane.showMessageDialog(frame, "Vous avez réussi !!!!", "Bravo !", JOptionPane.WARNING_MESSAGE,imageIconValide);
+                    frame.connectionMenuDisplay(frame);
+                }
                 else{
                     String message = game.getEndMessage();
                     JOptionPane.showMessageDialog(frame, message, "Bravo", JOptionPane.WARNING_MESSAGE);
                 }
 
             }
-            else{JOptionPane.showMessageDialog(frame, "Ce n'est pas la bonne reponse", "Raté", JOptionPane.WARNING_MESSAGE);}
+            else{JOptionPane.showMessageDialog(frame, "Ce n'est pas la bonne reponse", "Raté !", JOptionPane.WARNING_MESSAGE,imageIconRefus);
+            }
         }
 
     }

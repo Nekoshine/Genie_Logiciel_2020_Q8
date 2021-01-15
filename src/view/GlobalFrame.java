@@ -1,9 +1,5 @@
 package view;
 
-import database.DBGame;
-import launcher.Main;
-import model.Enigma;
-import model.EnigmaList;
 import model.Game;
 import model.RoomList;
 import view.style.ColorPerso;
@@ -12,8 +8,7 @@ import view.style.FontPerso;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 
@@ -32,6 +27,8 @@ public class GlobalFrame extends JFrame {
     RoomAccess roomAccess;
     PlayerManagement playerManagement;
 
+
+
     public int roomNumber;
     public boolean insideRoom;
 
@@ -41,6 +38,7 @@ public class GlobalFrame extends JFrame {
         UIManager.put("Label.font", FontPerso.Oxanimum);
         UIManager.put("Button.font",FontPerso.SirensDEMO);
         UIManager.put("Button.background", ColorPerso.grisOriginal);
+
 
         frame = this;
 
@@ -54,7 +52,7 @@ public class GlobalFrame extends JFrame {
 
         //menu = new RoomManagement();
         //this.setContentPane(menu);
-        mainMenuDisplay(this);
+        connectionMenuDisplay(this);
 
 
 
@@ -71,7 +69,7 @@ public class GlobalFrame extends JFrame {
                 super.componentResized(e);
                 windowSize = getSize();
                 if (getContentPane() instanceof GameCreation) {
-                    GameCreation gameCreation = new GameCreation(frame,roomNumber,null);
+                    GameCreation gameCreation = new GameCreation(frame,roomNumber,((GameCreation) getContentPane()).game);
                     setContentPane(gameCreation);
                 }
 
@@ -163,7 +161,7 @@ public class GlobalFrame extends JFrame {
 
         currentGame = new CurrentGame(frame,partie);
         setContentPane(currentGame);
-        frame.setSize(1280,720);
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setResizable(true);
         this.setLocationRelativeTo(null);
         frame.revalidate();
@@ -188,6 +186,7 @@ public class GlobalFrame extends JFrame {
         playerManagement = new PlayerManagement(frame, gameNb, riddleNb, boolHint1Revealed, boolHint2Revealed, boolHint3Revealed);
         setContentPane(playerManagement);
         frame.setSize(1280,720);
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setResizable(true);
         frame.revalidate();
         frame.repaint();

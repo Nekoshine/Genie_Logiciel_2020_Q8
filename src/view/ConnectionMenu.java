@@ -3,6 +3,7 @@
 package view;
 
 import Sockets.Client;
+import Sockets.ThreadAdmin;
 import database.DBRoom;
 import database.DBUser;
 import launcher.Main;
@@ -48,7 +49,6 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
         JLabel motdepasse = new JLabel("Mot de passe :");
         saisiemotdepasse = new JPasswordField();
         saisiemotdepasse.setColumns(30);
-        saisiemotdepasse.addKeyListener(this);
 
         mdp.add(motdepasse);
         mdp.add(saisiemotdepasse);

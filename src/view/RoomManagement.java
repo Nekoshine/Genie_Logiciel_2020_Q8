@@ -78,81 +78,7 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
         this.CreateList();
 
 
-        /*newButton.setAction(new AbstractAction("Nouvelle Salle") {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                Room salle = new Room(ListRoom.getSize()+1,"Titre du jeu " + (ListRoom.getSize()+1));
-
-
-                /* Contraintes GridBag *
-
-                gbc.fill = GridBagConstraints.HORIZONTAL;
-                gbc.weightx = 1;
-                gbc.gridy = salle.getId()-1;
-                gbc.gridx = 0;
-
-
-                /* Ajout Panel *
-
-                listPanel.remove(newButtonPanel);
-                JPanel panelSalle = new JPanel();
-
-                /* Construction PanelSalle *
-
-                GridLayout grille = new GridLayout(1,4,70,0);
-                JLabel nomSalle = new JLabel("Salle " + salle.getId() + " :");
-                nomSalle.setHorizontalAlignment(SwingConstants.CENTER);
-
-                JLabel nomJeu = new JLabel(salle.getGame());
-                nomJeu.setHorizontalAlignment(SwingConstants.CENTER);
-
-                JButton boutonJeu = new JButton("Choisir Jeu");
-                boutonJeu.setBackground(ColorPerso.jaune);
-                boutonJeu.addActionListener(new AbstractAction() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        frame.gameManagementDisplay(frame, salle.getId());
-                    }
-                });
-
-                JButton boutonLancer = new JButton("Lancer");
-                boutonLancer.setBackground(ColorPerso.vert);
-                boutonLancer.addActionListener(new AbstractAction() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        System.out.println(salle.getId());
-                    }
-                });
-
-                /* Ajout Éléments au panel Salle *
-
-                panelSalle.add(nomSalle);
-                panelSalle.add(nomJeu);
-                panelSalle.add(boutonJeu);
-                panelSalle.add(boutonLancer);
-                panelSalle.setLayout(grille);
-
-                /* Configuration panelSalle *
-
-                panelSalle.setBorder(BorderFactory.createLineBorder(Color.BLACK,3));
-                panelSalle.setPreferredSize(new Dimension(listPanel.getWidth()-45,75));
-                panelSalle.setBounds(0,0+(salle.getId()*75),listPanel.getWidth()-45,75);
-
-
-                /* Ajout à la liste des salles *
-
-                roomPanel.add(panelSalle,gbc);
-                listPanel.add(newButtonPanel,BorderLayout.SOUTH);
-                ListRoom.addRoom(salle);
-                listPanel.revalidate();
-                listPanel.repaint();
-
-
-
-            }
-        });*/
 
         /* Setup Marges */
         Border mainPadding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
@@ -206,6 +132,12 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
 
     private JPanel ajoutSalle(Room salle, GridBagConstraints gbc, int i) {
 
+        GridBagConstraints gbcTitle = new GridBagConstraints();
+        GridBagConstraints gbcName = new GridBagConstraints();
+        GridBagConstraints gbcLaunch = new GridBagConstraints();
+        GridBagConstraints gbcChoose = new GridBagConstraints();
+
+
         /* Contraintes GridBag */
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1.0;
@@ -214,9 +146,15 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
 
         /* Ajout Panel */
         JPanel panelSalle = new JPanel();
+        JPanel panelName = new JPanel();
+        JPanel panelTitle = new JPanel();
+        JPanel panelLaunch = new JPanel();
+        JPanel panelChoose = new JPanel();
 
         /* Construction Panel Salle */
-        GridLayout grille = new GridLayout(1, 4, 70, 50);
+        GridLayout grille = new GridLayout(1,4,20,0);
+
+
         JLabel nomSalle = new JLabel("Salle " + i + " :");
         nomSalle.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -262,9 +200,12 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
 
         JButton boutonLancer = new JButton("Lancer");
         boutonLancer.setBackground(ColorPerso.vert);
-        if (salle.getGame() == null || salle.getUserInside() == -1) {
-            boutonLancer.setBackground(new Color(250,118,20));
-            boutonLancer.setText("Ouvrir la salle");
+
+
+        if (salle.getGame() == null /* || salle.getUserInside() == -1 */) {
+            boutonLancer.setEnabled(false);
+            boutonLancer.setBackground(Color.darkGray);
+            //boutonLancer.setText("Ouvrir la salle");
 
         }
 
@@ -272,13 +213,14 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Bouton lancer " + salle.getId());
+                frame.playerManagement(frame,salle.getGame().getId(), 1,true,false,false);
 
-                if (boutonLancer.getText()=="Ouvrir la salle"){
+
+                /*if (boutonLancer.getText()=="Ouvrir la salle"){
                     boutonLancer.setText("En attente");
                     boutonLancer.repaint();
-                    Admin.setServerAdmin();
 
-                }
+                }*/
             }
         });
 
@@ -312,6 +254,7 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
                 }
             });
         }
+
 
         /* Ajout Éléments au panel Salle */
         panelSalle.add(nomSalle);

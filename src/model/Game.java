@@ -44,6 +44,10 @@ public class Game{
     this.titre = titre;
   }
 
+  public void setScore(int score) {
+    this.score = score;
+  }
+
   @Override
   public String toString() {
     return titre;

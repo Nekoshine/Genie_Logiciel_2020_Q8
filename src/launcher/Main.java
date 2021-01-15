@@ -1,5 +1,7 @@
 package launcher;
 
+import database.DBEnigma;
+import database.DBRoom;
 import model.*;
 import view.GlobalFrame;
 
@@ -10,6 +12,7 @@ public class Main {
     // Variable global
     public static EnigmaList ListEnigma = new EnigmaList();
     public static RoomList ListRoom = new RoomList();
+    public static int idAdmin;
 
     // à supprimer
     public static int idUser=5;
@@ -20,5 +23,4 @@ public class Main {
         new GlobalFrame();
 
     }
-
 }

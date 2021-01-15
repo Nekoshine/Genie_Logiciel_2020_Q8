@@ -194,7 +194,12 @@ public class GameManagement extends JPanel implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == buttonReturn){
-            frame.mainMenuDisplay(frame);
+            if (frame.roomNumber==-1){
+                frame.mainMenuDisplay(frame);
+            }
+            else {
+                frame.roomManagementDisplay(frame);
+            }
         }
         else if (e.getSource() == buttonAddGame){
             Main.ListEnigma= new EnigmaList();
