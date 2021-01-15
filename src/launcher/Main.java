@@ -5,15 +5,17 @@ import database.DBRoom;
 import model.*;
 import view.GlobalFrame;
 
-
-import javax.swing.*;
 import java.io.IOException;
 
 public class Main {
+
+    // Variable global
     public static EnigmaList ListEnigma = new EnigmaList();
-    public static int idUser=0;
     public static RoomList ListRoom = new RoomList();
     public static int idAdmin;
+
+    // à supprimer
+    public static int idUser=5;
 
     public static void main(String[] args) throws IOException {
 
