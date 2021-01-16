@@ -12,7 +12,7 @@ public class ImagePerso{
     static{
         try{
 
-            ImageIcon image = new ImageIcon(new ImageIcon("./src/view/image/FondConnection.png").getImage().getScaledInstance(720, 450, Image.SCALE_DEFAULT));
+            ImageIcon image = new ImageIcon(new ImageIcon("./src/view/image/FondConnection2.png").getImage().getScaledInstance(720, 450, Image.SCALE_DEFAULT));
             backgroundMenu = image.getImage();
 
         }
