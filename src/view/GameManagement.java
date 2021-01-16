@@ -70,13 +70,14 @@ public class GameManagement extends JPanel implements ActionListener {
         returnButton.setBackground(ColorPerso.rouge);
         returnButton.setForeground(Color.white);
 
-        newButton = new JButton("Créer un nouveau jeu");
-        newButton.setBackground(Color.GRAY);
-        newButton.setOpaque(false);
-        newButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        newButton.addActionListener(this);
+        if(frame.roomNumber==-1) {
+            newButton = new JButton("Créer un nouveau jeu");
+            newButton.setBackground(Color.GRAY);
+            newButton.setOpaque(false);
+            newButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+            newButton.addActionListener(this);
+        }
 
-        /* Affichage des salles */
         this.CreateList();
 
         /* Setup Marges */
@@ -91,8 +92,9 @@ public class GameManagement extends JPanel implements ActionListener {
         listPanel.add(newButtonPanel, BorderLayout.PAGE_END);
         listPanel.setBorder(BorderFactory.createLineBorder(Color.black,2));
 
-        newButtonPanel.add(newButton);
-
+        if(frame.roomNumber==-1) {
+            newButtonPanel.add(newButton);
+        }
         /* Setup Titre */
         JLabel titre = new JLabel("MJ - Gestion des Jeux");
         titre.setFont(FontPerso.ArialBold);
@@ -105,7 +107,6 @@ public class GameManagement extends JPanel implements ActionListener {
         returnPanel.add(returnButton);
         returnButton.addActionListener(this);
 
-        /* Setup Fenêtre gestion des salles */
         this.setLayout(mainLayout);
         this.setBackground(ColorPerso.gris);
         this.add(listPanel, BorderLayout.CENTER);
@@ -125,20 +126,19 @@ public class GameManagement extends JPanel implements ActionListener {
         gbc.gridx = 0;
 
         /* Ajout Panel */
-        JPanel panelSalle = new JPanel();
+        JPanel panelJeu = new JPanel();
 
-        /* Construction Panel Salle */
         GridLayout grille = new GridLayout(1,4,20,0);
 
 
-        JLabel nomSalle = new JLabel("Jeu  " + i + " :");
-        nomSalle.setHorizontalAlignment(SwingConstants.CENTER);
+        JLabel numJeu = new JLabel("Jeu  " + i + " :");
+        numJeu.setHorizontalAlignment(SwingConstants.CENTER);
 
         JLabel nomJeu = new JLabel(jeu.getTitre());
         nomJeu.setHorizontalAlignment(SwingConstants.CENTER);
 
-        panelSalle.add(nomSalle);
-        panelSalle.add(nomJeu);
+        panelJeu.add(numJeu);
+        panelJeu.add(nomJeu);
         if(frame.roomNumber==-1) {
             JButton buttonModify = new JButton("Modifier");
             buttonModify.setBackground(ColorPerso.jaune);
@@ -162,8 +162,8 @@ public class GameManagement extends JPanel implements ActionListener {
                 }
             });
 
-            panelSalle.add(buttonModify);
-            panelSalle.add(buttonDelete);
+            panelJeu.add(buttonModify);
+            panelJeu.add(buttonDelete);
         }
         else {
 
@@ -187,17 +187,17 @@ public class GameManagement extends JPanel implements ActionListener {
 
                 }
             });
-            panelSalle.add(boutonChoix);
+            panelJeu.add(boutonChoix);
 
         }
-        panelSalle.setLayout(grille);
+        panelJeu.setLayout(grille);
 
 
 
         /* Configuration panelSalle */
-        panelSalle.setBorder(BorderFactory.createLineBorder(Color.BLACK,3));
+        panelJeu.setBorder(BorderFactory.createLineBorder(Color.BLACK,3));
 
-        return panelSalle;
+        return panelJeu;
 
     }
 
