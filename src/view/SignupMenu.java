@@ -160,31 +160,31 @@ public class SignupMenu extends JPanel implements ActionListener, MouseListener,
   @Override
   public void mouseClicked(MouseEvent e) {}
     
-    @Override
-    public void mousePressed(MouseEvent e) {}
+  @Override
+  public void mousePressed(MouseEvent e) {}
       
-      @Override
-      public void mouseReleased(MouseEvent e) {}
+  @Override
+  public void mouseReleased(MouseEvent e) {}
         
-        @Override
-        public void mouseEntered(MouseEvent e) {
-          if(e.getSource()==back){
-            back.setBackground(ColorPerso.rougeHoover);
-          }
-          else if(e.getSource()==confirm){
-            confirm.setBackground(ColorPerso.vertHoover);
-          }
-        }
-        
-        @Override
-        public void mouseExited(MouseEvent e) {
-          if(e.getSource()==back){
-            back.setBackground(ColorPerso.rouge);
-          }
-          else if(e.getSource()==confirm){
-            confirm.setBackground(ColorPerso.vert);
-          }
-        }
+  @Override
+  public void mouseEntered(MouseEvent e) {
+    if(e.getSource()==back){
+      back.setBackground(ColorPerso.rougeHoover);
+    }
+    else if(e.getSource()==confirm){
+      confirm.setBackground(ColorPerso.vertHoover);
+    }
+  }
+
+  @Override
+  public void mouseExited(MouseEvent e) {
+    if(e.getSource()==back){
+      back.setBackground(ColorPerso.rouge);
+    }
+    else if(e.getSource()==confirm){
+      confirm.setBackground(ColorPerso.vert);
+    }
+  }
 
   @Override
   public void keyTyped(KeyEvent e) {

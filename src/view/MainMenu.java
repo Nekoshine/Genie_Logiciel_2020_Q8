@@ -11,12 +11,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-public class MainMenu extends JPanel implements ActionListener {
+public class MainMenu extends JPanel implements ActionListener, MouseListener {
 
     private JButton deconnection;
-    private JButton management;
-    private JButton creation;
+    private JButtonImage management;
+    private JButtonImage creation;
 
     private Image image;
 
@@ -34,6 +36,7 @@ public class MainMenu extends JPanel implements ActionListener {
         /*création du bouton deconnexion*/
         deconnection = new JButton("Deconnexion");
         deconnection.addActionListener(this);
+        deconnection.addMouseListener(this);
         deconnection.setBackground(ColorPerso.rouge);
         deconnection.setForeground(Color.WHITE);
         deconnection.setPreferredSize(new Dimension(150,60));
@@ -56,9 +59,11 @@ public class MainMenu extends JPanel implements ActionListener {
 
         creation = new JButtonImage("./src/view/image/creation.png");
         creation.addActionListener(this);
+        creation.addMouseListener(this);
 
         management = new JButtonImage("./src/view/image/gestion.png");
         management.addActionListener(this);
+        management.addMouseListener(this);
         /*création du conteneur des menus*/
         JPanel menucontainer = new JPanel();
         menucontainer.setLayout(new GridLayout(1, 2, 30, 5));
@@ -100,4 +105,45 @@ public class MainMenu extends JPanel implements ActionListener {
         }
     }
 
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        if(e.getSource() == management ){
+            management.setBackground("./src/view/image/gestionHoover.png");
+        }
+        else if(e.getSource() == creation){
+            creation.setBackground("./src/view/image/creationHoover.png");
+        }
+        else if(e.getSource() == deconnection){
+            deconnection.setBackground(ColorPerso.rougeHoover);
+        }
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        if(e.getSource() == management ){
+            management.setBackground("./src/view/image/gestion.png");
+        }
+        else if(e.getSource() == creation){
+            creation.setBackground("./src/view/image/creation.png");
+        }
+        else if(e.getSource() == deconnection){
+            deconnection.setBackground(ColorPerso.rouge);
+        }
+
+    }
 }

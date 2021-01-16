@@ -15,10 +15,11 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 
-
-public class GameManagement extends JPanel implements ActionListener {
+public class GameManagement extends JPanel implements ActionListener, MouseListener {
 
     private final GameList ListGame;
 
@@ -76,6 +77,7 @@ public class GameManagement extends JPanel implements ActionListener {
             newButton.setOpaque(false);
             newButton.setAlignmentX(Component.CENTER_ALIGNMENT);
             newButton.addActionListener(this);
+            newButton.addMouseListener(this);
         }
 
         this.CreateList();
@@ -106,6 +108,7 @@ public class GameManagement extends JPanel implements ActionListener {
         returnPanel.setBackground(ColorPerso.gris);
         returnPanel.add(returnButton);
         returnButton.addActionListener(this);
+        returnButton.addMouseListener(this);
 
         this.setLayout(mainLayout);
         this.setBackground(ColorPerso.gris);
@@ -150,6 +153,29 @@ public class GameManagement extends JPanel implements ActionListener {
                     frame.gameCreationDisplay(frame,frame.roomNumber,jeuChoisi);
                 }
             });
+            buttonModify.addMouseListener(new MouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    buttonModify.setBackground(ColorPerso.jauneHoover);
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    buttonModify.setBackground(ColorPerso.jaune);
+                }
+            });
 
             JButton buttonDelete = new JButton("Supprimer");
             buttonDelete.setBackground(ColorPerso.rouge);
@@ -159,6 +185,29 @@ public class GameManagement extends JPanel implements ActionListener {
                 public void actionPerformed(ActionEvent e) {
                     Game jeuChoisi = ListGame.findByID(jeu.getId());
                     DBGame.deleteGame(jeuChoisi.getId());
+                }
+            });
+            buttonDelete.addMouseListener(new MouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    buttonDelete.setBackground(ColorPerso.rougeHoover);
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    buttonDelete.setBackground(ColorPerso.rouge);
                 }
             });
 
@@ -187,12 +236,33 @@ public class GameManagement extends JPanel implements ActionListener {
 
                 }
             });
+            boutonChoix.addMouseListener(new MouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    boutonChoix.setBackground(ColorPerso.vertHoover);
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    boutonChoix.setBackground(ColorPerso.vert);
+                }
+            });
             panelJeu.add(boutonChoix);
 
         }
         panelJeu.setLayout(grille);
-
-
 
         /* Configuration panelSalle */
         panelJeu.setBorder(BorderFactory.createLineBorder(Color.BLACK,3));
@@ -233,6 +303,44 @@ public class GameManagement extends JPanel implements ActionListener {
         else if (e.getSource() == newButton){
             Main.ListEnigma= new EnigmaList();
             frame.gameCreationDisplay(frame,frame.roomNumber,null);
+        }
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        if (e.getSource()==returnButton) {
+            returnButton.setBackground(ColorPerso.rougeHoover);
+        }
+        else if(e.getSource()==newButton){
+            newButton.setBackground(Color.BLACK);
+            newButton.setOpaque(true);
+            newButton.setForeground(Color.white);
+        }
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        if (e.getSource()==returnButton) {
+            returnButton.setBackground(ColorPerso.rouge);
+        }
+        else if(e.getSource()==newButton){
+            newButton.setOpaque(false);
+            newButton.setForeground(Color.black);
         }
     }
 }

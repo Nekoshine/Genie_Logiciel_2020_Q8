@@ -52,6 +52,7 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
         motdepasse.setForeground(Color.white);
         saisiemotdepasse = new JPasswordField();
         saisiemotdepasse.setColumns(30);
+        saisiemotdepasse.addKeyListener(this);
 
         mdp.add(motdepasse);
         mdp.add(saisiemotdepasse);
