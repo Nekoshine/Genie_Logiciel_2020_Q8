@@ -8,6 +8,7 @@ import view.style.ColorPerso;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.regex.Pattern;
 import javax.swing.*;
 
 
@@ -105,11 +106,28 @@ public class SignupMenu extends JPanel implements ActionListener, MouseListener,
   }
 
   private void signUp(String idinput, String mdpinput, String cleinmput) {
+
+    System.out.println(mdpinput);
+
+
     if (idinput.isEmpty() || mdpinput.isEmpty() ){
       Toolkit.getDefaultToolkit().beep();
       JOptionPane.showMessageDialog(frame,"Un ou plusieurs champs n'ont pas été remplis","Informations incomplètes", JOptionPane.WARNING_MESSAGE);
     }
-    if(cleinmput.isEmpty()){
+    else if (idinput.length()<3){
+      Toolkit.getDefaultToolkit().beep();
+      JOptionPane.showMessageDialog(frame, "L'identifiant doit contenir au moins 3 caractères \nVotre identifiant n'en contient que "+idinput.length(), "Attention", JOptionPane.WARNING_MESSAGE);
+    }
+    else if (mdpinput.length()<8){
+      Toolkit.getDefaultToolkit().beep();
+      JOptionPane.showMessageDialog(frame, "Le mot de passe doit faire au moins 8 caractères \nVotre mot de passe n'en contient que "+mdpinput.length(), "Attention", JOptionPane.WARNING_MESSAGE);
+    }
+    else if(!Pattern.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\\p{Punct}).*$", mdpinput)){
+      Toolkit.getDefaultToolkit().beep();
+      JOptionPane.showMessageDialog(frame, "Pour votre sécurité, votre mot de passe doit contenir au moins 1 majuscule, 1 minuscule, 1 chiffre, 1 caractère spécial\n" +
+              "Les caractère spéciaux sont : ! \" # $ % & ' ( ) * + , - . / ; < = > ? @ [ \\ ] ^ _ ` { | } ~", "Attention", JOptionPane.WARNING_MESSAGE);
+    }
+    else if(cleinmput.isEmpty()){
       if (DBUser.insertUser(idinput, mdpinput,false)) {
         frame.connectionMenuDisplay(frame);
       } else {

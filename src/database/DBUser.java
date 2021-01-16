@@ -38,6 +38,10 @@ public class DBUser extends DBConnexion {
             requete.setString(1,login);
             ResultSet resultat = requete.executeQuery();
             resultat.next();
+            String loginBDD = resultat.getString("login");
+            if(!loginBDD.equals(login)){
+                return 3;
+            }
             pwd = resultat.getString("pwd");
             idUser = resultat.getInt("id");
             isAdmin = resultat.getInt("isAdmin");
