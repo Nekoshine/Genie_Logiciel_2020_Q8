@@ -240,17 +240,12 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
 
                 @Override
                 public void mouseEntered(MouseEvent e) {
-
-                    if (boutonLancer.getText()=="Lancer") {
-                        boutonLancer.setBackground(ColorPerso.vertHoover);
-                    }
+                    boutonLancer.setBackground(ColorPerso.vertHoover);
                 }
 
                 @Override
                 public void mouseExited(MouseEvent e) {
-                    if (boutonLancer.getText()=="Lancer") {
-                        boutonLancer.setBackground(ColorPerso.vert);
-                    }
+                    boutonLancer.setBackground(ColorPerso.vert);
                 }
             });
         }
