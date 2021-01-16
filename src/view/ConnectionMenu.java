@@ -8,6 +8,7 @@ import database.DBRoom;
 import database.DBUser;
 import launcher.Main;
 import view.style.ColorPerso;
+import view.style.ImagePerso;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -35,6 +36,7 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
         login.setLayout(new FlowLayout(FlowLayout.CENTER,30,0));
 
         JLabel identifiant = new JLabel("Identifiant :");
+        identifiant.setForeground(Color.white);
         saisieidentifiant = new JTextField();
         saisieidentifiant.setColumns(30);
         saisieidentifiant.addKeyListener(this);
@@ -47,6 +49,7 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
         JPanel mdp = new JPanel();
         mdp.setLayout(new FlowLayout(FlowLayout.CENTER,10,0));
         JLabel motdepasse = new JLabel("Mot de passe :");
+        motdepasse.setForeground(Color.white);
         saisiemotdepasse = new JPasswordField();
         saisiemotdepasse.setColumns(30);
 
@@ -72,6 +75,10 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
         conteneurboutons.add(connection);
         conteneurboutons.add(inscription);
 
+        conteneurboutons.setOpaque(false);
+        login.setOpaque(false);
+        mdp.setOpaque(false);
+
 
 
         this.add(Box.createRigidArea(new Dimension(0, 150)));
@@ -85,6 +92,11 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
         this.add(conteneurboutons);
         this.setVisible(true);
 
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        g.drawImage(ImagePerso.backgroundMenu,0,0,this);
     }
 
     private void connect(String idinput, String mdpinput) {
