@@ -39,4 +39,16 @@ public class JButtonImage extends JButton {
         g2d.drawRenderedImage(img,aTransform);
 
     }
+
+    public void setBackground(String path){
+        aTransform = new AffineTransform();
+        try {
+            img = ImageIO.read(new File(path));
+            ratio = (float)img.getWidth(null)/(float)img.getHeight(null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        this.setOpaque(true);
+    }
 }
