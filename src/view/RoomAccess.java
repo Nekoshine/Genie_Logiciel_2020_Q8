@@ -3,7 +3,6 @@
 package view;
 
 import Sockets.Client;
-import controller.RoomController;
 import database.DBRoom;
 import database.DBUser;
 import launcher.Main;

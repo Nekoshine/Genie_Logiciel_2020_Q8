@@ -102,14 +102,19 @@ public class GlobalFrame extends JFrame {
 
     public void mainMenuDisplay(GlobalFrame frame){
 
-        mainmenu = new MainMenu(frame);
+        if (getContentPane() instanceof ConnectionMenu ){
+            mainmenu = new MainMenu(frame);
+            frame.setSize(1280, 720);
+            this.setLocationRelativeTo(null);
+        }
+        else {
+            mainmenu = new MainMenu(frame);
+            frame.setSize(1280, 720);
+        }
         setContentPane(mainmenu);
-        frame.setSize(1280,720);
         frame.setResizable(true);
-        this.setLocationRelativeTo(null);
         frame.revalidate();
         frame.repaint();
-
     }
 
     public void connectionMenuDisplay(GlobalFrame frame){

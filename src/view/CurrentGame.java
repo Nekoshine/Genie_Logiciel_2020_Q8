@@ -382,10 +382,6 @@ public class CurrentGame extends JPanel implements ActionListener {
                 else{JOptionPane.showMessageDialog(frame, "Vous avez réussi !!!!", "Bravo !", JOptionPane.WARNING_MESSAGE,imageIconValide);
                     frame.connectionMenuDisplay(frame);
                 }
-                else{
-                    String message = game.getEndMessage();
-                    JOptionPane.showMessageDialog(frame, message, "Bravo", JOptionPane.WARNING_MESSAGE);
-                }
 
             }
             else{JOptionPane.showMessageDialog(frame, "Ce n'est pas la bonne reponse", "Raté !", JOptionPane.WARNING_MESSAGE,imageIconRefus);
