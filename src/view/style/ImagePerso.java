@@ -7,13 +7,20 @@ import java.awt.image.ImagingOpException;
 
 public class ImagePerso{
 
-    public static Image backgroundMenu;
+    public static Image backgroundConnexion;
+    public static Image backgroundLogo;
+    public static Image backgroundInscription;
 
     static{
         try{
 
             ImageIcon image = new ImageIcon(new ImageIcon("./src/view/image/FondConnection2.png").getImage().getScaledInstance(720, 450, Image.SCALE_DEFAULT));
-            backgroundMenu = image.getImage();
+            backgroundConnexion = image.getImage();
+
+            backgroundLogo = (new ImageIcon("./src/view/image/FondPrincipal.png").getImage().getScaledInstance(1280,690,Image.SCALE_DEFAULT));
+
+            image = new ImageIcon(new ImageIcon("./src/view/image/FondInscription.png").getImage().getScaledInstance(720, 450, Image.SCALE_DEFAULT));
+            backgroundInscription = image.getImage();
 
         }
 

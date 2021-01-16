@@ -73,6 +73,11 @@ public class GlobalFrame extends JFrame {
                     setContentPane(gameCreation);
                 }
 
+                if (getContentPane() instanceof MainMenu){
+                    MainMenu mainMenu = new MainMenu(frame);
+                    setContentPane(mainMenu);
+                }
+
                 /*if (getContentPane() instanceof CurrentGame) {
                     CurrentGame currentGame = new CurrentGame(frame);
                     setContentPane(currentGame);

@@ -5,6 +5,7 @@ package view;
 import Sockets.Admin;
 import view.style.ColorPerso;
 import view.style.FontPerso;
+import view.style.ImagePerso;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +17,8 @@ public class MainMenu extends JPanel implements ActionListener {
     private JButton deconnection;
     private JButton management;
     private JButton creation;
+
+    private Image image;
 
     private GlobalFrame frame;
 
@@ -38,6 +41,7 @@ public class MainMenu extends JPanel implements ActionListener {
         /*création du conteneur pour le bouton deconnexion*/
         JPanel deconnectionPanel = new JPanel();
         deconnectionPanel.setLayout(new FlowLayout(0));
+        deconnectionPanel.setOpaque(false);
 
         /*création du titre*/
         JLabel titre = new JLabel("MJ - Menu Principal");
@@ -59,6 +63,7 @@ public class MainMenu extends JPanel implements ActionListener {
         JPanel menucontainer = new JPanel();
         menucontainer.setLayout(new GridLayout(1, 2, 30, 5));
         menucontainer.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+        menucontainer.setOpaque(false);
 
         /*intégration*/
 
@@ -67,12 +72,19 @@ public class MainMenu extends JPanel implements ActionListener {
         menucontainer.add(creation);
         menucontainer.add(management);
 
+        image = ImagePerso.backgroundLogo.getScaledInstance(frame.getWidth(),frame.getHeight(),Image.SCALE_FAST);
+
         this.add("South", deconnectionPanel);
         this.add("North", titlecontainer);
         this.add("Center", new JSeparator());
         this.add("Center", menucontainer);
         this.setVisible(true);
 
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        g.drawImage(image,0,0,this);
     }
 
     public void actionPerformed(ActionEvent e) {

@@ -96,7 +96,7 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
 
     @Override
     protected void paintComponent(Graphics g) {
-        g.drawImage(ImagePerso.backgroundMenu,0,0,this);
+        g.drawImage(ImagePerso.backgroundConnexion,0,0,this);
     }
 
     private void connect(String idinput, String mdpinput) {

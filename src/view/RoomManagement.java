@@ -9,6 +9,7 @@ import model.Room;
 import model.RoomList;
 import view.style.ColorPerso;
 import view.style.FontPerso;
+import view.style.ImagePerso;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -57,6 +58,8 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
         FlowLayout decoLayout = new FlowLayout(FlowLayout.LEADING);
         GridBagLayout listLayout = new GridBagLayout();
         roomPanel.setLayout(listLayout);
+        roomPanel.setOpaque(false);
+
 
         /* Contraintes GridBag */
         GridBagConstraints gbc = new GridBagConstraints();
@@ -67,17 +70,15 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
         returnButton.setBackground(ColorPerso.rouge);
         returnButton.setForeground(Color.white);
 
+
         newButton = new JButton("Nouvelle Salle");
         newButton.setBackground(Color.GRAY);
-        newButton.setOpaque(false);
         newButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         newButton.addActionListener(this);
         newButton.addMouseListener(this);
 
         /* Affichage des salles */
         this.CreateList();
-
-
 
 
         /* Setup Marges */
@@ -91,6 +92,8 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
         listPanel.add(scrollPane,BorderLayout.CENTER);
         listPanel.add(newButtonPanel, BorderLayout.PAGE_END);
         listPanel.setBorder(BorderFactory.createLineBorder(Color.black,2));
+
+
 
         newButtonPanel.add(newButton);
         //roomPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
@@ -150,6 +153,7 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
         JPanel panelTitle = new JPanel();
         JPanel panelLaunch = new JPanel();
         JPanel panelChoose = new JPanel();
+
 
         /* Construction Panel Salle */
         GridLayout grille = new GridLayout(1,4,20,0);
@@ -265,6 +269,7 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
 
         /* Configuration panelSalle */
         panelSalle.setBorder(BorderFactory.createLineBorder(Color.BLACK,3));
+        panelSalle.setOpaque(false);
 
        return panelSalle;
 

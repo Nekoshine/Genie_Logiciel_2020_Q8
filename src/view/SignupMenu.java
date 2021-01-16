@@ -5,6 +5,7 @@ package view;
 
 import database.DBUser;
 import view.style.ColorPerso;
+import view.style.ImagePerso;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -34,36 +35,45 @@ public class SignupMenu extends JPanel implements ActionListener, MouseListener,
     logincontainer.setLayout(new FlowLayout(FlowLayout.CENTER,30,0));
     
     JLabel id = new JLabel("Identifiant :");
+    id.setForeground(Color.white);
     idtextfiled = new JTextField();
     idtextfiled.setColumns(30);
     idtextfiled.addKeyListener(this);
+
     
     logincontainer.add(id);
     logincontainer.add(idtextfiled);
+    logincontainer.setOpaque(false);
     
     //creation de la partie motdepasse
     
     JPanel passwordcontainer = new JPanel();
     passwordcontainer.setLayout(new FlowLayout(FlowLayout.CENTER,10,0));
     JLabel password = new JLabel("Mot de passe :");
+    password.setForeground(Color.white);
     passwordtextfield = new JPasswordField();
     passwordtextfield.setColumns(30);
     passwordtextfield.addKeyListener(this);
+
     
     passwordcontainer.add(password);
     passwordcontainer.add(passwordtextfield);
+    passwordcontainer.setOpaque(false);
     
     //creation de la partie clé admin
     
     JPanel keycontainer = new JPanel();
     keycontainer.setLayout(new FlowLayout(FlowLayout.CENTER,25,0));
     JLabel key = new JLabel("Clé (compte admin) :");
+    key.setForeground(Color.white);
     keytextfield = new JTextField();
     keytextfield.setColumns(25);
     keytextfield.addKeyListener(this);
-    
+
+
     keycontainer.add(key);
     keycontainer.add(keytextfield);
+    keycontainer.setOpaque(false);
     
     //creation du bouton de confirmation
     
@@ -78,11 +88,12 @@ public class SignupMenu extends JPanel implements ActionListener, MouseListener,
     back.addActionListener(this);
     back.addMouseListener(this);
     back.setBackground(ColorPerso.rouge);
-    back.setForeground(Color.WHITE);
+
     
     JPanel backcontainer = new JPanel();
     backcontainer.setLayout(new FlowLayout(FlowLayout.LEADING));
     backcontainer.add(back);
+    backcontainer.setOpaque(false);
     
     //ajout des composants
     
@@ -102,6 +113,11 @@ public class SignupMenu extends JPanel implements ActionListener, MouseListener,
     this.add(backcontainer);
     this.setVisible(true);
     
+  }
+
+  @Override
+  protected void paintComponent(Graphics g) {
+    g.drawImage(ImagePerso.backgroundInscription,0,0,this);
   }
 
   private void signUp(String idinput, String mdpinput, String cleinmput) {
