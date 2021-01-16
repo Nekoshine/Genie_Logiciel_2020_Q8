@@ -1,5 +1,3 @@
-/* Interface développée par Bastien Maubon */
-
 package view;
 
 import database.DBEnigma;
@@ -10,6 +8,7 @@ import model.EnigmaList;
 import model.Game;
 import model.GameList;
 import view.style.ColorPerso;
+import view.style.FontPerso;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -17,183 +16,213 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
+
 public class GameManagement extends JPanel implements ActionListener {
 
-    public GameList ListGame;
+    private final GameList ListGame;
 
-    /*Final JPanel*/
-    public JPanel windowNamePanel = new JPanel();
-    public JPanel gameListPanel = new JPanel();
-    public JPanel buttonAddGamePanel = new JPanel();
-    public JPanel buttonReturnPanel = new JPanel();
-    public JScrollPane scrollGameListPanel = new JScrollPane(gameListPanel,
-            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
+    /* Panel */
+    private JPanel listPanel;
+    private JPanel newButtonPanel;
+    private JPanel gamePanel;
+
+    /* Boutons */
+    private JButton returnButton;
+    private JButton newButton;
 
     private GlobalFrame frame;
-    private JButton buttonReturn;
 
-    public JButton buttonChose;
-    public JButton buttonDelete;
-    public JButton buttonModify;
-    public JButton buttonAddGame;
+    GameManagement(GlobalFrame frame, int roomNumber){
 
-
-    public GameManagement(GlobalFrame frame, int roomNumber){
         this.frame = frame;
+
+        /* Provenance */
         frame.roomNumber = roomNumber;
 
-        //recuperation des jeux du User
+        /* Recuperation des jeux du User */
         this.ListGame= DBGame.getGames(Main.idUser);
 
-        /*WindowNamePanel set up*/
-        JLabel windowName = new JLabel("MJ - Gestion des Jeux");
-        JPanel windowNameInsidePanel = new JPanel();
-        windowNameInsidePanel.add(windowName);
-        windowNameInsidePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
-        windowNamePanel.setBorder(BorderFactory.createEmptyBorder(0,0,10,0));
-        windowNamePanel.setLayout(new BoxLayout(windowNamePanel,BoxLayout.LINE_AXIS));
-        windowNamePanel.add(windowNameInsidePanel);
+        /* Déclaration JPanel - JScrollPane */
+        listPanel = new JPanel();
+        gamePanel = new JPanel();
+        JPanel titlePanel = new JPanel();
+        JPanel returnPanel = new JPanel();
+        newButtonPanel = new JPanel();
+        JScrollPane scrollPane = new JScrollPane(gamePanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder());
+        scrollPane.getVerticalScrollBar().setUnitIncrement(10);
 
-        scrollGameListPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
-        scrollGameListPanel.getVerticalScrollBar().setUnitIncrement(10);
+        /* Déclaration Layouts */
+        BorderLayout mainLayout = new BorderLayout(10, 10);
+        BorderLayout centerLayout = new BorderLayout(4, 4);
+        FlowLayout decoLayout = new FlowLayout(FlowLayout.LEADING);
+        GridBagLayout listLayout = new GridBagLayout();
+        gamePanel.setLayout(listLayout);
 
-        gameListPanel.setLayout(new BoxLayout(gameListPanel, BoxLayout.PAGE_AXIS));
+        /* Contraintes GridBag */
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(7,15,7,30);
 
-        int nbGames = ListGame.getSize(); //fonction pour récupérer nombre de Jeux enregistrés dans BdD
+        /* Déclaration Boutons */
+        returnButton = new JButton("Retour");
+        returnButton.setBackground(ColorPerso.rouge);
+        returnButton.setForeground(Color.white);
 
+        newButton = new JButton("Créer un nouveau jeu");
+        newButton.setBackground(Color.GRAY);
+        newButton.setOpaque(false);
+        newButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        newButton.addActionListener(this);
+
+        /* Affichage des salles */
+        this.CreateList();
+
+        /* Setup Marges */
+        Border mainPadding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
+        Border listPadding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
+        this.setBorder(mainPadding);
+        listPanel.setBorder(listPadding);
+
+        /* Setup listPanel */
+        listPanel.setLayout(centerLayout);
+        listPanel.add(scrollPane,BorderLayout.CENTER);
+        listPanel.add(newButtonPanel, BorderLayout.PAGE_END);
+        listPanel.setBorder(BorderFactory.createLineBorder(Color.black,2));
+
+        newButtonPanel.add(newButton);
+
+        /* Setup Titre */
+        JLabel titre = new JLabel("MJ - Gestion des Jeux");
+        titre.setFont(FontPerso.ArialBold);
+        titlePanel.setBorder(BorderFactory.createLineBorder(Color.black,2));
+        titlePanel.add(titre);
+
+        /* Setup bouton retour */
+        returnPanel.setLayout(decoLayout);
+        returnPanel.setBackground(ColorPerso.gris);
+        returnPanel.add(returnButton);
+        returnButton.addActionListener(this);
+
+        /* Setup Fenêtre gestion des salles */
+        this.setLayout(mainLayout);
+        this.setBackground(ColorPerso.gris);
+        this.add(listPanel, BorderLayout.CENTER);
+        this.add(titlePanel, BorderLayout.PAGE_START);
+        this.add(returnPanel, BorderLayout.PAGE_END);
+        this.setVisible(true);
+
+
+    }
+
+    private JPanel ajoutJeu(Game jeu, GridBagConstraints gbc, int i) {
+
+        /* Contraintes GridBag */
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
+        gbc.gridy = jeu.getId() - 1;
+        gbc.gridx = 0;
+
+        /* Ajout Panel */
+        JPanel panelSalle = new JPanel();
+
+        /* Construction Panel Salle */
+        GridLayout grille = new GridLayout(1,4,20,0);
+
+
+        JLabel nomSalle = new JLabel("Jeu  " + i + " :");
+        nomSalle.setHorizontalAlignment(SwingConstants.CENTER);
+
+        JLabel nomJeu = new JLabel(jeu.getTitre());
+        nomJeu.setHorizontalAlignment(SwingConstants.CENTER);
+
+        panelSalle.add(nomSalle);
+        panelSalle.add(nomJeu);
+        if(frame.roomNumber==-1) {
+            JButton buttonModify = new JButton("Modifier");
+            buttonModify.setBackground(ColorPerso.jaune);
+            buttonModify.addActionListener(new AbstractAction() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    Game jeuChoisi = ListGame.findByID(jeu.getId());
+                    Main.ListEnigma= DBEnigma.getEnigmas(jeuChoisi.getId());
+                    frame.gameCreationDisplay(frame,frame.roomNumber,jeuChoisi);
+                }
+            });
+
+            JButton buttonDelete = new JButton("Supprimer");
+            buttonDelete.setBackground(ColorPerso.rouge);
+            buttonDelete.setForeground(Color.white);
+            buttonDelete.addActionListener(new AbstractAction() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    Game jeuChoisi = ListGame.findByID(jeu.getId());
+                    DBGame.deleteGame(jeuChoisi.getId());
+                }
+            });
+
+            panelSalle.add(buttonModify);
+            panelSalle.add(buttonDelete);
+        }
+        else {
+
+            JButton boutonChoix = new JButton("Choisir");
+            boutonChoix.setBackground(ColorPerso.vert);
+            boutonChoix.addActionListener(new AbstractAction() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    Main.ListRoom.findByID(frame.roomNumber).setGame(ListGame.findByID(jeu.getId()));
+                    frame.roomManagementDisplay(frame);
+
+                    int idRoom = Main.ListRoom.findByID(frame.roomNumber).getId();
+                    int idGame =jeu.getId();
+                    if(DBRoom.isInDB(idRoom,idGame)) {
+                        DBRoom.insertRoom(Main.ListRoom.findByID(frame.roomNumber).getId(), jeu.getId());
+                    }
+                    else{
+                        DBRoom.majGame(Main.ListRoom.findByID(frame.roomNumber).getId(),jeu.getId());
+
+                    }
+
+                }
+            });
+            panelSalle.add(boutonChoix);
+
+        }
+        panelSalle.setLayout(grille);
+
+
+
+        /* Configuration panelSalle */
+        panelSalle.setBorder(BorderFactory.createLineBorder(Color.BLACK,3));
+
+        return panelSalle;
+
+    }
+
+    private void CreateList() {
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(7,15,7,30);
+        int nbGames = ListGame.getSize();
         for(int i = 0; i<nbGames; i++){
-
-            final int y = i;
-            JPanel gameInsidePanel = new JPanel();
-            JPanel gameOutsidePanel = new JPanel();
-            JPanel gameNbPanel = new JPanel();
-            JPanel gameTitlePanel = new JPanel();
-
-            gameInsidePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
-            gameInsidePanel.setLayout(new BoxLayout(gameInsidePanel,BoxLayout.LINE_AXIS));
-
-            gameOutsidePanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-            gameOutsidePanel.setLayout((new BoxLayout(gameOutsidePanel, BoxLayout.LINE_AXIS)));
-
-            JLabel gameNbLabel = new JLabel("Jeu " +(i+1)+" :");
-            JLabel gameTitleLabel = new JLabel(ListGame.getGame(i).getTitre()); //fonction pour récupérer le titre du jeu i
-
-            gameNbPanel.add(gameNbLabel, BorderLayout.CENTER);
-            gameTitlePanel.add(gameTitleLabel, BorderLayout.CENTER);
-
-
-            gameInsidePanel.add(gameNbPanel);
-            gameInsidePanel.add(gameTitlePanel);
-            if(roomNumber==-1){
-                JPanel buttonModifyPanel = new JPanel();
-                JPanel buttonDeletePanel = new JPanel();
-
-                buttonModify = new JButton("Modifier");
-                buttonModify.setBackground(Color.orange);
-                buttonModify.setOpaque(true);
-
-                buttonDelete = new JButton("Supprimer");
-                buttonDelete.setBackground(ColorPerso.rouge);
-                buttonDelete.setForeground(Color.WHITE);
-                buttonDelete.setOpaque(true);
-
-
-                buttonModify.addActionListener(new AbstractAction() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        Game jeuChoisi = ListGame.getGame(y);
-                        Main.ListEnigma=DBEnigma.getEnigmas(jeuChoisi.getId());
-                        frame.gameCreationDisplay(frame,frame.roomNumber,jeuChoisi);
-                    }
-                });
-
-                buttonDelete.addActionListener(new AbstractAction() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        Game jeuChoisi = ListGame.getGame(y);
-                        DBGame.deleteGame(jeuChoisi.getId());
-
-                        // il faut recharger l'affichage mais je sais pas comment on fait
-                    }
-                });
-
-                buttonModifyPanel.add(buttonModify, BorderLayout.CENTER);
-                buttonDeletePanel.add(buttonDelete, BorderLayout.CENTER);
-
-                gameInsidePanel.add(buttonModifyPanel);
-                gameInsidePanel.add(buttonDeletePanel);
-            }else {
-                JPanel buttonChosePanel = new JPanel();
-
-                buttonChose = new JButton("Choisir");
-                buttonChose.setBackground(ColorPerso.vert);
-                buttonChose.setOpaque(true);
-
-                buttonChose.addActionListener(new AbstractAction() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        Main.ListRoom.findByID(roomNumber).setGame(ListGame.getGame(y));
-                        frame.roomManagementDisplay(frame);
-
-                        int idRoom = Main.ListRoom.findByID(roomNumber).getId();
-                        int idGame =ListGame.getGame(y).getId();
-                        if(DBRoom.isInDB(idRoom,idGame)) {
-                            System.out.println("Mise a jour");
-                            DBRoom.majGame(Main.ListRoom.findByID(roomNumber).getId(),ListGame.getGame(y).getId());
-                        }
-                        else{
-                            System.out.println("Insertion");
-                            DBRoom.insertRoom(Main.ListRoom.findByID(roomNumber).getId(), ListGame.getGame(y).getId());
-                        }
-
-                    }
-                });
-
-                buttonChosePanel.add(buttonChose, BorderLayout.CENTER);
-
-                gameInsidePanel.add(buttonChosePanel);
-            }
-
-            gameOutsidePanel.add(gameInsidePanel);
-
-            gameListPanel.add(gameOutsidePanel);
+            listPanel.remove(newButtonPanel);
+            JPanel panelGame = this.ajoutJeu(ListGame.getGame(i), gbc,i+1);
+            panelGame.setPreferredSize(new Dimension(listPanel.getWidth() - 45, 75));
+            gamePanel.add(panelGame, gbc);
+            listPanel.add(newButtonPanel, BorderLayout.PAGE_END);
+            listPanel.revalidate();
+            listPanel.repaint();
         }
 
-        buttonAddGame = new JButton("Créer un nouveau jeu");
-        buttonAddGame.setOpaque(false);
-        buttonAddGame.addActionListener(this);
-
-        JPanel buttonAddGameInsidePanel = new JPanel();
-        buttonAddGameInsidePanel.setBorder(BorderFactory.createLineBorder(Color.black, 2));
-        buttonAddGameInsidePanel.add(buttonAddGame, BorderLayout.WEST);
-        buttonAddGamePanel.setBorder(BorderFactory.createEmptyBorder(10,0,10,0));
-        buttonAddGamePanel.setLayout(new BoxLayout(buttonAddGamePanel, BoxLayout.LINE_AXIS));
-        buttonAddGamePanel.add(buttonAddGameInsidePanel);
-
-
-        buttonReturn = new JButton("Retour");
-        buttonReturn.addActionListener(this);
-        buttonReturn.setBackground(ColorPerso.rouge);
-        buttonReturn.setForeground(Color.white);
-        buttonReturn.setOpaque(true);
-        buttonReturn.addActionListener(this);
-        buttonReturnPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        buttonReturnPanel.add(buttonReturn);
-
-
-        Border mainEdge = BorderFactory.createEmptyBorder(10,10,10,10);
-        this.setBorder(mainEdge);
-
-        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-        this.add(windowNamePanel);
-        this.add(scrollGameListPanel);
-        this.add(buttonAddGamePanel);
-        this.add(buttonReturnPanel);
+        listPanel.revalidate();
+        listPanel.repaint();
+        frame.repaint();
 
     }
 
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == buttonReturn){
+        if (e.getSource() == returnButton){
             if (frame.roomNumber==-1){
                 frame.mainMenuDisplay(frame);
             }
@@ -201,7 +230,7 @@ public class GameManagement extends JPanel implements ActionListener {
                 frame.roomManagementDisplay(frame);
             }
         }
-        else if (e.getSource() == buttonAddGame){
+        else if (e.getSource() == newButton){
             Main.ListEnigma= new EnigmaList();
             frame.gameCreationDisplay(frame,frame.roomNumber,null);
         }
