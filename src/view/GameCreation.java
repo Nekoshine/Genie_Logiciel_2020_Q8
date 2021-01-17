@@ -76,8 +76,8 @@ public class GameCreation extends JPanel implements ActionListener {
 
     private GlobalFrame frame;
 
-
-    public GameCreation(GlobalFrame frame, int roomNumber, Game game){
+    private static volatile GameCreation INSTANCE = new GameCreation(Main.frame,0,null);
+    private GameCreation(GlobalFrame frame, int roomNumber, Game game){
 
         this.frame = frame;
         this.game=game;
@@ -173,7 +173,7 @@ public class GameCreation extends JPanel implements ActionListener {
         rankingButton.setBackground(ColorPerso.azur);
         rankingButton.setForeground(Color.white);
 
-        if (listEnigma.List.isEmpty()){
+        if (listEnigma.getSize()==0){
             rankingButton.setEnabled(false);
             rankingButton.setBackground(Color.darkGray);
         }
@@ -238,7 +238,9 @@ public class GameCreation extends JPanel implements ActionListener {
             @Override
             public void caretUpdate(CaretEvent e) {
                 if (e.getSource()==title){
-                    game.setTitre(title.getText());
+                    if(game!=null) {
+                        game.setTitre(title.getText());
+                    }
                 }
                 else
                     try{
@@ -260,6 +262,40 @@ public class GameCreation extends JPanel implements ActionListener {
         this.setVisible(true);
 
 
+    }
+    public static GameCreation getInstance(GlobalFrame frame, int roomNumber, Game game) {
+        //Le "Double-Checked Singleton"/"Singleton doublement vérifié" permet
+        //d'éviter un appel coûteux à synchronized,
+        //une fois que l'instanciation est faite.
+        if (INSTANCE == null) {
+            // Le mot-clé synchronized sur ce bloc empêche toute instanciation
+            // multiple même par différents "threads".
+            // Il est TRES important.
+            synchronized(INSTANCE) {
+                if (INSTANCE == null) {
+                    INSTANCE = new GameCreation(frame, roomNumber,game);
+                }
+            }
+        }
+        else {
+            INSTANCE.frame = frame;
+            if (game != null){
+                INSTANCE.title.setText(game.getTitre());
+                INSTANCE.initialScore.setText(String.valueOf(game.getScore()));
+            }
+            else{
+                INSTANCE.title.setText("Titre");
+                INSTANCE.initialScore.setText("Score Initial");
+            }
+            INSTANCE.listEnigma=Main.ListEnigma;
+            INSTANCE.createList();
+            if (INSTANCE.listEnigma.getSize()==0){
+                INSTANCE.rankingButton.setEnabled(false);
+                INSTANCE.rankingButton.setBackground(Color.darkGray);
+            }
+        }
+
+        return INSTANCE;
     }
 
 
@@ -504,6 +540,7 @@ public class GameCreation extends JPanel implements ActionListener {
     public void createList(){
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(15,15,20,30);
+        enigmasPanel.removeAll();
 
         for (int i = 0; i < listEnigma.getSize(); i++) {
             centerPanel.remove(newPanel);

@@ -84,11 +84,11 @@ public class GlobalFrame extends JFrame {
                 //frame.setSize(frame.getWidth(),(16/9)*frame.getWidth());
 
                 if (getContentPane() instanceof GameCreation) {
-                    GameCreation gameCreation = new GameCreation(frame,roomNumber,((GameCreation) getContentPane()).game);
-                    setContentPane(gameCreation);
+                    //GameCreation gameCreation = GameCreation.getInstance(frame,roomNumber,((GameCreation) getContentPane()).game);
+                    //setContentPane(gameCreation);
                 }
 
-                if (getContentPane() instanceof MainMenu){
+                else if (getContentPane() instanceof MainMenu){
                     new ImageLoaderMainMenu(mainmenu,frame.getSize()).execute();
                 }
 
@@ -185,7 +185,7 @@ public class GlobalFrame extends JFrame {
 
     public void gameCreationDisplay(GlobalFrame frame, int roomNumber, Game game){
 
-        gameCreation = new GameCreation(frame,roomNumber,game);
+        gameCreation = GameCreation.getInstance(frame,roomNumber,game);
         setContentPane(gameCreation);
         frame.setResizable(true);
         frame.revalidate();
