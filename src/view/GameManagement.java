@@ -21,7 +21,7 @@ import java.awt.event.MouseListener;
 
 public class GameManagement extends JPanel implements ActionListener, MouseListener {
 
-    private final GameList ListGame;
+    private GameList ListGame;
 
 
     /* Panel */
@@ -35,7 +35,9 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
 
     private GlobalFrame frame;
 
-    GameManagement(GlobalFrame frame, int roomNumber){
+    private static volatile GameManagement INSTANCE = new GameManagement(Main.frame,-1);
+
+    private GameManagement(GlobalFrame frame, int roomNumber){
 
         this.frame = frame;
 
@@ -80,7 +82,7 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
             newButton.addMouseListener(this);
         }
 
-        this.CreateList();
+        this.createList();
 
         /* Setup Marges */
         Border mainPadding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
@@ -118,6 +120,29 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
         this.setVisible(true);
 
 
+    }
+
+    public final static GameManagement getInstance(GlobalFrame frame, int roomNumber) {
+        //Le "Double-Checked Singleton"/"Singleton doublement vérifié" permet
+        //d'éviter un appel coûteux à synchronized,
+        //une fois que l'instanciation est faite.
+        if (INSTANCE == null) {
+            // Le mot-clé synchronized sur ce bloc empêche toute instanciation
+            // multiple même par différents "threads".
+            // Il est TRES important.
+            synchronized(INSTANCE) {
+                if (INSTANCE == null) {
+                    INSTANCE = new GameManagement(frame, roomNumber);
+                }
+            }
+        }
+        else {
+            INSTANCE.frame=frame;
+            INSTANCE.frame.roomNumber=roomNumber;
+            INSTANCE.ListGame= DBGame.getGames(Main.idUser);
+            INSTANCE.createList();
+        }
+        return INSTANCE;
     }
 
     private JPanel ajoutJeu(Game jeu, GridBagConstraints gbc, int i) {
@@ -271,10 +296,12 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
 
     }
 
-    private void CreateList() {
+    private void createList() {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(7,15,7,30);
         int nbGames = ListGame.getSize();
+        gamePanel.removeAll();
+
         for(int i = 0; i<nbGames; i++){
             listPanel.remove(newButtonPanel);
             JPanel panelGame = this.ajoutJeu(ListGame.getGame(i), gbc,i+1);

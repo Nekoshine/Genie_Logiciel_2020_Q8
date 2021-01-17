@@ -150,7 +150,7 @@ public class GlobalFrame extends JFrame {
 
     public void gameManagementDisplay(GlobalFrame frame, int roomNumber){
 
-        gamemanagement = new GameManagement(frame, roomNumber);
+        gamemanagement = GameManagement.getInstance(frame, roomNumber);
         setContentPane(gamemanagement);
         frame.setResizable(true);
         frame.revalidate();
