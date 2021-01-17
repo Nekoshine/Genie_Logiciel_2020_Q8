@@ -3,6 +3,7 @@
 package view;
 
 import Sockets.Admin;
+import launcher.Main;
 import view.SwingWorkers.ImageLoaderMainMenu;
 import view.style.ColorPerso;
 import view.style.FontPerso;

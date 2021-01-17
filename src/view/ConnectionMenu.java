@@ -26,7 +26,8 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
     private GlobalFrame frame;
     public static Graphics g;
 
-    ConnectionMenu(GlobalFrame frame) {
+    private static volatile ConnectionMenu INSTANCE = new ConnectionMenu(Main.frame);
+    private ConnectionMenu(GlobalFrame frame) {
 
         this.frame = frame;
         new ImageLoaderConnection(this).execute();
@@ -97,6 +98,28 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
 
     }
 
+    public final static ConnectionMenu getInstance(GlobalFrame frame) {
+        //Le "Double-Checked Singleton"/"Singleton doublement vérifié" permet
+        //d'éviter un appel coûteux à synchronized,
+        //une fois que l'instanciation est faite.
+        if (INSTANCE == null) {
+            // Le mot-clé synchronized sur ce bloc empêche toute instanciation
+            // multiple même par différents "threads".
+            // Il est TRES important.
+            synchronized(INSTANCE) {
+                if (INSTANCE == null) {
+                    INSTANCE = new ConnectionMenu(frame);
+                }
+            }
+        }
+        else {
+            INSTANCE.frame=frame;
+            INSTANCE.saisieidentifiant.setText("");
+            INSTANCE.saisiemotdepasse.setText("");
+        }
+        return INSTANCE;
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -111,18 +134,18 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
     private void connect(String idinput, String mdpinput) {
         int isAdmin = DBUser.connectUser(idinput,mdpinput);
         if (isAdmin==1){
-            frame.mainMenuDisplay(frame);
+            Main.frame.mainMenuDisplay(Main.frame);
             Main.ListRoom = DBRoom.getRooms(Main.idUser); // recherche des salles dans la BDD apres la connection
         }
         else if( isAdmin==0){
             //Client.connectToServer();
             Main.ListRoom = DBRoom.getRooms(3); //si le joueur est le numero
-            frame.roomAccessDisplay(frame,Main.ListRoom);
+            Main.frame.roomAccessDisplay(Main.frame,Main.ListRoom);
             //Client.recepAdminInfo()
         }
         else {
             Toolkit.getDefaultToolkit().beep();
-            JOptionPane.showMessageDialog(frame,"l'identifiant ou le mot de passe ne correspond pas");
+            JOptionPane.showMessageDialog(Main.frame,"l'identifiant ou le mot de passe ne correspond pas");
         }
     }
 
@@ -134,7 +157,7 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
 
         }
         else if (e.getSource() == inscription){
-            frame.signupMenuDisplay(frame);
+            Main.frame.signupMenuDisplay(frame);
         }
     }
 

@@ -9,7 +9,6 @@ import model.Room;
 import model.RoomList;
 import view.style.ColorPerso;
 import view.style.FontPerso;
-import view.style.ImagePerso;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -28,14 +27,15 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
     private JPanel listPanel;
     private JPanel newButtonPanel;
     private JPanel roomPanel;
-
+    private JScrollPane scrollPane;
     /* Boutons */
     private JButton returnButton;
     private JButton newButton;
 
     private GlobalFrame frame;
 
-    RoomManagement(GlobalFrame frame){
+    private static volatile RoomManagement INSTANCE = new RoomManagement(Main.frame);
+    private RoomManagement(GlobalFrame frame){
 
         this.frame = frame;
 
@@ -48,10 +48,9 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
         JPanel titlePanel = new JPanel();
         JPanel decoPanel = new JPanel();
         newButtonPanel = new JPanel();
-        JScrollPane scrollPane = new JScrollPane(roomPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane = new JScrollPane(roomPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
         scrollPane.getVerticalScrollBar().setUnitIncrement(10);
-
 
         /* Déclaration Layouts */
         BorderLayout mainLayout = new BorderLayout(10, 10);
@@ -72,7 +71,6 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
         returnButton.setBackground(ColorPerso.rouge);
         returnButton.setForeground(Color.white);
 
-
         newButton = new JButton("Nouvelle Salle");
         newButton.setOpaque(false);
         newButton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -80,8 +78,7 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
         newButton.addMouseListener(this);
 
         /* Affichage des salles */
-        this.CreateList();
-
+        this.createList();
 
         /* Setup Marges */
         Border mainPadding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
@@ -127,6 +124,28 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
 
     }
 
+    public final static RoomManagement getInstance(GlobalFrame frame) {
+        //Le "Double-Checked Singleton"/"Singleton doublement vérifié" permet
+        //d'éviter un appel coûteux à synchronized,
+        //une fois que l'instanciation est faite.
+        if (INSTANCE == null) {
+            // Le mot-clé synchronized sur ce bloc empêche toute instanciation
+            // multiple même par différents "threads".
+            // Il est TRES important.
+            synchronized(INSTANCE) {
+                if (INSTANCE == null) {
+                    INSTANCE = new RoomManagement(frame);
+                }
+            }
+        }
+        else {
+            INSTANCE.frame=frame;
+            Main.ListRoom=DBRoom.getRooms(Main.idUser);
+            INSTANCE.ListRoom = Main.ListRoom;
+            INSTANCE.createList();
+        }
+        return INSTANCE;
+    }
 
     /**
      * La méthode ajoutSalle() permet l'ajout d'une salle à l'interface de gestion des salles.
@@ -158,7 +177,6 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
         JPanel panelTitle = new JPanel();
         JPanel panelLaunch = new JPanel();
         JPanel panelChoose = new JPanel();
-
 
         /* Construction Panel Salle */
         GridLayout grille = new GridLayout(1,4,20,0);
@@ -288,12 +306,13 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
 
     private void majRoom() {
         ListRoom.addRoom(DBRoom.getMax()+1,null);
-        this.CreateList();
+        this.createList();
     }
 
-    private void CreateList() {
+    private void createList() {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(7,15,7,30);
+        roomPanel.removeAll();
 
         for (int i = 0; i < ListRoom.getSize(); i++) {
             listPanel.remove(newButtonPanel);

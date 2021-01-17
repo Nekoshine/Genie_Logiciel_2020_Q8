@@ -14,14 +14,15 @@ public class Main {
     public static RoomList ListRoom = new RoomList();
     public static int idAdmin;
 
-    // à supprimer
+
     public static int idUser=5;
+    public static GlobalFrame frame = null;
 
     public static void main(String[] args) throws IOException {
 
         /* Création de la vue */
         //System.setProperty("sun.java2d.opengl","True");
-        new GlobalFrame();
+        frame = new GlobalFrame();
 
     }
 }

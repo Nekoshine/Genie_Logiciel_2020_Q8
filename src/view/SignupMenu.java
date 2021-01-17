@@ -3,7 +3,9 @@
 package view;
 
 
+import database.DBRoom;
 import database.DBUser;
+import launcher.Main;
 import view.style.ColorPerso;
 import view.style.ImagePerso;
 
@@ -25,9 +27,11 @@ public class SignupMenu extends JPanel implements ActionListener, MouseListener,
   private GlobalFrame frame;
   
   private String cleAdmin = "JeSuisLaCleSecurisee";
-  SignupMenu(GlobalFrame frame) {
+
+  private static volatile SignupMenu INSTANCE = new SignupMenu(Main.frame);
+  private SignupMenu(GlobalFrame frame) {
     
-    this.frame = frame;
+    this.frame = Main.frame;
     
     //creation de la partie login
     
@@ -116,15 +120,35 @@ public class SignupMenu extends JPanel implements ActionListener, MouseListener,
     
   }
 
+  public final static SignupMenu getInstance(GlobalFrame frame) {
+    //Le "Double-Checked Singleton"/"Singleton doublement vérifié" permet
+    //d'éviter un appel coûteux à synchronized,
+    //une fois que l'instanciation est faite.
+    if (INSTANCE == null) {
+      // Le mot-clé synchronized sur ce bloc empêche toute instanciation
+      // multiple même par différents "threads".
+      // Il est TRES important.
+      synchronized(INSTANCE) {
+        if (INSTANCE == null) {
+          INSTANCE = new SignupMenu(frame);
+        }
+      }
+    }
+    else {
+      INSTANCE.frame=frame;
+      INSTANCE.idtextfiled.setText("");
+      INSTANCE.passwordtextfield.setText("");
+      INSTANCE.keytextfield.setText("");
+    }
+    return INSTANCE;
+  }
+
   @Override
   protected void paintComponent(Graphics g) {
     ImagePerso.backgroundInscription.paintIcon(this,g,0,0);
   }
 
   private void signUp(String idinput, String mdpinput, String cleinmput) {
-
-
-
     if (idinput.isEmpty() || mdpinput.isEmpty() ){
       Toolkit.getDefaultToolkit().beep();
       JOptionPane.showMessageDialog(frame,"Un ou plusieurs champs n'ont pas été remplis","Informations incomplètes", JOptionPane.WARNING_MESSAGE);

@@ -1,5 +1,6 @@
 package view;
 
+import launcher.Main;
 import model.Game;
 import model.RoomList;
 import view.SwingWorkers.ImageLoaderMainMenu;
@@ -100,7 +101,7 @@ public class GlobalFrame extends JFrame {
 
     public void roomManagementDisplay(GlobalFrame frame){
 
-        roommanagement = new RoomManagement(frame);
+        roommanagement = RoomManagement.getInstance(frame);
         setContentPane(roommanagement);
         frame.setResizable(true);
         frame.revalidate();
@@ -126,7 +127,7 @@ public class GlobalFrame extends JFrame {
 
     public void connectionMenuDisplay(GlobalFrame frame){
 
-        connectionmenu = new ConnectionMenu(frame);
+        connectionmenu = ConnectionMenu.getInstance(frame);
         setContentPane(connectionmenu);
         frame.setSize(720,480);
         frame.setResizable(false);
@@ -138,7 +139,7 @@ public class GlobalFrame extends JFrame {
 
     public void signupMenuDisplay(GlobalFrame frame){
 
-        signupmenu = new SignupMenu(frame);
+        signupmenu = SignupMenu.getInstance(frame);
         setContentPane(signupmenu);
         frame.setSize(720,480);
         frame.setResizable(false);
@@ -149,7 +150,7 @@ public class GlobalFrame extends JFrame {
 
     public void gameManagementDisplay(GlobalFrame frame, int roomNumber){
 
-        gamemanagement = new GameManagement(frame, roomNumber);
+        gamemanagement = GameManagement.getInstance(frame, roomNumber);
         setContentPane(gamemanagement);
         frame.setResizable(true);
         frame.revalidate();
