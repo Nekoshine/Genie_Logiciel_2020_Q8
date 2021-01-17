@@ -1,5 +1,8 @@
 package view;
 
+import database.DBEnigma;
+import database.DBGame;
+import launcher.Main;
 import model.EnigmaList;
 import view.style.ColorPerso;
 
@@ -9,64 +12,31 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import static database.DBEnigma.getEnigmas;
-import static database.DBGame.getTitleGame;
-
 public class PlayerManagement extends JPanel implements ActionListener{
 
-    public JPanel topPan = new JPanel();
-    public JPanel titlePan = new JPanel();
-    public JPanel titlePanIn = new JPanel();
-    public JPanel timerPan = new JPanel();
-    public JPanel timerPanIn = new JPanel();
-    public JPanel currentStoryPan = new JPanel();
-    public JPanel currentStoryPanIn = new JPanel();
-    public JPanel answersPan = new JPanel();
-    public JPanel answersPanIn = new JPanel();
-    public JPanel helpGMPan = new JPanel();
-    public JPanel helpGMPanIn = new JPanel();
-    public JPanel helpMessageGMPan = new JPanel();
-    public JPanel helpButtonGMPan= new JPanel();
-    public JPanel helpButtonGMPanIn = new JPanel();
-    public JPanel bottomPan = new JPanel();
-    public JPanel bottomPanIn = new JPanel();
-    public JPanel buttonReturnPan = new JPanel();
-    public JPanel buttonReturnPanIn =new JPanel();
-    public JPanel buttonHint1Pan = new JPanel();
-    public JPanel buttonHint1PanIn =new JPanel();
-    public JPanel buttonHint2Pan = new JPanel();
-    public JPanel buttonHint2PanIn =new JPanel();
-    public JPanel buttonHint3Pan = new JPanel();
-    public JPanel buttonHint3PanIn =new JPanel();
+    private JPanel currentStoryPanIn = new JPanel();
+    private JPanel answersPanIn = new JPanel();
 
-    public JScrollPane scrollCurrentStoryPanIn = new JScrollPane(currentStoryPanIn,
-            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-    public JScrollPane scrollAnswersPanIn = new JScrollPane(answersPanIn,
-            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
-    public JLabel title = new JLabel();
-    public JLabel timer = new JLabel();
-    public JLabel currentStory = new JLabel();
-    public JLabel answers = new JLabel();
-    public JTextField helpMessageGM = new JTextField();
-    public JButton helpButtonGM = new JButton("Envoyer");
-    public JButton buttonReturn = new JButton("Return");
-    public JButton buttonHint1;
-    public JButton buttonHint2;
-    public JButton buttonHint3;
+    private JButton helpButtonGM;
+    private JButton buttonReturn;
+    private JButton buttonHint1;
+    private JButton buttonHint2;
+    private JButton buttonHint3;
 
     public GlobalFrame frame;
-    public int gameNb;
-    public int riddleNb;
-    public boolean boolHint1;
-    public boolean boolHint2;
-    public boolean boolHint3;
+    private boolean boolHint1;
+    private boolean boolHint2;
+    private boolean boolHint3;
 
-    public PlayerManagement(GlobalFrame frame,int gameNb, int riddleNb, boolean boolHint1Revealed, boolean boolHint2Revealed,
-                            boolean boolHint3Revealed){
+    private JLabel currentStory;
+    private EnigmaList currentRiddles;
+    private JLabel title;
+    private JLabel answers;
+
+    private static volatile PlayerManagement INSTANCE = new PlayerManagement(Main.frame,1,1,false,false,false);
+
+    public PlayerManagement(GlobalFrame frame,int gameNb, int riddleNb, boolean boolHint1Revealed, boolean boolHint2Revealed, boolean boolHint3Revealed){
         this.frame = frame;
-        this.gameNb = gameNb;
-        this.riddleNb = riddleNb;
         this.boolHint1 = boolHint1Revealed;
         this.boolHint2 = boolHint2Revealed;
         this.boolHint3 = boolHint3Revealed;
@@ -74,153 +44,119 @@ public class PlayerManagement extends JPanel implements ActionListener{
         int width = (int) frame.windowSize.getWidth();
         int height = (int) frame.windowSize.getHeight();
 
-        EnigmaList currentRiddles = getEnigmas(gameNb); // la liste des énigmes du jeu
+        currentRiddles = DBEnigma.getEnigmas(gameNb); // la liste des énigmes du jeu
 
+        helpButtonGM = new JButton("Envoyer");
         helpButtonGM.addActionListener(this);
         helpButtonGM.setBackground(Color.white);
         helpButtonGM.setForeground(Color.black);
         helpButtonGM.setOpaque(true);
 
+        buttonReturn = new JButton("Retour");
         buttonReturn.addActionListener(this);
         buttonReturn.setBackground(ColorPerso.rouge);
         buttonReturn.setForeground(Color.white);
         buttonReturn.setOpaque(true);
 
-        if(!boolHint1){
-            buttonHint1 = new JButton("Afficher l'indice 1");
-            buttonHint1.addActionListener(this);
-            buttonHint1.setBackground(Color.white);
-        }else{
-            buttonHint1 = new JButton("Indice 1 déjà affiché");
-            buttonHint1.setBackground(Color.gray);
-        }
-        buttonHint1.setForeground(Color.black);
-        buttonHint1.setOpaque(true);
+        buttonHint1 = this.hintButton(1);
+        buttonHint2 = this.hintButton(2);
+        buttonHint3 = this.hintButton(3);
 
-        if(!boolHint2){
-            buttonHint2 = new JButton("Afficher l'indice 2");
-            buttonHint2.addActionListener(this);
-            buttonHint2.setBackground(Color.white);
-        }else{
-            buttonHint2 = new JButton("Indice 2 déjà affiché");
-            buttonHint2.setBackground(Color.gray);
-        }
-        buttonHint2.setForeground(Color.black);
-        buttonHint2.setOpaque(true);
+        title = new JLabel();
+        title.setText(DBGame.getTitleGame(gameNb));
 
-        if(!boolHint3){
-            buttonHint3 = new JButton("Afficher l'indice 3");
-            buttonHint3.addActionListener(this);
-            buttonHint3.setBackground(Color.white);
-        }else{
-            buttonHint3 = new JButton("Indice 3 déjà affiché");
-            buttonHint3.setBackground(Color.gray);
-        }
-        buttonHint3.setForeground(Color.black);
-        buttonHint3.setOpaque(true);
-
-        //Baptiste fonction récupérer le titre du jeu
-
-        title.setText(getTitleGame(gameNb));
-
+        JPanel titlePanIn = new JPanel();
         titlePanIn.setPreferredSize(new Dimension((int) ((width-40)*0.7),(int) ((height-70)*0.12)));
         titlePanIn.add(title);
         titlePanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+        JPanel titlePan = new JPanel();
         titlePan.add(titlePanIn);
         titlePan.setBorder(BorderFactory.createEmptyBorder(0,0,10,10));
+        JPanel timerPanIn = new JPanel();
         timerPanIn.setPreferredSize(new Dimension((int)((width-40)*0.3),(int) ((height-70)*0.12)));
+        JLabel timer = new JLabel();
         timerPanIn.add(timer);
         timerPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+        JPanel timerPan = new JPanel();
         timerPan.add(timerPanIn);
         timerPan.setBorder(BorderFactory.createEmptyBorder(0,0,10,0));
+        JPanel topPan = new JPanel();
         topPan.setLayout(new BoxLayout(topPan, BoxLayout.LINE_AXIS));
         topPan.add(titlePan);
         topPan.add(timerPan);
 
-        //Baptiste fonction récupérer le texte de l'histoire en cours
-
+        currentStory = new JLabel();
         currentStory.setText((currentRiddles.getEnigma(riddleNb - 1)).getText());
 
-        // variante ou on prend toute l'histoire
-        /*
-        String currentStoryStr = "";
-        for(int i = 0; i < riddleNb; i++){
-            currentStoryStr = currentStoryStr + (currentRiddles.getEnigma(i)).getText();
-        }*/
 
-        // Fin fonction récupérer le texte de l'histoire en cours
-
+        JScrollPane scrollCurrentStoryPanIn = new JScrollPane(currentStoryPanIn,
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollCurrentStoryPanIn.setPreferredSize(new Dimension(width-20,(height-70)*22/100));
         currentStoryPanIn.add(currentStory);
         scrollCurrentStoryPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+        JPanel currentStoryPan = new JPanel();
         currentStoryPan.add(scrollCurrentStoryPanIn);
         currentStoryPan.setBorder(BorderFactory.createEmptyBorder(0,0,10,0));
 
-        //Baptiste fonction récupérer les réponses déjà tentées
-
-        // Faire une action qui récupère les réponses données
-
-        //Baptiste fonction récupérer la réponse attendue
-
+        answers = new JLabel();
         answers.setText((currentRiddles.getEnigma(riddleNb -1)).getAnswer());
 
-        // Fin de fonction récupérer la réponse attendue
-
+        JScrollPane scrollAnswersPanIn = new JScrollPane(answersPanIn,
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollAnswersPanIn.setPreferredSize(new Dimension((int) (width-20),(int) ((height-70)*0.22)));
         answersPanIn.add(answers);
         scrollAnswersPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+        JPanel answersPan = new JPanel();
         answersPan.add(scrollAnswersPanIn);
         answersPan.setBorder(BorderFactory.createEmptyBorder(0,0,10,0));
 
+        JTextField helpMessageGM = new JTextField();
         helpMessageGM.setPreferredSize(new Dimension((int) (width-20-helpButtonGM.getWidth()), (int) ((height-70)*0.22)));
+        JPanel helpMessageGMPan = new JPanel();
         helpMessageGMPan.add(helpMessageGM);
+        JPanel helpButtonGMPanIn = new JPanel();
         helpButtonGMPanIn.add(helpButtonGM);
         helpButtonGMPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+        JPanel helpButtonGMPan = new JPanel();
         helpButtonGMPan.add(helpButtonGMPanIn);
         helpButtonGMPan.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+        JPanel helpGMPanIn = new JPanel();
         helpGMPanIn.setPreferredSize(new Dimension((int) (width-20), (int) ((height-70)*0.22)));
         helpGMPanIn.setLayout(new BoxLayout(helpGMPanIn, BoxLayout.LINE_AXIS));
         helpGMPanIn.add(helpMessageGMPan);
         helpGMPanIn.add(helpButtonGMPan);
         helpGMPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+        JPanel helpGMPan = new JPanel();
         helpGMPan.add(helpGMPanIn);
         helpGMPan.setBorder(BorderFactory.createEmptyBorder(0,0,10,0));
 
-        //Baptiste fonction récupérer hint1
-
-        if(boolHint1){
-            String hint1Str = (currentRiddles.getEnigma(riddleNb - 1)).getClue1();
-        }
-
-        //Baptiste fonction récupérer hint2
-
-        if(boolHint2){
-            String hint2Str = (currentRiddles.getEnigma(riddleNb - 1)).getClue1();
-        }
-
-        //Baptiste fonction récupérer hint3
-
-        if(boolHint3){
-            String hint3Str = (currentRiddles.getEnigma(riddleNb - 1)).getClue1();
-        }
-
+        JPanel buttonReturnPanIn = new JPanel();
         buttonReturnPanIn.add(buttonReturn);
         buttonReturnPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+        JPanel buttonReturnPan = new JPanel();
         buttonReturnPan.add(buttonReturnPanIn);
         buttonReturnPan.setBorder(BorderFactory.createEmptyBorder(20,0,0,20));
+        JPanel buttonHint1PanIn = new JPanel();
         buttonHint1PanIn.add(buttonHint1);
         buttonHint1PanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+        JPanel buttonHint1Pan = new JPanel();
         buttonHint1Pan.add(buttonHint1PanIn);
         buttonHint1Pan.setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
+        JPanel buttonHint2PanIn = new JPanel();
         buttonHint2PanIn.add(buttonHint2);
         buttonHint2PanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+        JPanel buttonHint2Pan = new JPanel();
         buttonHint2Pan.add(buttonHint2PanIn);
         buttonHint2Pan.setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
+        JPanel buttonHint3PanIn = new JPanel();
         buttonHint3PanIn.add(buttonHint3);
         buttonHint3PanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+        JPanel buttonHint3Pan = new JPanel();
         buttonHint3Pan.add(buttonHint3PanIn);
         buttonHint3Pan.setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
+        JPanel bottomPan = new JPanel();
         bottomPan.setPreferredSize(new Dimension((int) (width-20),(int) ((height)*0.22)));
+        JPanel bottomPanIn = new JPanel();
         bottomPanIn.setLayout(new BoxLayout(bottomPanIn, BoxLayout.LINE_AXIS));
         bottomPanIn.add(buttonReturnPan);
         bottomPanIn.add(buttonHint1Pan);
@@ -242,6 +178,80 @@ public class PlayerManagement extends JPanel implements ActionListener{
 
     }
 
+    public static PlayerManagement getInstance(GlobalFrame frame,int gameNb, int riddleNb, boolean boolHint1Revealed, boolean boolHint2Revealed,
+                                               boolean boolHint3Revealed){
+        //Le "Double-Checked Singleton"/"Singleton doublement vérifié" permet
+        //d'éviter un appel coûteux à synchronized,
+        //une fois que l'instanciation est faite.
+        if (INSTANCE == null) {
+            // Le mot-clé synchronized sur ce bloc empêche toute instanciation
+            // multiple même par différents "threads".
+            // Il est TRES important.
+            synchronized(INSTANCE) {
+                if (INSTANCE == null) {
+                    INSTANCE = new PlayerManagement(frame,gameNb, riddleNb, boolHint1Revealed, boolHint2Revealed,
+                    boolHint3Revealed);
+                }
+            }
+        }
+        else {
+            INSTANCE.frame=frame;
+            INSTANCE.boolHint1 = boolHint1Revealed;
+            INSTANCE.boolHint2 = boolHint2Revealed;
+            INSTANCE.boolHint3 = boolHint3Revealed;
+
+            INSTANCE.title.setText(DBGame.getTitleGame(gameNb));
+            INSTANCE.currentRiddles = DBEnigma.getEnigmas(gameNb);
+            INSTANCE.currentStory.setText((INSTANCE.currentRiddles.getEnigma(riddleNb - 1)).getText());
+            INSTANCE.answers.setText((INSTANCE.currentRiddles.getEnigma(riddleNb -1)).getAnswer());
+
+            if(INSTANCE.boolHint1){
+                INSTANCE.buttonHint1.setText("Indice 1 déjà affiché");
+            }
+            else{
+                INSTANCE.buttonHint1.setText("Afficher l'indice 1");
+            }
+            if(INSTANCE.boolHint2){
+                INSTANCE.buttonHint2.setText("Indice 2 déjà affiché");
+            }
+            else{
+                INSTANCE.buttonHint2.setText("Afficher l'indice 2");
+            }
+            if(INSTANCE.boolHint3){
+                INSTANCE.buttonHint3.setText("Indice 3 déjà affiché");
+            }
+            else{
+                INSTANCE.buttonHint3.setText("Afficher l'indice 3");
+            }
+        }
+        return INSTANCE;
+    }
+
+    private JButton hintButton(int i){
+        JButton button;
+        boolean revealed = false;
+        if(i==1){
+            revealed=boolHint1;
+        }
+        else if (i==2){
+            revealed=boolHint2;
+        }
+        else{
+            revealed=boolHint3;
+        }
+        if(!revealed){
+            button = new JButton("Afficher l'indice "+i);
+            button.addActionListener(this);
+            button.setBackground(Color.white);
+        }else{
+            button = new JButton("Indice " + i + " déjà affiché");
+            button.setBackground(Color.gray);
+        }
+        button.setForeground(Color.black);
+        button.setOpaque(true);
+        return button;
+    }
+
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==helpButtonGM){
             //Baptiste fonction envoyer le message aux joueurs
@@ -249,14 +259,14 @@ public class PlayerManagement extends JPanel implements ActionListener{
         }else if(e.getSource() == buttonReturn){
             frame.roomManagementDisplay(frame);
         }else if(e.getSource()==buttonHint1){
-            //Baptiste fonction afficher indice 1 pour les joueurs
-
-            frame.playerManagement(frame, gameNb, riddleNb, true, boolHint2, boolHint3);
+            boolHint1=true;
+            buttonHint1.setText("Indice 1 déjà affiché");
         }else if(e.getSource()==buttonHint2){
-            frame.playerManagement(frame, gameNb, riddleNb, boolHint1, true, boolHint3);
-
+            boolHint2=true;
+            buttonHint2.setText("Indice 2 déjà affiché");
         }else if(e.getSource()==buttonHint3){
-            frame.playerManagement(frame, gameNb, riddleNb, boolHint1, boolHint2, true);
+            boolHint3=true;
+            buttonHint3.setText("Indice 3 déjà affiché");
         }
     }
 }

@@ -216,9 +216,9 @@ public class GlobalFrame extends JFrame {
 
     }
 
-    public void playerManagement(GlobalFrame frame,int gameNb, int riddleNb, boolean boolHint1Revealed, boolean boolHint2Revealed,
+    public void playerManagementDisplay(GlobalFrame frame,int gameNb, int riddleNb, boolean boolHint1Revealed, boolean boolHint2Revealed,
                                  boolean boolHint3Revealed){
-        playerManagement = new PlayerManagement(frame, gameNb, riddleNb, boolHint1Revealed, boolHint2Revealed, boolHint3Revealed);
+        playerManagement = PlayerManagement.getInstance(frame, gameNb, riddleNb, boolHint1Revealed, boolHint2Revealed, boolHint3Revealed);
         setContentPane(playerManagement);
         frame.setSize(1280,720);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
