@@ -2,6 +2,7 @@ package view;
 
 import model.Game;
 import model.RoomList;
+import view.SwingWorkers.ImageLoaderMainMenu;
 import view.style.ColorPerso;
 import view.style.FontPerso;
 
@@ -58,8 +59,8 @@ public class GlobalFrame extends JFrame {
 
         //this.setSize(windowSize);
         this.setLocationRelativeTo(null);
-        //this.setMinimumSize(new Dimension(720,480));
-        //this.setResizable(false);
+        this.setMinimumSize(new Dimension(720,480));
+
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 
@@ -68,15 +69,19 @@ public class GlobalFrame extends JFrame {
             public void componentResized(ComponentEvent e) {
                 super.componentResized(e);
                 windowSize = getSize();
+                //frame.setSize(frame.getWidth(),(16/9)*frame.getWidth());
+
                 if (getContentPane() instanceof GameCreation) {
                     GameCreation gameCreation = new GameCreation(frame,roomNumber,((GameCreation) getContentPane()).game);
                     setContentPane(gameCreation);
                 }
 
                 if (getContentPane() instanceof MainMenu){
+                    remove(getContentPane());
                     MainMenu mainMenu = new MainMenu(frame);
                     setContentPane(mainMenu);
                 }
+
 
                 /*if (getContentPane() instanceof CurrentGame) {
                     CurrentGame currentGame = new CurrentGame(frame);
@@ -97,9 +102,7 @@ public class GlobalFrame extends JFrame {
 
         roommanagement = new RoomManagement(frame);
         setContentPane(roommanagement);
-        frame.setSize(1280,720);
         frame.setResizable(true);
-        this.setLocationRelativeTo(null);
         frame.revalidate();
         frame.repaint();
 
@@ -109,12 +112,11 @@ public class GlobalFrame extends JFrame {
 
         if (getContentPane() instanceof ConnectionMenu ){
             mainmenu = new MainMenu(frame);
-            frame.setSize(1280, 720);
-            this.setLocationRelativeTo(null);
+            frame.setSize(1280,720);
+            frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         }
         else {
             mainmenu = new MainMenu(frame);
-            frame.setSize(1280, 720);
         }
         setContentPane(mainmenu);
         frame.setResizable(true);
@@ -149,9 +151,7 @@ public class GlobalFrame extends JFrame {
 
         gamemanagement = new GameManagement(frame, roomNumber);
         setContentPane(gamemanagement);
-        frame.setSize(1280,720);
         frame.setResizable(true);
-        frame.setLocationRelativeTo(null);
         frame.revalidate();
         frame.repaint();
     }
@@ -160,9 +160,7 @@ public class GlobalFrame extends JFrame {
 
         gameCreation = new GameCreation(frame,roomNumber,game);
         setContentPane(gameCreation);
-        frame.setSize(1280,720);
         frame.setResizable(true);
-        frame.setLocationRelativeTo(null);
         frame.revalidate();
         frame.repaint();
     }

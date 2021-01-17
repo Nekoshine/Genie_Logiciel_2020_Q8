@@ -3,30 +3,33 @@
 package view;
 
 import Sockets.Admin;
+import view.SwingWorkers.ImageLoaderMainMenu;
 import view.style.ColorPerso;
 import view.style.FontPerso;
 import view.style.ImagePerso;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
+import java.awt.image.BufferedImage;
 
 public class MainMenu extends JPanel implements ActionListener, MouseListener {
 
     private JButton deconnection;
-    private JButtonImage management;
-    private JButtonImage creation;
+    public JButtonImage management;
+    public JButtonImage creation;
+    private MainMenu mainMenu;
 
-    private Image image;
+    private Image backgroundLogo;
 
     private GlobalFrame frame;
 
     MainMenu(GlobalFrame frame) {
 
         this.frame = frame;
+        this.mainMenu = this;
+
+        new ImageLoaderMainMenu(this,frame.getSize()).execute();
 
         /*Création de la fenetre principale*/
 
@@ -77,7 +80,6 @@ public class MainMenu extends JPanel implements ActionListener, MouseListener {
         menucontainer.add(creation);
         menucontainer.add(management);
 
-        image = ImagePerso.backgroundLogo.getScaledInstance(frame.getWidth(),frame.getHeight(),Image.SCALE_FAST);
 
         this.add("South", deconnectionPanel);
         this.add("North", titlecontainer);
@@ -89,7 +91,11 @@ public class MainMenu extends JPanel implements ActionListener, MouseListener {
 
     @Override
     protected void paintComponent(Graphics g) {
-        g.drawImage(image,0,0,this);
+        super.paintComponent(g);
+        if(backgroundLogo != null){
+            System.out.println(frame.getWidth());
+            g.drawImage(backgroundLogo,0,0,this);
+        }
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -145,5 +151,10 @@ public class MainMenu extends JPanel implements ActionListener, MouseListener {
             deconnection.setBackground(ColorPerso.rouge);
         }
 
+    }
+
+    public void imageLoaded(Image backgroundLogo) {
+        this.backgroundLogo = backgroundLogo;
+        repaint();
     }
 }

@@ -2,32 +2,34 @@
 
 package view;
 
-import Sockets.Client;
-import Sockets.ThreadAdmin;
 import database.DBRoom;
 import database.DBUser;
 import launcher.Main;
+import view.SwingWorkers.ImageLoaderConnection;
 import view.style.ColorPerso;
-import view.style.ImagePerso;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 import javax.swing.*;
 
 
 public class ConnectionMenu extends JPanel implements ActionListener, MouseListener, KeyListener {
 
-    private JButton connection;
+    private static JButton connection;
     private JButton inscription;
+    private BufferedImage backgroundConnexion;
 
     private JTextField saisieidentifiant;
     private JPasswordField saisiemotdepasse;
 
     private GlobalFrame frame;
+    public static Graphics g;
 
     ConnectionMenu(GlobalFrame frame) {
 
         this.frame = frame;
+        new ImageLoaderConnection(this).execute();
 
         //creation de la partie login
 
@@ -97,7 +99,13 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
 
     @Override
     protected void paintComponent(Graphics g) {
-        g.drawImage(ImagePerso.backgroundConnexion,0,0,this);
+        super.paintComponent(g);
+        if(backgroundConnexion != null){
+            g.drawImage(backgroundConnexion,0,0,this);
+
+        }
+
+
     }
 
     private void connect(String idinput, String mdpinput) {
@@ -178,6 +186,20 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
     public void keyReleased(KeyEvent e) {
 
     }
+
+    public void imageLoaded(BufferedImage backgroundConnexion) {
+        this.backgroundConnexion = backgroundConnexion;
+        repaint();
+    }
+
 }
+
+
+
+
+
+
+
+
 
 

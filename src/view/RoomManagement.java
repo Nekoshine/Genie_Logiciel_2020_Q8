@@ -52,13 +52,15 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
         scrollPane.getVerticalScrollBar().setUnitIncrement(10);
 
+
         /* Déclaration Layouts */
         BorderLayout mainLayout = new BorderLayout(10, 10);
         BorderLayout centerLayout = new BorderLayout(4, 4);
         FlowLayout decoLayout = new FlowLayout(FlowLayout.LEADING);
         GridBagLayout listLayout = new GridBagLayout();
         roomPanel.setLayout(listLayout);
-        roomPanel.setOpaque(false);
+        roomPanel.setBackground(Color.LIGHT_GRAY);
+
 
 
         /* Contraintes GridBag */
@@ -72,7 +74,7 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
 
 
         newButton = new JButton("Nouvelle Salle");
-        newButton.setBackground(Color.GRAY);
+        newButton.setOpaque(false);
         newButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         newButton.addActionListener(this);
         newButton.addMouseListener(this);
@@ -92,10 +94,12 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
         listPanel.add(scrollPane,BorderLayout.CENTER);
         listPanel.add(newButtonPanel, BorderLayout.PAGE_END);
         listPanel.setBorder(BorderFactory.createLineBorder(Color.black,2));
+        listPanel.setBackground(Color.LIGHT_GRAY);
 
 
 
         newButtonPanel.add(newButton);
+        newButtonPanel.setBackground(Color.LIGHT_GRAY);
         //roomPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
 
         /* Setup Titre */
@@ -106,14 +110,14 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
 
         /* Setup bouton retour */
         decoPanel.setLayout(decoLayout);
-        decoPanel.setBackground(ColorPerso.gris);
+        decoPanel.setBackground(ColorPerso.DARK_GRAY);
         decoPanel.add(returnButton);
         returnButton.addActionListener(this);
         returnButton.addMouseListener(this);
 
         /* Setup Fenêtre gestion des salles */
         this.setLayout(mainLayout);
-        this.setBackground(ColorPerso.gris);
+        this.setBackground(ColorPerso.DARK_GRAY);
         this.add(listPanel, BorderLayout.CENTER);
         this.add(titlePanel, BorderLayout.PAGE_START);
         this.add(decoPanel, BorderLayout.PAGE_END);
@@ -264,7 +268,6 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
 
         /* Configuration panelSalle */
         panelSalle.setBorder(BorderFactory.createLineBorder(Color.BLACK,3));
-        panelSalle.setOpaque(false);
 
        return panelSalle;
 

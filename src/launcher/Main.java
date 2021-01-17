@@ -20,6 +20,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         /* Création de la vue */
+        //System.setProperty("sun.java2d.opengl","True");
         new GlobalFrame();
 
     }
