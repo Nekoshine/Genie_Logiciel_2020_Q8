@@ -1,5 +1,6 @@
 package view;
 
+import database.DBRoom;
 import launcher.Main;
 import model.Game;
 import model.RoomList;
@@ -19,6 +20,16 @@ public class GlobalFrame extends JFrame {
     public static Dimension windowSize;
     private BorderLayout mainLayout;
     GlobalFrame frame;
+    private static volatile GlobalFrame INSTANCE;
+
+    static {
+        try {
+            INSTANCE = new GlobalFrame();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     RoomManagement roommanagement;
     MainMenu mainmenu;
     ConnectionMenu connectionmenu;
@@ -35,7 +46,7 @@ public class GlobalFrame extends JFrame {
     public boolean insideRoom;
 
 
-    public GlobalFrame() throws IOException {
+    private GlobalFrame() throws IOException {
         /*Font*/
         UIManager.put("Label.font", FontPerso.Oxanimum);
         UIManager.put("Button.font",FontPerso.SirensDEMO);
@@ -95,6 +106,26 @@ public class GlobalFrame extends JFrame {
 
 
 
+    }
+
+    public final static GlobalFrame getInstance() throws IOException {
+        //Le "Double-Checked Singleton"/"Singleton doublement vérifié" permet
+        //d'éviter un appel coûteux à synchronized,
+        //une fois que l'instanciation est faite.
+        if (INSTANCE == null) {
+            // Le mot-clé synchronized sur ce bloc empêche toute instanciation
+            // multiple même par différents "threads".
+            // Il est TRES important.
+            synchronized(INSTANCE) {
+                if (INSTANCE == null) {
+                    INSTANCE = new GlobalFrame();
+                }
+            }
+        }
+        else {
+            INSTANCE.frame=INSTANCE;
+        }
+        return INSTANCE;
     }
 
     public void roomManagementDisplay(GlobalFrame frame){
