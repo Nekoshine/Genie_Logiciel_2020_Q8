@@ -25,9 +25,9 @@ public class MainMenu extends JPanel implements ActionListener, MouseListener {
 
     private GlobalFrame frame;
 
-    MainMenu() {
+    MainMenu(GlobalFrame frame) {
 
-        this.frame = Main.frame;
+        this.frame = frame;
         this.mainMenu = this;
 
         new ImageLoaderMainMenu(this,frame.getSize()).execute();

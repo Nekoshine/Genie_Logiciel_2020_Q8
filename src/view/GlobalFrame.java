@@ -79,7 +79,7 @@ public class GlobalFrame extends JFrame {
 
                 if (getContentPane() instanceof MainMenu){
                     remove(getContentPane());
-                    MainMenu mainMenu = new MainMenu();
+                    MainMenu mainMenu = new MainMenu(frame);
                     setContentPane(mainMenu);
                 }
 
@@ -112,12 +112,12 @@ public class GlobalFrame extends JFrame {
     public void mainMenuDisplay(GlobalFrame frame){
 
         if (getContentPane() instanceof ConnectionMenu ){
-            mainmenu = new MainMenu();
+            mainmenu = new MainMenu(frame);
             frame.setSize(1280,720);
             frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         }
         else {
-            mainmenu = new MainMenu();
+            mainmenu = new MainMenu(frame);
         }
         setContentPane(mainmenu);
         frame.setResizable(true);
