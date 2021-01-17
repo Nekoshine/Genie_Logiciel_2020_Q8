@@ -49,7 +49,7 @@ public class DBGame extends DBConnexion {
     */
     public static GameList getGames(int idUser){
         GameList gameList = new GameList();
-        boolean boolGame=false;
+        boolean boolGame;
         try{
             PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("Select * from Game WHERE idUser=? ORDER BY id ASC");
             requete.setString(1, String.valueOf(idUser));
@@ -85,11 +85,13 @@ public class DBGame extends DBConnexion {
         boolean inserted = false;
         int valueReady=0;
         try{
-            PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("Insert into Game VALUES (default,?,?,?,?,?)");
+            PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("Insert into Game VALUES (default,?,?,?,?,?,?)");
             requete.setInt(1,idUserN);
             requete.setString(2,titreN);
             requete.setInt(3,scoreN);
             requete.setInt(4,timerN);
+            requete.setBoolean(5,readyN);
+            requete.setString(6,"Félicitation");
             if(readyN){
                 valueReady=1;
             }

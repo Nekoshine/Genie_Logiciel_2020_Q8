@@ -215,7 +215,10 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     Game jeuChoisi = ListGame.findByID(jeu.getId());
-                    DBGame.deleteGame(jeuChoisi.getId());
+                    if(!DBGame.deleteGame(jeuChoisi.getId())){
+                        Toolkit.getDefaultToolkit().beep();
+                        JOptionPane.showMessageDialog(frame, "Le jeu ne peut pas être supprimé car il est utilisé par une salle", "Erreur", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             });
             buttonDelete.addMouseListener(new MouseListener() {
@@ -252,7 +255,7 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
             JPanel checkPanel = new JPanel();
             JCheckBox competitionCheck = new JCheckBox("Mode Compétitif");
             checkPanel.add(Box.createVerticalGlue());
-            checkPanel.add(competitionCheck,checkLayout.CENTER);
+            checkPanel.add(competitionCheck, BorderLayout.CENTER);
             checkPanel.add(Box.createVerticalGlue());
 
             boutonChoix.setBackground(ColorPerso.vert);
