@@ -34,10 +34,10 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
 
     private GlobalFrame frame;
 
-    private static volatile RoomManagement INSTANCE = new RoomManagement();
-    private RoomManagement(){
+    private static volatile RoomManagement INSTANCE = new RoomManagement(Main.frame);
+    private RoomManagement(GlobalFrame frame){
 
-        this.frame = Main.frame;
+        this.frame = frame;
 
         /* Récuperation des salles */
         ListRoom = Main.ListRoom;
@@ -123,7 +123,7 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
 
     }
 
-    public final static RoomManagement getInstance() {
+    public final static RoomManagement getInstance(GlobalFrame frame) {
         //Le "Double-Checked Singleton"/"Singleton doublement vérifié" permet
         //d'éviter un appel coûteux à synchronized,
         //une fois que l'instanciation est faite.
@@ -133,11 +133,12 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
             // Il est TRES important.
             synchronized(INSTANCE) {
                 if (INSTANCE == null) {
-                    INSTANCE = new RoomManagement();
+                    INSTANCE = new RoomManagement(frame);
                 }
             }
         }
         else {
+            INSTANCE.frame=frame;
             Main.ListRoom=DBRoom.getRooms(Main.idUser);
             INSTANCE.ListRoom = Main.ListRoom;
             INSTANCE.createList();

@@ -79,7 +79,7 @@ public class GlobalFrame extends JFrame {
 
                 if (getContentPane() instanceof MainMenu){
                     remove(getContentPane());
-                    MainMenu mainMenu = new MainMenu(frame);
+                    MainMenu mainMenu = new MainMenu();
                     setContentPane(mainMenu);
                 }
 
@@ -100,8 +100,8 @@ public class GlobalFrame extends JFrame {
     }
 
     public void roomManagementDisplay(GlobalFrame frame){
-        Main.frame=frame;
-        roommanagement = RoomManagement.getInstance();
+
+        roommanagement = RoomManagement.getInstance(frame);
         setContentPane(roommanagement);
         frame.setResizable(true);
         frame.revalidate();
@@ -112,12 +112,12 @@ public class GlobalFrame extends JFrame {
     public void mainMenuDisplay(GlobalFrame frame){
 
         if (getContentPane() instanceof ConnectionMenu ){
-            mainmenu = new MainMenu(frame);
+            mainmenu = new MainMenu();
             frame.setSize(1280,720);
             frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         }
         else {
-            mainmenu = new MainMenu(frame);
+            mainmenu = new MainMenu();
         }
         setContentPane(mainmenu);
         frame.setResizable(true);
@@ -127,7 +127,7 @@ public class GlobalFrame extends JFrame {
 
     public void connectionMenuDisplay(GlobalFrame frame){
 
-        connectionmenu = new ConnectionMenu(frame);
+        connectionmenu = ConnectionMenu.getInstance(frame);
         setContentPane(connectionmenu);
         frame.setSize(720,480);
         frame.setResizable(false);
@@ -139,7 +139,7 @@ public class GlobalFrame extends JFrame {
 
     public void signupMenuDisplay(GlobalFrame frame){
 
-        signupmenu = new SignupMenu(frame);
+        signupmenu = SignupMenu.getInstance(frame);
         setContentPane(signupmenu);
         frame.setSize(720,480);
         frame.setResizable(false);

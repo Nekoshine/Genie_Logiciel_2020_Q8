@@ -3,6 +3,7 @@
 package view;
 
 import Sockets.Admin;
+import launcher.Main;
 import view.SwingWorkers.ImageLoaderMainMenu;
 import view.style.ColorPerso;
 import view.style.FontPerso;
@@ -24,9 +25,9 @@ public class MainMenu extends JPanel implements ActionListener, MouseListener {
 
     private GlobalFrame frame;
 
-    MainMenu(GlobalFrame frame) {
+    MainMenu() {
 
-        this.frame = frame;
+        this.frame = Main.frame;
         this.mainMenu = this;
 
         new ImageLoaderMainMenu(this,frame.getSize()).execute();
