@@ -216,7 +216,14 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
         }
         else {
 
+            BorderLayout checkLayout = new BorderLayout();
             JButton boutonChoix = new JButton("Choisir");
+            JPanel checkPanel = new JPanel();
+            JCheckBox competitionCheck = new JCheckBox("Mode Compétitif");
+            checkPanel.add(Box.createVerticalGlue());
+            checkPanel.add(competitionCheck,checkLayout.CENTER);
+            checkPanel.add(Box.createVerticalGlue());
+
             boutonChoix.setBackground(ColorPerso.vert);
             boutonChoix.addActionListener(new AbstractAction() {
                 @Override
@@ -260,6 +267,7 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
                 }
             });
             panelJeu.add(boutonChoix);
+            panelJeu.add(checkPanel);
 
         }
         panelJeu.setLayout(grille);

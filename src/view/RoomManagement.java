@@ -85,7 +85,7 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
 
         /* Setup Marges */
         Border mainPadding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
-        Border listPadding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
+        Border listPadding = BorderFactory.createEmptyBorder(20, 10, 10, 10);
         this.setBorder(mainPadding);
         listPanel.setBorder(listPadding);
 
@@ -118,6 +118,7 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
         /* Setup Fenêtre gestion des salles */
         this.setLayout(mainLayout);
         this.setBackground(ColorPerso.DARK_GRAY);
+        this.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
         this.add(listPanel, BorderLayout.CENTER);
         this.add(titlePanel, BorderLayout.PAGE_START);
         this.add(decoPanel, BorderLayout.PAGE_END);

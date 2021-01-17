@@ -123,7 +123,6 @@ public class SignupMenu extends JPanel implements ActionListener, MouseListener,
 
   private void signUp(String idinput, String mdpinput, String cleinmput) {
 
-    System.out.println(mdpinput);
 
 
     if (idinput.isEmpty() || mdpinput.isEmpty() ){

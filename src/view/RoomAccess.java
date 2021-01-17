@@ -81,7 +81,7 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
 
         /* Setup Marges */
         Border mainPadding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
-        Border listPadding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
+        Border listPadding = BorderFactory.createEmptyBorder(20, 10, 10, 10);
         this.setBorder(mainPadding);
         listPanel.setBorder(listPadding);
 
@@ -89,6 +89,7 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
         listPanel.setLayout(centerLayout);
         listPanel.add(scrollPane,BorderLayout.CENTER);
         listPanel.setBorder(BorderFactory.createLineBorder(Color.black,2));
+        listPanel.setBackground(Color.LIGHT_GRAY);
 
 
         //roomPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
@@ -103,6 +104,7 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
         decoPanel.setLayout(decoLayout);
         decoPanel.setBackground(ColorPerso.gris);
         decoPanel.add(returnButton);
+        decoPanel.setBackground(ColorPerso.DARK_GRAY);
         returnButton.addActionListener(this);
         returnButton.addMouseListener(this);
 
@@ -111,8 +113,10 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
         this.setLayout(mainLayout);
         this.setBackground(ColorPerso.gris);
         this.add(listPanel, BorderLayout.CENTER);
+        this.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
         this.add(titlePanel, BorderLayout.PAGE_START);
         this.add(decoPanel, BorderLayout.PAGE_END);
+        this.setBackground(ColorPerso.darkGray);
         this.setVisible(true);
 
 
@@ -139,7 +143,7 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
 
         /* Ajout Panel */
         JPanel panelSalle = new JPanel();
-        System.out.println(salle.getUserInside());
+
 
         /* Construction Panel Salle */
         GridLayout grille = new GridLayout(1,3,70,50);
