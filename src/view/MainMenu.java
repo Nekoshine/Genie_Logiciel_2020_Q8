@@ -3,6 +3,7 @@
 package view;
 
 import Sockets.Admin;
+import database.DBRoom;
 import launcher.Main;
 import view.SwingWorkers.ImageLoaderMainMenu;
 import view.style.ColorPerso;
@@ -19,16 +20,16 @@ public class MainMenu extends JPanel implements ActionListener, MouseListener {
     private JButton deconnection;
     public JButtonImage management;
     public JButtonImage creation;
-    private MainMenu mainMenu;
+    private static volatile MainMenu INSTANCE = new MainMenu(Main.frame);
 
     private Image backgroundLogo;
 
     private GlobalFrame frame;
 
-    MainMenu(GlobalFrame frame) {
+    private MainMenu(GlobalFrame frame) {
 
         this.frame = frame;
-        this.mainMenu = this;
+        //this.mainMenu = this;
 
         new ImageLoaderMainMenu(this,frame.getSize()).execute();
 
@@ -88,6 +89,27 @@ public class MainMenu extends JPanel implements ActionListener, MouseListener {
         this.add("Center", menucontainer);
         this.setVisible(true);
 
+    }
+
+    public final static MainMenu getInstance(GlobalFrame frame) {
+        //Le "Double-Checked Singleton"/"Singleton doublement vérifié" permet
+        //d'éviter un appel coûteux à synchronized,
+        //une fois que l'instanciation est faite.
+        if (INSTANCE == null) {
+            // Le mot-clé synchronized sur ce bloc empêche toute instanciation
+            // multiple même par différents "threads".
+            // Il est TRES important.
+            synchronized(INSTANCE) {
+                if (INSTANCE == null) {
+                    INSTANCE = new MainMenu(frame);
+                }
+            }
+        }
+        else {
+            INSTANCE.frame=frame;
+            new ImageLoaderMainMenu(INSTANCE,frame.getSize()).execute();
+        }
+        return INSTANCE;
     }
 
     @Override
