@@ -25,12 +25,12 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
 
 
     /* Panel */
-    private JPanel listPanel;
-    private JPanel newButtonPanel;
-    private JPanel gamePanel;
+    private final JPanel listPanel;
+    private final JPanel newButtonPanel;
+    private final JPanel gamePanel;
 
     /* Boutons */
-    private JButton returnButton;
+    private final JButton returnButton;
     private JButton newButton;
 
     private GlobalFrame frame;
@@ -122,7 +122,7 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
 
     }
 
-    public final static GameManagement getInstance(GlobalFrame frame, int roomNumber) {
+    public static GameManagement getInstance(GlobalFrame frame, int roomNumber) {
         //Le "Double-Checked Singleton"/"Singleton doublement vérifié" permet
         //d'éviter un appel coûteux à synchronized,
         //une fois que l'instanciation est faite.
@@ -141,6 +141,12 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
             INSTANCE.frame.roomNumber=roomNumber;
             INSTANCE.ListGame= DBGame.getGames(Main.idUser);
             INSTANCE.createList();
+            if(roomNumber==-1){
+                INSTANCE.newButton.setVisible(true);
+            }
+            else{
+                INSTANCE.newButton.setVisible(false);
+            }
         }
         return INSTANCE;
     }
@@ -253,18 +259,23 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
             boutonChoix.addActionListener(new AbstractAction() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    Game oldGame = Main.ListRoom.findByID(frame.roomNumber).getGame();
+                    int idOldGame=0;
+                    if(oldGame!=null) {
+                        //recuperation de l'ancien jeu si on ne créé pas une salle
+                        idOldGame = oldGame.getId();
+                    }
+
+                    //mise a jour dans la liste
                     Main.ListRoom.findByID(frame.roomNumber).setGame(ListGame.findByID(jeu.getId()));
 
                     int idRoom = Main.ListRoom.findByID(frame.roomNumber).getId();
-                    int idGame =jeu.getId();
-                    System.out.println(idRoom);
-                    System.out.println(idGame);
-                    if(DBRoom.isInDB(idRoom,idGame)) {
-                        DBRoom.insertRoom(Main.ListRoom.findByID(frame.roomNumber).getId(), jeu.getId());
+
+                    if(DBRoom.isInDB(idRoom,idOldGame)) {
+                        DBRoom.majGame(Main.ListRoom.findByID(frame.roomNumber).getId(),jeu.getId());
                     }
                     else{
-                        DBRoom.majGame(Main.ListRoom.findByID(frame.roomNumber).getId(),jeu.getId());
-
+                        DBRoom.insertRoom(Main.ListRoom.findByID(frame.roomNumber).getId(), jeu.getId());
                     }
                     frame.roomManagementDisplay(frame);
 
