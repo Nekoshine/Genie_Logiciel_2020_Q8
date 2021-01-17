@@ -1,5 +1,6 @@
 package view;
 
+import launcher.Main;
 import model.Game;
 import model.RoomList;
 import view.SwingWorkers.ImageLoaderMainMenu;
@@ -99,8 +100,8 @@ public class GlobalFrame extends JFrame {
     }
 
     public void roomManagementDisplay(GlobalFrame frame){
-
-        roommanagement = new RoomManagement(frame);
+        Main.frame=frame;
+        roommanagement = RoomManagement.getInstance();
         setContentPane(roommanagement);
         frame.setResizable(true);
         frame.revalidate();

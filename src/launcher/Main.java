@@ -16,12 +16,13 @@ public class Main {
 
     // à supprimer
     public static int idUser=5;
+    public static GlobalFrame frame;
 
     public static void main(String[] args) throws IOException {
 
         /* Création de la vue */
         //System.setProperty("sun.java2d.opengl","True");
-        new GlobalFrame();
+        frame = new GlobalFrame();
 
     }
 }
