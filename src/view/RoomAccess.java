@@ -38,8 +38,8 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
 
     public User user;
 
-
-    RoomAccess(GlobalFrame frame,RoomList roomList){
+    private static volatile RoomAccess INSTANCE = new RoomAccess(Main.frame,Main.ListRoom);
+    private RoomAccess(GlobalFrame frame,RoomList roomList){
 
         this.frame = frame;
         user = new User(Main.idUser,"","",false);
@@ -77,7 +77,7 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
 
 
         /* Affichage des salles */
-        this.CreateList();
+        this.createList();
 
         /* Setup Marges */
         Border mainPadding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
@@ -120,6 +120,28 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
         this.setVisible(true);
 
 
+    }
+
+    public static RoomAccess getInstance(GlobalFrame frame, RoomList roomList) {
+        //Le "Double-Checked Singleton"/"Singleton doublement vérifié" permet
+        //d'éviter un appel coûteux à synchronized,
+        //une fois que l'instanciation est faite.
+        if (INSTANCE == null) {
+            // Le mot-clé synchronized sur ce bloc empêche toute instanciation
+            // multiple même par différents "threads".
+            // Il est TRES important.
+            synchronized(INSTANCE) {
+                if (INSTANCE == null) {
+                    INSTANCE = new RoomAccess(frame,roomList);
+                }
+            }
+        }
+        else {
+            INSTANCE.frame=frame;
+            INSTANCE.ListRoom=roomList;
+            INSTANCE.createList();
+        }
+        return INSTANCE;
     }
 
 
@@ -256,10 +278,10 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
 
     private void majRoom() {
         ListRoom.addRoom(ListRoom.getSize()+1,null);
-        this.CreateList();
+        this.createList();
     }
 
-    private void CreateList() {
+    private void createList() {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(7,15,7,30);
 
