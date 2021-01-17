@@ -32,7 +32,6 @@ public class EnigmaList {
         List.remove(i);
     }
 
-
     public int getSize() {
         return List.size();
     }
@@ -44,5 +43,10 @@ public class EnigmaList {
             }
         }
         return null;
+    }
+
+    public void changeText(int id,String text){
+        this.getEnigma(id).setQuestion(text);
+
     }
 }
