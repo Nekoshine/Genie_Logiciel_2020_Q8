@@ -52,6 +52,8 @@ public class GlobalFrame extends JFrame {
         UIManager.put("Button.font",FontPerso.SirensDEMO);
         UIManager.put("Button.background", ColorPerso.grisOriginal);
 
+        Toolkit.getDefaultToolkit().setDynamicLayout(true);
+
 
         frame = this;
 
@@ -145,6 +147,7 @@ public class GlobalFrame extends JFrame {
             frame.setSize(1280,720);
             frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         }
+        setMinimumSize(new Dimension(1280,720));
         setContentPane(mainmenu);
         frame.setResizable(true);
         frame.revalidate();
