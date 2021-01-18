@@ -48,7 +48,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
 
         helpButtonGM = new JButton("Envoyer");
         helpButtonGM.addActionListener(this);
-        helpButtonGM.setBackground(Color.white);
+        helpButtonGM.setBackground(Color.LIGHT_GRAY);
         helpButtonGM.setForeground(Color.black);
         helpButtonGM.setOpaque(true);
 
@@ -66,21 +66,26 @@ public class PlayerManagement extends JPanel implements ActionListener{
         title.setText(DBGame.getTitleGame(gameNb));
 
         JPanel titlePanIn = new JPanel();
-        titlePanIn.setPreferredSize(new Dimension((int) ((width-40)*0.7),(int) ((height-70)*0.12)));
+        titlePanIn.setPreferredSize(new Dimension((int) ((width-40)*0.7),(int) ((height-90)*0.06)));
+        titlePanIn.setBackground(Color.LIGHT_GRAY);
         titlePanIn.add(title);
         titlePanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         JPanel titlePan = new JPanel();
-        titlePan.add(titlePanIn);
+        titlePan.setBackground(ColorPerso.darkGray);
         titlePan.setBorder(BorderFactory.createEmptyBorder(0,0,10,10));
-        JPanel timerPanIn = new JPanel();
-        timerPanIn.setPreferredSize(new Dimension((int)((width-40)*0.3),(int) ((height-70)*0.12)));
+        titlePan.add(titlePanIn);
         JLabel timer = new JLabel();
-        timerPanIn.add(timer);
+        JPanel timerPanIn = new JPanel();
+        timerPanIn.setPreferredSize(new Dimension((int)((width-40)*0.3),(int) ((height-90)*0.06)));
+        timerPanIn.setBackground(Color.LIGHT_GRAY);
         timerPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+        timerPanIn.add(timer);
         JPanel timerPan = new JPanel();
-        timerPan.add(timerPanIn);
+        timerPan.setBackground(ColorPerso.darkGray);
         timerPan.setBorder(BorderFactory.createEmptyBorder(0,0,10,0));
+        timerPan.add(timerPanIn);
         JPanel topPan = new JPanel();
+        topPan.setBackground(ColorPerso.darkGray);
         topPan.setLayout(new BoxLayout(topPan, BoxLayout.LINE_AXIS));
         topPan.add(titlePan);
         topPan.add(timerPan);
@@ -91,72 +96,93 @@ public class PlayerManagement extends JPanel implements ActionListener{
 
         JScrollPane scrollCurrentStoryPanIn = new JScrollPane(currentStoryPanIn,
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollCurrentStoryPanIn.setPreferredSize(new Dimension(width-20,(height-70)*22/100));
+        scrollCurrentStoryPanIn.setPreferredSize(new Dimension(width-20,(height-90)*22/100));
+        scrollCurrentStoryPanIn.setBackground(Color.LIGHT_GRAY);
+        currentStoryPanIn.setBackground(Color.LIGHT_GRAY);
         currentStoryPanIn.add(currentStory);
         scrollCurrentStoryPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         JPanel currentStoryPan = new JPanel();
+        currentStoryPan.setBackground(ColorPerso.darkGray);
         currentStoryPan.add(scrollCurrentStoryPanIn);
-        currentStoryPan.setBorder(BorderFactory.createEmptyBorder(0,0,10,0));
+        currentStoryPan.setBorder(BorderFactory.createEmptyBorder(0,0,20,0));
 
         answers = new JLabel();
         answers.setText((currentRiddles.getEnigma(riddleNb -1)).getAnswer());
 
         JScrollPane scrollAnswersPanIn = new JScrollPane(answersPanIn,
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollAnswersPanIn.setPreferredSize(new Dimension((int) (width-20),(int) ((height-70)*0.22)));
+        scrollAnswersPanIn.setPreferredSize(new Dimension((int) (width-20),(int) ((height-90)*0.235)));
+        scrollAnswersPanIn.setBackground(Color.LIGHT_GRAY);
+        answersPanIn.setBackground(Color.LIGHT_GRAY);
         answersPanIn.add(answers);
         scrollAnswersPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         JPanel answersPan = new JPanel();
+        answersPan.setBackground(ColorPerso.darkGray);
         answersPan.add(scrollAnswersPanIn);
-        answersPan.setBorder(BorderFactory.createEmptyBorder(0,0,10,0));
+        answersPan.setBorder(BorderFactory.createEmptyBorder(0,0,20,0));
 
         JTextField helpMessageGM = new JTextField();
-        helpMessageGM.setPreferredSize(new Dimension((int) (width-20-helpButtonGM.getWidth()), (int) ((height-70)*0.22)));
+        helpMessageGM.setPreferredSize(new Dimension((int) (width-200-helpButtonGM.getWidth()), (int) ((height-150)*0.235)));
         JPanel helpMessageGMPan = new JPanel();
+        helpMessageGMPan.setBackground(Color.LIGHT_GRAY);
         helpMessageGMPan.add(helpMessageGM);
         JPanel helpButtonGMPanIn = new JPanel();
+        helpButtonGMPanIn.setBackground(Color.white);
         helpButtonGMPanIn.add(helpButtonGM);
         helpButtonGMPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         JPanel helpButtonGMPan = new JPanel();
+        helpButtonGMPan.setBackground(Color.LIGHT_GRAY);
         helpButtonGMPan.add(helpButtonGMPanIn);
         helpButtonGMPan.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
         JPanel helpGMPanIn = new JPanel();
-        helpGMPanIn.setPreferredSize(new Dimension((int) (width-20), (int) ((height-70)*0.22)));
+        helpGMPanIn.setBackground(Color.LIGHT_GRAY);
+        helpGMPanIn.setPreferredSize(new Dimension((int) (width-20), (int) ((height-90)*0.235)));
         helpGMPanIn.setLayout(new BoxLayout(helpGMPanIn, BoxLayout.LINE_AXIS));
         helpGMPanIn.add(helpMessageGMPan);
         helpGMPanIn.add(helpButtonGMPan);
         helpGMPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         JPanel helpGMPan = new JPanel();
+        helpGMPan.setBackground(ColorPerso.darkGray);
         helpGMPan.add(helpGMPanIn);
         helpGMPan.setBorder(BorderFactory.createEmptyBorder(0,0,10,0));
 
         JPanel buttonReturnPanIn = new JPanel();
+        buttonReturnPanIn.setBackground(Color.white);
         buttonReturnPanIn.add(buttonReturn);
         buttonReturnPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         JPanel buttonReturnPan = new JPanel();
+        buttonReturnPan.setBackground(Color.LIGHT_GRAY);
         buttonReturnPan.add(buttonReturnPanIn);
         buttonReturnPan.setBorder(BorderFactory.createEmptyBorder(20,0,0,20));
         JPanel buttonHint1PanIn = new JPanel();
+        buttonHint1PanIn.setBackground(Color.white);
         buttonHint1PanIn.add(buttonHint1);
         buttonHint1PanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         JPanel buttonHint1Pan = new JPanel();
+        buttonHint1Pan.setBackground(Color.LIGHT_GRAY);
         buttonHint1Pan.add(buttonHint1PanIn);
         buttonHint1Pan.setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
         JPanel buttonHint2PanIn = new JPanel();
+        buttonHint2PanIn.setBackground(Color.white);
         buttonHint2PanIn.add(buttonHint2);
         buttonHint2PanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         JPanel buttonHint2Pan = new JPanel();
+        buttonHint2Pan.setBackground(Color.LIGHT_GRAY);
         buttonHint2Pan.add(buttonHint2PanIn);
         buttonHint2Pan.setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
         JPanel buttonHint3PanIn = new JPanel();
+        buttonHint3PanIn.setBackground(Color.white);
         buttonHint3PanIn.add(buttonHint3);
         buttonHint3PanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         JPanel buttonHint3Pan = new JPanel();
+        buttonHint3Pan.setBackground(Color.LIGHT_GRAY);
         buttonHint3Pan.add(buttonHint3PanIn);
         buttonHint3Pan.setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
         JPanel bottomPan = new JPanel();
-        bottomPan.setPreferredSize(new Dimension((int) (width-20),(int) ((height)*0.22)));
+        bottomPan.setBackground(ColorPerso.darkGray);
+        bottomPan.setPreferredSize(new Dimension((int) (width-20),(int) ((height)*0.235)));
         JPanel bottomPanIn = new JPanel();
+        bottomPanIn.setBackground(Color.LIGHT_GRAY);
         bottomPanIn.setLayout(new BoxLayout(bottomPanIn, BoxLayout.LINE_AXIS));
         bottomPanIn.add(buttonReturnPan);
         bottomPanIn.add(buttonHint1Pan);
@@ -168,7 +194,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
 
         Border mainEdge = BorderFactory.createEmptyBorder(10,10,10,10);
         this.setBorder(mainEdge);
-
+        this.setBackground(ColorPerso.darkGray);
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         this.add(topPan);
         this.add(currentStoryPan);
@@ -245,7 +271,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
             button.setBackground(Color.white);
         }else{
             button = new JButton("Indice " + i + " déjà affiché");
-            button.setBackground(Color.gray);
+            button.setBackground(Color.lightGray);
         }
         button.setForeground(Color.black);
         button.setOpaque(true);
