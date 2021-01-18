@@ -18,10 +18,12 @@ import javax.swing.plaf.BorderUIResource;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-public class GameCreation extends JPanel implements ActionListener {
+public class GameCreation extends JPanel implements ActionListener, MouseListener {
 
     public EnigmaList listEnigma;
     public Game game;
@@ -201,6 +203,7 @@ public class GameCreation extends JPanel implements ActionListener {
         this.createList();
 
         newButton.addActionListener(this);
+        newButton.addMouseListener(this);
 
         /* Setup Marges */
 
@@ -217,13 +220,18 @@ public class GameCreation extends JPanel implements ActionListener {
         initialScore.setBorder(BorderFactory.createEmptyBorder());
         initialScore.setHorizontalAlignment(JTextField.CENTER);
         initialScore.setFont(FontPerso.Oxanimum);
+
         rankingButton.setHorizontalAlignment(JButton.CENTER);
-        rankingButton.setBackground(ColorPerso.azur);
         rankingButton.setForeground(Color.white);
+        rankingButton.addMouseListener(this);
 
         if (listEnigma.getSize()==0){
             rankingButton.setEnabled(false);
             rankingButton.setBackground(Color.darkGray);
+        }
+        else{
+            rankingButton.setEnabled(true);
+            rankingButton.setBackground(ColorPerso.azur);
         }
 
         gbcTitle.weightx = 2;
@@ -257,14 +265,17 @@ public class GameCreation extends JPanel implements ActionListener {
         exitButton.setBackground(ColorPerso.azur);
         exitButton.setForeground(Color.white);
         exitButton.addActionListener(this);
+        exitButton.addMouseListener(this);
 
         saveButton.setBackground(ColorPerso.vert);
         saveButton.setForeground(Color.white);
         saveButton.addActionListener(this);
+        saveButton.addMouseListener(this);
 
         deleteButton.setBackground(ColorPerso.rouge);
         deleteButton.setForeground(Color.white);
         deleteButton.addActionListener(this);
+        deleteButton.addMouseListener(this);
 
         buttonPanel.setLayout(buttonLayout);
         buttonPanel.add(exitButton,gbcScores);
@@ -327,6 +338,8 @@ public class GameCreation extends JPanel implements ActionListener {
         }
         else {
             INSTANCE.frame = frame;
+            INSTANCE.rankingButton.setBackground(ColorPerso.azur);
+            INSTANCE.exitButton.setBackground(ColorPerso.azur);
             if (game != null){
                 INSTANCE.title.setText(game.getTitre());
                 INSTANCE.initialScore.setText(String.valueOf(game.getScore()));
@@ -343,8 +356,11 @@ public class GameCreation extends JPanel implements ActionListener {
                 INSTANCE.rankingButton.setEnabled(false);
                 INSTANCE.rankingButton.setBackground(Color.darkGray);
             }
+            else {
+                INSTANCE.rankingButton.setEnabled(true);
+                INSTANCE.rankingButton.setBackground(ColorPerso.azur);
+            }
             INSTANCE.game=game;
-            //INSTANCE.exitButton.setBackground(ColorPerso.rouge);
         }
 
         return INSTANCE;
@@ -695,6 +711,62 @@ public class GameCreation extends JPanel implements ActionListener {
                 message = "Mise à jour effectuée";
             }
             JOptionPane.showMessageDialog(frame, message, "", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        if(e.getSource()==exitButton){
+            exitButton.setBackground(ColorPerso.azurHoover);
+        }
+        else if(e.getSource()==saveButton){
+            saveButton.setBackground(ColorPerso.vertHoover);
+        }
+        else if(e.getSource()==deleteButton){
+            deleteButton.setBackground(ColorPerso.rougeHoover);
+        }
+        else if(e.getSource()==newButton){
+            newButton.setBackground(Color.black);
+            newButton.setForeground(Color.white);
+            newButton.setOpaque(true);
+        }
+        else if(e.getSource()==rankingButton && rankingButton.isEnabled()){
+            rankingButton.setBackground(ColorPerso.azurHoover);
+        }
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        if(e.getSource()==exitButton){
+            exitButton.setBackground(ColorPerso.azur);
+        }
+        else if(e.getSource()==saveButton){
+            saveButton.setBackground(ColorPerso.vert);
+        }
+        else if(e.getSource()==deleteButton){
+            deleteButton.setBackground(ColorPerso.rouge);
+        }
+        else if(e.getSource()==newButton){
+            newButton.setForeground(Color.black);
+            newButton.setOpaque(false);
+        }
+        else if(e.getSource()==rankingButton && rankingButton.isEnabled()){
+            rankingButton.setBackground(ColorPerso.azur);
         }
     }
 }
