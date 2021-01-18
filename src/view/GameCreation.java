@@ -609,7 +609,6 @@ public class GameCreation extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
         if (e.getSource()==newButton){
             this.majEnigma();
 
@@ -623,6 +622,16 @@ public class GameCreation extends JPanel implements ActionListener {
 
         }
         else if (e.getSource()==saveButton){
+            Enigma a = null;
+            for(int i=0;i<listEnigma.getSize();i++) {
+                a = listEnigma.getEnigma(i);
+                String clue1 = a.getClue1();
+                int timer1 = a.getTimer1();
+                if (clue1.equals("indice 1") || timer1 == -1){
+                    JOptionPane.showMessageDialog(frame, "Un engime doit avoir au moins un indice associé a un timer", "", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
+            }
             boolean ajout = false;
             String titre = title.getText();
             int score = 0;
@@ -640,8 +649,10 @@ public class GameCreation extends JPanel implements ActionListener {
                 DBGame. majGame(game.getId(), titre,score,timer,ready,endMessage);
             }
             else{
-                DBGame.insertGame(titre,score,idUser,timer,ready,endMessage);
+                int id = DBGame.insertGame(titre,score,idUser,timer,ready,endMessage);
+                game = new Game(id,titre,score,idUser,timer,ready,endMessage);
                 ajout = true;
+
             }
 
             Enigma enigme = null;
@@ -656,6 +667,7 @@ public class GameCreation extends JPanel implements ActionListener {
                 String clue3 = enigme.getClue3();
                 if (clue1.equals("indice 1")){
                     clue1=null;
+
                 }
                 if (clue2==null ||clue2.equals("indice 2")){
                     clue2=null;
@@ -669,7 +681,6 @@ public class GameCreation extends JPanel implements ActionListener {
 
                 if(DBEnigma.isInDB(id)){
                     DBEnigma.majEnigma(id, text,answer, clue1, timer1,clue2, timer2,clue3, timer3);
-
                 }
                 else{
                     DBEnigma.insertEnigma(game.getId(),text,answer, clue1, timer1,clue2, timer2,clue3, timer3);

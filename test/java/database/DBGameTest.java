@@ -18,7 +18,11 @@ class DBGameTest {
 
     @Test
     final void testInsertGame() {
-        boolean test = DBGame.insertGame(titre,score,idUser,timer,ready,message);
+        boolean test = false;
+        int id = DBGame.insertGame(titre,score,idUser,timer,ready,message);
+        if(id!=-1){
+            test=true;
+        }
         Assertions.assertTrue(test, "Echec de l'ajout dans la BDD");
     }
 
@@ -35,7 +39,11 @@ class DBGameTest {
 
     @Test
     final void testGetGames() {
-        boolean insert = DBGame.insertGame(titre,score,idUser,timer,ready,message);
+        boolean insert = false;
+        int id= DBGame.insertGame(titre,score,idUser,timer,ready,message);
+        if(id!=-1){
+            insert=true;
+        }
         if(insert) {
             boolean test = false;
             GameList listGame = DBGame.getGames(4);

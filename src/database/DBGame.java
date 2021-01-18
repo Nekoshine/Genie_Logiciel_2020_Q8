@@ -24,6 +24,13 @@ public class DBGame extends DBConnexion {
     public static boolean deleteGame(int idGame){
         boolean boolDelete=false;
         try{
+            PreparedStatement req = DBConnexion.getConnexion().prepareStatement("SELECT * from Enigma WHERE idGame = ?");
+            req.setInt(1, idGame);
+            ResultSet res = req.executeQuery();
+            while (res.next() != false) { // On itère chaque résultat
+                DBEnigma.deleteEnigma(res.getInt("id"));
+            }
+
             PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("Delete from Game WHERE id=? ");
             requete.setInt(1, idGame);
             requete.executeUpdate();
@@ -73,16 +80,16 @@ public class DBGame extends DBConnexion {
     }
 
     /**
-    * V2 de l insertion de jeux, on insere un jeu grace aux champs donnés en argument
-    * @param titreN titre du jeu
-    * @param scoreN score initiale du jeu
-    * @param idUserN identifiant de l'utilisateur qui possede le jeu
-    * @param timerN
-    * @param readyN
-    * @return true si le jeu a été inséré
-    */
-    public static boolean insertGame(String titreN,int scoreN,int idUserN,int timerN,Boolean readyN,String message){
-        boolean inserted = false;
+     * insertion d'un jeu, on insere un jeu grace aux champs donnés en argument
+     * @param titreN titre du jeu
+     * @param scoreN score initiale du jeu
+     * @param idUserN identifiant de l'utilisateur qui possede le jeu
+     * @param timerN
+     * @param readyN
+     * @return -1 si echec, l'id du jeu sinon
+     */
+    public static int insertGame(String titreN,int scoreN,int idUserN,int timerN,Boolean readyN,String message){
+        int inserted = -1;
         int valueReady=0;
         try{
             PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("Insert into Game VALUES (default,?,?,?,?,?,?)");
@@ -103,7 +110,7 @@ public class DBGame extends DBConnexion {
             requeteVerif.setInt(2,idUserN);
             ResultSet resultatVerif = requeteVerif.executeQuery();
             if(resultatVerif.next() != false){ // Si il a été inséré
-                inserted=true; // Alors on valide l insertion
+                inserted= resultatVerif.getInt("id"); // Alors on valide l insertion
             }
             resultatVerif.close();
             requeteVerif.close();

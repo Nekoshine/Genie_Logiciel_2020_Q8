@@ -149,6 +149,9 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
                 INSTANCE.newButton.setVisible(false);
             }
             INSTANCE.returnButton.setBackground(ColorPerso.rouge);
+            INSTANCE.newButton.setBackground(Color.GRAY);
+            INSTANCE.newButton.setOpaque(false);
+            INSTANCE.newButton.setForeground(Color.black);
         }
         return INSTANCE;
     }
@@ -217,9 +220,20 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     Game jeuChoisi = ListGame.findByID(jeu.getId());
-                    if(!DBGame.deleteGame(jeuChoisi.getId())){
-                        Toolkit.getDefaultToolkit().beep();
-                        JOptionPane.showMessageDialog(frame, "Le jeu ne peut pas être supprimé car il est utilisé par une salle", "Erreur", JOptionPane.ERROR_MESSAGE);
+                    String[] options = {"Oui", "Non"};
+                    int reponse = JOptionPane.showOptionDialog
+                            (null, "Voulez vous supprimer le jeu : \""+jeuChoisi.getTitre()+"\"",
+                                    "Nouveau Joueur",
+                                    JOptionPane.YES_NO_OPTION,
+                                    JOptionPane.QUESTION_MESSAGE,
+                                    null, // pas d'icone
+                                    options, // titres des boutons
+                                    null); // désactiver la touche ENTER
+                    if (reponse == JOptionPane.YES_OPTION) {
+                        if(!DBGame.deleteGame(jeuChoisi.getId())){
+                            Toolkit.getDefaultToolkit().beep();
+                            JOptionPane.showMessageDialog(frame, "Le jeu ne peut pas être supprimé car il est utilisé par une salle", "Erreur", JOptionPane.ERROR_MESSAGE);
+                        }
                     }
                     Main.frame.setContentPane(getInstance(frame,frame.roomNumber));
                 }
