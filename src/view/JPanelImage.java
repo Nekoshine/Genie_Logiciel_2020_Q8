@@ -13,11 +13,12 @@ public class JPanelImage extends JPanel {
     private float ratio;
     private AffineTransform aTransform;
 
-    JPanelImage(String path) {
+    JPanelImage(String path,Dimension windowSize) {
         super();
         aTransform = new AffineTransform();
         try {
             img = ImageIO.read(new File(path));
+            img.getScaledInstance(windowSize.width,windowSize.height,Image.SCALE_FAST);
             ratio = (float)img.getWidth(null)/(float)img.getHeight(null);
         } catch (IOException e) {
             e.printStackTrace();
@@ -31,12 +32,9 @@ public class JPanelImage extends JPanel {
         super.paintComponent(g);
         if (img == null) return;
         float largeur = (float)this.getWidth();
-        aTransform.setToIdentity();
-        aTransform.scale(largeur/(float)img.getWidth(null),largeur/(float)img.getWidth(null));
-        this.setSize(Math.round(largeur),Math.round(largeur/ratio));
         //g.drawImage(img, 0, 0, getWidth(), getHeight(), this);
         Graphics2D g2d=(Graphics2D) g;
-        g2d.drawRenderedImage(img,aTransform);
+        g2d.drawRenderedImage(img,null);
 
     }
 

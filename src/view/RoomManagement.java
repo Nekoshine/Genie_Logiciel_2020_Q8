@@ -13,10 +13,7 @@ import view.style.FontPerso;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 
 public class RoomManagement extends JPanel implements ActionListener,MouseListener {
 
@@ -34,10 +31,13 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
 
     private GlobalFrame frame;
 
+    Dimension windowSize;
+
     private static volatile RoomManagement INSTANCE = new RoomManagement(Main.frame);
     private RoomManagement(GlobalFrame frame){
 
         this.frame = frame;
+        windowSize = frame.getSize();
 
         /* Récuperation des salles */
         ListRoom = Main.ListRoom;
@@ -111,6 +111,15 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
         decoPanel.add(returnButton);
         returnButton.addActionListener(this);
         returnButton.addMouseListener(this);
+
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                windowSize = Main.frame.getSize();
+                INSTANCE.revalidate();
+                INSTANCE.repaint();
+            }
+        });
 
         /* Setup Fenêtre gestion des salles */
         this.setLayout(mainLayout);

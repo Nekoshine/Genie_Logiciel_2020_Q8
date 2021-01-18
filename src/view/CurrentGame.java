@@ -2,6 +2,7 @@ package view;
 
 import database.DBEnigma;
 import database.DBGame;
+import launcher.Main;
 import model.EnigmaList;
 import model.Game;
 import view.SwingWorkers.ImageLoaderMainMenu;
@@ -10,6 +11,8 @@ import view.style.ColorPerso;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import javax.swing.*;
 import javax.swing.Timer;
 
@@ -85,12 +88,13 @@ public class CurrentGame extends JPanel implements ActionListener {
 
     private GlobalFrame frame;
 
+    Dimension windowSize;
+
     public CurrentGame (GlobalFrame frame, Game partiechoisie ){
 
         imageIconValide = new ImageIcon(new ImageIcon("./src/view/image/valide.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
         imageIconRefus = new ImageIcon(new ImageIcon("./src/view/image/refus.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
-
-
+        windowSize = frame.getSize();
         this.frame = frame;
         allEnigmas = DBEnigma.getEnigmas(partiechoisie.getId());
         game = DBGame.getGame(partiechoisie.getId());
@@ -276,7 +280,7 @@ public class CurrentGame extends JPanel implements ActionListener {
         hintRawPanel.add(hintContainer3);
         hintRawPanel.add(hintMJContainer);
 
-        componentPanel = new JPanelImage("./src/view/image/FondPrincipal.png");
+        componentPanel = new JPanelImage("./src/view/image/FondPrincipal.png",windowSize);
         componentPanel.setLayout(new GridBagLayout());
         componentPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
 
@@ -316,8 +320,9 @@ public class CurrentGame extends JPanel implements ActionListener {
         componentPanel.setMaximumSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.95),(int)((float) frame.windowSize.getHeight()*0.75)));
 
 
+
         this.setLayout(new BorderLayout(10,20));
-        this.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
+        this.setBorder(BorderFactory.createEmptyBorder(20,20,40,20));
         this.add(firstRawPanel,BorderLayout.NORTH);
         this.add(componentPanel,BorderLayout.CENTER);
         this.setBackground(ColorPerso.darkGray);
