@@ -24,6 +24,13 @@ public class DBGame extends DBConnexion {
     public static boolean deleteGame(int idGame){
         boolean boolDelete=false;
         try{
+            PreparedStatement reqRoom = DBConnexion.getConnexion().prepareStatement("SELECT * from Room WHERE idGame = ?");
+            reqRoom.setInt(1,idGame);
+            ResultSet resRoom = reqRoom.executeQuery();
+            if(resRoom.next()){ // Si il est dans une salle
+                return false; // Alors on arrete tout
+            }
+
             PreparedStatement req = DBConnexion.getConnexion().prepareStatement("SELECT * from Enigma WHERE idGame = ?");
             req.setInt(1, idGame);
             ResultSet res = req.executeQuery();
