@@ -34,13 +34,11 @@ public class Admin {
           AdminInfo signal = new AdminInfo(idUserAdmin);
           out.writeObject(signal);
         }else{
-          /* String login = DBUser.getUser(user.getId()); // On récupere le login de l'user qui demande à se connecter
-          
-          Normalement la on va faire un pop up qui va demander à l'admin si il veut accepter le joueur dans la salle ou non ,
-          vous me renvoyez un booleen pour savoir
-          
-          */
           boolean reponse = true;
+          /* String login = DBUser.getUser(user.getId()); // On récupere le login de l'user qui demande à se connecter
+          reponse = Main.frame.AccpetUser(login); //pop up demande de connexion
+          */
+
           
           ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
           if (reponse){ // Si cest le bon user alors on lui dit quon accepte sa demande de jeu
