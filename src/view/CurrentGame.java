@@ -10,16 +10,13 @@ import view.SwingWorkers.ImageLoaderMainMenu;
 import view.style.ColorPerso;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+import java.awt.event.*;
 import javax.print.attribute.standard.MediaSize;
 import javax.swing.*;
 import javax.swing.Timer;
 
 
-public class CurrentGame extends JPanel implements ActionListener {
+public class CurrentGame extends JPanel implements ActionListener, WindowListener{
 
     private JPanel firstRawPanel;
     private JPanel secondRawPanel;
@@ -112,7 +109,6 @@ public class CurrentGame extends JPanel implements ActionListener {
 
         ishint3present = !(allEnigmas.getEnigma(enigmalistflag).getClue3().isEmpty());
         if(ishint3present){timerclue3 = allEnigmas.getEnigma(enigmalistflag).getTimer3();};
-
 
 
 
@@ -336,6 +332,7 @@ public class CurrentGame extends JPanel implements ActionListener {
         });
 
 
+        Main.frame.addWindowListener(this);
         this.setLayout(new BorderLayout(10,20));
         this.setBorder(BorderFactory.createEmptyBorder(20,20,40,20));
         this.add(firstRawPanel,BorderLayout.NORTH);
@@ -344,7 +341,7 @@ public class CurrentGame extends JPanel implements ActionListener {
 
     }
 
-    public final static CurrentGame getInstance(GlobalFrame frame, Game partiechoisie) {
+    public final static CurrentGame getInstance(GlobalFrame frame, Game partiechoisie,int idRoom) {
         //Le "Double-Checked Singleton"/"Singleton doublement vérifié" permet
         //d'éviter un appel coûteux à synchronized,
         //une fois que l'instanciation est faite.
@@ -354,7 +351,7 @@ public class CurrentGame extends JPanel implements ActionListener {
             // Il est TRES important.
             synchronized(INSTANCE) {
                 if (INSTANCE == null) {
-                    INSTANCE = new CurrentGame(frame,partiechoisie,INSTANCE.room.getId());
+                    INSTANCE = new CurrentGame(frame,partiechoisie,idRoom);
                 }
             }
         }
@@ -368,6 +365,8 @@ public class CurrentGame extends JPanel implements ActionListener {
             INSTANCE.game = DBGame.getGame(partiechoisie.getId());
             INSTANCE.titleLabel.setText(partiechoisie.getTitre());
             INSTANCE.currentEnigmaTextArea.setText(allEnigmas.getEnigma(enigmalistflag).getText());
+
+            INSTANCE.room = Main.ListRoom.findByID(idRoom);
 
             INSTANCE.hintContainer1.removeAll();
             INSTANCE.hintContainer1.add(INSTANCE.hint1Button);
@@ -454,7 +453,7 @@ public class CurrentGame extends JPanel implements ActionListener {
                     //maj des champs relatifs aux enigmes
 
                     oldEnigmaTextArea.append(allEnigmas.getEnigma(enigmalistflag).getText());
-                    oldEnigmaTextArea.append("\n\n");
+                    oldEnigmaTextArea.append("\n");
                     enigmalistflag++;
                     currentEnigmaPanel.remove(currentEnigmaScroll);
                     currentEnigmaTextArea = new JTextArea(allEnigmas.getEnigma(enigmalistflag).getText());
@@ -518,6 +517,7 @@ public class CurrentGame extends JPanel implements ActionListener {
                 else{JOptionPane.showMessageDialog(frame, "Vous avez réussi !!!!", "Bravo !", JOptionPane.WARNING_MESSAGE,imageIconValide);
                     frame.insideRoom = false;
                     room.setUserInside(-1);
+                    DBRoom.majRoom(room.getId(),room.getGame().getId(),room.getCompetitive(),room.getUserInside());
                     frame.connectionMenuDisplay(frame);
                 }
 
@@ -528,4 +528,34 @@ public class CurrentGame extends JPanel implements ActionListener {
 
     }
 
+    @Override
+    public void windowOpened(WindowEvent e) {
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        room.setUserInside(-1);
+        DBRoom.majRoom(room.getId(),room.getGame().getId(),room.getCompetitive(),room.getUserInside());
+
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+    }
 }

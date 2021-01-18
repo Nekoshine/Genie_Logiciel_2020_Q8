@@ -244,7 +244,7 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
         boutonLancer.setBackground(ColorPerso.vert);
 
 
-        if (salle.getGame() == null /* || salle.getUserInside() == -1 */) {
+        if (salle.getGame() == null  || salle.getUserInside() == -1 ) {
             boutonLancer.setEnabled(false);
             boutonLancer.setBackground(Color.darkGray);
             //boutonLancer.setText("Ouvrir la salle");
