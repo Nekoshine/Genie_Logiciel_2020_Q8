@@ -86,7 +86,7 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
 
         /* Setup Marges */
         Border mainPadding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
-        Border listPadding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
+        Border listPadding = BorderFactory.createEmptyBorder(20, 10, 10, 10);
         this.setBorder(mainPadding);
         listPanel.setBorder(listPadding);
 
@@ -107,14 +107,15 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
 
         /* Setup bouton retour */
         returnPanel.setLayout(decoLayout);
-        returnPanel.setBackground(ColorPerso.gris);
+        returnPanel.setBackground(ColorPerso.darkGray);
         returnPanel.add(returnButton);
         returnButton.addActionListener(this);
         returnButton.addMouseListener(this);
 
         this.setLayout(mainLayout);
-        this.setBackground(ColorPerso.gris);
+        this.setBackground(ColorPerso.darkGray);
         this.add(listPanel, BorderLayout.CENTER);
+        this.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
         this.add(titlePanel, BorderLayout.PAGE_START);
         this.add(returnPanel, BorderLayout.PAGE_END);
         this.setVisible(true);

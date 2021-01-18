@@ -52,6 +52,8 @@ public class GlobalFrame extends JFrame {
         UIManager.put("Button.font",FontPerso.SirensDEMO);
         UIManager.put("Button.background", ColorPerso.grisOriginal);
 
+        Toolkit.getDefaultToolkit().setDynamicLayout(true);
+
 
         frame = this;
 
@@ -145,6 +147,7 @@ public class GlobalFrame extends JFrame {
             frame.setSize(1280,720);
             frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         }
+        setMinimumSize(new Dimension(1280,720));
         setContentPane(mainmenu);
         frame.setResizable(true);
         frame.revalidate();
@@ -155,6 +158,7 @@ public class GlobalFrame extends JFrame {
 
         connectionmenu = ConnectionMenu.getInstance(frame);
         setContentPane(connectionmenu);
+        frame.setMinimumSize(new Dimension(720,480));
         frame.setSize(720,480);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
@@ -228,5 +232,28 @@ public class GlobalFrame extends JFrame {
 
     }
 
+    public boolean AccpetUser(String login) {
+        //si je suis administrateur
+        boolean admin = true;
+
+        if (admin) {
+            String[] options = {"Oui", "Non"};
+            int reponse = JOptionPane.showOptionDialog
+                    (null, login + " souhaites se connecter\nL'accepter ?",
+                            "Nouveau Joueur",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE,
+                            null, // pas d'icone
+                            options, // titres des boutons
+                            null); // désactiver la touche ENTER
+            if (reponse == JOptionPane.YES_OPTION) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        return false;
+    }
 
 }

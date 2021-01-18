@@ -29,13 +29,17 @@ public class GameCreation extends JPanel implements ActionListener {
     private BorderLayout mainLayout;
     private BorderLayout titleLayout;
     private BorderLayout centerLayout;
+    private BorderLayout newLayout;
 
     private GridBagLayout buttonLayout;
 
     private GridBagLayout gridInfo;
     private GridBagLayout gridEnigma;
+    private GridBagLayout gridWin;
+
 
     private GridBagConstraints gbcEnigma;
+    private GridBagConstraints gbcWin;
 
     private GridLayout grid;
     private GridLayout gridHint;
@@ -50,6 +54,7 @@ public class GameCreation extends JPanel implements ActionListener {
     private JPanel titleNamePanel;
     private JPanel defaultScorePanel;
     private JPanel pointsPanel;
+    private JPanel winPanel;
 
     private JPanel centerPanel;
     private JPanel storyPanel;
@@ -59,6 +64,8 @@ public class GameCreation extends JPanel implements ActionListener {
     private JPanel hint1Panel;
     private JPanel hint2Panel;
     private JPanel hint3Panel;
+    private JPanel buttonNewPanel;
+    private JPanel winMessagePanel;
 
 
 
@@ -69,14 +76,17 @@ public class GameCreation extends JPanel implements ActionListener {
     private JButton rankingButton;
 
     private JLabel windowName;
+    private JLabel winMessageLabel;
 
     private JTextField initialScore;
     private JTextField points;
     private JTextField title;
+    private JTextField winMessage;
 
     private GlobalFrame frame;
 
     private static volatile GameCreation INSTANCE = new GameCreation(Main.frame,0,null);
+
     private GameCreation(GlobalFrame frame, int roomNumber, Game game){
 
         this.frame = frame;
@@ -85,6 +95,9 @@ public class GameCreation extends JPanel implements ActionListener {
 
         mainLayout = new BorderLayout(10,10);
         titleLayout= new BorderLayout(10,10);
+        newLayout = new BorderLayout(10,10);
+
+        buttonNewPanel = new JPanel();
 
         centerLayout = new BorderLayout(30,30);
 
@@ -108,6 +121,8 @@ public class GameCreation extends JPanel implements ActionListener {
         pointsPanel = new JPanel();
         newPanel = new JPanel();
         enigmasPanel = new JPanel();
+        winPanel = new JPanel();
+        winMessagePanel = new JPanel();
 
         saveButton = new JButton("Enregistrer");
         exitButton = new JButton("Quitter");
@@ -118,12 +133,22 @@ public class GameCreation extends JPanel implements ActionListener {
         if(game==null) {
             title = new JTextField("Titre", 45);
             initialScore = new JTextField("Score Initial", 7);
+            winMessage = new JTextField();
         }
         else {
             title = new JTextField(game.getTitre(),45);
             initialScore = new JTextField(String.valueOf(game.getScore()),7);
+            winMessage = new JTextField(game.getEndMessage());
         }
         points = new JTextField("Points (Si désiré)",7);
+
+        winMessageLabel = new JLabel("Message de fin :",SwingConstants.RIGHT);
+        JPanel winLabelPanel = new JPanel();
+        winLabelPanel.add(winMessageLabel);
+
+
+
+
 
         windowName = new JLabel("MJ - Création/Modification de Jeux",JLabel.CENTER);
 
@@ -131,8 +156,31 @@ public class GameCreation extends JPanel implements ActionListener {
 
         newButton.setOpaque(false);
         newButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        buttonNewPanel.add(newButton);
 
-        newPanel.add(newButton);
+        gridWin = new GridBagLayout();
+        gbcWin = new GridBagConstraints();
+
+        gbcWin.weightx = 1;
+        gbcWin.insets = new Insets(0,0,0,100);
+
+        winPanel.setLayout(gridWin);
+        gbcWin.fill = GridBagConstraints.HORIZONTAL;
+        winPanel.add(winMessageLabel,gbcWin);
+
+        gbcWin.weightx = 2;
+        gbcWin.insets = new Insets(0,0,0,200);
+
+
+        winMessagePanel.setLayout(gridWin);
+        winMessagePanel.add(winMessage,gbcWin);
+
+        winPanel.add(winMessagePanel,gbcWin);
+
+        newPanel.setLayout(newLayout);
+        newPanel.add(buttonNewPanel,BorderLayout.NORTH);
+        newPanel.add(winPanel,BorderLayout.CENTER);
+        newPanel.setBorder(BorderFactory.createEmptyBorder(0,0,25,0));
 
         centerPanel.setLayout(centerLayout);
 
@@ -282,6 +330,7 @@ public class GameCreation extends JPanel implements ActionListener {
             if (game != null){
                 INSTANCE.title.setText(game.getTitre());
                 INSTANCE.initialScore.setText(String.valueOf(game.getScore()));
+                INSTANCE.winMessage.setText(game.getEndMessage());
             }
             else{
                 INSTANCE.title.setText("Titre");
@@ -586,12 +635,12 @@ public class GameCreation extends JPanel implements ActionListener {
             int idUser = Main.idUser;
             int timer = 0;
             boolean ready = true;
-
+            String endMessage = winMessage.getText();
             if(game!=null){
-                DBGame. majGame(game.getId(), titre,score,timer,ready);
+                DBGame. majGame(game.getId(), titre,score,timer,ready,endMessage);
             }
             else{
-                DBGame.insertGame(titre,score,idUser,timer,ready);
+                DBGame.insertGame(titre,score,idUser,timer,ready,endMessage);
                 ajout = true;
             }
 

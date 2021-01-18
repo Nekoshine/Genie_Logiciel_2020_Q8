@@ -119,7 +119,6 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
         this.setBackground(ColorPerso.darkGray);
         this.setVisible(true);
 
-
     }
 
     public static RoomAccess getInstance(GlobalFrame frame, RoomList roomList) {
@@ -174,7 +173,12 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
 
         JLabel nomJeu;
         if (salle.getGame()!=null){
-            nomJeu = new JLabel(salle.getGame().getTitre());
+            if(salle.getCompetitive()) {
+                nomJeu = new JLabel("Competitif : "+salle.getGame().getTitre());
+            }
+            else {
+                nomJeu = new JLabel(salle.getGame().getTitre());
+            }
         }
         else{
             nomJeu = new JLabel("Pas de jeu");
@@ -186,10 +190,15 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
         if(salle.getUserInside()==-1) {
             boutonJoin.setText("Rejoindre la salle");
             boutonJoin.setBackground(ColorPerso.azur);
+
         }
 
-        if (salle.getUserInside()==user.getId()){
+        else if (salle.getUserInside()==user.getId()){
             boutonJoin.setText("En attente du MJ . . .");
+            boutonJoin.setBackground(ColorPerso.vert);
+        }
+        else{
+            boutonJoin.setText("Occupé. . .");
             boutonJoin.setBackground(ColorPerso.vert);
         }
 
@@ -212,9 +221,9 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
             public void actionPerformed(ActionEvent e) {
 
                 if(salle.getUserInside()==-1){
-                    /*frame.insideRoom = true;
+                    frame.insideRoom = true;
                     salle.setUserInside(user.getId());
-                    frame.roomAccessDisplay(frame,ListRoom);*/
+                    //frame.roomAccessDisplay(frame,ListRoom);
                     frame.currentGameDisplay(frame,salle.getGame());
                 }
 
@@ -276,15 +285,10 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
 
     }
 
-    private void majRoom() {
-        ListRoom.addRoom(ListRoom.getSize()+1,null,false);
-        this.createList();
-    }
-
     private void createList() {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(7,15,7,30);
-
+        roomPanel.removeAll();
         for (int i = 0; i < ListRoom.getSize(); i++) {
 
             JPanel panelSalle = this.ajoutSalle(ListRoom.getRoom(i), gbc,i+1);

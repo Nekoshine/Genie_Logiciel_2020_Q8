@@ -26,7 +26,7 @@ public class ImageLoaderMainMenu extends SwingWorker<Image,Image> {
 
     @Override
     protected Image doInBackground() throws Exception {
-        ImageIcon imageIcon = new ImageIcon(new ImageIcon("./src/view/image/FondPrincipal.png").getImage().getScaledInstance((int)dimension.getWidth(),(int)dimension.getHeight(), Image.SCALE_DEFAULT));
+        ImageIcon imageIcon = new ImageIcon(new ImageIcon("./src/view/image/FondPrincipal.png").getImage().getScaledInstance((int)dimension.getWidth(),(int)dimension.getHeight()-30, Image.SCALE_DEFAULT));
         Image backgroundConnexion =  imageIcon.getImage();
         return backgroundConnexion;
     }
