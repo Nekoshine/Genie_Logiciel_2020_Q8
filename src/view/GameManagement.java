@@ -293,10 +293,10 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
                     int idRoom = Main.ListRoom.findByID(frame.roomNumber).getId();
 
                     if(DBRoom.isInDB(idRoom,idOldGame)) {
-                        DBRoom.majRoom(Main.ListRoom.findByID(frame.roomNumber).getId(),jeu.getId(),competitionCheck.isSelected());
+                        DBRoom.majRoom(Main.ListRoom.findByID(frame.roomNumber).getId(),jeu.getId(),competitionCheck.isSelected(),-1);
                     }
                     else{
-                        DBRoom.insertRoom(Main.ListRoom.findByID(frame.roomNumber).getId(), jeu.getId(),competitionCheck.isSelected());
+                        DBRoom.insertRoom(Main.ListRoom.findByID(frame.roomNumber).getId(), jeu.getId(),competitionCheck.isSelected(),-1);
                     }
                     frame.roomManagementDisplay(frame);
 

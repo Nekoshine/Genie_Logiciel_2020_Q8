@@ -37,7 +37,7 @@ public class DBRoom extends DBConnexion{
                         ,resultat.getInt("score")
                         ,idUser
                         ,resultat.getInt("timer")
-                        , Boolean.valueOf(resultat.getString("ready")),resultat.getString("Game.messageFin"),competitive));
+                        , Boolean.valueOf(resultat.getString("ready")),resultat.getString("Game.messageFin"),competitive,resultat.getInt("UserInside")));
 
             }
             //for (int i=0;i<roomList.getSize() ;i++ ) {         System.out.println(roomList.getRoom(i).getId()); System.out.println(roomList.getRoom(i).getGame());       }
@@ -80,7 +80,7 @@ public class DBRoom extends DBConnexion{
      * @param idGame le jeu associé
      * @return true si la salle a été inséré
      */
-    public static boolean insertRoom(int id,int idGame,boolean competitive) {
+    public static boolean insertRoom(int id,int idGame,boolean competitive, int userInside) {
         boolean inserted=false;
         try{
             PreparedStatement requetePresence = DBConnexion.getConnexion().prepareStatement("SELECT * FROM Room WHERE id=? AND idGame=?"); // On regarde si la salle n'est pas deja dans la BDD
@@ -94,10 +94,11 @@ public class DBRoom extends DBConnexion{
             }else{
                 requetePresence.close();
                 resultatPresence.close();
-                PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("INSERT INTO Room VALUES (?,?,?)");
+                PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("INSERT INTO Room VALUES (?,?,?,?)");
                 requete.setString(1, String.valueOf(id));
                 requete.setString(2, String.valueOf(idGame));
                 requete.setBoolean(3, competitive);
+                requete.setInt(4,userInside);
                 requete.executeUpdate();
                 requete.close();
 
@@ -124,13 +125,14 @@ public class DBRoom extends DBConnexion{
      * @param idGame le nouveau jeu
      * @return true si la mise à jour a fonctionné
      */
-    public static boolean majRoom(int id, int idGame, boolean competitive){
+    public static boolean majRoom(int id, int idGame, boolean competitive, int userInside){
         boolean inserted = false;
         try{
-            PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("UPDATE Room SET idGame=?,competitive=? WHERE id=?");
+            PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("UPDATE Room SET idGame=?,competitive=?,UserInside=? WHERE id=?");
             requete.setInt(1, idGame);
             requete.setBoolean(2, competitive);
-            requete.setInt(3, id);
+            requete.setInt(3, userInside);
+            requete.setInt(4, id);
             requete.executeUpdate();
             requete.close();
 
