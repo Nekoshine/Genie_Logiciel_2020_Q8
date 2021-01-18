@@ -220,6 +220,7 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
                         Toolkit.getDefaultToolkit().beep();
                         JOptionPane.showMessageDialog(frame, "Le jeu ne peut pas être supprimé car il est utilisé par une salle", "Erreur", JOptionPane.ERROR_MESSAGE);
                     }
+                    Main.frame.setContentPane(getInstance(frame,frame.roomNumber));
                 }
             });
             buttonDelete.addMouseListener(new MouseListener() {
