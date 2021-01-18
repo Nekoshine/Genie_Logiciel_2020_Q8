@@ -196,13 +196,13 @@ public class GlobalFrame extends JFrame {
         frame.repaint();
     }
 
-    public void currentGameDisplay(GlobalFrame frame,Game partie){
+    public void currentGameDisplay(GlobalFrame frame,Game partie,int idRoom){
 
-        currentGame = CurrentGame.getInstance(frame,partie);
+        currentGame = CurrentGame.getInstance(frame,partie,idRoom);
+
         setContentPane(currentGame);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        frame.setResizable(true);
-        this.setLocationRelativeTo(null);
+        frame.setResizable(false);
         frame.revalidate();
         frame.repaint();
 

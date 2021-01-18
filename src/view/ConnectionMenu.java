@@ -139,7 +139,7 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
         }
         else if( isAdmin==0){
             //Client.connectToServer();
-            Main.ListRoom = DBRoom.getRooms(3); //si le joueur est le numero
+            Main.ListRoom = DBRoom.getRooms(5); //si le joueur est le numero
             Main.frame.roomAccessDisplay(Main.frame,Main.ListRoom);
             //Client.recepAdminInfo()
         }

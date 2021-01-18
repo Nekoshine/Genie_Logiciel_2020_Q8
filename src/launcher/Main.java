@@ -8,6 +8,7 @@ import view.GlobalFrame;
 import view.MainMenu;
 import view.RoomManagement;
 
+import java.awt.*;
 import java.io.IOException;
 
 public class Main {
@@ -25,6 +26,7 @@ public class Main {
 
         /* Création de la vue */
         //System.setProperty("sun.java2d.opengl","True");
+
         frame = GlobalFrame.getInstance();
 
         /*Thread thread = new Thread(){
