@@ -5,6 +5,7 @@ import database.DBGame;
 import launcher.Main;
 import database.DBRoom;
 import launcher.Main;
+import model.Enigma;
 import model.EnigmaList;
 import model.Game;
 import model.Room;
@@ -16,6 +17,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import javax.print.attribute.standard.MediaSize;
 import javax.swing.*;
 import javax.swing.Timer;
 
@@ -36,6 +38,7 @@ public class CurrentGame extends JPanel implements ActionListener {
     private JPanel hintContainer2;
     private JPanel hintContainer3;
     private JPanel hintMJContainer;
+    private JPanel currentEnigmaPanel;
     private JPanelImage componentPanel;
 
     private JScrollPane currentEnigmaScroll;
@@ -58,10 +61,10 @@ public class CurrentGame extends JPanel implements ActionListener {
     private JTextArea hint2TextArea;
     private JTextArea hint3TextArea;
     private JTextArea hintMJTextArea;
+    private JTextField answerTextField;
 
     private JLabel titleLabel;
     private JLabel countdownLabel;
-    private JLabel window;
 
     private GridBagConstraints gbcfirstraw;
     private GridBagConstraints gbcglobal;
@@ -96,9 +99,6 @@ public class CurrentGame extends JPanel implements ActionListener {
 
     private CurrentGame (GlobalFrame frame, Game partiechoisie){
 
-
-
-
         imageIconValide = new ImageIcon(new ImageIcon("./src/view/image/valide.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
         imageIconRefus = new ImageIcon(new ImageIcon("./src/view/image/refus.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
         windowSize = frame.getSize();
@@ -118,10 +118,10 @@ public class CurrentGame extends JPanel implements ActionListener {
 
         // nom de la fenetre
 
-        firstRawPanel = new JPanel();
+        JPanel firstRawPanel = new JPanel();
         firstRawPanel.setLayout(new FlowLayout());
 
-        window = new JLabel("Joueur - Fenêtre de jeu");
+        JLabel window = new JLabel("Joueur - Fenêtre de jeu");
 
         firstRawPanel.add(window);
         firstRawPanel.setBorder((BorderFactory.createLineBorder(Color.BLACK,2)));
@@ -130,14 +130,14 @@ public class CurrentGame extends JPanel implements ActionListener {
 
         //titre + timer
 
-        secondRawPanel = new JPanel();
+        JPanel secondRawPanel = new JPanel();
         secondRawPanel.setLayout(new GridBagLayout());
 
         gbcfirstraw = new GridBagConstraints();
         gbcfirstraw.weightx = 1;
         gbcfirstraw.fill = GridBagConstraints.HORIZONTAL;
 
-        secondRawPanelIn1 = new JPanel();
+        JPanel secondRawPanelIn1 = new JPanel();
         secondRawPanelIn1.setLayout(new FlowLayout(FlowLayout.LEFT));
         secondRawPanelIn1.setPreferredSize(new Dimension((int)((float) windowSize.getWidth()*0.95),30));
         secondRawPanelIn1.setOpaque(false);
@@ -170,7 +170,7 @@ public class CurrentGame extends JPanel implements ActionListener {
         currentEnigmaTextArea.setLineWrap(true);
         currentEnigmaTextArea.setWrapStyleWord(true);
         currentEnigmaTextArea.setEditable(false);
-        currentEnigmaScroll = new JScrollPane(currentEnigmaTextArea,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        currentEnigmaScroll = new JScrollPane(currentEnigmaTextArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         currentEnigmaScroll.getVerticalScrollBar().setUnitIncrement(20);
         currentEnigmaScroll.setBorder(BorderFactory.createEmptyBorder());
 
@@ -180,7 +180,7 @@ public class CurrentGame extends JPanel implements ActionListener {
         currentEnigmaPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         currentEnigmaPanel.add(currentEnigmaScroll);
 
-        currentEnigmaPanelOUT = new JPanel();
+        JPanel currentEnigmaPanelOUT = new JPanel();
         currentEnigmaPanelOUT.setLayout(new GridLayout(1,1));
         currentEnigmaPanelOUT.setPreferredSize(new Dimension((int)((float) windowSize.getWidth()*0.95),(int)((float) windowSize.getHeight()*0.25)));
         currentEnigmaPanelOUT.setBorder(BorderFactory.createEmptyBorder(5,10,5,10));
@@ -199,7 +199,7 @@ public class CurrentGame extends JPanel implements ActionListener {
         //confirmButton.setPreferredSize(new Dimension(30,15));
         confirmButton.addActionListener(this);
 
-        fourthRawPanel = new JPanel();
+        JPanel fourthRawPanel = new JPanel();
         fourthRawPanel.setLayout(new FlowLayout(FlowLayout.CENTER,20,0));
         fourthRawPanel.setSize(new Dimension((int)((float) windowSize.getWidth()*0.95),10));
         fourthRawPanel.setBorder(BorderFactory.createEmptyBorder(5,10,5,10));
@@ -214,16 +214,16 @@ public class CurrentGame extends JPanel implements ActionListener {
         oldEnigmaTextArea.setLineWrap(true);
         oldEnigmaTextArea.setWrapStyleWord(true);
         oldEnigmaTextArea.setEditable(false);
-        oldEnigmaScroll = new JScrollPane(oldEnigmaTextArea,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        JScrollPane oldEnigmaScroll = new JScrollPane(oldEnigmaTextArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         oldEnigmaScroll.getVerticalScrollBar().setUnitIncrement(20);
         oldEnigmaScroll.setBorder(BorderFactory.createEmptyBorder());
 
-        oldEnigmaPanel = new JPanel();
+        JPanel oldEnigmaPanel = new JPanel();
         oldEnigmaPanel.setLayout(new GridLayout(1,1));
         oldEnigmaPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         oldEnigmaPanel.add(oldEnigmaScroll);
 
-        oldEnigmaPanelOUT = new JPanel();
+        JPanel oldEnigmaPanelOUT = new JPanel();
         oldEnigmaPanelOUT.setLayout(new GridLayout(1,1));
         oldEnigmaPanelOUT.setPreferredSize(new Dimension((int)((float) windowSize.getWidth()*0.95),(int)((float) windowSize.getHeight()*0.25)));
         oldEnigmaPanelOUT.setBorder(BorderFactory.createEmptyBorder(5,10,5,10));
@@ -231,7 +231,7 @@ public class CurrentGame extends JPanel implements ActionListener {
         oldEnigmaPanelOUT.setOpaque(false);
         // indices
 
-        hint1Button = new JButton("hint1");
+        hint1Button = new JButton("Indice n°1");
         hint1Button.setEnabled(true);
         hint1Button.setBackground(Color.GRAY);
         hint1Button.addActionListener(this);
@@ -277,7 +277,7 @@ public class CurrentGame extends JPanel implements ActionListener {
         hintMJContainer.setPreferredSize(new Dimension((int)((float)windowSize.getWidth()*0.35),(int)((float) windowSize.getHeight()*0.15)));
         hintMJContainer.add(hintMJTextArea);
 
-        hintRawPanel = new JPanel();
+        JPanel hintRawPanel = new JPanel();
         hintRawPanel.setLayout(new FlowLayout(FlowLayout.CENTER,40,0));
         hintRawPanel.setOpaque(false);
 
@@ -359,10 +359,30 @@ public class CurrentGame extends JPanel implements ActionListener {
             }
         }
         else {
+            INSTANCE.enigmalistflag=0;
+            int enigmalistflag = INSTANCE.enigmalistflag;
             INSTANCE.frame=frame;
             INSTANCE.allEnigmas = DBEnigma.getEnigmas(partiechoisie.getId());
+            EnigmaList allEnigmas = INSTANCE.allEnigmas;
+
             INSTANCE.game = DBGame.getGame(partiechoisie.getId());
             INSTANCE.titleLabel.setText(partiechoisie.getTitre());
+            INSTANCE.currentEnigmaTextArea.setText(allEnigmas.getEnigma(enigmalistflag).getText());
+
+            INSTANCE.hintContainer1.removeAll();
+            INSTANCE.hintContainer1.add(INSTANCE.hint1Button);
+
+            INSTANCE.hintContainer2.removeAll();
+            INSTANCE.hintContainer2.add(INSTANCE.hint2Button);
+
+            INSTANCE.hintContainer3.removeAll();
+            INSTANCE.hintContainer3.add(INSTANCE.hint3Button);
+
+            INSTANCE.answerTextField.setText("");
+
+            INSTANCE.oldEnigmaTextArea.setText("");
+
+
         }
         return INSTANCE;
     }
@@ -374,7 +394,7 @@ public class CurrentGame extends JPanel implements ActionListener {
             hint1TextArea.setLineWrap(true);
             hint1TextArea.setWrapStyleWord(true);
             hint1TextArea.setEditable(false);
-            hint1Scroll = new JScrollPane(hint1TextArea,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+            hint1Scroll = new JScrollPane(hint1TextArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
             hint1Scroll.getVerticalScrollBar().setUnitIncrement(20);
             hint1Scroll.setBorder(BorderFactory.createEmptyBorder());
             hintContainer1.remove(hint1Button);
@@ -390,7 +410,7 @@ public class CurrentGame extends JPanel implements ActionListener {
                 hint2TextArea.setLineWrap(true);
                 hint2TextArea.setWrapStyleWord(true);
                 hint2TextArea.setEditable(false);
-                hint2Scroll = new JScrollPane(hint2TextArea,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+                hint2Scroll = new JScrollPane(hint2TextArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
                 hint2Scroll.getVerticalScrollBar().setUnitIncrement(20);
                 hint2Scroll.setBorder(BorderFactory.createEmptyBorder());
                 hintContainer2.remove(hint2Button);
@@ -408,7 +428,7 @@ public class CurrentGame extends JPanel implements ActionListener {
                 hint3TextArea.setLineWrap(true);
                 hint3TextArea.setWrapStyleWord(true);
                 hint3TextArea.setEditable(false);
-                hint3Scroll = new JScrollPane(hint3TextArea,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+                hint3Scroll = new JScrollPane(hint3TextArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
                 hint3Scroll.getVerticalScrollBar().setUnitIncrement(20);
                 hint3Scroll.setBorder(BorderFactory.createEmptyBorder());
                 hintContainer3.remove(hint3Button);
@@ -434,6 +454,7 @@ public class CurrentGame extends JPanel implements ActionListener {
                     //maj des champs relatifs aux enigmes
 
                     oldEnigmaTextArea.append(allEnigmas.getEnigma(enigmalistflag).getText());
+                    oldEnigmaTextArea.append("\n\n");
                     enigmalistflag++;
                     currentEnigmaPanel.remove(currentEnigmaScroll);
                     currentEnigmaTextArea = new JTextArea(allEnigmas.getEnigma(enigmalistflag).getText());
