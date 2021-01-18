@@ -81,7 +81,7 @@ public class DBGame extends DBConnexion {
     * @param readyN
     * @return true si le jeu a été inséré
     */
-    public static boolean insertGame(String titreN,int scoreN,int idUserN,int timerN,Boolean readyN){
+    public static boolean insertGame(String titreN,int scoreN,int idUserN,int timerN,Boolean readyN,String message){
         boolean inserted = false;
         int valueReady=0;
         try{
@@ -91,7 +91,7 @@ public class DBGame extends DBConnexion {
             requete.setInt(3,scoreN);
             requete.setInt(4,timerN);
             requete.setBoolean(5,readyN);
-            requete.setString(6,"Félicitation");
+            requete.setString(6,message);
             if(readyN){
                 valueReady=1;
             }
@@ -169,15 +169,16 @@ public class DBGame extends DBConnexion {
      * @param readyN
      * @return
      */
-    public static boolean majGame(int idGame, String titreN,int scoreN,int timerN,Boolean readyN){
+    public static boolean majGame(int idGame, String titreN,int scoreN,int timerN,Boolean readyN, String message){
         boolean inserted = false;
         try{
-            PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("UPDATE Game SET titre=?, score=?, timer=?, ready=? WHERE id=?");
+            PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("UPDATE Game SET titre=?, score=?, timer=?, ready=?, messageFin=? WHERE id=?");
             requete.setString(1, titreN);
             requete.setInt(2, scoreN);
             requete.setInt(3, timerN);
             requete.setBoolean(4, readyN);
-            requete.setInt(5, idGame);
+            requete.setString(5, message);
+            requete.setInt(6, idGame);
             requete.executeUpdate();
             requete.close();
             /*reste la verif a faire*/

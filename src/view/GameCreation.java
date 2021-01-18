@@ -133,16 +133,20 @@ public class GameCreation extends JPanel implements ActionListener {
         if(game==null) {
             title = new JTextField("Titre", 45);
             initialScore = new JTextField("Score Initial", 7);
+            winMessage = new JTextField();
         }
         else {
             title = new JTextField(game.getTitre(),45);
             initialScore = new JTextField(String.valueOf(game.getScore()),7);
+            winMessage = new JTextField(game.getEndMessage());
         }
         points = new JTextField("Points (Si désiré)",7);
-        winMessage = new JTextField();
-        winMessageLabel = new JLabel("Message de victoire :",SwingConstants.RIGHT);
+
+        winMessageLabel = new JLabel("Message de fin :",SwingConstants.RIGHT);
         JPanel winLabelPanel = new JPanel();
         winLabelPanel.add(winMessageLabel);
+
+
 
 
 
@@ -326,6 +330,7 @@ public class GameCreation extends JPanel implements ActionListener {
             if (game != null){
                 INSTANCE.title.setText(game.getTitre());
                 INSTANCE.initialScore.setText(String.valueOf(game.getScore()));
+                INSTANCE.winMessage.setText(game.getEndMessage());
             }
             else{
                 INSTANCE.title.setText("Titre");
@@ -630,12 +635,12 @@ public class GameCreation extends JPanel implements ActionListener {
             int idUser = Main.idUser;
             int timer = 0;
             boolean ready = true;
-
+            String endMessage = winMessage.getText();
             if(game!=null){
-                DBGame. majGame(game.getId(), titre,score,timer,ready);
+                DBGame. majGame(game.getId(), titre,score,timer,ready,endMessage);
             }
             else{
-                DBGame.insertGame(titre,score,idUser,timer,ready);
+                DBGame.insertGame(titre,score,idUser,timer,ready,endMessage);
                 ajout = true;
             }
 
