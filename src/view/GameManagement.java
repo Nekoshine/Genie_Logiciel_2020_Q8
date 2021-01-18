@@ -147,6 +147,7 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
             else{
                 INSTANCE.newButton.setVisible(false);
             }
+            INSTANCE.returnButton.setBackground(ColorPerso.rouge);
         }
         return INSTANCE;
     }
@@ -262,6 +263,7 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
             boutonChoix.addActionListener(new AbstractAction() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    System.out.println(competitionCheck.isSelected());
                     Game oldGame = Main.ListRoom.findByID(frame.roomNumber).getGame();
                     int idOldGame=0;
                     if(oldGame!=null) {
@@ -275,10 +277,10 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
                     int idRoom = Main.ListRoom.findByID(frame.roomNumber).getId();
 
                     if(DBRoom.isInDB(idRoom,idOldGame)) {
-                        DBRoom.majGame(Main.ListRoom.findByID(frame.roomNumber).getId(),jeu.getId());
+                        DBRoom.majRoom(Main.ListRoom.findByID(frame.roomNumber).getId(),jeu.getId(),competitionCheck.isSelected());
                     }
                     else{
-                        DBRoom.insertRoom(Main.ListRoom.findByID(frame.roomNumber).getId(), jeu.getId());
+                        DBRoom.insertRoom(Main.ListRoom.findByID(frame.roomNumber).getId(), jeu.getId(),competitionCheck.isSelected());
                     }
                     frame.roomManagementDisplay(frame);
 

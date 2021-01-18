@@ -108,6 +108,7 @@ public class MainMenu extends JPanel implements ActionListener, MouseListener {
         else {
             INSTANCE.frame=frame;
             new ImageLoaderMainMenu(INSTANCE,frame.getSize()).execute();
+            INSTANCE.deconnection.setBackground(ColorPerso.rouge);
         }
         return INSTANCE;
     }

@@ -12,7 +12,7 @@ class DBRoomTest {
 
     @Test
     final void testInsertRoom() {
-        boolean test = DBRoom.insertRoom(DBRoom.getMax()+1,idGame);
+        boolean test = DBRoom.insertRoom(DBRoom.getMax()+1,idGame,true);
         Assertions.assertTrue(test, "Echec de l'ajout de la room");
     }
 
@@ -31,7 +31,7 @@ class DBRoomTest {
     final void testGetRooms() {
         int id = DBRoom.getMax()+1;
         boolean test=false;
-        boolean insert = DBRoom.insertRoom(id,idGame);
+        boolean insert = DBRoom.insertRoom(id,idGame,true);
         if(insert){
             RoomList listRoom = DBRoom.getRooms(3);
             Room room = listRoom.getRoom(listRoom.getSize()-1);
@@ -50,9 +50,9 @@ class DBRoomTest {
     final void TestMajJeu(){
         int id = DBRoom.getMax()+1;
         boolean test=false;
-        boolean insert = DBRoom.insertRoom(id,idGame);
+        boolean insert = DBRoom.insertRoom(id,idGame,true);
         if(insert) {
-            test = DBRoom.majGame(id, 3);
+            test = DBRoom.majRoom(id, 3,false);
             Assertions.assertTrue(test, "Echec de la mise a jour");
         }
         else {

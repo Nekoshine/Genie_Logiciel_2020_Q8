@@ -20,8 +20,8 @@ public class RoomList {
    * @param id du jeu
    * @param Game associé a la salle
    */
-  public void addRoom(int id, Game Game){
-    List.add(new Room(id,Game));
+  public void addRoom(int id, Game Game,boolean competitive){
+    List.add(new Room(id,Game,competitive));
   }
 
   /**

@@ -143,6 +143,7 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
             Main.ListRoom=DBRoom.getRooms(Main.idUser);
             INSTANCE.ListRoom = Main.ListRoom;
             INSTANCE.createList();
+            INSTANCE.returnButton.setBackground(ColorPerso.rouge);
         }
         return INSTANCE;
     }
@@ -305,7 +306,7 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
     }
 
     private void majRoom() {
-        ListRoom.addRoom(DBRoom.getMax()+1,null);
+        ListRoom.addRoom(DBRoom.getMax()+1,null,false);
         this.createList();
     }
 

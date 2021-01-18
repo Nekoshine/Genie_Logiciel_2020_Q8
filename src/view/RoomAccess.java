@@ -277,7 +277,7 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
     }
 
     private void majRoom() {
-        ListRoom.addRoom(ListRoom.getSize()+1,null);
+        ListRoom.addRoom(ListRoom.getSize()+1,null,false);
         this.createList();
     }
 

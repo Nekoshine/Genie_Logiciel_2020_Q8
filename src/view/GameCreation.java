@@ -294,6 +294,7 @@ public class GameCreation extends JPanel implements ActionListener {
                 INSTANCE.rankingButton.setBackground(Color.darkGray);
             }
             INSTANCE.game=game;
+            //INSTANCE.exitButton.setBackground(ColorPerso.rouge);
         }
 
         return INSTANCE;
@@ -587,11 +588,9 @@ public class GameCreation extends JPanel implements ActionListener {
             boolean ready = true;
 
             if(game!=null){
-                System.out.println("Mise a jour");
                 DBGame. majGame(game.getId(), titre,score,timer,ready);
             }
             else{
-                System.out.println("Insertion");
                 DBGame.insertGame(titre,score,idUser,timer,ready);
                 ajout = true;
             }
@@ -619,20 +618,11 @@ public class GameCreation extends JPanel implements ActionListener {
                 int timer2 = enigme.getTimer2();
                 int timer3 = enigme.getTimer3();
 
-                System.out.println(id);
-                System.out.println(text);
-                System.out.println(answer);
-                System.out.println(clue1 + " " + timer1);
-                System.out.println(clue2 + " " + timer2);
-                System.out.println(clue3 + " " + timer3);
-
                 if(DBEnigma.isInDB(id)){
-                    System.out.println("Mise a jour");
                     DBEnigma.majEnigma(id, text,answer, clue1, timer1,clue2, timer2,clue3, timer3);
 
                 }
                 else{
-                    System.out.println("Insertion");
                     DBEnigma.insertEnigma(game.getId(),text,answer, clue1, timer1,clue2, timer2,clue3, timer3);
                 }
             }
