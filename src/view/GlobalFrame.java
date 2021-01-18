@@ -198,7 +198,7 @@ public class GlobalFrame extends JFrame {
 
     public void currentGameDisplay(GlobalFrame frame,Game partie){
 
-        currentGame = new CurrentGame(frame,partie);
+        currentGame = CurrentGame.getInstance(frame,partie);
         setContentPane(currentGame);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setResizable(true);

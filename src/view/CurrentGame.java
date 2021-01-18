@@ -2,6 +2,8 @@ package view;
 
 import database.DBEnigma;
 import database.DBGame;
+import database.DBRoom;
+import launcher.Main;
 import model.EnigmaList;
 import model.Game;
 import view.SwingWorkers.ImageLoaderMainMenu;
@@ -85,7 +87,9 @@ public class CurrentGame extends JPanel implements ActionListener {
 
     private GlobalFrame frame;
 
-    public CurrentGame (GlobalFrame frame, Game partiechoisie ){
+    private static volatile CurrentGame INSTANCE = new CurrentGame(Main.frame,new Game(9,"perdu",12,3,0,true,"end"));
+
+    private CurrentGame (GlobalFrame frame, Game partiechoisie ){
 
         imageIconValide = new ImageIcon(new ImageIcon("./src/view/image/valide.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
         imageIconRefus = new ImageIcon(new ImageIcon("./src/view/image/refus.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
@@ -101,8 +105,6 @@ public class CurrentGame extends JPanel implements ActionListener {
 
         ishint3present = !(allEnigmas.getEnigma(enigmalistflag).getClue3().isEmpty());
         if(ishint3present){timerclue3 = allEnigmas.getEnigma(enigmalistflag).getTimer3();};
-
-
 
 
         // nom de la fenetre
@@ -322,6 +324,29 @@ public class CurrentGame extends JPanel implements ActionListener {
         this.add(componentPanel,BorderLayout.CENTER);
         this.setBackground(ColorPerso.darkGray);
 
+    }
+
+    public final static CurrentGame getInstance(GlobalFrame frame, Game partiechoisie) {
+        //Le "Double-Checked Singleton"/"Singleton doublement vérifié" permet
+        //d'éviter un appel coûteux à synchronized,
+        //une fois que l'instanciation est faite.
+        if (INSTANCE == null) {
+            // Le mot-clé synchronized sur ce bloc empêche toute instanciation
+            // multiple même par différents "threads".
+            // Il est TRES important.
+            synchronized(INSTANCE) {
+                if (INSTANCE == null) {
+                    INSTANCE = new CurrentGame(frame,partiechoisie);
+                }
+            }
+        }
+        else {
+            INSTANCE.frame=frame;
+            INSTANCE.allEnigmas = DBEnigma.getEnigmas(partiechoisie.getId());
+            INSTANCE.game = DBGame.getGame(partiechoisie.getId());
+            INSTANCE.titleLabel.setText(partiechoisie.getTitre());
+        }
+        return INSTANCE;
     }
 
 
