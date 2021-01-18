@@ -188,7 +188,12 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
 
         JLabel nomJeu;
         if (salle.getGame() != null) {
-            nomJeu = new JLabel(salle.getGame().getTitre());
+            if(salle.getCompetitive()) {
+                nomJeu = new JLabel("Competitif : "+salle.getGame().getTitre());
+            }
+            else {
+                nomJeu = new JLabel(salle.getGame().getTitre());
+            }
         } else {
             nomJeu = new JLabel("Pas de jeu");
         }

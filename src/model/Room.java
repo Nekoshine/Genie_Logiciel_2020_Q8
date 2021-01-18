@@ -16,6 +16,7 @@ public class Room {
     public Room(int id, int idGame,String titre,int score,int idUser,int timer,Boolean ready,String endMessage, boolean competitive){
         this.id = id;
         this.game = new Game(idGame,titre,score,idUser,timer,ready,endMessage);
+        this.competitive = competitive;
     }
 
     public int getId(){

@@ -128,9 +128,9 @@ public class DBRoom extends DBConnexion{
         boolean inserted = false;
         try{
             PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("UPDATE Room SET idGame=?,competitive=? WHERE id=?");
-            requete.setString(1, String.valueOf(idGame));
-            requete.setString(2, String.valueOf(competitive));
-            requete.setString(3, String.valueOf(id));
+            requete.setInt(1, idGame);
+            requete.setBoolean(2, competitive);
+            requete.setInt(3, id);
             requete.executeUpdate();
             requete.close();
 
