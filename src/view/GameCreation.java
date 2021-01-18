@@ -335,6 +335,7 @@ public class GameCreation extends JPanel implements ActionListener {
             else{
                 INSTANCE.title.setText("Titre");
                 INSTANCE.initialScore.setText("Score Initial");
+                INSTANCE.winMessage.setText("");
             }
             INSTANCE.listEnigma=Main.ListEnigma;
             INSTANCE.createList();
