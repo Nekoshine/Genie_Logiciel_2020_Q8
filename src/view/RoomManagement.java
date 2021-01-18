@@ -311,7 +311,7 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
     }
 
     private void majRoom() {
-        ListRoom.addRoom(DBRoom.getMax()+1,null,false);
+        ListRoom.addRoom(DBRoom.getMax()+1,null,false,-1);
         this.createList();
     }
 
