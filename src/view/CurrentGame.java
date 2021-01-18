@@ -4,6 +4,7 @@ import database.DBEnigma;
 import database.DBGame;
 import model.EnigmaList;
 import model.Game;
+import view.SwingWorkers.ImageLoaderMainMenu;
 import view.style.ColorPerso;
 
 import java.awt.*;
@@ -15,12 +16,13 @@ import javax.swing.Timer;
 
 public class CurrentGame extends JPanel implements ActionListener {
 
-    private JPanel firstRawPanel ;
-    private JPanel firstRawPanelIn1;
-    private JPanel firstRawPanelIn2;
+    private JPanel firstRawPanel;
+    private JPanel secondRawPanel;
+    private JPanel secondRawPanelIn1;
+    private JPanel secondRawPanelIn2;
     private JPanel currentEnigmaPanel;
     private JPanel currentEnigmaPanelOUT;
-    private JPanel thirdRawPanel;
+    private JPanel fourthRawPanel;
     private JPanel oldEnigmaPanel;
     private JPanel oldEnigmaPanelOUT;
     private JPanel hintRawPanel;
@@ -28,6 +30,7 @@ public class CurrentGame extends JPanel implements ActionListener {
     private JPanel hintContainer2;
     private JPanel hintContainer3;
     private JPanel hintMJContainer;
+    private JPanelImage componentPanel;
 
     private JScrollPane currentEnigmaScroll;
     private JScrollPane oldEnigmaScroll;
@@ -52,6 +55,10 @@ public class CurrentGame extends JPanel implements ActionListener {
 
     private JLabel titleLabel;
     private JLabel countdownLabel;
+    private JLabel window;
+
+    private GridBagConstraints gbcfirstraw;
+    private GridBagConstraints gbcglobal;
 
     private int enigmalistflag = 0;
     private int timerclue1;
@@ -70,6 +77,7 @@ public class CurrentGame extends JPanel implements ActionListener {
     private Game game;
 
 
+
     private Timer countdownenigma;
     private Timer timeonenigma;
 
@@ -81,6 +89,7 @@ public class CurrentGame extends JPanel implements ActionListener {
 
         imageIconValide = new ImageIcon(new ImageIcon("./src/view/image/valide.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
         imageIconRefus = new ImageIcon(new ImageIcon("./src/view/image/refus.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+
 
         this.frame = frame;
         allEnigmas = DBEnigma.getEnigmas(partiechoisie.getId());
@@ -94,34 +103,55 @@ public class CurrentGame extends JPanel implements ActionListener {
         if(ishint3present){timerclue3 = allEnigmas.getEnigma(enigmalistflag).getTimer3();};
 
 
-        //titre + timer
+
+
+        // nom de la fenetre
 
         firstRawPanel = new JPanel();
-        firstRawPanel.setLayout(new FlowLayout(FlowLayout.LEFT,160,0));
-        firstRawPanel.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.95),35));
-        firstRawPanel.setBorder(BorderFactory.createEmptyBorder(10,10,5,5));
+        firstRawPanel.setLayout(new FlowLayout());
 
-        firstRawPanelIn1 = new JPanel();
-        firstRawPanelIn1.setLayout(new FlowLayout(FlowLayout.LEFT));
-        firstRawPanelIn1.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.95),30));
+        window = new JLabel("Joueur - Fenêtre de jeu");
+
+        firstRawPanel.add(window);
+        firstRawPanel.setBorder((BorderFactory.createLineBorder(Color.BLACK,2)));
+
+
+
+        //titre + timer
+
+        secondRawPanel = new JPanel();
+        secondRawPanel.setLayout(new GridBagLayout());
+
+        gbcfirstraw = new GridBagConstraints();
+        gbcfirstraw.weightx = 1;
+        gbcfirstraw.fill = GridBagConstraints.HORIZONTAL;
+
+        secondRawPanelIn1 = new JPanel();
+        secondRawPanelIn1.setLayout(new FlowLayout(FlowLayout.LEFT));
+        secondRawPanelIn1.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.95),30));
+        secondRawPanelIn1.setOpaque(false);
 
         titleLabel = new JLabel(partiechoisie.getTitre());
-        titleLabel.setMaximumSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.60),20));
+        titleLabel.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.60),20));
         titleLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
 
-        countdownLabel = new JLabel("Timer");
-        countdownLabel.setMaximumSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.20),20));
+
+        countdownLabel = new JLabel("Timer",SwingConstants.CENTER);
+        countdownLabel.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.10),20));
         countdownLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
 
-        firstRawPanelIn2 = new JPanel();
-        firstRawPanelIn2.setLayout(new FlowLayout(FlowLayout.RIGHT));
-        firstRawPanelIn2.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.20),30));
+        secondRawPanelIn2 = new JPanel();
+        secondRawPanelIn2.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        secondRawPanelIn2.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.20),30));
+        secondRawPanelIn2.setOpaque(false);
 
 
-        firstRawPanelIn1.add(titleLabel);
-        firstRawPanelIn2.add(countdownLabel);
-        firstRawPanel.add(firstRawPanelIn1);
-        firstRawPanel.add(firstRawPanelIn2);
+        secondRawPanelIn1.add(titleLabel);
+        secondRawPanelIn2.add(countdownLabel);
+        secondRawPanel.add(secondRawPanelIn1,gbcfirstraw);
+        secondRawPanel.add(secondRawPanelIn2,gbcfirstraw);
+        secondRawPanel.setBorder(BorderFactory.createEmptyBorder(5,50,5,50));
+        secondRawPanel.setOpaque(false);
 
         //Enigme en cours
 
@@ -144,26 +174,28 @@ public class CurrentGame extends JPanel implements ActionListener {
         currentEnigmaPanelOUT.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.95),(int)((float) frame.windowSize.getHeight()*0.25)));
         currentEnigmaPanelOUT.setBorder(BorderFactory.createEmptyBorder(5,10,5,10));
         currentEnigmaPanelOUT.add(currentEnigmaPanel);
+        currentEnigmaPanelOUT.setOpaque(false);
 
         // Champs de reponse + bouton de confirmation
 
         answerTextField = new JTextField("your answer");
         answerTextField.setColumns(30);
         answerTextField.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
-        answerTextField.setMaximumSize(new Dimension(60,15));
+        //answerTextField.setMaximumSize(new Dimension(60,15));
 
         confirmButton = new JButton("Confirmer");
         confirmButton.setBackground(ColorPerso.vert);
-        confirmButton.setMaximumSize(new Dimension(30,15));
+        //confirmButton.setPreferredSize(new Dimension(30,15));
         confirmButton.addActionListener(this);
 
-        thirdRawPanel = new JPanel();
-        thirdRawPanel.setLayout(new FlowLayout(FlowLayout.CENTER,20,0));
-        thirdRawPanel.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.95),35));
-        thirdRawPanel.setBorder(BorderFactory.createEmptyBorder(5,10,5,10));
+        fourthRawPanel = new JPanel();
+        fourthRawPanel.setLayout(new FlowLayout(FlowLayout.CENTER,20,0));
+        fourthRawPanel.setSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.95),10));
+        fourthRawPanel.setBorder(BorderFactory.createEmptyBorder(5,10,5,10));
 
-        thirdRawPanel.add(answerTextField);
-        thirdRawPanel.add(confirmButton);
+        fourthRawPanel.add(answerTextField);
+        fourthRawPanel.add(confirmButton);
+        fourthRawPanel.setOpaque(false);
 
         //anciennes enigmes
 
@@ -185,7 +217,7 @@ public class CurrentGame extends JPanel implements ActionListener {
         oldEnigmaPanelOUT.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.95),(int)((float) frame.windowSize.getHeight()*0.25)));
         oldEnigmaPanelOUT.setBorder(BorderFactory.createEmptyBorder(5,10,5,10));
         oldEnigmaPanelOUT.add(oldEnigmaPanel);
-
+        oldEnigmaPanelOUT.setOpaque(false);
         // indices
 
         hint1Button = new JButton("hint1");
@@ -236,6 +268,7 @@ public class CurrentGame extends JPanel implements ActionListener {
 
         hintRawPanel = new JPanel();
         hintRawPanel.setLayout(new FlowLayout(FlowLayout.CENTER,40,0));
+        hintRawPanel.setOpaque(false);
 
         hintRawPanel.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.95),(int)((float) frame.windowSize.getHeight()*0.18)));
         hintRawPanel.add(hintContainer1);
@@ -243,17 +276,51 @@ public class CurrentGame extends JPanel implements ActionListener {
         hintRawPanel.add(hintContainer3);
         hintRawPanel.add(hintMJContainer);
 
-        this.setLayout(new BoxLayout(this , BoxLayout.PAGE_AXIS));
-        this.add(firstRawPanel);
-        this.add(Box.createRigidArea(new Dimension(0, 10)));
-        this.add(currentEnigmaPanelOUT);
-        this.add(Box.createRigidArea(new Dimension(0, 20)));
-        this.add(thirdRawPanel);
-        this.add(Box.createRigidArea(new Dimension(0, 20)));
-        this.add(oldEnigmaPanelOUT);
-        this.add(Box.createRigidArea(new Dimension(0, 30)));
-        this.add(hintRawPanel);
+        componentPanel = new JPanelImage("./src/view/image/FondPrincipal.png");
+        componentPanel.setLayout(new GridBagLayout());
+        componentPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
 
+        gbcglobal = new GridBagConstraints();
+        gbcglobal.weighty = 1;
+        gbcglobal.weightx = 1;
+        gbcglobal.gridy = 0;
+        gbcglobal.fill = GridBagConstraints.BOTH;
+
+        componentPanel.add(secondRawPanel,gbcglobal);
+
+        gbcglobal.weighty = 5;
+        gbcglobal.gridy = 1;
+        gbcglobal.insets = new Insets(0,10,0,10);
+
+        componentPanel.add(currentEnigmaPanelOUT,gbcglobal);
+
+        gbcglobal.weighty = 1;
+        gbcglobal.gridy = 2;
+        gbcglobal.insets = new Insets(10,0,0,0);
+        gbcglobal.fill = GridBagConstraints.HORIZONTAL;
+
+        componentPanel.add(fourthRawPanel,gbcglobal);
+
+        gbcglobal.weighty = 5;
+        gbcglobal.gridy = 3;
+        gbcglobal.insets = new Insets(10,10,0,10);
+        gbcglobal.fill = GridBagConstraints.BOTH;
+
+        componentPanel.add(oldEnigmaPanelOUT,gbcglobal);
+
+        gbcglobal.weighty = 4;
+        gbcglobal.gridy = 4;
+        gbcglobal.insets = new Insets(20,0,0,0);
+
+        componentPanel.add(hintRawPanel,gbcglobal);
+        componentPanel.setMaximumSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.95),(int)((float) frame.windowSize.getHeight()*0.75)));
+
+
+        this.setLayout(new BorderLayout(10,20));
+        this.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
+        this.add(firstRawPanel,BorderLayout.NORTH);
+        this.add(componentPanel,BorderLayout.CENTER);
+        this.setBackground(ColorPerso.darkGray);
 
     }
 
@@ -325,12 +392,17 @@ public class CurrentGame extends JPanel implements ActionListener {
 
                     oldEnigmaTextArea.append(allEnigmas.getEnigma(enigmalistflag).getText());
                     enigmalistflag++;
-                    currentEnigmaPanel.remove(currentEnigmaTextArea);
+                    currentEnigmaPanel.remove(currentEnigmaScroll);
                     currentEnigmaTextArea = new JTextArea(allEnigmas.getEnigma(enigmalistflag).getText());
                     currentEnigmaTextArea.setLineWrap(true);
                     currentEnigmaTextArea.setWrapStyleWord(true);
                     currentEnigmaTextArea.setEditable(false);
-                    currentEnigmaPanel.add(currentEnigmaTextArea);
+
+                    currentEnigmaScroll = new JScrollPane(currentEnigmaTextArea,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+                    currentEnigmaScroll.getVerticalScrollBar().setUnitIncrement(20);
+                    currentEnigmaScroll.setBorder(BorderFactory.createEmptyBorder());
+
+                    currentEnigmaPanel.add(currentEnigmaScroll);
 
                     //maj hint 1
                     if(isused1){
