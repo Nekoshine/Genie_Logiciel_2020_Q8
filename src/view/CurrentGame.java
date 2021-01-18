@@ -5,10 +5,7 @@ import database.DBGame;
 import launcher.Main;
 import database.DBRoom;
 import launcher.Main;
-import model.Enigma;
-import model.EnigmaList;
-import model.Game;
-import model.Room;
+import model.*;
 import view.SwingWorkers.ImageLoaderMainMenu;
 import view.style.ColorPerso;
 
@@ -38,7 +35,6 @@ public class CurrentGame extends JPanel implements ActionListener {
     private JPanel hintContainer2;
     private JPanel hintContainer3;
     private JPanel hintMJContainer;
-    private JPanel currentEnigmaPanel;
     private JPanelImage componentPanel;
 
     private JScrollPane currentEnigmaScroll;
@@ -61,7 +57,7 @@ public class CurrentGame extends JPanel implements ActionListener {
     private JTextArea hint2TextArea;
     private JTextArea hint3TextArea;
     private JTextArea hintMJTextArea;
-    private JTextField answerTextField;
+
 
     private JLabel titleLabel;
     private JLabel countdownLabel;
@@ -92,12 +88,16 @@ public class CurrentGame extends JPanel implements ActionListener {
 
     private int time = 3600;
 
+    private Room room;
+
     private GlobalFrame frame;
 
     Dimension windowSize;
-    private static volatile CurrentGame INSTANCE = new CurrentGame(Main.frame,new Game(9,"perdu",12,3,0,true,"end"));
+    private static volatile CurrentGame INSTANCE = new CurrentGame(Main.frame,new Game(9,"perdu",12,3,0,true,"end"),1);
 
-    private CurrentGame (GlobalFrame frame, Game partiechoisie){
+    private CurrentGame (GlobalFrame frame, Game partiechoisie,int idRoom){
+
+        room = Main.ListRoom.findByID(idRoom);
 
         imageIconValide = new ImageIcon(new ImageIcon("./src/view/image/valide.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
         imageIconRefus = new ImageIcon(new ImageIcon("./src/view/image/refus.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
@@ -354,7 +354,7 @@ public class CurrentGame extends JPanel implements ActionListener {
             // Il est TRES important.
             synchronized(INSTANCE) {
                 if (INSTANCE == null) {
-                    INSTANCE = new CurrentGame(frame,partiechoisie);
+                    INSTANCE = new CurrentGame(frame,partiechoisie,INSTANCE.room.getId());
                 }
             }
         }
@@ -516,7 +516,8 @@ public class CurrentGame extends JPanel implements ActionListener {
                     frame.repaint();
                 }
                 else{JOptionPane.showMessageDialog(frame, "Vous avez réussi !!!!", "Bravo !", JOptionPane.WARNING_MESSAGE,imageIconValide);
-
+                    frame.insideRoom = false;
+                    room.setUserInside(-1);
                     frame.connectionMenuDisplay(frame);
                 }
 
