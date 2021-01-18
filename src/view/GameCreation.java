@@ -628,7 +628,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==newButton){
             this.majEnigma();
-
+            scrollEnigmas.getVerticalScrollBar().setValue(scrollEnigmas.getVerticalScrollBar().getMaximum());
         }
         else if (e.getSource()== exitButton){
             frame.gameManagementDisplay(frame,frame.roomNumber);
