@@ -72,7 +72,7 @@ public class MainMenu extends JPanel implements ActionListener, MouseListener {
         /*création du conteneur des menus*/
         JPanel menucontainer = new JPanel();
         menucontainer.setLayout(new GridLayout(1, 2, 30, 5));
-        menucontainer.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+        menucontainer.setBorder(BorderFactory.createEmptyBorder((int)((float) frame.getHeight()*0.20), 30, 30, 30));
         menucontainer.setOpaque(false);
 
         /*intégration*/
