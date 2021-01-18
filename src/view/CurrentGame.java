@@ -7,6 +7,7 @@ import database.DBRoom;
 import launcher.Main;
 import model.EnigmaList;
 import model.Game;
+import model.Room;
 import view.SwingWorkers.ImageLoaderMainMenu;
 import view.style.ColorPerso;
 
@@ -93,7 +94,9 @@ public class CurrentGame extends JPanel implements ActionListener {
     Dimension windowSize;
     private static volatile CurrentGame INSTANCE = new CurrentGame(Main.frame,new Game(9,"perdu",12,3,0,true,"end"));
 
-    private CurrentGame (GlobalFrame frame, Game partiechoisie ){
+    private CurrentGame (GlobalFrame frame, Game partiechoisie){
+
+
 
 
         imageIconValide = new ImageIcon(new ImageIcon("./src/view/image/valide.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
@@ -136,21 +139,21 @@ public class CurrentGame extends JPanel implements ActionListener {
 
         secondRawPanelIn1 = new JPanel();
         secondRawPanelIn1.setLayout(new FlowLayout(FlowLayout.LEFT));
-        secondRawPanelIn1.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.95),30));
+        secondRawPanelIn1.setPreferredSize(new Dimension((int)((float) windowSize.getWidth()*0.95),30));
         secondRawPanelIn1.setOpaque(false);
 
         titleLabel = new JLabel(partiechoisie.getTitre());
-        titleLabel.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.60),20));
+        titleLabel.setPreferredSize(new Dimension((int)((float) windowSize.getWidth()*0.60),20));
         titleLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
 
 
         countdownLabel = new JLabel("Timer",SwingConstants.CENTER);
-        countdownLabel.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.10),20));
+        countdownLabel.setPreferredSize(new Dimension((int)((float) windowSize.getWidth()*0.10),20));
         countdownLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
 
         secondRawPanelIn2 = new JPanel();
         secondRawPanelIn2.setLayout(new FlowLayout(FlowLayout.RIGHT));
-        secondRawPanelIn2.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.20),30));
+        secondRawPanelIn2.setPreferredSize(new Dimension((int)((float) windowSize.getWidth()*0.20),30));
         secondRawPanelIn2.setOpaque(false);
 
 
@@ -179,7 +182,7 @@ public class CurrentGame extends JPanel implements ActionListener {
 
         currentEnigmaPanelOUT = new JPanel();
         currentEnigmaPanelOUT.setLayout(new GridLayout(1,1));
-        currentEnigmaPanelOUT.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.95),(int)((float) frame.windowSize.getHeight()*0.25)));
+        currentEnigmaPanelOUT.setPreferredSize(new Dimension((int)((float) windowSize.getWidth()*0.95),(int)((float) windowSize.getHeight()*0.25)));
         currentEnigmaPanelOUT.setBorder(BorderFactory.createEmptyBorder(5,10,5,10));
         currentEnigmaPanelOUT.add(currentEnigmaPanel);
         currentEnigmaPanelOUT.setOpaque(false);
@@ -198,7 +201,7 @@ public class CurrentGame extends JPanel implements ActionListener {
 
         fourthRawPanel = new JPanel();
         fourthRawPanel.setLayout(new FlowLayout(FlowLayout.CENTER,20,0));
-        fourthRawPanel.setSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.95),10));
+        fourthRawPanel.setSize(new Dimension((int)((float) windowSize.getWidth()*0.95),10));
         fourthRawPanel.setBorder(BorderFactory.createEmptyBorder(5,10,5,10));
 
         fourthRawPanel.add(answerTextField);
@@ -222,7 +225,7 @@ public class CurrentGame extends JPanel implements ActionListener {
 
         oldEnigmaPanelOUT = new JPanel();
         oldEnigmaPanelOUT.setLayout(new GridLayout(1,1));
-        oldEnigmaPanelOUT.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.95),(int)((float) frame.windowSize.getHeight()*0.25)));
+        oldEnigmaPanelOUT.setPreferredSize(new Dimension((int)((float) windowSize.getWidth()*0.95),(int)((float) windowSize.getHeight()*0.25)));
         oldEnigmaPanelOUT.setBorder(BorderFactory.createEmptyBorder(5,10,5,10));
         oldEnigmaPanelOUT.add(oldEnigmaPanel);
         oldEnigmaPanelOUT.setOpaque(false);
@@ -235,7 +238,7 @@ public class CurrentGame extends JPanel implements ActionListener {
 
         hintContainer1 = new JPanel();
         hintContainer1.setLayout(new GridLayout(1,1));
-        hintContainer1.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.25),(int)((float) frame.windowSize.getHeight()*0.15)));
+        hintContainer1.setPreferredSize(new Dimension((int)((float) windowSize.getWidth()*0.25),(int)((float) windowSize.getHeight()*0.15)));
         hintContainer1.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         hintContainer1.add(hint1Button);
 
@@ -247,7 +250,7 @@ public class CurrentGame extends JPanel implements ActionListener {
 
         hintContainer2 = new JPanel();
         hintContainer2.setLayout(new GridLayout(1,1));
-        hintContainer2.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.25),(int)((float) frame.windowSize.getHeight()*0.15)));
+        hintContainer2.setPreferredSize(new Dimension((int)((float) windowSize.getWidth()*0.25),(int)((float) windowSize.getHeight()*0.15)));
         hintContainer2.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         hintContainer2.add(hint2Button);
 
@@ -259,7 +262,7 @@ public class CurrentGame extends JPanel implements ActionListener {
 
         hintContainer3 = new JPanel();
         hintContainer3.setLayout(new GridLayout(1,1));
-        hintContainer3.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.25),(int)((float) frame.windowSize.getHeight()*0.15)));
+        hintContainer3.setPreferredSize(new Dimension((int)((float) windowSize.getWidth()*0.25),(int)((float) windowSize.getHeight()*0.15)));
         hintContainer3.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         hintContainer3.add(hint3Button);
 
@@ -271,14 +274,14 @@ public class CurrentGame extends JPanel implements ActionListener {
 
         hintMJContainer = new JPanel();
         hintMJContainer.setLayout(new GridLayout(1,1));
-        hintMJContainer.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.35),(int)((float) frame.windowSize.getHeight()*0.15)));
+        hintMJContainer.setPreferredSize(new Dimension((int)((float)windowSize.getWidth()*0.35),(int)((float) windowSize.getHeight()*0.15)));
         hintMJContainer.add(hintMJTextArea);
 
         hintRawPanel = new JPanel();
         hintRawPanel.setLayout(new FlowLayout(FlowLayout.CENTER,40,0));
         hintRawPanel.setOpaque(false);
 
-        hintRawPanel.setPreferredSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.95),(int)((float) frame.windowSize.getHeight()*0.18)));
+        hintRawPanel.setPreferredSize(new Dimension((int)((float) windowSize.getWidth()*0.95),(int)((float) windowSize.getHeight()*0.18)));
         hintRawPanel.add(hintContainer1);
         hintRawPanel.add(hintContainer2);
         hintRawPanel.add(hintContainer3);
@@ -321,7 +324,16 @@ public class CurrentGame extends JPanel implements ActionListener {
         gbcglobal.insets = new Insets(20,0,0,0);
 
         componentPanel.add(hintRawPanel,gbcglobal);
-        componentPanel.setMaximumSize(new Dimension((int)((float) frame.windowSize.getWidth()*0.95),(int)((float) frame.windowSize.getHeight()*0.75)));
+        componentPanel.setMaximumSize(new Dimension((int)((float) windowSize.getWidth()*0.95),(int)((float) windowSize.getHeight()*0.75)));
+
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                windowSize = Main.frame.getSize();
+                INSTANCE.revalidate();
+                INSTANCE.repaint();
+            }
+        });
 
 
         this.setLayout(new BorderLayout(10,20));
@@ -483,6 +495,7 @@ public class CurrentGame extends JPanel implements ActionListener {
                     frame.repaint();
                 }
                 else{JOptionPane.showMessageDialog(frame, "Vous avez réussi !!!!", "Bravo !", JOptionPane.WARNING_MESSAGE,imageIconValide);
+
                     frame.connectionMenuDisplay(frame);
                 }
 
