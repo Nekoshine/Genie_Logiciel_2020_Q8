@@ -158,6 +158,7 @@ public class GlobalFrame extends JFrame {
 
         connectionmenu = ConnectionMenu.getInstance(frame);
         setContentPane(connectionmenu);
+        frame.setMinimumSize(new Dimension(720,480));
         frame.setSize(720,480);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);

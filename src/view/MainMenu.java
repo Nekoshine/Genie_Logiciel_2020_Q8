@@ -32,7 +32,6 @@ public class MainMenu extends JPanel implements ActionListener, MouseListener {
 
         this.frame = frame;
         windowSize = frame.getSize();
-        //this.mainMenu = this;
 
         new ImageLoaderMainMenu(this,frame.getSize()).execute();
 
@@ -94,6 +93,7 @@ public class MainMenu extends JPanel implements ActionListener, MouseListener {
                 INSTANCE.repaint();
             }
         });
+
         this.add("South", deconnectionPanel);
         this.add("North", titlecontainer);
         this.add("Center", new JSeparator());
