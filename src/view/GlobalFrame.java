@@ -228,5 +228,28 @@ public class GlobalFrame extends JFrame {
 
     }
 
+    public boolean AccpetUser(String login) {
+        //si je suis administrateur
+        boolean admin = true;
+
+        if (admin) {
+            String[] options = {"Oui", "Non"};
+            int reponse = JOptionPane.showOptionDialog
+                    (null, login + " souhaites se connecter\nL'accepter ?",
+                            "Nouveau Joueur",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE,
+                            null, // pas d'icone
+                            options, // titres des boutons
+                            null); // désactiver la touche ENTER
+            if (reponse == JOptionPane.YES_OPTION) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        return false;
+    }
 
 }
