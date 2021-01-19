@@ -2,11 +2,7 @@
 
 package view;
 
-import Sockets.Client;
 import database.DBRoom;
-import database.DBUser;
-import launcher.Main;
-import model.Game;
 import launcher.Main;
 import model.Room;
 import model.RoomList;
@@ -39,7 +35,7 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener{
     private RoomAccess(GlobalFrame frame,RoomList roomList){
 
         this.frame = frame;
-        user = new User(Main.idUser,"","",false);
+        user = new User(Main.idAdmin,"","",false);
 
 
         /* Récuperation des salles */

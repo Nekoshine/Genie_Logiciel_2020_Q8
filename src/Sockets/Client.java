@@ -12,16 +12,16 @@ import static java.lang.Thread.sleep;
 
 public class Client {
   
-  private static int port = 1095;
+  private static int port = 1096;
   private static String host = "127.0.0.1"; //localhost
   
   public static void connectToServer(int idUser){
     try{
       Socket socket = new Socket(host,port);
       ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-
+      
       DemandeConnexion signal = new DemandeConnexion(idUser,false);
-
+      
       out.writeObject(signal);
       ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
       Object oserver =  in.readObject();
@@ -38,19 +38,21 @@ public class Client {
     }catch(ClassNotFoundException e){
       System.out.println("ClassNotFoundException :"+ e.getMessage());
     }catch(IOException e){
-      System.out.println("IOException :" + e.getMessage());
+      System.out.println("IOException :"+ e.getMessage());
     }
   }
-
-
+  
+  
+  
   public static int recepAdminInfo(int idUser){
-    int idUserAdmin=0;
+    int idUserAdmin=0 ;
     try{
       
-      ServerSocket s = new ServerSocket(port);
-      Socket socket = s.accept();
+      Socket socket = new Socket(host,port);
       ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+      
       DemandeConnexion signal = new DemandeConnexion(idUser,true);
+      
       out.writeObject(signal);
       
       ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
@@ -58,15 +60,16 @@ public class Client {
       AdminInfo user = new AdminInfo(0);
       if(oserver instanceof AdminInfo){
         user = (AdminInfo) oserver;
-        System.out.println("idUser : "+user.getIdUserAdmin());
+        System.out.println("RAI idUser : "+user.getIdUserAdmin());
         idUserAdmin=user.getIdUserAdmin();
       }
-
+      socket.close();
     }catch(IOException e){
       System.out.println("IOException : "+ e.getMessage());
     }catch(ClassNotFoundException e){
       System.out.println("ClassNotFoundException : "+ e.getMessage());
     }
+    System.out.println(idUserAdmin);
     return idUserAdmin;
   }
   

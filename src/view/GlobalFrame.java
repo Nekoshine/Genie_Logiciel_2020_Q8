@@ -234,7 +234,7 @@ public class GlobalFrame extends JFrame {
 
     }
 
-    public boolean AccpetUser(String login) {
+    public boolean AcceptUser(String login) {
         //si je suis administrateur
         boolean admin = true;
 

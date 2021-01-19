@@ -17,9 +17,9 @@ public class Main {
     public static EnigmaList ListEnigma = new EnigmaList();
     public static RoomList ListRoom = new RoomList();
     public static GlobalFrame frame = null;
-    public static int idRoom =-1;
 
-    public static int idUser;
+
+    public static int idAdmin =5;
 
     public static void main(String[] args) throws IOException {
 

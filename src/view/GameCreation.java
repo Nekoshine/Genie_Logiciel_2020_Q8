@@ -362,7 +362,13 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
             }
             INSTANCE.game=game;
         }
-
+        System.out.println("nb enigme : "+INSTANCE.listEnigma.getSize());
+        for(int i=0;i<INSTANCE.listEnigma.getSize();i++){
+            System.out.println("i :"+i);
+            System.out.println("id : "+INSTANCE.listEnigma.getEnigma(i).getId());
+            System.out.println("reponse : "+INSTANCE.listEnigma.getEnigma(i).getAnswer());
+        }
+        System.out.println("---------------------------------");
         return INSTANCE;
     }
 
@@ -600,7 +606,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
 
 
     private void majEnigma() {
-        listEnigma.addEnigma(listEnigma.getSize()+1,"Enigme","Réponse","indice 1",-1,"indice 2",-1,"indice 3",-1);
+        listEnigma.addEnigma(listEnigma.getSize()+2,"Enigme","Réponse","indice 1",-1,"indice 2",-1,"indice 3",-1);
         this.createList();
         frame.gameCreationDisplay(frame,frame.roomNumber,game);
     }
@@ -628,7 +634,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==newButton){
             this.majEnigma();
-
+            scrollEnigmas.getVerticalScrollBar().setValue(scrollEnigmas.getVerticalScrollBar().getMaximum());
         }
         else if (e.getSource()== exitButton){
             frame.gameManagementDisplay(frame,frame.roomNumber);
@@ -644,6 +650,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
                 a = listEnigma.getEnigma(i);
                 String clue1 = a.getClue1();
                 int timer1 = a.getTimer1();
+                System.out.println("indice : "+clue1 + "| timer : " +timer1);
                 if (clue1.equals("indice 1") || timer1 == -1){
                     JOptionPane.showMessageDialog(frame, "Un engime doit avoir au moins un indice associé a un timer", "", JOptionPane.INFORMATION_MESSAGE);
                     return;
@@ -658,7 +665,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
             catch (Exception exception){
                 System.out.println("Le score n'est pas un entier");
             }
-            int idUser = Main.idUser;
+            int idUser = Main.idAdmin;
             int timer = 0;
             boolean ready = true;
             String endMessage = winMessage.getText();
