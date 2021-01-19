@@ -57,7 +57,6 @@ public class DBUser extends DBConnexion {
     }catch(NoSuchAlgorithmException e ){
       System.err.println("Erreur Algorithme: " + e.getMessage());
     }
-    Main.idUser=idUser;
     return isAdmin;
   }
   
@@ -119,14 +118,14 @@ public class DBUser extends DBConnexion {
     int userId = 0;
     try{
       PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("Select * from User where login=?"); // On regarde si l'user n'est pas déja dans la BDD
-      requete.setInt(1,loginUser);
+      requete.setString(1,loginUser);
       ResultSet resultat = requete.executeQuery();
       resultat.next();
-      userId=resultat.getInt("login");
+      userId=resultat.getInt("id");
       requete.close();
       resultat.close();
     }catch(SQLException e ){
-      System.err.println("Erreur Algorithme: " + e.getMessage());
+      System.err.println("Erreur requete getidUser: " + e.getMessage());
     }
     return userId;
   }

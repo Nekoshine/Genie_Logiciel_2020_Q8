@@ -2,6 +2,8 @@
 
 package view;
 
+import Sockets.Admin;
+import Sockets.Client;
 import database.DBRoom;
 import database.DBUser;
 import launcher.Main;
@@ -11,6 +13,8 @@ import view.style.ColorPerso;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import javax.swing.*;
 
 
@@ -133,19 +137,25 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
   
   private void connect(String idinput, String mdpinput) {
     int isAdmin = DBUser.connectUser(idinput,mdpinput);
+    if(isAdmin==1){
+        Main.idAdmin= DBUser.getidUser(idinput);
+    }
+    int idUser = DBUser.getidUser(idinput);
     if (isAdmin==1){
       ExecutorService service = Executors.newFixedThreadPool(4);
-      service.submit(new Runnable()){
+      service.submit(new Runnable(){
         public void run(){
-          Admin.setServerAdmin();
+          Admin.setServerAdmin(Main.idAdmin);
         }
-      }
+      });
       Main.frame.mainMenuDisplay(Main.frame);
-      Main.ListRoom = DBRoom.getRooms(Main.idUser); // recherche des salles dans la BDD apres la connection
+      Main.ListRoom = DBRoom.getRooms(Main.idAdmin); // recherche des salles dans la BDD apres la connection
     }
     else if( isAdmin==0){
-      Client.connectToServer();
-      int idAdmin=Client.recepAdminInfo()
+      Client.connectToServer(idUser);
+      int idAdmin=Client.recepAdminInfo(idUser);
+      System.out.println("admin " + idAdmin);
+      System.out.println("user " + idUser);
       Main.ListRoom = DBRoom.getRooms(idAdmin); //si le joueur est le numero
       Main.frame.roomAccessDisplay(Main.frame,Main.ListRoom);
       

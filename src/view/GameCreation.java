@@ -658,7 +658,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
             catch (Exception exception){
                 System.out.println("Le score n'est pas un entier");
             }
-            int idUser = Main.idUser;
+            int idUser = Main.idAdmin;
             int timer = 0;
             boolean ready = true;
             String endMessage = winMessage.getText();

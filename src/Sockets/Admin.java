@@ -26,7 +26,7 @@ public class Admin {
       
       if(oserver instanceof DemandeConnexion){
         DemandeConnexion user = (DemandeConnexion) oserver;
-        System.out.println("idUser : "+user.getIdUser());
+        System.out.println("SSA idUser : "+user.getIdUser());
         
         if(user.getFirstConn()){
           System.out.println("Je renvoie l'id de l'admin " + idUserAdmin);
@@ -52,7 +52,6 @@ public class Admin {
         }
       }
     }
-    socket.close();
   }catch(IOException e){
     System.out.println("IOException : "+ e.getMessage());
   }catch(ClassNotFoundException e){

@@ -2,7 +2,6 @@
 
 package view;
 
-import Sockets.Admin;
 import database.DBRoom;
 import launcher.Main;
 import model.Room;
@@ -149,7 +148,7 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
         }
         else {
             INSTANCE.frame=frame;
-            Main.ListRoom=DBRoom.getRooms(Main.idUser);
+            Main.ListRoom=DBRoom.getRooms(Main.idAdmin);
             INSTANCE.ListRoom = Main.ListRoom;
             INSTANCE.createList();
             INSTANCE.returnButton.setBackground(ColorPerso.rouge);

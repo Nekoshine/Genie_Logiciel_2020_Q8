@@ -58,10 +58,10 @@ public class Client {
       AdminInfo user = new AdminInfo(0);
       if(oserver instanceof AdminInfo){
         user = (AdminInfo) oserver;
-        System.out.println("idUser : "+user.getIdUserAdmin());
+        System.out.println("RAI idUser : "+user.getIdUserAdmin());
         idUserAdmin=user.getIdUserAdmin();
       }
-
+      socket.close();
     }catch(IOException e){
       System.out.println("IOException : "+ e.getMessage());
     }catch(ClassNotFoundException e){

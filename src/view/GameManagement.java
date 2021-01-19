@@ -45,7 +45,7 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
         frame.roomNumber = roomNumber;
 
         /* Recuperation des jeux du User */
-        this.ListGame= DBGame.getGames(Main.idUser);
+        this.ListGame= DBGame.getGames(Main.idAdmin);
 
         /* Déclaration JPanel - JScrollPane */
         listPanel = new JPanel();
@@ -140,7 +140,7 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
         else {
             INSTANCE.frame=frame;
             INSTANCE.frame.roomNumber=roomNumber;
-            INSTANCE.ListGame= DBGame.getGames(Main.idUser);
+            INSTANCE.ListGame= DBGame.getGames(Main.idAdmin);
             INSTANCE.createList();
             if(roomNumber==-1){
                 INSTANCE.newButton.setVisible(true);

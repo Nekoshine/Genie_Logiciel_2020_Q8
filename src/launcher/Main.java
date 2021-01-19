@@ -16,11 +16,10 @@ public class Main {
     // Variable global
     public static EnigmaList ListEnigma = new EnigmaList();
     public static RoomList ListRoom = new RoomList();
-    public static int idAdmin;
     public static GlobalFrame frame = null;
 
 
-    public static int idUser=5;
+    public static int idAdmin =5;
 
     public static void main(String[] args) throws IOException {
 
