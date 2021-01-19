@@ -200,42 +200,19 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
             boutonJoin.setBackground(ColorPerso.vert);
         }
 
-        if (frame.insideRoom){
-            if (salle.getUserInside()!=user.getId()){
-                boutonJoin.setEnabled(false);
-                boutonJoin.setBackground(ColorPerso.darkGray);
-            }
-        }
 
-        if (!frame.insideRoom){
-            if(salle.getGame()== null || salle.getUserInside()!=-1){
-                boutonJoin.setEnabled(false);
-                boutonJoin.setBackground(ColorPerso.darkGray);
-            }
-        }
 
         boutonJoin.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
                 if(salle.getUserInside()==-1){
-                    frame.insideRoom = true;
-                    salle.setUserInside(user.getId());
-                    DBRoom.majRoom(salle.getId(),salle.getGame().getId(),salle.getCompetitive(),salle.getUserInside());
-                    //frame.roomAccessDisplay(frame,ListRoom);
-                    if(Client.connectToServer(user.getId(),salle)){
-                        frame.currentGameDisplay(frame,salle.getGame(),salle.getId());
-                    }
-                    else{
-                        frame.roomAccessDisplay(frame,ListRoom,user);
-                    }
 
+                    Client.connectToServer(user.getId());
                 }
 
                 else{
-                    frame.insideRoom = false;
-                    salle.setUserInside(-1);
-                    DBRoom.majRoom(salle.getId(),salle.getGame().getId(),salle.getCompetitive(),salle.getUserInside());
+
                     frame.roomAccessDisplay(frame,ListRoom,user);
                 }
 
