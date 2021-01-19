@@ -137,10 +137,14 @@ public class DBUser extends DBConnexion {
       requete.setInt(1,idUser);
       ResultSet resultat = requete.executeQuery();
       resultat.next();
-      user.setLogin(resultat.getString("login"));
-      user.setPwd(resultat.getString("pwd"));
-      user.setId(resultat.getInt("id"));
-      user.setIsAdmin(resultat.getInt("isAdmin"));
+      int isAdmin = resultat.getInt("isAdmin");
+      if(isAdmin==0) {
+        user = new User(resultat.getInt("id"), resultat.getString("login"), resultat.getString("pwd"), false);
+      }
+      else {
+        user = new User(resultat.getInt("id"), resultat.getString("login"), resultat.getString("pwd"), true);
+      }
+
       requete.close();
       resultat.close();
     }catch(SQLException e ){

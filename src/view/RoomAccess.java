@@ -4,7 +4,6 @@ package view;
 
 import Sockets.Client;
 import database.DBRoom;
-import database.DBUser;
 import launcher.Main;
 import model.Room;
 import model.RoomList;
@@ -15,9 +14,12 @@ import view.style.FontPerso;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-public class RoomAccess extends JPanel implements ActionListener,MouseListener{
+public class RoomAccess extends JPanel implements ActionListener,MouseListener {
 
     /* Liste des salles */
     private RoomList ListRoom;
@@ -29,15 +31,15 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener{
     /* Boutons */
     private JButton returnButton;
 
-
     private GlobalFrame frame;
+
     public User user;
 
-    private static volatile RoomAccess INSTANCE = new RoomAccess(Main.frame,Main.ListRoom);
-    private RoomAccess(GlobalFrame frame,RoomList roomList){
+    private static volatile RoomAccess INSTANCE = new RoomAccess(Main.frame,Main.ListRoom,new User(1,"","",false));
+    private RoomAccess(GlobalFrame frame,RoomList roomList,User user){
 
         this.frame = frame;
-        user = DBUser.getUser(9);
+        this.user = user;
 
 
         /* Récuperation des salles */
@@ -105,7 +107,6 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener{
 
         /* Setup Fenêtre gestion des salles */
 
-
         this.setLayout(mainLayout);
         this.setBackground(ColorPerso.gris);
         this.add(listPanel, BorderLayout.CENTER);
@@ -117,7 +118,7 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener{
 
     }
 
-    public static RoomAccess getInstance(GlobalFrame frame, RoomList roomList) {
+    public static RoomAccess getInstance(GlobalFrame frame, RoomList roomList,User user) {
         //Le "Double-Checked Singleton"/"Singleton doublement vérifié" permet
         //d'éviter un appel coûteux à synchronized,
         //une fois que l'instanciation est faite.
@@ -127,7 +128,7 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener{
             // Il est TRES important.
             synchronized(INSTANCE) {
                 if (INSTANCE == null) {
-                    INSTANCE = new RoomAccess(frame,roomList);
+                    INSTANCE = new RoomAccess(frame,roomList,user);
                 }
             }
         }
@@ -135,6 +136,7 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener{
             INSTANCE.frame=frame;
             INSTANCE.ListRoom=roomList;
             INSTANCE.createList();
+            INSTANCE.user=user;
         }
         return INSTANCE;
     }
@@ -220,15 +222,17 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener{
                     frame.insideRoom = true;
                     salle.setUserInside(user.getId());
                     DBRoom.majRoom(salle.getId(),salle.getGame().getId(),salle.getCompetitive(),salle.getUserInside());
+                    //frame.roomAccessDisplay(frame,ListRoom);
                     Client.connectToServer(user.getId());
+                    System.out.println(user.getId());
+                    frame.currentGameDisplay(frame,salle.getGame(),salle.getId());
                 }
 
                 else{
                     frame.insideRoom = false;
                     salle.setUserInside(-1);
-
                     DBRoom.majRoom(salle.getId(),salle.getGame().getId(),salle.getCompetitive(),salle.getUserInside());
-                    frame.roomAccessDisplay(frame,ListRoom);
+                    frame.roomAccessDisplay(frame,ListRoom,user);
                 }
 
 
@@ -326,6 +330,5 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener{
         }
 
     }
-
 
 }

@@ -4,6 +4,7 @@ import database.DBRoom;
 import launcher.Main;
 import model.Game;
 import model.RoomList;
+import model.User;
 import view.SwingWorkers.ImageLoaderMainMenu;
 import view.style.ColorPerso;
 import view.style.FontPerso;
@@ -210,9 +211,9 @@ public class GlobalFrame extends JFrame {
 
     }
 
-    public void roomAccessDisplay(GlobalFrame frame, RoomList roomList){
+    public void roomAccessDisplay(GlobalFrame frame, RoomList roomList, User user){
 
-        roomAccess = RoomAccess.getInstance(frame,roomList);
+        roomAccess = RoomAccess.getInstance(frame,roomList,user);
         setContentPane(roomAccess);
         frame.setSize(1280,720);
         frame.setLocationRelativeTo(null);
@@ -241,7 +242,7 @@ public class GlobalFrame extends JFrame {
         if (admin) {
             String[] options = {"Oui", "Non"};
             int reponse = JOptionPane.showOptionDialog
-                    (null, login + " souhaites se connecter\nL'accepter ?",
+                    (null, login + " souhaite se connecter\nL'accepter ?",
                             "Nouveau Joueur",
                             JOptionPane.YES_NO_OPTION,
                             JOptionPane.QUESTION_MESSAGE,

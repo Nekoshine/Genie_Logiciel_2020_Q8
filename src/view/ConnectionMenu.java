@@ -158,7 +158,7 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
       System.out.println("admin " + idAdmin);
       System.out.println("user " + Main.idUser);
       Main.ListRoom = DBRoom.getRooms(idAdmin); //si le joueur est le numero
-      Main.frame.roomAccessDisplay(Main.frame,Main.ListRoom);
+      Main.frame.roomAccessDisplay(Main.frame,Main.ListRoom,DBUser.getUser(idUser));
       
     }
     else {
