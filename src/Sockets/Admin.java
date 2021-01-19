@@ -12,7 +12,7 @@ import java.net.Socket;
 import static java.lang.Thread.sleep;
 
 public class Admin {
-  private static int port = 1095;
+  private static int port = 1096;
   private static String host = "127.0.0.1"; //localhost
   
   public static void setServerAdmin(int idUserAdmin){
@@ -22,8 +22,6 @@ public class Admin {
       
       ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
       Object oserver =  in.readObject();
-      
-      
       if(oserver instanceof DemandeConnexion){
         DemandeConnexion user = (DemandeConnexion) oserver;
         System.out.println("SSA idUser : "+user.getIdUser());
@@ -52,10 +50,15 @@ public class Admin {
         }
       }
     }
+    Thread.sleep(4);
+    socket.close();
+    
   }catch(IOException e){
     System.out.println("IOException : "+ e.getMessage());
   }catch(ClassNotFoundException e){
     System.out.println("ClassNotFoundException : "+ e.getMessage());
+  }catch(InterruptedException  e){
+    System.out.println("InterruptedException  : "+ e.getMessage());
   }
 }
 

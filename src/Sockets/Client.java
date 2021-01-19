@@ -19,9 +19,9 @@ public class Client {
     try{
       Socket socket = new Socket(host,port);
       ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-
+      
       DemandeConnexion signal = new DemandeConnexion(idUser,false);
-
+      
       out.writeObject(signal);
       ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
       Object oserver =  in.readObject();
@@ -41,16 +41,17 @@ public class Client {
       System.out.println("IOException :" + e.getMessage());
     }
   }
-
-
+  
+  
   public static int recepAdminInfo(int idUser){
-    int idUserAdmin=0;
+    int idUserAdmin=0 ;
     try{
       
-      ServerSocket s = new ServerSocket(port);
-      Socket socket = s.accept();
+      Socket socket = new Socket(host,port);
       ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+      
       DemandeConnexion signal = new DemandeConnexion(idUser,true);
+      
       out.writeObject(signal);
       
       ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
@@ -67,6 +68,7 @@ public class Client {
     }catch(ClassNotFoundException e){
       System.out.println("ClassNotFoundException : "+ e.getMessage());
     }
+    System.out.println(idUserAdmin);
     return idUserAdmin;
   }
   
