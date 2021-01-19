@@ -38,9 +38,10 @@ public class Client {
     }catch(ClassNotFoundException e){
       System.out.println("ClassNotFoundException :"+ e.getMessage());
     }catch(IOException e){
-      System.out.println("IOException :" + e.getMessage());
+      System.out.println("IOException :"+ e.getMessage());
     }
   }
+  
   
   
   public static int recepAdminInfo(int idUser){

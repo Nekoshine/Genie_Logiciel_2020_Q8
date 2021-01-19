@@ -22,8 +22,8 @@ public class Admin {
     try{
       ServerSocket s = new ServerSocket(port);
       Socket socket = s.accept();
-      
       ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+      
       Object oserver =  in.readObject();
       if(oserver instanceof DemandeConnexion){
         DemandeConnexion user = (DemandeConnexion) oserver;
@@ -36,33 +36,38 @@ public class Admin {
           out.writeObject(signal);
         }else{
           boolean reponse = false;
-          User logged = DBUser.getUser(user.getIdUser()); // On récupere le login de l'user qui demande à se connecter
-          reponse = Main.frame.AcceptUser(logged.getLogin()); //pop up demande de connexion
-
           
           
-          ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-          if (reponse){ // Si cest le bon user alors on lui dit quon accepte sa demande de jeu
-            System.out.println("Je renvoie oui");
-            Reponse signal = new Reponse("Oui");
-            out.writeObject(signal);
-          }else{ // Si c'est le mauvais on refuse
-          System.out.println("Je renvoie non");
-          Reponse signal = new Reponse("Non");
+          System.out.println("Veux tu autoriser la connexion  de ? " + user.getIdUser());/*
+          Scanner sc = new Scanner (System.in);
+          int reponseVal = sc.nextInt();
+          if (reponseVal==1){
+          reponse=true;
+        }*/
+        User logged = DBUser.getUser(user.getIdUser()); // On récupere le login de l'user qui demande à se connecter
+        reponse = Main.frame.AcceptUser(logged.getLogin()); //pop up demande de connexion
+        
+        
+        ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+        if (reponse){ // Si cest le bon user alors on lui dit quon accepte sa demande de jeu
+          System.out.println("Je renvoie oui");
+          Reponse signal = new Reponse("Oui");
           out.writeObject(signal);
-        }
+        }else{ // Si c'est le mauvais on refuse
+        System.out.println("Je renvoie non");
+        Reponse signal = new Reponse("Non");
+        out.writeObject(signal);
       }
     }
-    Thread.sleep(4);
-    socket.close();
-    
-  }catch(IOException e){
-    System.out.println("IOException : "+ e.getMessage());
-  }catch(ClassNotFoundException e){
-    System.out.println("ClassNotFoundException : "+ e.getMessage());
-  }catch(InterruptedException  e){
-    System.out.println("InterruptedException  : "+ e.getMessage());
   }
+  s.close();
+}catch(IOException e){
+  System.out.println("IOException : "+ e.getMessage());
+  e.printStackTrace();
+}catch(ClassNotFoundException e){
+  System.out.println("ClassNotFoundException : "+ e.getMessage());
+}
+
 }
 
 public void envoiGameInfo(Game game){
