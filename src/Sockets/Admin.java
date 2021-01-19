@@ -22,8 +22,8 @@ public class Admin {
       
       ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
       Object oserver =  in.readObject();
-
-
+      
+      
       if(oserver instanceof DemandeConnexion){
         DemandeConnexion user = (DemandeConnexion) oserver;
         System.out.println("idUser : "+user.getIdUser());
@@ -35,10 +35,10 @@ public class Admin {
           out.writeObject(signal);
         }else{
           boolean reponse = true;
-          /* String login = DBUser.getUser(user.getId()); // On récupere le login de l'user qui demande à se connecter
-          reponse = Main.frame.AccpetUser(login); //pop up demande de connexion
+          /* User logged = DBUser.getUser(user.getId()); // On récupere le login de l'user qui demande à se connecter
+          reponse = Main.frame.AcceptUser(logged.getLogin()); //pop up demande de connexion
           */
-
+          
           
           ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
           if (reponse){ // Si cest le bon user alors on lui dit quon accepte sa demande de jeu
