@@ -17,12 +17,9 @@ import view.style.FontPerso;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 
-public class RoomAccess extends JPanel implements ActionListener,MouseListener {
+public class RoomAccess extends JPanel implements ActionListener,MouseListener{
 
     /* Liste des salles */
     private RoomList ListRoom;
@@ -34,8 +31,8 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
     /* Boutons */
     private JButton returnButton;
 
-    private GlobalFrame frame;
 
+    private GlobalFrame frame;
     public User user;
 
     private static volatile RoomAccess INSTANCE = new RoomAccess(Main.frame,Main.ListRoom);
@@ -109,6 +106,7 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
         returnButton.addMouseListener(this);
 
         /* Setup Fenêtre gestion des salles */
+
 
         this.setLayout(mainLayout);
         this.setBackground(ColorPerso.gris);
@@ -224,13 +222,14 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
                     frame.insideRoom = true;
                     salle.setUserInside(user.getId());
                     DBRoom.majRoom(salle.getId(),salle.getGame().getId(),salle.getCompetitive(),salle.getUserInside());
-                    //frame.roomAccessDisplay(frame,ListRoom);
+                    Main.idRoom = salle.getId();
                     frame.currentGameDisplay(frame,salle.getGame(),salle.getId());
                 }
 
                 else{
                     frame.insideRoom = false;
                     salle.setUserInside(-1);
+                    Main.idRoom = -1;
                     DBRoom.majRoom(salle.getId(),salle.getGame().getId(),salle.getCompetitive(),salle.getUserInside());
                     frame.roomAccessDisplay(frame,ListRoom);
                 }
@@ -330,5 +329,6 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
         }
 
     }
+
 
 }
