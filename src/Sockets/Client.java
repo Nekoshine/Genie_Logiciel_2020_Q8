@@ -12,7 +12,7 @@ import static java.lang.Thread.sleep;
 
 public class Client {
   
-  private static int port = 1095;
+  private static int port = 1096;
   private static String host = "127.0.0.1"; //localhost
   
   public static void connectToServer(int idUser){
