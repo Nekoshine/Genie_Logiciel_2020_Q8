@@ -207,12 +207,10 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
             public void actionPerformed(ActionEvent e) {
 
                 if(salle.getUserInside()==-1){
-
                     Client.connectToServer(user.getId());
                 }
 
                 else{
-
                     frame.roomAccessDisplay(frame,ListRoom,user);
                 }
 
