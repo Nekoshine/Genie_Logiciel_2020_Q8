@@ -145,14 +145,15 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
       ExecutorService service = Executors.newFixedThreadPool(4);
       service.submit(new Runnable(){
         public void run(){
-          Admin.setServerAdmin(Main.idAdmin);
+          while (true){
+            Admin.setServerAdmin(Main.idAdmin);
+          }
         }
       });
       Main.frame.mainMenuDisplay(Main.frame);
       Main.ListRoom = DBRoom.getRooms(Main.idAdmin); // recherche des salles dans la BDD apres la connection
     }
     else if( isAdmin==0){
-      Client.connectToServer(idUser);
       int idAdmin=Client.recepAdminInfo(idUser);
       System.out.println("admin " + idAdmin);
       System.out.println("user " + idUser);
