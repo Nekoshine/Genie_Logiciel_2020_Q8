@@ -1,6 +1,7 @@
 package Sockets;
 
 import model.Game;
+import model.Room;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -15,12 +16,13 @@ public class Client {
   private static int port = 1096;
   private static String host = "127.0.0.1"; //localhost
   
-  public static void connectToServer(int idUser){
+  public static boolean connectToServer(int idUser, Room salle){
+    boolean accept = false;
     try{
       Socket socket = new Socket(host,port);
       ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
       
-      DemandeConnexion signal = new DemandeConnexion(idUser,false);
+      DemandeConnexion signal = new DemandeConnexion(idUser,false, salle.getGame().getTitre());
       
       out.writeObject(signal);
       ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
@@ -30,7 +32,9 @@ public class Client {
         reponse = (Reponse) oserver;
         if((reponse.getReponse()).equals("Oui")){
           System.out.println("C'est autorisé");
+          accept=true;
         }else{
+          accept=false;
           System.out.println("C'est refusé");
         }
       }
@@ -40,6 +44,7 @@ public class Client {
     }catch(IOException e){
       System.out.println("IOException :"+ e.getMessage());
     }
+    return accept;
   }
   
   
@@ -51,7 +56,7 @@ public class Client {
       Socket socket = new Socket(host,port);
       ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
       
-      DemandeConnexion signal = new DemandeConnexion(idUser,true);
+      DemandeConnexion signal = new DemandeConnexion(idUser,true, null);
       
       out.writeObject(signal);
       

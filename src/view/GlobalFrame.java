@@ -3,6 +3,7 @@ package view;
 import database.DBRoom;
 import launcher.Main;
 import model.Game;
+import model.Room;
 import model.RoomList;
 import model.User;
 import view.SwingWorkers.ImageLoaderMainMenu;
@@ -233,14 +234,14 @@ public class GlobalFrame extends JFrame {
 
     }
 
-    public boolean AcceptUser(String login) {
+    public boolean AcceptUser(String login, String salle) {
         //si je suis administrateur
         boolean admin = true;
-
+        String nomJeu = salle;
         if (admin) {
             String[] options = {"Oui", "Non"};
             int reponse = JOptionPane.showOptionDialog
-                    (null, login + " souhaite se connecter\nL'accepter ?",
+                    (null, login + " souhaite se connecter a "+ nomJeu +"\nL'accepter ?",
                             "Nouveau Joueur",
                             JOptionPane.YES_NO_OPTION,
                             JOptionPane.QUESTION_MESSAGE,

@@ -45,7 +45,7 @@ public class Admin {
           reponse=true;
         }*/
         User logged = DBUser.getUser(user.getIdUser()); // On récupere le login de l'user qui demande à se connecter
-        reponse = Main.frame.AcceptUser(logged.getLogin()); //pop up demande de connexion
+        reponse = Main.frame.AcceptUser(logged.getLogin(),user.getSalle()); //pop up demande de connexion
         
         
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
