@@ -1,6 +1,9 @@
 package Sockets;
 
+import database.DBUser;
+import launcher.Main;
 import model.Game;
+import model.User;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -32,10 +35,10 @@ public class Admin {
           AdminInfo signal = new AdminInfo(idUserAdmin);
           out.writeObject(signal);
         }else{
-          boolean reponse = true;
-          /* User logged = DBUser.getUser(user.getId()); // On récupere le login de l'user qui demande à se connecter
+          boolean reponse = false;
+          User logged = DBUser.getUser(user.getIdUser()); // On récupere le login de l'user qui demande à se connecter
           reponse = Main.frame.AcceptUser(logged.getLogin()); //pop up demande de connexion
-          */
+
           
           
           ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
