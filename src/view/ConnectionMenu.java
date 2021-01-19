@@ -129,7 +129,7 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
     super.paintComponent(g);
     if(backgroundConnexion != null){
       g.drawImage(backgroundConnexion,0,0,this);
-      
+
     }
     
     
@@ -140,7 +140,7 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
     if(isAdmin==1){
         Main.idAdmin= DBUser.getidUser(idinput);
     }
-    int idUser = DBUser.getidUser(idinput);
+    Main.idUser = DBUser.getidUser(idinput);
     if (isAdmin==1){
       ExecutorService service = Executors.newFixedThreadPool(4);
       service.submit(new Runnable(){
@@ -154,9 +154,9 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
       Main.ListRoom = DBRoom.getRooms(Main.idAdmin); // recherche des salles dans la BDD apres la connection
     }
     else if( isAdmin==0){
-      int idAdmin=Client.recepAdminInfo(idUser);
+      int idAdmin=Client.recepAdminInfo(Main.idUser);
       System.out.println("admin " + idAdmin);
-      System.out.println("user " + idUser);
+      System.out.println("user " + Main.idUser);
       Main.ListRoom = DBRoom.getRooms(idAdmin); //si le joueur est le numero
       Main.frame.roomAccessDisplay(Main.frame,Main.ListRoom);
       

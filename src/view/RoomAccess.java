@@ -2,7 +2,9 @@
 
 package view;
 
+import Sockets.Client;
 import database.DBRoom;
+import database.DBUser;
 import launcher.Main;
 import model.Room;
 import model.RoomList;
@@ -35,7 +37,7 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener{
     private RoomAccess(GlobalFrame frame,RoomList roomList){
 
         this.frame = frame;
-        user = new User(Main.idAdmin,"","",false);
+        user = DBUser.getUser(9);
 
 
         /* Récuperation des salles */
@@ -218,14 +220,13 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener{
                     frame.insideRoom = true;
                     salle.setUserInside(user.getId());
                     DBRoom.majRoom(salle.getId(),salle.getGame().getId(),salle.getCompetitive(),salle.getUserInside());
-                    Main.idRoom = salle.getId();
-                    frame.currentGameDisplay(frame,salle.getGame(),salle.getId());
+                    Client.connectToServer(user.getId());
                 }
 
                 else{
                     frame.insideRoom = false;
                     salle.setUserInside(-1);
-                    Main.idRoom = -1;
+
                     DBRoom.majRoom(salle.getId(),salle.getGame().getId(),salle.getCompetitive(),salle.getUserInside());
                     frame.roomAccessDisplay(frame,ListRoom);
                 }
