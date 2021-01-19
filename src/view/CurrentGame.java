@@ -90,7 +90,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
     private GlobalFrame frame;
 
     Dimension windowSize;
-    private static volatile CurrentGame INSTANCE = new CurrentGame(Main.frame,new Game(9,"perdu",12,3,0,true,"end"),1);
+    private static volatile CurrentGame INSTANCE = new CurrentGame(Main.frame,new Game(1,"perdu",12,3,0,true,"end"),1);
 
     private CurrentGame (GlobalFrame frame, Game partiechoisie,int idRoom){
 
