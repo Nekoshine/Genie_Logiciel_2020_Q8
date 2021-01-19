@@ -19,7 +19,7 @@ public class Main {
     public static GlobalFrame frame = null;
 
 
-    public static int idAdmin =5;
+    public static int idAdmin;
 
     public static void main(String[] args) throws IOException {
 
