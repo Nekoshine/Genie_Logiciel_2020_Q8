@@ -6,11 +6,13 @@ package view;
 import database.DBRoom;
 import database.DBUser;
 import launcher.Main;
+import view.SwingWorkers.ImageLoaderSignup;
 import view.style.ColorPerso;
 import view.style.ImagePerso;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 import java.util.regex.Pattern;
 import javax.swing.*;
 
@@ -19,7 +21,8 @@ public class SignupMenu extends JPanel implements ActionListener, MouseListener,
   
   private JButton confirm;
   private JButton back;
-  
+
+  private  BufferedImage backgroundConnexion;
   private JTextField idtextfiled;
   private JTextField keytextfield;
   private JPasswordField passwordtextfield;
@@ -32,6 +35,7 @@ public class SignupMenu extends JPanel implements ActionListener, MouseListener,
   private SignupMenu(GlobalFrame frame) {
     
     this.frame = Main.frame;
+    new ImageLoaderSignup(this).execute();
     
     //creation de la partie login
     
@@ -146,7 +150,10 @@ public class SignupMenu extends JPanel implements ActionListener, MouseListener,
 
   @Override
   protected void paintComponent(Graphics g) {
-    g.drawImage(ImagePerso.backgroundInscription,0,0,null);
+    super.paintComponent(g);
+    if(backgroundConnexion != null) {
+      g.drawImage(backgroundConnexion, 0, 0, this);
+    }
   }
 
   private void signUp(String idinput, String mdpinput, String cleinmput) {
@@ -247,6 +254,11 @@ public class SignupMenu extends JPanel implements ActionListener, MouseListener,
   @Override
   public void keyReleased(KeyEvent e) {
 
+  }
+
+  public void imageLoaded(BufferedImage backgroundConnexion) {
+    this.backgroundConnexion = backgroundConnexion;
+    repaint();
   }
 }
       
