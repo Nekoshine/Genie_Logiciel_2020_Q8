@@ -26,9 +26,6 @@ public class Main {
 
         frame = GlobalFrame.getInstance();
 
-        GameList gameList = DBGame.getGames(1);
-        Game partie = gameList.getGame(0);
-        frame.currentGameDisplay(frame,partie,1);
 
        /* Thread thread = new Thread(){
             public void run(){
