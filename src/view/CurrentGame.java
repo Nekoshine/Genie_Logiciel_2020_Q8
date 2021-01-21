@@ -95,17 +95,17 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
     Dimension windowSize;
 
 
-    public CurrentGame (GlobalFrame frame, Game partiechoisie,int idRoom){
+    public CurrentGame (GlobalFrame frame, Game partiechoisie,int idRoom) throws IOException, FontFormatException {
 
         room = Main.ListRoom.findByID(idRoom);
 
         try {
-            imageIconValide = new ImageIcon(new ImageIcon(ImageIO.read(Main.class.getResourceAsStream("/res/image/valide.png"))).getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+            imageIconValide = new ImageIcon(new ImageIcon(ImageIO.read(Main.class.getResourceAsStream("/image/valide.png"))).getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
         } catch (IOException e) {
             e.printStackTrace();
         }
         try {
-            imageIconRefus = new ImageIcon(new ImageIcon(ImageIO.read(Main.class.getResourceAsStream("/res/image/refus.png"))).getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+            imageIconRefus = new ImageIcon(new ImageIcon(ImageIO.read(Main.class.getResourceAsStream("/image/refus.png"))).getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -163,22 +163,24 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
 
         secondRawPanelIn1 = new JPanel();
         secondRawPanelIn1.setLayout(new FlowLayout(FlowLayout.LEFT));
-        secondRawPanelIn1.setPreferredSize(new Dimension((int)((float) windowSize.getWidth()*0.95),30));
+        //secondRawPanelIn1.setPreferredSize(new Dimension((int)((float) windowSize.getWidth()*0.95),20));
         secondRawPanelIn1.setOpaque(false);
 
-        titleLabel = new JLabel(partiechoisie.getTitre());
-        titleLabel.setPreferredSize(new Dimension((int)((float) windowSize.getWidth()*0.60),20));
-        titleLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+        titleLabel = new JLabel("<html><body><u>" + partiechoisie.getTitre() + "</u></body></html>");
+        //titleLabel.setPreferredSize(new Dimension((int)((float) windowSize.getWidth()*0.60),20));
+        titleLabel.setFont(Font.createFont(Font.TRUETYPE_FONT, Main.class.getResourceAsStream("/font/Oxanium.ttf")).deriveFont(Font.PLAIN,20));
+        //titleLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
 
 
 
         countdownLabel = new JLabel("Timer",SwingConstants.CENTER);
-        countdownLabel.setPreferredSize(new Dimension((int)((float) windowSize.getWidth()*0.10),20));
+        //countdownLabel.setPreferredSize(new Dimension((int)((float) windowSize.getWidth()*0.10),25));
+        countdownLabel.setFont(Font.createFont(Font.TRUETYPE_FONT, Main.class.getResourceAsStream("/font/Oxanium.ttf")).deriveFont(Font.PLAIN,20));
         countdownLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
 
         secondRawPanelIn2 = new JPanel();
         secondRawPanelIn2.setLayout(new FlowLayout(FlowLayout.RIGHT));
-        secondRawPanelIn2.setPreferredSize(new Dimension((int)((float) windowSize.getWidth()*0.20),30));
+        //secondRawPanelIn2.setPreferredSize(new Dimension((int)((float) windowSize.getWidth()*0.20),30));
         secondRawPanelIn2.setOpaque(false);
 
 
@@ -317,7 +319,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
         hintRawPanel.add(hintContainer3);
         hintRawPanel.add(hintMJContainer);
 
-        componentPanel = new JPanelImage(Main.class.getResourceAsStream("/res/image/FondPrincipal.png"),windowSize);
+        componentPanel = new JPanelImage(Main.class.getResourceAsStream("/image/FondPrincipal.png"),windowSize);
         componentPanel.setLayout(new GridBagLayout());
         componentPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
 
@@ -375,6 +377,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
             public void actionPerformed(ActionEvent e1) {
                 int seconde = 0;
                 int minute = 0;
+
                 countdownvalue--;
                 seconde = countdownvalue%60;
                 minute = (countdownvalue - seconde)/60;

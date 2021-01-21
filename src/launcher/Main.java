@@ -26,6 +26,7 @@ public class Main {
 
         frame = GlobalFrame.getInstance();
 
+
        /* Thread thread = new Thread(){
             public void run(){
                 MainMenu.getInstance(frame);

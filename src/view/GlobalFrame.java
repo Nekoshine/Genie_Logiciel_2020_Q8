@@ -1,5 +1,6 @@
 package view;
 
+import launcher.Main;
 import model.Game;
 import model.RoomList;
 import model.User;
@@ -13,6 +14,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class GlobalFrame extends JFrame {
 
@@ -50,7 +52,7 @@ public class GlobalFrame extends JFrame {
 
         frame = this;
 
-        File fichier = new File("./res/image/logo.png");
+        InputStream fichier = Main.class.getResourceAsStream("/image/logo.png");
         try {
             Image logo = ImageIO.read(fichier);
             this.setIconImage(logo);

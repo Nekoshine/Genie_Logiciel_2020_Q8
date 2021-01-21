@@ -14,8 +14,8 @@ public class FontPerso {
 
     static {
         try {
-            Oxanimum = Font.createFont(Font.TRUETYPE_FONT, Main.class.getResourceAsStream("/res/font/Oxanium.ttf")).deriveFont(Font.PLAIN,15);
-            SirensDEMO = Font.createFont(Font.TRUETYPE_FONT, Main.class.getResourceAsStream("/res/font/SirensDEMO.otf")).deriveFont(Font.PLAIN,15);
+            Oxanimum = Font.createFont(Font.TRUETYPE_FONT, Main.class.getResourceAsStream("/font/Oxanium.ttf")).deriveFont(Font.PLAIN,15);
+            SirensDEMO = Font.createFont(Font.TRUETYPE_FONT, Main.class.getResourceAsStream("/font/SirensDEMO.otf")).deriveFont(Font.PLAIN,15);
 
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();
