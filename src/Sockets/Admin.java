@@ -16,6 +16,7 @@ import static java.lang.Thread.sleep;
 
 public class Admin {
   private static int port = 1096;
+  private static int portS=1100;
   private static String host = "127.0.0.1"; //localhost
   
   public static void setServerAdmin(int idUserAdmin){
@@ -70,13 +71,21 @@ public class Admin {
 
 }
 
-public void envoiGameInfo(Game game){
+public void envoiInfoClient(String message,int idIndice){
   try{
-    Socket socket = new Socket(host,port);
-    ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-    GameInfo gameSend = new GameInfo(game);
-    out.writeObject(gameSend);
-    socket.close();
+    if(message != null ){      
+      Socket socket = new Socket(host,portS);
+      ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+      Message msgSend = new Message(message);
+      out.writeObject(msgSend);
+      socket.close();
+    }else{
+      Socket socket = new Socket(host,portS);
+      ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+      Indice indiceS = new Indice(idIndice);
+      out.writeObject(indiceS);
+      socket.close();
+    }
   } catch(IOException e){
     System.out.println("IOException :" + e.getMessage());
   }
