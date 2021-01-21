@@ -22,15 +22,7 @@ public class GlobalFrame extends JFrame {
     public static Dimension windowSize;
     private BorderLayout mainLayout;
     GlobalFrame frame;
-    private static volatile GlobalFrame INSTANCE;
-
-    static {
-        try {
-            INSTANCE = new GlobalFrame();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    private static volatile GlobalFrame INSTANCE = new GlobalFrame();
 
     RoomManagement roommanagement;
     MainMenu mainmenu;
@@ -48,7 +40,7 @@ public class GlobalFrame extends JFrame {
     public boolean insideRoom;
 
 
-    private GlobalFrame() throws IOException {
+    private GlobalFrame() {
         /*Font*/
         UIManager.put("Label.font", FontPerso.Oxanimum);
         UIManager.put("Button.font",FontPerso.SirensDEMO);
@@ -62,8 +54,13 @@ public class GlobalFrame extends JFrame {
         frame = this;
 
         File fichier = new File("./src/view/image/logo.png");
-        Image logo = ImageIO.read(fichier);
-        this.setIconImage(logo);
+        try {
+            Image logo = ImageIO.read(fichier);
+            this.setIconImage(logo);
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
         this.setTitle("E-Scape Game");
         this.setVisible(true);
         windowSize = new Dimension(720,480);
@@ -114,7 +111,7 @@ public class GlobalFrame extends JFrame {
 
     }
 
-    public final static GlobalFrame getInstance() throws IOException {
+    public final static GlobalFrame getInstance() {
         //Le "Double-Checked Singleton"/"Singleton doublement vérifié" permet
         //d'éviter un appel coûteux à synchronized,
         //une fois que l'instanciation est faite.

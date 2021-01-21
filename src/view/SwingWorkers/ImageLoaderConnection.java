@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ImageConsumer;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.Buffer;
 import view.ConnectionMenu;
@@ -20,12 +21,18 @@ public class ImageLoaderConnection extends SwingWorker<BufferedImage,BufferedIma
     }
 
     @Override
-    protected BufferedImage doInBackground() throws Exception {
+    protected BufferedImage doInBackground() {
         File file = new File("./src/view/image/FondConnection2.png");
-        InputStream is = new FileInputStream(file);
-        BufferedImage backgroundConnexion = ImageIO.read(is);
-        backgroundConnexion.getScaledInstance(720,450,Image.SCALE_FAST);
-        backgroundConnexion.setAccelerationPriority(1);
+        BufferedImage backgroundConnexion = null;
+        try {
+            InputStream is = new FileInputStream(file);
+            backgroundConnexion = ImageIO.read(is);
+            backgroundConnexion.getScaledInstance(720, 450, Image.SCALE_FAST);
+            backgroundConnexion.setAccelerationPriority(1);
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
         return backgroundConnexion;
     }
 
