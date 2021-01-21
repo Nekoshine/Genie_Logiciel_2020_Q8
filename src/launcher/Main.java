@@ -3,10 +3,7 @@ package launcher;
 import database.DBEnigma;
 import database.DBRoom;
 import model.*;
-import view.GameManagement;
-import view.GlobalFrame;
-import view.MainMenu;
-import view.RoomManagement;
+import view.*;
 
 import java.awt.*;
 import java.io.IOException;
@@ -21,20 +18,20 @@ public class Main {
 
     public static int idAdmin;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         /* Création de la vue */
         //System.setProperty("sun.java2d.opengl","True");
 
         frame = GlobalFrame.getInstance();
 
-        /*Thread thread = new Thread(){
+       /* Thread thread = new Thread(){
             public void run(){
-                System.out.println("run");
                 MainMenu.getInstance(frame);
                 GameManagement.getInstance(frame,-1);
                 RoomManagement.getInstance(frame);
-                System.out.println("end");
+                GameCreation.getInstance(frame,0,null);
+                RoomAccess.getInstance(frame,ListRoom,new User(1,"","",false));
             }
         };
 

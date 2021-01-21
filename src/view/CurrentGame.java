@@ -89,7 +89,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
     private GlobalFrame frame;
 
     Dimension windowSize;
-    private static volatile CurrentGame INSTANCE = new CurrentGame(Main.frame,new Game(1,"perdu",12,3,0,true,"end"),1);
+    private static volatile CurrentGame INSTANCE = new CurrentGame(Main.frame,new Game(-1,"",0,0,0,true,""),1);
 
     private CurrentGame (GlobalFrame frame, Game partiechoisie,int idRoom){
 
@@ -99,8 +99,15 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
         imageIconRefus = new ImageIcon(new ImageIcon("./src/view/image/refus.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
         windowSize = frame.getSize();
         this.frame = frame;
-        allEnigmas = DBEnigma.getEnigmas(partiechoisie.getId());
-        game = DBGame.getGame(partiechoisie.getId());
+        if(partiechoisie.getId()!=-1) {
+            allEnigmas = DBEnigma.getEnigmas(partiechoisie.getId());
+            game = DBGame.getGame(partiechoisie.getId());
+        }
+        else {
+            game=new Game(-1,"",0,0,0,true,"");
+            allEnigmas = new EnigmaList();
+            allEnigmas.addEnigma(new Enigma(1,1,"","","",1,"",1,"",3));
+        }
         timerclue1 = allEnigmas.getEnigma(enigmalistflag).getTimer1();
 
         ishint2present = !(allEnigmas.getEnigma(enigmalistflag).getClue2().isEmpty());
