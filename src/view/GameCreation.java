@@ -68,6 +68,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
     private JPanel hint3Panel;
     private JPanel buttonNewPanel;
     private JPanel winMessagePanel;
+    private JPanel namePanel;
 
 
 
@@ -125,6 +126,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
         enigmasPanel = new JPanel();
         winPanel = new JPanel();
         winMessagePanel = new JPanel();
+        namePanel = new JPanel();
 
         saveButton = new JButton("Enregistrer");
         exitButton = new JButton("Quitter");
@@ -149,10 +151,10 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
         winLabelPanel.add(winMessageLabel);
 
 
-
-
-
         windowName = new JLabel("MJ - Création/Modification de Jeux",JLabel.CENTER);
+        namePanel.add(windowName);
+        namePanel.setBackground(ColorPerso.grisOriginal);
+        namePanel.setBorder(BorderFactory.createLineBorder(Color.black,2));
 
         //Center
 
@@ -249,13 +251,17 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
         pointsPanel.setLayout(grid);
 
         titleNamePanel.add(title);
+        titleNamePanel.setOpaque(false);
         defaultScorePanel.add(initialScore);
+        defaultScorePanel.setOpaque(false);
         pointsPanel.add(rankingButton);
+        pointsPanel.setOpaque(false);
 
         infoPanel.setLayout(gridInfo);
         infoPanel.add(titleNamePanel,gbcTitle);
         infoPanel.add(defaultScorePanel,gbcScores);
         infoPanel.add(pointsPanel,gbcScores);
+        infoPanel.setOpaque(false);
 
         titleNamePanel.setBorder(BorderFactory.createLineBorder(Color.black,2));
         defaultScorePanel.setBorder(BorderFactory.createLineBorder(Color.black,2));
@@ -281,8 +287,8 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
         buttonPanel.add(exitButton,gbcScores);
         buttonPanel.add(saveButton,gbcScores);
         buttonPanel.add(deleteButton,gbcScores);
+        buttonPanel.setOpaque(false);
 
-        windowName.setBorder(BorderFactory.createLineBorder(Color.black,2));
 
         Border mainPadding = BorderFactory.createEmptyBorder(10, 10, 0, 10);
         Border buttonsPadding = BorderFactory.createEmptyBorder(5,0,10,0);
@@ -290,7 +296,8 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
         buttonPanel.setBorder(buttonsPadding);
 
         titlePanel.setLayout(titleLayout);
-        titlePanel.add(windowName,BorderLayout.NORTH);
+        titlePanel.add(namePanel,BorderLayout.NORTH);
+        titlePanel.setOpaque(false);
         titlePanel.add(infoPanel,BorderLayout.SOUTH);
 
         title.addCaretListener(new CaretListener() {
@@ -317,6 +324,8 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
         this.add(centerPanel,BorderLayout.CENTER);
         this.add(titlePanel,BorderLayout.NORTH);
         this.add(buttonPanel, BorderLayout.SOUTH);
+        this.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
+        this.setBackground(ColorPerso.darkGray);
 
         this.setVisible(true);
 

@@ -53,6 +53,7 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
         JPanel titlePanel = new JPanel();
         JPanel returnPanel = new JPanel();
         newButtonPanel = new JPanel();
+        newButtonPanel.setBackground(ColorPerso.gris);
         JScrollPane scrollPane = new JScrollPane(gamePanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
         scrollPane.getVerticalScrollBar().setUnitIncrement(10);
@@ -63,6 +64,7 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
         FlowLayout decoLayout = new FlowLayout(FlowLayout.LEADING);
         GridBagLayout listLayout = new GridBagLayout();
         gamePanel.setLayout(listLayout);
+        gamePanel.setBackground(ColorPerso.gris);
 
         /* Contraintes GridBag */
         GridBagConstraints gbc = new GridBagConstraints();
@@ -94,6 +96,7 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
         listPanel.setLayout(centerLayout);
         listPanel.add(scrollPane,BorderLayout.CENTER);
         listPanel.add(newButtonPanel, BorderLayout.PAGE_END);
+        listPanel.setBackground(ColorPerso.gris);
         listPanel.setBorder(BorderFactory.createLineBorder(Color.black,2));
 
         if(frame.roomNumber==-1) {

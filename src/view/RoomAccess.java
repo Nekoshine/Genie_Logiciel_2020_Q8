@@ -62,6 +62,7 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
         FlowLayout decoLayout = new FlowLayout(FlowLayout.LEADING);
         GridBagLayout listLayout = new GridBagLayout();
         roomPanel.setLayout(listLayout);
+        roomPanel.setBackground(Color.LIGHT_GRAY);
 
         /* Contraintes GridBag */
         GridBagConstraints gbc = new GridBagConstraints();
@@ -86,7 +87,7 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
         listPanel.setLayout(centerLayout);
         listPanel.add(scrollPane,BorderLayout.CENTER);
         listPanel.setBorder(BorderFactory.createLineBorder(Color.black,2));
-        listPanel.setBackground(Color.LIGHT_GRAY);
+        listPanel.setBackground(ColorPerso.gray);
 
 
         //roomPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
@@ -188,18 +189,13 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
         if(salle.getUserInside()==-1) {
             boutonJoin.setText("Rejoindre la salle");
             boutonJoin.setBackground(ColorPerso.azur);
-
         }
 
-        else if (salle.getUserInside()==user.getId()){
-            boutonJoin.setText("En attente du MJ . . .");
-            boutonJoin.setBackground(ColorPerso.vert);
-        }
         else{
             boutonJoin.setText("Occupé. . .");
-            boutonJoin.setBackground(ColorPerso.vert);
+            boutonJoin.setEnabled(false);
+            boutonJoin.setBackground(ColorPerso.darkGray);
         }
-
 
 
         boutonJoin.addActionListener(new AbstractAction() {
@@ -207,9 +203,11 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
             public void actionPerformed(ActionEvent e) {
 
                 if(salle.getUserInside()==-1){
-
+                    JOptionPane.showMessageDialog(null, "Le MJ va valider votre connection", "Connexion en cours", JOptionPane.INFORMATION_MESSAGE,null);
                     if(Client.connectToServer(user.getId(),salle)){
                         frame.currentGameDisplay(frame,salle.getGame(),salle.getId());
+                        salle.setUserInside(user.getId());
+                        DBRoom.majRoom(salle.getId(),salle.getGame().getId(),salle.getCompetitive(),salle.getUserInside());
                     }
                     else {
                         frame.roomAccessDisplay(frame,Main.ListRoom,user);

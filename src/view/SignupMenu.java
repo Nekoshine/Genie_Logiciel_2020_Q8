@@ -93,6 +93,7 @@ public class SignupMenu extends JPanel implements ActionListener, MouseListener,
     back.addActionListener(this);
     back.addMouseListener(this);
     back.setBackground(ColorPerso.rouge);
+    back.setForeground(Color.white);
 
     
     JPanel backcontainer = new JPanel();
