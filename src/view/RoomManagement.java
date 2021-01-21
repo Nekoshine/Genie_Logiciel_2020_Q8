@@ -239,7 +239,7 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
             }
         });
 
-        JButton boutonLancer = new JButton("Lancer");
+        JButton boutonLancer = new JButton("Suivre Partie");
         boutonLancer.setBackground(ColorPerso.vert);
 
 
