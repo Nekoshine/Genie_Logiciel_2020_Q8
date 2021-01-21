@@ -26,6 +26,13 @@ public class Main {
 
         frame = GlobalFrame.getInstance();
 
+        GameList gameList = DBGame.getGames(2);
+        Game partie = gameList.getGame(0);
+        try {
+            frame.currentGameDisplay(frame,partie,1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
        /* Thread thread = new Thread(){
             public void run(){

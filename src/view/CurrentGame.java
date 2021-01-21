@@ -99,8 +99,16 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
 
         room = Main.ListRoom.findByID(idRoom);
 
-        imageIconValide = new ImageIcon(new ImageIcon(ImageIO.read(Main.class.getResourceAsStream("/image/valide.png"))).getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
-        imageIconRefus = new ImageIcon(new ImageIcon(ImageIO.read(Main.class.getResourceAsStream("/image/refus.png"))).getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+        try {
+            imageIconValide = new ImageIcon(new ImageIcon(ImageIO.read(Main.class.getResourceAsStream("/res/image/valide.png"))).getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            imageIconRefus = new ImageIcon(new ImageIcon(ImageIO.read(Main.class.getResourceAsStream("/res/image/refus.png"))).getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         windowSize = frame.getSize();
         this.frame = frame;
 
