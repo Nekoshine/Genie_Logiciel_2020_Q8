@@ -66,6 +66,7 @@ public class GlobalFrame extends JFrame {
         //menu = new RoomManagement();
         //this.setContentPane(menu);
         connectionMenuDisplay(this);
+        //currentGameDisplay(this, database.DBGame.getGames(2).getGame(4),1);
 
 
 
@@ -196,7 +197,7 @@ public class GlobalFrame extends JFrame {
 
     public void currentGameDisplay(GlobalFrame frame,Game partie,int idRoom) throws IOException {
 
-        currentGame = CurrentGame.getInstance(frame,partie,idRoom);
+        currentGame = new CurrentGame(frame,partie,idRoom);
 
         setContentPane(currentGame);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
