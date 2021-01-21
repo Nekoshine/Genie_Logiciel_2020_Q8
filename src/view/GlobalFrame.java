@@ -156,7 +156,8 @@ public class GlobalFrame extends JFrame {
     public void connectionMenuDisplay(GlobalFrame frame){
 
         connectionmenu = ConnectionMenu.getInstance(frame);
-        setContentPane(connectionmenu);
+        removeFullScreen(connectionmenu);
+        setVisible(true);
         frame.setMinimumSize(new Dimension(720,480));
         frame.setSize(720,480);
         frame.setResizable(false);
@@ -196,15 +197,13 @@ public class GlobalFrame extends JFrame {
     }
 
     public void currentGameDisplay(GlobalFrame frame,Game partie,int idRoom) throws IOException {
-
         currentGame = new CurrentGame(frame,partie,idRoom);
 
-        setContentPane(currentGame);
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        frame.setResizable(false);
+        setFullScreen(currentGame);
+
         frame.revalidate();
         frame.repaint();
-
+        setVisible(true);
     }
 
     public void roomAccessDisplay(GlobalFrame frame, RoomList roomList, User user){
@@ -254,4 +253,25 @@ public class GlobalFrame extends JFrame {
         return false;
     }
 
+    public void setFullScreen(JPanel pane){
+        GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice device = env.getDefaultScreenDevice();
+        setVisible(false);
+        dispose();
+        setContentPane(pane);
+        setUndecorated(true);
+        device.setFullScreenWindow(this);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setResizable(false);
+    }
+
+    public void removeFullScreen(JPanel pane){
+        GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice device = env.getDefaultScreenDevice();
+        setVisible(false);
+        dispose();
+        setContentPane(pane);
+        setUndecorated(false);
+        device.setFullScreenWindow(null);
+    }
 }
