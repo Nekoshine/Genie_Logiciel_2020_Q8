@@ -12,6 +12,7 @@ import view.style.FontPerso;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicScrollBarUI;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
@@ -55,6 +56,7 @@ public class GlobalFrame extends JFrame {
         UIManager.put("TextArea.font",FontPerso.Oxanimum);
         UIManager.put("TextField.font",FontPerso.Oxanimum);
         UIManager.put("Button.background", ColorPerso.grisOriginal);
+
 
         Toolkit.getDefaultToolkit().setDynamicLayout(true);
 
@@ -229,7 +231,6 @@ public class GlobalFrame extends JFrame {
         playerManagement = PlayerManagement.getInstance(frame, gameNb, riddleNb, boolHint1Revealed, boolHint2Revealed, boolHint3Revealed);
         setContentPane(playerManagement);
         frame.setSize(1280,720);
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setResizable(true);
         frame.revalidate();
         frame.repaint();
