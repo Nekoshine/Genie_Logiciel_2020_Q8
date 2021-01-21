@@ -58,7 +58,7 @@ public class ScoreList {
         int size = this.getSize();
         Score scoreTmp;
         for(int i = size - 1; i > 0; i--){
-            for(int j = 0; j < i; i++){
+            for(int j = 0; j < i; j++){
                 if(this.getScore(j+1).getScore() > this.getScore(j).getScore()){
                     scoreTmp = this.getScore(j+1);
                     this.set(j + 1, this.getScore(j));
