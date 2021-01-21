@@ -1,6 +1,7 @@
 package launcher;
 
 import database.DBEnigma;
+import database.DBGame;
 import database.DBRoom;
 import model.*;
 import view.*;
@@ -24,6 +25,10 @@ public class Main {
         //System.setProperty("sun.java2d.opengl","True");
 
         frame = GlobalFrame.getInstance();
+
+        GameList gameList = DBGame.getGames(1);
+        Game partie = gameList.getGame(0);
+        frame.currentGameDisplay(frame,partie,1);
 
        /* Thread thread = new Thread(){
             public void run(){
