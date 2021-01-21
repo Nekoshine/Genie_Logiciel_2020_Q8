@@ -3,6 +3,7 @@ package view;
 import database.DBEnigma;
 import database.DBGame;
 import launcher.Main;
+import model.Enigma;
 import model.EnigmaList;
 import view.style.ColorPerso;
 import view.style.FontPerso;
@@ -34,7 +35,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
     private JLabel title;
     private JLabel answers;
 
-    private static volatile PlayerManagement INSTANCE = new PlayerManagement(Main.frame,1,1,false,false,false);
+    private static volatile PlayerManagement INSTANCE = new PlayerManagement(Main.frame,-1,1,false,false,false);
 
     public PlayerManagement(GlobalFrame frame,int gameNb, int riddleNb, boolean boolHint1Revealed, boolean boolHint2Revealed, boolean boolHint3Revealed){
         this.frame = frame;
@@ -45,8 +46,13 @@ public class PlayerManagement extends JPanel implements ActionListener{
         int width = (int) frame.windowSize.getWidth();
         int height = (int) frame.windowSize.getHeight();
 
-        currentRiddles = DBEnigma.getEnigmas(gameNb); // la liste des énigmes du jeu
-
+        if(gameNb!=-1) {
+            currentRiddles = DBEnigma.getEnigmas(gameNb); // la liste des énigmes du jeu
+        }
+        else{
+            currentRiddles = new EnigmaList();
+            currentRiddles.addEnigma(new Enigma(1,1,"","","",1,"",1,"",3));
+        }
         helpButtonGM = new JButton("Envoyer");
         helpButtonGM.addActionListener(this);
         helpButtonGM.setBackground(Color.LIGHT_GRAY);
