@@ -1,5 +1,7 @@
 package view.style;
 
+import launcher.Main;
+
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -12,8 +14,8 @@ public class FontPerso {
 
     static {
         try {
-            Oxanimum = Font.createFont(Font.TRUETYPE_FONT, new File("./src/view/font/Oxanium.ttf")).deriveFont(Font.PLAIN,15);
-            SirensDEMO = Font.createFont(Font.TRUETYPE_FONT, new File("./src/view/font/SirensDEMO.otf")).deriveFont(Font.PLAIN,15);
+            Oxanimum = Font.createFont(Font.TRUETYPE_FONT, Main.class.getResourceAsStream("/res/font/Oxanium.ttf")).deriveFont(Font.PLAIN,15);
+            SirensDEMO = Font.createFont(Font.TRUETYPE_FONT, Main.class.getResourceAsStream("/res/font/SirensDEMO.otf")).deriveFont(Font.PLAIN,15);
 
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();

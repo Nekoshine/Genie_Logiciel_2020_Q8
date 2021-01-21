@@ -18,6 +18,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 
 public class RoomAccess extends JPanel implements ActionListener,MouseListener {
 
@@ -205,7 +206,11 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
                 if(salle.getUserInside()==-1){
                     JOptionPane.showMessageDialog(null, "Le MJ va valider votre connection", "Connexion en cours", JOptionPane.INFORMATION_MESSAGE,null);
                     if(Client.connectToServer(user.getId(),salle)){
-                        frame.currentGameDisplay(frame,salle.getGame(),salle.getId());
+                        try {
+                            frame.currentGameDisplay(frame,salle.getGame(),salle.getId());
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
+                        }
                         salle.setUserInside(user.getId());
                         DBRoom.majRoom(salle.getId(),salle.getGame().getId(),salle.getCompetitive(),salle.getUserInside());
                     }

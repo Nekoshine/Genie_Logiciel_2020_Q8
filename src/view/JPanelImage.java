@@ -7,17 +7,18 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class JPanelImage extends JPanel {
     private BufferedImage img;
     private float ratio;
     private AffineTransform aTransform;
 
-    JPanelImage(String path,Dimension windowSize) {
+    JPanelImage(InputStream path, Dimension windowSize) {
         super();
         aTransform = new AffineTransform();
         try {
-            img = ImageIO.read(new File(path));
+            img = ImageIO.read(path);
             img.getScaledInstance(windowSize.width,windowSize.height,Image.SCALE_FAST);
             ratio = (float)img.getWidth(null)/(float)img.getHeight(null);
         } catch (IOException e) {
@@ -38,10 +39,10 @@ public class JPanelImage extends JPanel {
 
     }
 
-    public void setBackground(String path){
+    public void setBackground(InputStream path){
         aTransform = new AffineTransform();
         try {
-            img = ImageIO.read(new File(path));
+            img = ImageIO.read(path);
             ratio = (float)img.getWidth(null)/(float)img.getHeight(null);
         } catch (IOException e) {
             e.printStackTrace();

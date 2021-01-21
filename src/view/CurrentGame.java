@@ -4,15 +4,14 @@ import database.DBEnigma;
 import database.DBGame;
 import launcher.Main;
 import database.DBRoom;
-import launcher.Main;
 import model.*;
-import view.SwingWorkers.ImageLoaderMainMenu;
 import view.style.ColorPerso;
 import view.style.FontPerso;
 
 import java.awt.*;
 import java.awt.event.*;
-import javax.print.attribute.standard.MediaSize;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.Timer;
 
@@ -89,14 +88,22 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
     private GlobalFrame frame;
 
     Dimension windowSize;
-    private static volatile CurrentGame INSTANCE = new CurrentGame(Main.frame,new Game(-1,"",0,0,0,true,""),1);
+    private static volatile CurrentGame INSTANCE;
 
-    private CurrentGame (GlobalFrame frame, Game partiechoisie,int idRoom){
+    static {
+        try {
+            INSTANCE = new CurrentGame(Main.frame,new Game(-1,"",0,0,0,true,""),1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private CurrentGame (GlobalFrame frame, Game partiechoisie,int idRoom) throws IOException {
 
         room = Main.ListRoom.findByID(idRoom);
 
-        imageIconValide = new ImageIcon(new ImageIcon("./src/view/image/valide.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
-        imageIconRefus = new ImageIcon(new ImageIcon("./src/view/image/refus.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+        imageIconValide = new ImageIcon(new ImageIcon(ImageIO.read(Main.class.getResourceAsStream("/image/valide.png"))).getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+        imageIconRefus = new ImageIcon(new ImageIcon(ImageIO.read(Main.class.getResourceAsStream("/image/refus.png"))).getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
         windowSize = frame.getSize();
         this.frame = frame;
         if(partiechoisie.getId()!=-1) {
@@ -297,7 +304,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
         hintRawPanel.add(hintContainer3);
         hintRawPanel.add(hintMJContainer);
 
-        componentPanel = new JPanelImage("./src/view/image/FondPrincipal.png",windowSize);
+        componentPanel = new JPanelImage(Main.class.getResourceAsStream("/res/image/FondPrincipal.png"),windowSize);
         componentPanel.setLayout(new GridBagLayout());
         componentPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
 
@@ -355,7 +362,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
 
     }
 
-    public final static CurrentGame getInstance(GlobalFrame frame, Game partiechoisie,int idRoom) {
+    public final static CurrentGame getInstance(GlobalFrame frame, Game partiechoisie,int idRoom) throws IOException {
         //Le "Double-Checked Singleton"/"Singleton doublement vérifié" permet
         //d'éviter un appel coûteux à synchronized,
         //une fois que l'instanciation est faite.

@@ -73,15 +73,11 @@ public class Ranking extends JFrame {
         JLabel placeLabel = new JLabel(String.valueOf(score.getId()));
         placeLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-
-
         JLabel userLabel = new JLabel(DBUser.getUser(score.getIdUser()).getLogin());
         userLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         JLabel scoreLabel = new JLabel(String.valueOf(score.getScore()));
         scoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
-
-
 
 
 

@@ -1,9 +1,6 @@
 package view;
 
-import database.DBRoom;
-import launcher.Main;
 import model.Game;
-import model.Room;
 import model.RoomList;
 import model.User;
 import view.SwingWorkers.ImageLoaderMainMenu;
@@ -53,7 +50,7 @@ public class GlobalFrame extends JFrame {
 
         frame = this;
 
-        File fichier = new File("./src/view/image/logo.png");
+        File fichier = new File("./res/image/logo.png");
         try {
             Image logo = ImageIO.read(fichier);
             this.setIconImage(logo);
@@ -197,7 +194,7 @@ public class GlobalFrame extends JFrame {
         frame.repaint();
     }
 
-    public void currentGameDisplay(GlobalFrame frame,Game partie,int idRoom){
+    public void currentGameDisplay(GlobalFrame frame,Game partie,int idRoom) throws IOException {
 
         currentGame = CurrentGame.getInstance(frame,partie,idRoom);
 
