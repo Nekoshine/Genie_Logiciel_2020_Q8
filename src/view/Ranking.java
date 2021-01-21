@@ -5,8 +5,11 @@ import model.Score;
 import model.ScoreList;
 import view.style.ColorPerso;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Ranking extends JFrame {
@@ -34,12 +37,30 @@ public class Ranking extends JFrame {
         rankingPanel = new JPanel();
         closePanel = new JPanel();
 
+        File fichier = new File("./res/image/logo.png");
+        try {
+            Image logo = ImageIO.read(fichier);
+            this.setIconImage(logo);
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
         closeButton = new JButton("Fermer");
         closeButton.setBackground(ColorPerso.rouge);
 
         closePanel.add(closeButton);
 
         mainLayout = new BorderLayout();
+
+        for (int i = 0;i< scoreList.getSize();i++){
+
+            JPanel panel = ajoutResultat(scoreList.getScore(i),gbc);
+            rankingPanel.add(panel,gbc);
+            mainPanel.revalidate();
+            mainPanel.repaint();
+
+        }
 
         mainPanel.setLayout(mainLayout);
         mainPanel.add(rankingPanel,BorderLayout.CENTER);
@@ -53,14 +74,13 @@ public class Ranking extends JFrame {
         this.add(generalPanel);
         this.setSize(400,700);
         this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setVisible(true);
 
 
     }
 
-    void ajoutResultat(Score score,GridBagConstraints gbc){
+    public JPanel ajoutResultat(Score score,GridBagConstraints gbc){
 
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1.0;
@@ -72,14 +92,24 @@ public class Ranking extends JFrame {
 
         JLabel placeLabel = new JLabel(String.valueOf(score.getId()));
         placeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        placeLabel.setBorder(BorderFactory.createLineBorder(Color.black));
 
         JLabel userLabel = new JLabel(DBUser.getUser(score.getIdUser()).getLogin());
         userLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        userLabel.setBorder(BorderFactory.createLineBorder(Color.black));
 
         JLabel scoreLabel = new JLabel(String.valueOf(score.getScore()));
         scoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        scoreLabel.setBorder(BorderFactory.createLineBorder(Color.black));
 
+        panelResultat.setLayout(grid);
+        panelResultat.add(placeLabel);
+        panelResultat.add(userLabel);
+        panelResultat.add(scoreLabel);
 
+        panelResultat.setBorder(BorderFactory.createLineBorder(Color.black,2));
+
+        return  panelResultat;
 
     }
 

@@ -23,7 +23,7 @@ public class ImageLoaderConnection extends SwingWorker<BufferedImage,BufferedIma
 
     @Override
     protected BufferedImage doInBackground() throws URISyntaxException {
-        InputStream is  = Main.class.getResourceAsStream("/res/image/FondConnection2.png");
+        InputStream is  = Main.class.getResourceAsStream("/image/FondConnection2.png");
         BufferedImage backgroundConnexion = null;
         try {
             backgroundConnexion = ImageIO.read(is);
