@@ -146,7 +146,7 @@ public class SignupMenu extends JPanel implements ActionListener, MouseListener,
 
   @Override
   protected void paintComponent(Graphics g) {
-    ImagePerso.backgroundInscription.paintIcon(this,g,0,0);
+    g.drawImage(ImagePerso.backgroundInscription,0,0,null);
   }
 
   private void signUp(String idinput, String mdpinput, String cleinmput) {

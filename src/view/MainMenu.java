@@ -2,18 +2,14 @@
 
 package view;
 
-import Sockets.Admin;
-import database.DBRoom;
 import launcher.Main;
 import view.SwingWorkers.ImageLoaderMainMenu;
 import view.style.ColorPerso;
 import view.style.FontPerso;
-import view.style.ImagePerso;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
 
 public class MainMenu extends JPanel implements ActionListener, MouseListener {
 
@@ -64,11 +60,11 @@ public class MainMenu extends JPanel implements ActionListener, MouseListener {
 
         /*création des boutons de choix de menu*/
 
-        creation = new JButtonImage("./src/view/image/creation.png");
+        creation = new JButtonImage(Main.class.getResourceAsStream("/res/image/creation.png"));
         creation.addActionListener(this);
         creation.addMouseListener(this);
 
-        management = new JButtonImage("./src/view/image/gestion.png");
+        management = new JButtonImage(Main.class.getResourceAsStream("/res/image/gestion.png"));
         management.addActionListener(this);
         management.addMouseListener(this);
         /*création du conteneur des menus*/
@@ -163,10 +159,10 @@ public class MainMenu extends JPanel implements ActionListener, MouseListener {
     @Override
     public void mouseEntered(MouseEvent e) {
         if(e.getSource() == management ){
-            management.setBackground("./src/view/image/gestionHoover.png");
+            management.setBackground(Main.class.getResourceAsStream("/res/image/gestionHoover.png"));
         }
         else if(e.getSource() == creation){
-            creation.setBackground("./src/view/image/creationHoover.png");
+            creation.setBackground(Main.class.getResourceAsStream("/res/image/creationHoover.png"));
         }
         else if(e.getSource() == deconnection){
             deconnection.setBackground(ColorPerso.rougeHoover);
@@ -176,10 +172,10 @@ public class MainMenu extends JPanel implements ActionListener, MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
         if(e.getSource() == management ){
-            management.setBackground("./src/view/image/gestion.png");
+            management.setBackground(Main.class.getResourceAsStream("/res/image/gestion.png"));
         }
         else if(e.getSource() == creation){
-            creation.setBackground("./src/view/image/creation.png");
+            creation.setBackground(Main.class.getResourceAsStream("/res/image/creation.png"));
         }
         else if(e.getSource() == deconnection){
             deconnection.setBackground(ColorPerso.rouge);

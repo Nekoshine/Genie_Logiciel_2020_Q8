@@ -10,6 +10,8 @@ import view.style.FontPerso;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.Timer;
 
@@ -97,8 +99,8 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
 
         room = Main.ListRoom.findByID(idRoom);
 
-        imageIconValide = new ImageIcon(new ImageIcon("./src/view/image/valide.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
-        imageIconRefus = new ImageIcon(new ImageIcon("./src/view/image/refus.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+        imageIconValide = new ImageIcon(new ImageIcon(ImageIO.read(Main.class.getResourceAsStream("/image/valide.png"))).getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
+        imageIconRefus = new ImageIcon(new ImageIcon(ImageIO.read(Main.class.getResourceAsStream("/image/refus.png"))).getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
         windowSize = frame.getSize();
         this.frame = frame;
 
@@ -307,9 +309,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
         hintRawPanel.add(hintContainer3);
         hintRawPanel.add(hintMJContainer);
 
-        // intégration dans la fenetre principale
-
-        componentPanel = new JPanelImage("./src/view/image/FondPrincipal.png",windowSize);
+        componentPanel = new JPanelImage(Main.class.getResourceAsStream("/res/image/FondPrincipal.png"),windowSize);
         componentPanel.setLayout(new GridBagLayout());
         componentPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
 

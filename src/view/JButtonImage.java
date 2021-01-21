@@ -7,17 +7,18 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class JButtonImage extends JButton {
     private BufferedImage img;
     private float ratio;
     private AffineTransform aTransform;
 
-    JButtonImage(String path) {
+    JButtonImage(InputStream path) {
         super();
         aTransform = new AffineTransform();
         try {
-            img = ImageIO.read(new File(path));
+            img = ImageIO.read(path);
             ratio = (float)img.getWidth(null)/(float)img.getHeight(null);
         } catch (IOException e) {
             e.printStackTrace();
@@ -40,10 +41,10 @@ public class JButtonImage extends JButton {
 
     }
 
-    public void setBackground(String path){
+    public void setBackground(InputStream path){
         aTransform = new AffineTransform();
         try {
-            img = ImageIO.read(new File(path));
+            img = ImageIO.read(path);
             ratio = (float)img.getWidth(null)/(float)img.getHeight(null);
         } catch (IOException e) {
             e.printStackTrace();

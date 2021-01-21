@@ -13,6 +13,8 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class PlayerManagement extends JPanel implements ActionListener{
 
@@ -209,6 +211,15 @@ public class PlayerManagement extends JPanel implements ActionListener{
         bottomPan.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 
         Border mainEdge = BorderFactory.createEmptyBorder(10,10,10,10);
+
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                INSTANCE.revalidate();
+                INSTANCE.repaint();
+            }
+        });
+
         this.setBorder(mainEdge);
         this.setBackground(ColorPerso.darkGray);
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
