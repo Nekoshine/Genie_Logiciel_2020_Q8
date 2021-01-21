@@ -53,6 +53,7 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
         JPanel titlePanel = new JPanel();
         JPanel returnPanel = new JPanel();
         newButtonPanel = new JPanel();
+        newButtonPanel.setBackground(Color.lightGray);
         JScrollPane scrollPane = new JScrollPane(gamePanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
         scrollPane.getVerticalScrollBar().setUnitIncrement(10);
@@ -63,6 +64,7 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
         FlowLayout decoLayout = new FlowLayout(FlowLayout.LEADING);
         GridBagLayout listLayout = new GridBagLayout();
         gamePanel.setLayout(listLayout);
+        gamePanel.setBackground(Color.lightGray);
 
         /* Contraintes GridBag */
         GridBagConstraints gbc = new GridBagConstraints();
@@ -95,6 +97,7 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
         listPanel.add(scrollPane,BorderLayout.CENTER);
         listPanel.add(newButtonPanel, BorderLayout.PAGE_END);
         listPanel.setBorder(BorderFactory.createLineBorder(Color.black,2));
+        listPanel.setBackground(Color.lightGray);
 
         if(frame.roomNumber==-1) {
             newButtonPanel.add(newButton);
@@ -107,13 +110,13 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
 
         /* Setup bouton retour */
         returnPanel.setLayout(decoLayout);
-        returnPanel.setBackground(ColorPerso.gris);
+        returnPanel.setBackground(ColorPerso.darkGray);
         returnPanel.add(returnButton);
         returnButton.addActionListener(this);
         returnButton.addMouseListener(this);
 
         this.setLayout(mainLayout);
-        this.setBackground(ColorPerso.gris);
+        this.setBackground(ColorPerso.DARK_GRAY);
         this.add(listPanel, BorderLayout.CENTER);
         this.add(titlePanel, BorderLayout.PAGE_START);
         this.add(returnPanel, BorderLayout.PAGE_END);
