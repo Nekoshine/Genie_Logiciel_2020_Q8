@@ -97,6 +97,7 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
         listPanel.add(scrollPane,BorderLayout.CENTER);
         listPanel.add(newButtonPanel, BorderLayout.PAGE_END);
         listPanel.setBorder(BorderFactory.createLineBorder(Color.black,2));
+        listPanel.setBackground(Color.lightGray);
 
         if(frame.roomNumber==-1) {
             newButtonPanel.add(newButton);
