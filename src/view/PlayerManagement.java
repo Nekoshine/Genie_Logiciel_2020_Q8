@@ -5,6 +5,7 @@ import database.DBGame;
 import launcher.Main;
 import model.EnigmaList;
 import view.style.ColorPerso;
+import view.style.FontPerso;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -28,7 +29,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
     private boolean boolHint2;
     private boolean boolHint3;
 
-    private JLabel currentStory;
+    private JTextArea currentStory;
     private EnigmaList currentRiddles;
     private JLabel title;
     private JLabel answers;
@@ -68,7 +69,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
         JPanel titlePanIn = new JPanel();
         titlePanIn.setPreferredSize(new Dimension((int) ((width-40)*0.7),(int) ((height-90)*0.06)));
         titlePanIn.setBackground(Color.LIGHT_GRAY);
-        titlePanIn.add(title);
+        titlePanIn.add(title, CENTER_ALIGNMENT);
         titlePanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         JPanel titlePan = new JPanel();
         titlePan.setBackground(ColorPerso.darkGray);
@@ -90,7 +91,13 @@ public class PlayerManagement extends JPanel implements ActionListener{
         topPan.add(titlePan);
         topPan.add(timerPan);
 
-        currentStory = new JLabel();
+        currentStory = new JTextArea();
+        currentStory.setLineWrap(true);
+        currentStory.setWrapStyleWord(true);
+        currentStory.setBackground(Color.LIGHT_GRAY);
+        currentStory.setFont(FontPerso.Oxanimum);
+        currentStory.setEditable(false);
+        currentStory.setPreferredSize(new Dimension(width-20,(height-90)*22/100-10));
         currentStory.setText((currentRiddles.getEnigma(riddleNb - 1)).getText());
 
 
@@ -121,7 +128,10 @@ public class PlayerManagement extends JPanel implements ActionListener{
         answersPan.add(scrollAnswersPanIn);
         answersPan.setBorder(BorderFactory.createEmptyBorder(0,0,20,0));
 
-        JTextField helpMessageGM = new JTextField();
+        JTextArea helpMessageGM = new JTextArea();
+        helpMessageGM.setLineWrap(true);
+        helpMessageGM.setWrapStyleWord(true);
+        helpMessageGM.setFont(FontPerso.Oxanimum);
         helpMessageGM.setPreferredSize(new Dimension((int) (width-200-helpButtonGM.getWidth()), (int) ((height-150)*0.235)));
         JPanel helpMessageGMPan = new JPanel();
         helpMessageGMPan.setBackground(Color.LIGHT_GRAY);

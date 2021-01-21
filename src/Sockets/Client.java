@@ -14,6 +14,7 @@ import static java.lang.Thread.sleep;
 public class Client {
   
   private static int port = 1096;
+  private static int portS = 1100;
   private static String host = "127.0.0.1"; //localhost
   
   public static boolean connectToServer(int idUser, Room salle){
@@ -78,25 +79,30 @@ public class Client {
     return idUserAdmin;
   }
   
-  public static Game recepGameInfo(){
-    Game gameRCV = null;
+  public static Object recepGameInfo(){
+    Object obj= null;
     try{
-      
-      ServerSocket s = new ServerSocket(port);
+      ServerSocket s = new ServerSocket(portS);
       Socket socket = s.accept();
       
       ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
       Object oserver =  in.readObject();
-      if(oserver instanceof GameInfo){
-        GameInfo  game = (GameInfo) oserver;
-        System.out.println("Titre du jeu recu : "+game.getGameInfo().getTitre());
-        gameRCV=game.getGameInfo();
+      if(oserver instanceof Message){
+        Message  msg = (Message) oserver;
+        System.out.println("Message : "+msg.getMessage());
+        obj=msg;
       }
+      if(oserver instanceof Indice){
+        Indice  indice = (Indice) oserver;
+        System.out.println("idIndice : "+ indice.getIdIndice() );
+        obj=indice;
+      }
+      s.close();
     }catch(IOException e){
       System.out.println("IOException : "+ e.getMessage());
     }catch(ClassNotFoundException e){
       System.out.println("ClassNotFoundException : "+ e.getMessage());
     }
-    return gameRCV;
+    return obj;
   }
 }
