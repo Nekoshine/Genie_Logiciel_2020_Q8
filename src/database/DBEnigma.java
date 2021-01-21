@@ -179,14 +179,22 @@ public class DBEnigma extends DBConnexion{
                   requeteVerif.setInt(1,id);
                   ResultSet resultatVerif = requeteVerif.executeQuery();
                   if(resultatVerif.next() != false){ // Si on a bien 1 résultat
+                        String clue2BDD=resultatVerif.getString("clue2");
+                        String clue3BDD=resultatVerif.getString("clue3");
 
-                        //on vérifier tout les champs
+                        boolean sameClue2 = false;
+                        if(clue2BDD==null && clue2==null || clue2BDD.equals(clue2)){
+                              sameClue2=true;
+                        }
+
+                        boolean sameClue3 = false;
+                        if(clue3BDD==null && clue3==null || clue3BDD.equals(clue3)){
+                              sameClue3=true;
+                        }
+
                         if(resultatVerif.getString("text").equals(text)&&
                         resultatVerif.getString("answer").equals(answer)&&
-                        resultatVerif.getString("clue1").equals(clue1)&&
-                        resultatVerif.getString("clue2").equals(clue2)&&
-                        resultatVerif.getString("clue3").equals(clue3)){
-
+                        resultatVerif.getString("clue1").equals(clue1)&& sameClue2 && sameClue3){
                               inserted=true; // Alors on valide l insertion
                         }
                   }
@@ -197,5 +205,31 @@ public class DBEnigma extends DBConnexion{
                   System.err.println("Erreur requete majEnigma: " + e.getMessage());
             }
             return inserted;
+      }
+
+      /**
+       * Fonction qui va supprimer une enigme dans la BDD
+       * @param id l'identifiant de l'enigme a supprimer
+       * @return true si la suppression à reussi
+       */
+      public static boolean deleteEnigma(int id){
+            boolean boolDelete=false;
+            try{
+                  PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("Delete from Enigma WHERE id=? ");
+                  requete.setInt(1, id);
+                  requete.executeUpdate();
+                  requete.close();
+                  PreparedStatement requeteVerif = DBConnexion.getConnexion().prepareStatement("Select * from Game where id=?");  // On regarde si l'user a bien été supprimé
+                  requeteVerif.setInt(1, id);
+                  ResultSet resultatVerif = requeteVerif.executeQuery();
+                  if(!resultatVerif.next()){ // Si il a été supprimé
+                        boolDelete=true; // Alors on valide la suppression
+                  }
+                  resultatVerif.close();
+                  requeteVerif.close();
+            } catch(SQLException e ){
+                  System.err.println("Erreur requete deleteEnigma: " + e.getMessage());
+            }
+            return boolDelete;
       }
 }

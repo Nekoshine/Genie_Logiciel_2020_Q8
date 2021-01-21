@@ -45,7 +45,7 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
         frame.roomNumber = roomNumber;
 
         /* Recuperation des jeux du User */
-        this.ListGame= DBGame.getGames(Main.idUser);
+        this.ListGame= DBGame.getGames(Main.idAdmin);
 
         /* Déclaration JPanel - JScrollPane */
         listPanel = new JPanel();
@@ -88,7 +88,7 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
 
         /* Setup Marges */
         Border mainPadding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
-        Border listPadding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
+        Border listPadding = BorderFactory.createEmptyBorder(20, 10, 10, 10);
         this.setBorder(mainPadding);
         listPanel.setBorder(listPadding);
 
@@ -97,7 +97,6 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
         listPanel.add(scrollPane,BorderLayout.CENTER);
         listPanel.add(newButtonPanel, BorderLayout.PAGE_END);
         listPanel.setBorder(BorderFactory.createLineBorder(Color.black,2));
-        listPanel.setBackground(Color.lightGray);
 
         if(frame.roomNumber==-1) {
             newButtonPanel.add(newButton);
@@ -116,8 +115,9 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
         returnButton.addMouseListener(this);
 
         this.setLayout(mainLayout);
-        this.setBackground(ColorPerso.DARK_GRAY);
+        this.setBackground(ColorPerso.darkGray);
         this.add(listPanel, BorderLayout.CENTER);
+        this.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
         this.add(titlePanel, BorderLayout.PAGE_START);
         this.add(returnPanel, BorderLayout.PAGE_END);
         this.setVisible(true);
@@ -142,7 +142,7 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
         else {
             INSTANCE.frame=frame;
             INSTANCE.frame.roomNumber=roomNumber;
-            INSTANCE.ListGame= DBGame.getGames(Main.idUser);
+            INSTANCE.ListGame= DBGame.getGames(Main.idAdmin);
             INSTANCE.createList();
             if(roomNumber==-1){
                 INSTANCE.newButton.setVisible(true);
@@ -151,6 +151,9 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
                 INSTANCE.newButton.setVisible(false);
             }
             INSTANCE.returnButton.setBackground(ColorPerso.rouge);
+            INSTANCE.newButton.setBackground(Color.GRAY);
+            INSTANCE.newButton.setOpaque(false);
+            INSTANCE.newButton.setForeground(Color.black);
         }
         return INSTANCE;
     }
@@ -219,9 +222,20 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     Game jeuChoisi = ListGame.findByID(jeu.getId());
-                    if(!DBGame.deleteGame(jeuChoisi.getId())){
-                        Toolkit.getDefaultToolkit().beep();
-                        JOptionPane.showMessageDialog(frame, "Le jeu ne peut pas être supprimé car il est utilisé par une salle", "Erreur", JOptionPane.ERROR_MESSAGE);
+                    String[] options = {"Oui", "Non"};
+                    int reponse = JOptionPane.showOptionDialog
+                            (null, "Voulez vous supprimer le jeu : \""+jeuChoisi.getTitre()+"\"",
+                                    "Nouveau Joueur",
+                                    JOptionPane.YES_NO_OPTION,
+                                    JOptionPane.QUESTION_MESSAGE,
+                                    null, // pas d'icone
+                                    options, // titres des boutons
+                                    null); // désactiver la touche ENTER
+                    if (reponse == JOptionPane.YES_OPTION) {
+                        if(!DBGame.deleteGame(jeuChoisi.getId())){
+                            Toolkit.getDefaultToolkit().beep();
+                            JOptionPane.showMessageDialog(frame, "Le jeu ne peut pas être supprimé car il est utilisé par une salle", "Erreur", JOptionPane.ERROR_MESSAGE);
+                        }
                     }
                     Main.frame.setContentPane(getInstance(frame,frame.roomNumber));
                 }
@@ -281,10 +295,10 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
                     int idRoom = Main.ListRoom.findByID(frame.roomNumber).getId();
 
                     if(DBRoom.isInDB(idRoom,idOldGame)) {
-                        DBRoom.majRoom(Main.ListRoom.findByID(frame.roomNumber).getId(),jeu.getId(),competitionCheck.isSelected());
+                        DBRoom.majRoom(Main.ListRoom.findByID(frame.roomNumber).getId(),jeu.getId(),competitionCheck.isSelected(),-1);
                     }
                     else{
-                        DBRoom.insertRoom(Main.ListRoom.findByID(frame.roomNumber).getId(), jeu.getId(),competitionCheck.isSelected());
+                        DBRoom.insertRoom(Main.ListRoom.findByID(frame.roomNumber).getId(), jeu.getId(),competitionCheck.isSelected(),-1);
                     }
                     frame.roomManagementDisplay(frame);
 

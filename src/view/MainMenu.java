@@ -19,7 +19,9 @@ public class MainMenu extends JPanel implements ActionListener, MouseListener {
 
     private JButton deconnection;
     public JButtonImage management;
+    public JPanel menucontainer;
     public JButtonImage creation;
+    public Dimension windowSize;
     private static volatile MainMenu INSTANCE = new MainMenu(Main.frame);
 
     private Image backgroundLogo;
@@ -29,7 +31,7 @@ public class MainMenu extends JPanel implements ActionListener, MouseListener {
     private MainMenu(GlobalFrame frame) {
 
         this.frame = frame;
-        //this.mainMenu = this;
+        windowSize = frame.getSize();
 
         new ImageLoaderMainMenu(this,frame.getSize()).execute();
 
@@ -70,9 +72,9 @@ public class MainMenu extends JPanel implements ActionListener, MouseListener {
         management.addActionListener(this);
         management.addMouseListener(this);
         /*création du conteneur des menus*/
-        JPanel menucontainer = new JPanel();
+        menucontainer = new JPanel();
         menucontainer.setLayout(new GridLayout(1, 2, 30, 5));
-        menucontainer.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+        menucontainer.setBorder(BorderFactory.createEmptyBorder((int)((float) frame.getHeight()*0.20), 30, 30, 30));
         menucontainer.setOpaque(false);
 
         /*intégration*/
@@ -82,6 +84,15 @@ public class MainMenu extends JPanel implements ActionListener, MouseListener {
         menucontainer.add(creation);
         menucontainer.add(management);
 
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                windowSize = Main.frame.getSize();
+                menucontainer.setBorder(BorderFactory.createEmptyBorder((int) (windowSize.getHeight()*0.10), 30, (int) (windowSize.getHeight()*0.10), 30));
+                INSTANCE.revalidate();
+                INSTANCE.repaint();
+            }
+        });
 
         this.add("South", deconnectionPanel);
         this.add("North", titlecontainer);
@@ -117,7 +128,6 @@ public class MainMenu extends JPanel implements ActionListener, MouseListener {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if(backgroundLogo != null){
-            System.out.println(frame.getWidth());
             g.drawImage(backgroundLogo,0,0,this);
         }
     }

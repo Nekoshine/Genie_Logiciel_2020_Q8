@@ -3,7 +3,9 @@ package view;
 import database.DBRoom;
 import launcher.Main;
 import model.Game;
+import model.Room;
 import model.RoomList;
+import model.User;
 import view.SwingWorkers.ImageLoaderMainMenu;
 import view.style.ColorPerso;
 import view.style.FontPerso;
@@ -50,7 +52,11 @@ public class GlobalFrame extends JFrame {
         /*Font*/
         UIManager.put("Label.font", FontPerso.Oxanimum);
         UIManager.put("Button.font",FontPerso.SirensDEMO);
+        UIManager.put("TextArea.font",FontPerso.Oxanimum);
+        UIManager.put("TextField.font",FontPerso.Oxanimum);
         UIManager.put("Button.background", ColorPerso.grisOriginal);
+
+        Toolkit.getDefaultToolkit().setDynamicLayout(true);
 
 
         frame = this;
@@ -145,6 +151,7 @@ public class GlobalFrame extends JFrame {
             frame.setSize(1280,720);
             frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         }
+        setMinimumSize(new Dimension(1280,720));
         setContentPane(mainmenu);
         frame.setResizable(true);
         frame.revalidate();
@@ -155,6 +162,7 @@ public class GlobalFrame extends JFrame {
 
         connectionmenu = ConnectionMenu.getInstance(frame);
         setContentPane(connectionmenu);
+        frame.setMinimumSize(new Dimension(720,480));
         frame.setSize(720,480);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
@@ -192,21 +200,21 @@ public class GlobalFrame extends JFrame {
         frame.repaint();
     }
 
-    public void currentGameDisplay(GlobalFrame frame,Game partie){
+    public void currentGameDisplay(GlobalFrame frame,Game partie,int idRoom){
 
-        currentGame = new CurrentGame(frame,partie);
+        currentGame = CurrentGame.getInstance(frame,partie,idRoom);
+
         setContentPane(currentGame);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        frame.setResizable(true);
-        this.setLocationRelativeTo(null);
+        frame.setResizable(false);
         frame.revalidate();
         frame.repaint();
 
     }
 
-    public void roomAccessDisplay(GlobalFrame frame, RoomList roomList){
+    public void roomAccessDisplay(GlobalFrame frame, RoomList roomList, User user){
 
-        roomAccess = RoomAccess.getInstance(frame,roomList);
+        roomAccess = RoomAccess.getInstance(frame,roomList,user);
         setContentPane(roomAccess);
         frame.setSize(1280,720);
         frame.setLocationRelativeTo(null);
@@ -228,5 +236,28 @@ public class GlobalFrame extends JFrame {
 
     }
 
+    public boolean AcceptUser(String login, String salle) {
+        //si je suis administrateur
+        boolean admin = true;
+        String nomJeu = salle;
+        if (admin) {
+            String[] options = {"Oui", "Non"};
+            int reponse = JOptionPane.showOptionDialog
+                    (null, login + " souhaite se connecter a "+ nomJeu +"\nL'accepter ?",
+                            "Nouveau Joueur",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE,
+                            null, // pas d'icone
+                            options, // titres des boutons
+                            null); // désactiver la touche ENTER
+            if (reponse == JOptionPane.YES_OPTION) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        return false;
+    }
 
 }

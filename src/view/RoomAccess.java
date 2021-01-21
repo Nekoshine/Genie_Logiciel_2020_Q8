@@ -4,9 +4,6 @@ package view;
 
 import Sockets.Client;
 import database.DBRoom;
-import database.DBUser;
-import launcher.Main;
-import model.Game;
 import launcher.Main;
 import model.Room;
 import model.RoomList;
@@ -38,11 +35,11 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
 
     public User user;
 
-    private static volatile RoomAccess INSTANCE = new RoomAccess(Main.frame,Main.ListRoom);
-    private RoomAccess(GlobalFrame frame,RoomList roomList){
+    private static volatile RoomAccess INSTANCE = new RoomAccess(Main.frame,Main.ListRoom,new User(1,"","",false));
+    private RoomAccess(GlobalFrame frame,RoomList roomList,User user){
 
         this.frame = frame;
-        user = new User(Main.idUser,"","",false);
+        this.user = user;
 
 
         /* Récuperation des salles */
@@ -119,10 +116,9 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
         this.setBackground(ColorPerso.darkGray);
         this.setVisible(true);
 
-
     }
 
-    public static RoomAccess getInstance(GlobalFrame frame, RoomList roomList) {
+    public static RoomAccess getInstance(GlobalFrame frame, RoomList roomList,User user) {
         //Le "Double-Checked Singleton"/"Singleton doublement vérifié" permet
         //d'éviter un appel coûteux à synchronized,
         //une fois que l'instanciation est faite.
@@ -132,7 +128,7 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
             // Il est TRES important.
             synchronized(INSTANCE) {
                 if (INSTANCE == null) {
-                    INSTANCE = new RoomAccess(frame,roomList);
+                    INSTANCE = new RoomAccess(frame,roomList,user);
                 }
             }
         }
@@ -140,6 +136,7 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
             INSTANCE.frame=frame;
             INSTANCE.ListRoom=roomList;
             INSTANCE.createList();
+            INSTANCE.user=user;
         }
         return INSTANCE;
     }
@@ -174,7 +171,12 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
 
         JLabel nomJeu;
         if (salle.getGame()!=null){
-            nomJeu = new JLabel(salle.getGame().getTitre());
+            if(salle.getCompetitive()) {
+                nomJeu = new JLabel("Competitif : "+salle.getGame().getTitre());
+            }
+            else {
+                nomJeu = new JLabel(salle.getGame().getTitre());
+            }
         }
         else{
             nomJeu = new JLabel("Pas de jeu");
@@ -186,42 +188,37 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
         if(salle.getUserInside()==-1) {
             boutonJoin.setText("Rejoindre la salle");
             boutonJoin.setBackground(ColorPerso.azur);
+
         }
 
-        if (salle.getUserInside()==user.getId()){
+        else if (salle.getUserInside()==user.getId()){
             boutonJoin.setText("En attente du MJ . . .");
             boutonJoin.setBackground(ColorPerso.vert);
         }
-
-        if (frame.insideRoom){
-            if (salle.getUserInside()!=user.getId()){
-                boutonJoin.setEnabled(false);
-                boutonJoin.setBackground(ColorPerso.darkGray);
-            }
+        else{
+            boutonJoin.setText("Occupé. . .");
+            boutonJoin.setBackground(ColorPerso.vert);
         }
 
-        if (!frame.insideRoom){
-            if(salle.getGame()== null || salle.getUserInside()!=-1){
-                boutonJoin.setEnabled(false);
-                boutonJoin.setBackground(ColorPerso.darkGray);
-            }
-        }
+
 
         boutonJoin.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
                 if(salle.getUserInside()==-1){
-                    /*frame.insideRoom = true;
-                    salle.setUserInside(user.getId());
-                    frame.roomAccessDisplay(frame,ListRoom);*/
-                    frame.currentGameDisplay(frame,salle.getGame());
+
+                    if(Client.connectToServer(user.getId(),salle)){
+                        frame.currentGameDisplay(frame,salle.getGame(),salle.getId());
+                    }
+                    else {
+                        frame.roomAccessDisplay(frame,Main.ListRoom,user);
+                    }
                 }
 
                 else{
-                    frame.insideRoom = false;
-                    salle.setUserInside(-1);
-                    frame.roomAccessDisplay(frame,ListRoom);
+
+                    frame.roomAccessDisplay(frame,ListRoom,user);
                 }
 
 
@@ -276,15 +273,10 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
 
     }
 
-    private void majRoom() {
-        ListRoom.addRoom(ListRoom.getSize()+1,null,false);
-        this.createList();
-    }
-
     private void createList() {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(7,15,7,30);
-
+        roomPanel.removeAll();
         for (int i = 0; i < ListRoom.getSize(); i++) {
 
             JPanel panelSalle = this.ajoutSalle(ListRoom.getRoom(i), gbc,i+1);

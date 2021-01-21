@@ -45,6 +45,21 @@ public class Enigma {
     return this.clue1.getClue();
   }
 
+  public void ChangeClue1(String Text){
+    Hint hint = new Hint(Text,getTimer1());
+    this.clue1=hint;
+  }
+
+  public void ChangeClue2(String Text){
+    Hint hint = new Hint(Text,getTimer1());
+    this.clue2=hint;
+  }
+
+  public void ChangeClue3(String Text){
+    Hint hint = new Hint(Text,getTimer1());
+    this.clue3=hint;
+  }
+
   public int getTimer1() {
     return this.clue1.getTimer();
   }

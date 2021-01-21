@@ -24,6 +24,20 @@ public class DBGame extends DBConnexion {
     public static boolean deleteGame(int idGame){
         boolean boolDelete=false;
         try{
+            PreparedStatement reqRoom = DBConnexion.getConnexion().prepareStatement("SELECT * from Room WHERE idGame = ?");
+            reqRoom.setInt(1,idGame);
+            ResultSet resRoom = reqRoom.executeQuery();
+            if(resRoom.next()){ // Si il est dans une salle
+                return false; // Alors on arrete tout
+            }
+
+            PreparedStatement req = DBConnexion.getConnexion().prepareStatement("SELECT * from Enigma WHERE idGame = ?");
+            req.setInt(1, idGame);
+            ResultSet res = req.executeQuery();
+            while (res.next() != false) { // On itère chaque résultat
+                DBEnigma.deleteEnigma(res.getInt("id"));
+            }
+
             PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("Delete from Game WHERE id=? ");
             requete.setInt(1, idGame);
             requete.executeUpdate();
@@ -73,16 +87,16 @@ public class DBGame extends DBConnexion {
     }
 
     /**
-    * V2 de l insertion de jeux, on insere un jeu grace aux champs donnés en argument
-    * @param titreN titre du jeu
-    * @param scoreN score initiale du jeu
-    * @param idUserN identifiant de l'utilisateur qui possede le jeu
-    * @param timerN
-    * @param readyN
-    * @return true si le jeu a été inséré
-    */
-    public static boolean insertGame(String titreN,int scoreN,int idUserN,int timerN,Boolean readyN){
-        boolean inserted = false;
+     * insertion d'un jeu, on insere un jeu grace aux champs donnés en argument
+     * @param titreN titre du jeu
+     * @param scoreN score initiale du jeu
+     * @param idUserN identifiant de l'utilisateur qui possede le jeu
+     * @param timerN
+     * @param readyN
+     * @return -1 si echec, l'id du jeu sinon
+     */
+    public static int insertGame(String titreN,int scoreN,int idUserN,int timerN,Boolean readyN,String message){
+        int inserted = -1;
         int valueReady=0;
         try{
             PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("Insert into Game VALUES (default,?,?,?,?,?,?)");
@@ -91,7 +105,7 @@ public class DBGame extends DBConnexion {
             requete.setInt(3,scoreN);
             requete.setInt(4,timerN);
             requete.setBoolean(5,readyN);
-            requete.setString(6,"Félicitation");
+            requete.setString(6,message);
             if(readyN){
                 valueReady=1;
             }
@@ -103,7 +117,7 @@ public class DBGame extends DBConnexion {
             requeteVerif.setInt(2,idUserN);
             ResultSet resultatVerif = requeteVerif.executeQuery();
             if(resultatVerif.next() != false){ // Si il a été inséré
-                inserted=true; // Alors on valide l insertion
+                inserted= resultatVerif.getInt("id"); // Alors on valide l insertion
             }
             resultatVerif.close();
             requeteVerif.close();
@@ -169,15 +183,16 @@ public class DBGame extends DBConnexion {
      * @param readyN
      * @return
      */
-    public static boolean majGame(int idGame, String titreN,int scoreN,int timerN,Boolean readyN){
+    public static boolean majGame(int idGame, String titreN,int scoreN,int timerN,Boolean readyN, String message){
         boolean inserted = false;
         try{
-            PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("UPDATE Game SET titre=?, score=?, timer=?, ready=? WHERE id=?");
+            PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("UPDATE Game SET titre=?, score=?, timer=?, ready=?, messageFin=? WHERE id=?");
             requete.setString(1, titreN);
             requete.setInt(2, scoreN);
             requete.setInt(3, timerN);
             requete.setBoolean(4, readyN);
-            requete.setInt(5, idGame);
+            requete.setString(5, message);
+            requete.setInt(6, idGame);
             requete.executeUpdate();
             requete.close();
             /*reste la verif a faire*/

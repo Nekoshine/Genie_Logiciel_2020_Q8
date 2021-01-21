@@ -18,10 +18,12 @@ import javax.swing.plaf.BorderUIResource;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-public class GameCreation extends JPanel implements ActionListener {
+public class GameCreation extends JPanel implements ActionListener, MouseListener {
 
     public EnigmaList listEnigma;
     public Game game;
@@ -29,13 +31,17 @@ public class GameCreation extends JPanel implements ActionListener {
     private BorderLayout mainLayout;
     private BorderLayout titleLayout;
     private BorderLayout centerLayout;
+    private BorderLayout newLayout;
 
     private GridBagLayout buttonLayout;
 
     private GridBagLayout gridInfo;
     private GridBagLayout gridEnigma;
+    private GridBagLayout gridWin;
+
 
     private GridBagConstraints gbcEnigma;
+    private GridBagConstraints gbcWin;
 
     private GridLayout grid;
     private GridLayout gridHint;
@@ -50,6 +56,7 @@ public class GameCreation extends JPanel implements ActionListener {
     private JPanel titleNamePanel;
     private JPanel defaultScorePanel;
     private JPanel pointsPanel;
+    private JPanel winPanel;
 
     private JPanel centerPanel;
     private JPanel storyPanel;
@@ -59,6 +66,8 @@ public class GameCreation extends JPanel implements ActionListener {
     private JPanel hint1Panel;
     private JPanel hint2Panel;
     private JPanel hint3Panel;
+    private JPanel buttonNewPanel;
+    private JPanel winMessagePanel;
 
 
 
@@ -69,14 +78,17 @@ public class GameCreation extends JPanel implements ActionListener {
     private JButton rankingButton;
 
     private JLabel windowName;
+    private JLabel winMessageLabel;
 
     private JTextField initialScore;
     private JTextField points;
     private JTextField title;
+    private JTextField winMessage;
 
     private GlobalFrame frame;
 
     private static volatile GameCreation INSTANCE = new GameCreation(Main.frame,0,null);
+
     private GameCreation(GlobalFrame frame, int roomNumber, Game game){
 
         this.frame = frame;
@@ -85,6 +97,9 @@ public class GameCreation extends JPanel implements ActionListener {
 
         mainLayout = new BorderLayout(10,10);
         titleLayout= new BorderLayout(10,10);
+        newLayout = new BorderLayout(10,10);
+
+        buttonNewPanel = new JPanel();
 
         centerLayout = new BorderLayout(30,30);
 
@@ -108,6 +123,8 @@ public class GameCreation extends JPanel implements ActionListener {
         pointsPanel = new JPanel();
         newPanel = new JPanel();
         enigmasPanel = new JPanel();
+        winPanel = new JPanel();
+        winMessagePanel = new JPanel();
 
         saveButton = new JButton("Enregistrer");
         exitButton = new JButton("Quitter");
@@ -118,12 +135,22 @@ public class GameCreation extends JPanel implements ActionListener {
         if(game==null) {
             title = new JTextField("Titre", 45);
             initialScore = new JTextField("Score Initial", 7);
+            winMessage = new JTextField();
         }
         else {
             title = new JTextField(game.getTitre(),45);
             initialScore = new JTextField(String.valueOf(game.getScore()),7);
+            winMessage = new JTextField(game.getEndMessage());
         }
         points = new JTextField("Points (Si désiré)",7);
+
+        winMessageLabel = new JLabel("Message de fin :",SwingConstants.RIGHT);
+        JPanel winLabelPanel = new JPanel();
+        winLabelPanel.add(winMessageLabel);
+
+
+
+
 
         windowName = new JLabel("MJ - Création/Modification de Jeux",JLabel.CENTER);
 
@@ -131,8 +158,31 @@ public class GameCreation extends JPanel implements ActionListener {
 
         newButton.setOpaque(false);
         newButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        buttonNewPanel.add(newButton);
 
-        newPanel.add(newButton);
+        gridWin = new GridBagLayout();
+        gbcWin = new GridBagConstraints();
+
+        gbcWin.weightx = 1;
+        gbcWin.insets = new Insets(0,0,0,100);
+
+        winPanel.setLayout(gridWin);
+        gbcWin.fill = GridBagConstraints.HORIZONTAL;
+        winPanel.add(winMessageLabel,gbcWin);
+
+        gbcWin.weightx = 2;
+        gbcWin.insets = new Insets(0,0,0,200);
+
+
+        winMessagePanel.setLayout(gridWin);
+        winMessagePanel.add(winMessage,gbcWin);
+
+        winPanel.add(winMessagePanel,gbcWin);
+
+        newPanel.setLayout(newLayout);
+        newPanel.add(buttonNewPanel,BorderLayout.NORTH);
+        newPanel.add(winPanel,BorderLayout.CENTER);
+        newPanel.setBorder(BorderFactory.createEmptyBorder(0,0,25,0));
 
         centerPanel.setLayout(centerLayout);
 
@@ -153,6 +203,7 @@ public class GameCreation extends JPanel implements ActionListener {
         this.createList();
 
         newButton.addActionListener(this);
+        newButton.addMouseListener(this);
 
         /* Setup Marges */
 
@@ -169,13 +220,18 @@ public class GameCreation extends JPanel implements ActionListener {
         initialScore.setBorder(BorderFactory.createEmptyBorder());
         initialScore.setHorizontalAlignment(JTextField.CENTER);
         initialScore.setFont(FontPerso.Oxanimum);
+
         rankingButton.setHorizontalAlignment(JButton.CENTER);
-        rankingButton.setBackground(ColorPerso.azur);
         rankingButton.setForeground(Color.white);
+        rankingButton.addMouseListener(this);
 
         if (listEnigma.getSize()==0){
             rankingButton.setEnabled(false);
             rankingButton.setBackground(Color.darkGray);
+        }
+        else{
+            rankingButton.setEnabled(true);
+            rankingButton.setBackground(ColorPerso.azur);
         }
 
         gbcTitle.weightx = 2;
@@ -209,14 +265,17 @@ public class GameCreation extends JPanel implements ActionListener {
         exitButton.setBackground(ColorPerso.azur);
         exitButton.setForeground(Color.white);
         exitButton.addActionListener(this);
+        exitButton.addMouseListener(this);
 
         saveButton.setBackground(ColorPerso.vert);
         saveButton.setForeground(Color.white);
         saveButton.addActionListener(this);
+        saveButton.addMouseListener(this);
 
         deleteButton.setBackground(ColorPerso.rouge);
         deleteButton.setForeground(Color.white);
         deleteButton.addActionListener(this);
+        deleteButton.addMouseListener(this);
 
         buttonPanel.setLayout(buttonLayout);
         buttonPanel.add(exitButton,gbcScores);
@@ -279,13 +338,17 @@ public class GameCreation extends JPanel implements ActionListener {
         }
         else {
             INSTANCE.frame = frame;
+            INSTANCE.rankingButton.setBackground(ColorPerso.azur);
+            INSTANCE.exitButton.setBackground(ColorPerso.azur);
             if (game != null){
                 INSTANCE.title.setText(game.getTitre());
                 INSTANCE.initialScore.setText(String.valueOf(game.getScore()));
+                INSTANCE.winMessage.setText(game.getEndMessage());
             }
             else{
                 INSTANCE.title.setText("Titre");
                 INSTANCE.initialScore.setText("Score Initial");
+                INSTANCE.winMessage.setText("");
             }
             INSTANCE.listEnigma=Main.ListEnigma;
             INSTANCE.createList();
@@ -293,10 +356,19 @@ public class GameCreation extends JPanel implements ActionListener {
                 INSTANCE.rankingButton.setEnabled(false);
                 INSTANCE.rankingButton.setBackground(Color.darkGray);
             }
+            else {
+                INSTANCE.rankingButton.setEnabled(true);
+                INSTANCE.rankingButton.setBackground(ColorPerso.azur);
+            }
             INSTANCE.game=game;
-            //INSTANCE.exitButton.setBackground(ColorPerso.rouge);
         }
-
+        System.out.println("nb enigme : "+INSTANCE.listEnigma.getSize());
+        for(int i=0;i<INSTANCE.listEnigma.getSize();i++){
+            System.out.println("i :"+i);
+            System.out.println("id : "+INSTANCE.listEnigma.getEnigma(i).getId());
+            System.out.println("reponse : "+INSTANCE.listEnigma.getEnigma(i).getAnswer());
+        }
+        System.out.println("---------------------------------");
         return INSTANCE;
     }
 
@@ -534,7 +606,7 @@ public class GameCreation extends JPanel implements ActionListener {
 
 
     private void majEnigma() {
-        listEnigma.addEnigma(listEnigma.getSize()+1,"Enigme","Réponse","indice 1",-1,"indice 2",-1,"indice 3",-1);
+        listEnigma.addEnigma(listEnigma.getSize()+2,"Enigme","Réponse","indice 1",-1,"indice 2",-1,"indice 3",-1);
         this.createList();
         frame.gameCreationDisplay(frame,frame.roomNumber,game);
     }
@@ -560,10 +632,9 @@ public class GameCreation extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
         if (e.getSource()==newButton){
             this.majEnigma();
-
+            scrollEnigmas.getVerticalScrollBar().setValue(scrollEnigmas.getVerticalScrollBar().getMaximum());
         }
         else if (e.getSource()== exitButton){
             frame.gameManagementDisplay(frame,frame.roomNumber);
@@ -574,6 +645,17 @@ public class GameCreation extends JPanel implements ActionListener {
 
         }
         else if (e.getSource()==saveButton){
+            Enigma a = null;
+            for(int i=0;i<listEnigma.getSize();i++) {
+                a = listEnigma.getEnigma(i);
+                String clue1 = a.getClue1();
+                int timer1 = a.getTimer1();
+                System.out.println("indice : "+clue1 + "| timer : " +timer1);
+                if (clue1.equals("indice 1") || timer1 == -1){
+                    JOptionPane.showMessageDialog(frame, "Un engime doit avoir au moins un indice associé a un timer", "", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
+            }
             boolean ajout = false;
             String titre = title.getText();
             int score = 0;
@@ -583,16 +665,18 @@ public class GameCreation extends JPanel implements ActionListener {
             catch (Exception exception){
                 System.out.println("Le score n'est pas un entier");
             }
-            int idUser = Main.idUser;
+            int idUser = Main.idAdmin;
             int timer = 0;
             boolean ready = true;
-
+            String endMessage = winMessage.getText();
             if(game!=null){
-                DBGame. majGame(game.getId(), titre,score,timer,ready);
+                DBGame. majGame(game.getId(), titre,score,timer,ready,endMessage);
             }
             else{
-                DBGame.insertGame(titre,score,idUser,timer,ready);
+                int id = DBGame.insertGame(titre,score,idUser,timer,ready,endMessage);
+                game = new Game(id,titre,score,idUser,timer,ready,endMessage);
                 ajout = true;
+
             }
 
             Enigma enigme = null;
@@ -607,6 +691,7 @@ public class GameCreation extends JPanel implements ActionListener {
                 String clue3 = enigme.getClue3();
                 if (clue1.equals("indice 1")){
                     clue1=null;
+
                 }
                 if (clue2==null ||clue2.equals("indice 2")){
                     clue2=null;
@@ -620,7 +705,6 @@ public class GameCreation extends JPanel implements ActionListener {
 
                 if(DBEnigma.isInDB(id)){
                     DBEnigma.majEnigma(id, text,answer, clue1, timer1,clue2, timer2,clue3, timer3);
-
                 }
                 else{
                     DBEnigma.insertEnigma(game.getId(),text,answer, clue1, timer1,clue2, timer2,clue3, timer3);
@@ -634,6 +718,62 @@ public class GameCreation extends JPanel implements ActionListener {
                 message = "Mise à jour effectuée";
             }
             JOptionPane.showMessageDialog(frame, message, "", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        if(e.getSource()==exitButton){
+            exitButton.setBackground(ColorPerso.azurHoover);
+        }
+        else if(e.getSource()==saveButton){
+            saveButton.setBackground(ColorPerso.vertHoover);
+        }
+        else if(e.getSource()==deleteButton){
+            deleteButton.setBackground(ColorPerso.rougeHoover);
+        }
+        else if(e.getSource()==newButton){
+            newButton.setBackground(Color.black);
+            newButton.setForeground(Color.white);
+            newButton.setOpaque(true);
+        }
+        else if(e.getSource()==rankingButton && rankingButton.isEnabled()){
+            rankingButton.setBackground(ColorPerso.azurHoover);
+        }
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        if(e.getSource()==exitButton){
+            exitButton.setBackground(ColorPerso.azur);
+        }
+        else if(e.getSource()==saveButton){
+            saveButton.setBackground(ColorPerso.vert);
+        }
+        else if(e.getSource()==deleteButton){
+            deleteButton.setBackground(ColorPerso.rouge);
+        }
+        else if(e.getSource()==newButton){
+            newButton.setForeground(Color.black);
+            newButton.setOpaque(false);
+        }
+        else if(e.getSource()==rankingButton && rankingButton.isEnabled()){
+            rankingButton.setBackground(ColorPerso.azur);
         }
     }
 }

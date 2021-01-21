@@ -1,6 +1,7 @@
 package Sockets;
 
 import model.Game;
+import model.Room;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -12,16 +13,18 @@ import static java.lang.Thread.sleep;
 
 public class Client {
   
-  private static int port = 1095;
+  private static int port = 1096;
+  private static int portS = 1100;
   private static String host = "127.0.0.1"; //localhost
   
-  public static void connectToServer(int idUser){
+  public static boolean connectToServer(int idUser, Room salle){
+    boolean accept = false;
     try{
       Socket socket = new Socket(host,port);
       ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-
-      DemandeConnexion signal = new DemandeConnexion(idUser,false);
-
+      
+      DemandeConnexion signal = new DemandeConnexion(idUser,false, salle.getGame().getTitre());
+      
       out.writeObject(signal);
       ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
       Object oserver =  in.readObject();
@@ -30,7 +33,9 @@ public class Client {
         reponse = (Reponse) oserver;
         if((reponse.getReponse()).equals("Oui")){
           System.out.println("C'est autorisé");
+          accept=true;
         }else{
+          accept=false;
           System.out.println("C'est refusé");
         }
       }
@@ -38,19 +43,22 @@ public class Client {
     }catch(ClassNotFoundException e){
       System.out.println("ClassNotFoundException :"+ e.getMessage());
     }catch(IOException e){
-      System.out.println("IOException :" + e.getMessage());
+      System.out.println("IOException :"+ e.getMessage());
     }
+    return accept;
   }
-
-
+  
+  
+  
   public static int recepAdminInfo(int idUser){
-    int idUserAdmin=0;
+    int idUserAdmin=0 ;
     try{
       
-      ServerSocket s = new ServerSocket(port);
-      Socket socket = s.accept();
+      Socket socket = new Socket(host,port);
       ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-      DemandeConnexion signal = new DemandeConnexion(idUser,true);
+      
+      DemandeConnexion signal = new DemandeConnexion(idUser,true, null);
+      
       out.writeObject(signal);
       
       ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
@@ -58,37 +66,43 @@ public class Client {
       AdminInfo user = new AdminInfo(0);
       if(oserver instanceof AdminInfo){
         user = (AdminInfo) oserver;
-        System.out.println("idUser : "+user.getIdUserAdmin());
+        System.out.println("RAI idUser : "+user.getIdUserAdmin());
         idUserAdmin=user.getIdUserAdmin();
       }
-
+      socket.close();
     }catch(IOException e){
       System.out.println("IOException : "+ e.getMessage());
     }catch(ClassNotFoundException e){
       System.out.println("ClassNotFoundException : "+ e.getMessage());
     }
+    System.out.println(idUserAdmin);
     return idUserAdmin;
   }
   
-  public static Game recepGameInfo(){
-    Game gameRCV = null;
+  public static Object recepGameInfo(){
+    Object obj= null;
     try{
-      
-      ServerSocket s = new ServerSocket(port);
+      ServerSocket s = new ServerSocket(portS);
       Socket socket = s.accept();
       
       ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
       Object oserver =  in.readObject();
-      if(oserver instanceof GameInfo){
-        GameInfo  game = (GameInfo) oserver;
-        System.out.println("Titre du jeu recu : "+game.getGameInfo().getTitre());
-        gameRCV=game.getGameInfo();
+      if(oserver instanceof Message){
+        Message  msg = (Message) oserver;
+        System.out.println("Message : "+msg.getMessage());
+        obj=msg;
       }
+      if(oserver instanceof Indice){
+        Indice  indice = (Indice) oserver;
+        System.out.println("idIndice : "+ indice.getIdIndice() );
+        obj=indice;
+      }
+      s.close();
     }catch(IOException e){
       System.out.println("IOException : "+ e.getMessage());
     }catch(ClassNotFoundException e){
       System.out.println("ClassNotFoundException : "+ e.getMessage());
     }
-    return gameRCV;
+    return obj;
   }
 }

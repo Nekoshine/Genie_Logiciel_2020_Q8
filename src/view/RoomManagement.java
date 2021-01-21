@@ -2,7 +2,6 @@
 
 package view;
 
-import Sockets.Admin;
 import database.DBRoom;
 import launcher.Main;
 import model.Room;
@@ -13,10 +12,7 @@ import view.style.FontPerso;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 
 public class RoomManagement extends JPanel implements ActionListener,MouseListener {
 
@@ -34,10 +30,13 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
 
     private GlobalFrame frame;
 
+    Dimension windowSize;
+
     private static volatile RoomManagement INSTANCE = new RoomManagement(Main.frame);
     private RoomManagement(GlobalFrame frame){
 
         this.frame = frame;
+        windowSize = frame.getSize();
 
         /* Récuperation des salles */
         ListRoom = Main.ListRoom;
@@ -112,6 +111,15 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
         returnButton.addActionListener(this);
         returnButton.addMouseListener(this);
 
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                windowSize = Main.frame.getSize();
+                INSTANCE.revalidate();
+                INSTANCE.repaint();
+            }
+        });
+
         /* Setup Fenêtre gestion des salles */
         this.setLayout(mainLayout);
         this.setBackground(ColorPerso.DARK_GRAY);
@@ -140,7 +148,7 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
         }
         else {
             INSTANCE.frame=frame;
-            Main.ListRoom=DBRoom.getRooms(Main.idUser);
+            Main.ListRoom=DBRoom.getRooms(Main.idAdmin);
             INSTANCE.ListRoom = Main.ListRoom;
             INSTANCE.createList();
             INSTANCE.returnButton.setBackground(ColorPerso.rouge);
@@ -235,7 +243,7 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
         boutonLancer.setBackground(ColorPerso.vert);
 
 
-        if (salle.getGame() == null /* || salle.getUserInside() == -1 */) {
+        if (salle.getGame() == null  || salle.getUserInside() == -1 ) {
             boutonLancer.setEnabled(false);
             boutonLancer.setBackground(Color.darkGray);
             //boutonLancer.setText("Ouvrir la salle");
@@ -311,7 +319,7 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
     }
 
     private void majRoom() {
-        ListRoom.addRoom(DBRoom.getMax()+1,null,false);
+        ListRoom.addRoom(DBRoom.getMax()+1,null,false,-1);
         this.createList();
     }
 

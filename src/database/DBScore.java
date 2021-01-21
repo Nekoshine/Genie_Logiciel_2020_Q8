@@ -113,5 +113,4 @@ public class DBScore extends DBConnexion {
         }
         return scoreList;
     }
-
 }
