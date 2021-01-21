@@ -49,4 +49,10 @@ public class EnigmaList {
         this.getEnigma(id).setQuestion(text);
 
     }
+
+    public Enigma getLastEnigma() {
+        int nb = this.getSize();
+
+        return getEnigma(nb-1);
+    }
 }

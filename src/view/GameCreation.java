@@ -224,6 +224,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
         rankingButton.setHorizontalAlignment(JButton.CENTER);
         rankingButton.setForeground(Color.white);
         rankingButton.addMouseListener(this);
+        rankingButton.addActionListener(this);
 
         if (listEnigma.getSize()==0){
             rankingButton.setEnabled(false);
@@ -296,6 +297,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
         title.addCaretListener(new CaretListener() {
             @Override
             public void caretUpdate(CaretEvent e) {
+
                 if (e.getSource()==title){
                     if(game!=null) {
                         game.setTitre(title.getText());
@@ -362,13 +364,6 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
             }
             INSTANCE.game=game;
         }
-        System.out.println("nb enigme : "+INSTANCE.listEnigma.getSize());
-        for(int i=0;i<INSTANCE.listEnigma.getSize();i++){
-            System.out.println("i :"+i);
-            System.out.println("id : "+INSTANCE.listEnigma.getEnigma(i).getId());
-            System.out.println("reponse : "+INSTANCE.listEnigma.getEnigma(i).getAnswer());
-        }
-        System.out.println("---------------------------------");
         return INSTANCE;
     }
 
@@ -606,7 +601,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
 
 
     private void majEnigma() {
-        listEnigma.addEnigma(listEnigma.getSize()+2,"Enigme","Réponse","indice 1",-1,"indice 2",-1,"indice 3",-1);
+        listEnigma.addEnigma(-1,"Enigme","Réponse","indice 1",-1,"indice 2",-1,"indice 3",-1);
         this.createList();
         frame.gameCreationDisplay(frame,frame.roomNumber,game);
     }
@@ -640,6 +635,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
             frame.gameManagementDisplay(frame,frame.roomNumber);
         }
         else if (e.getSource()==deleteButton){
+            DBEnigma.deleteEnigma( listEnigma.getLastEnigma().getId());
             listEnigma.removeEnigma(listEnigma.getSize()-1);
             frame.gameCreationDisplay(frame,frame.roomNumber,game);
 
@@ -704,9 +700,11 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
                 int timer3 = enigme.getTimer3();
 
                 if(DBEnigma.isInDB(id)){
+                    System.out.println("MAJ");
                     DBEnigma.majEnigma(id, text,answer, clue1, timer1,clue2, timer2,clue3, timer3);
                 }
                 else{
+                    System.out.println("INSERT");
                     DBEnigma.insertEnigma(game.getId(),text,answer, clue1, timer1,clue2, timer2,clue3, timer3);
                 }
             }
@@ -718,6 +716,15 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
                 message = "Mise à jour effectuée";
             }
             JOptionPane.showMessageDialog(frame, message, "", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else if(e.getSource()==rankingButton){
+            System.out.println("nb enigme : "+listEnigma.getSize());
+            for(int i=0;i<listEnigma.getSize();i++){
+                System.out.println("i :"+i);
+                System.out.println("id : "+listEnigma.getEnigma(i).getId());
+                System.out.println("reponse : "+listEnigma.getEnigma(i).getAnswer());
+            }
+            System.out.println("---------------------------------");
         }
     }
 
