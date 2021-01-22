@@ -189,7 +189,7 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
                 public void actionPerformed(ActionEvent e) {
                     Game jeuChoisi = ListGame.findByID(jeu.getId());
                     Main.ListEnigma= DBEnigma.getEnigmas(jeuChoisi.getId());
-                    frame.gameCreationDisplay(frame,frame.roomNumber,jeuChoisi);
+                    frame.gameCreationDisplay(frame,jeuChoisi);
                 }
             });
             buttonModify.addMouseListener(new MouseListener() {
@@ -374,7 +374,7 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
         }
         else if (e.getSource() == newButton){
             Main.ListEnigma= new EnigmaList();
-            frame.gameCreationDisplay(frame,frame.roomNumber,null);
+            frame.gameCreationDisplay(frame,null);
         }
     }
 

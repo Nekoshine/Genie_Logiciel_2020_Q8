@@ -201,9 +201,9 @@ public class GlobalFrame extends JFrame {
         frame.repaint();
     }
 
-    public void gameCreationDisplay(GlobalFrame frame, int roomNumber, Game game){
+    public void gameCreationDisplay(GlobalFrame frame, Game game){
 
-        gameCreation = GameCreation.getInstance(frame,roomNumber,game);
+        gameCreation = GameCreation.getInstance(frame,game);
         setContentPane(gameCreation);
         frame.setResizable(true);
         frame.revalidate();
