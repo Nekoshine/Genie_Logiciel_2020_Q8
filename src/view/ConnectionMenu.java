@@ -18,17 +18,16 @@ import java.util.concurrent.Executors;
 import javax.swing.*;
 
 
-public class ConnectionMenu extends JPanel implements ActionListener, MouseListener, KeyListener {
+public class ConnectionMenu extends JPanel implements ActionListener, MouseListener, KeyListener, FocusListener {
 
   private static JButton connection;
-  private JButton inscription;
+  private final JButton inscription;
   private BufferedImage backgroundConnexion;
 
-  private JTextField saisieidentifiant;
-  private JPasswordField saisiemotdepasse;
+  private final JTextField saisieidentifiant;
+  private final JPasswordField saisiemotdepasse;
 
   private GlobalFrame frame;
-  public static Graphics g;
 
   private static volatile ConnectionMenu INSTANCE = new ConnectionMenu(Main.frame);
   private ConnectionMenu(GlobalFrame frame) {
@@ -44,9 +43,10 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
 
     JLabel identifiant = new JLabel("Identifiant :");
     identifiant.setForeground(Color.white);
-    saisieidentifiant = new JTextField();
+    saisieidentifiant = new JTextField("identifiant");
     saisieidentifiant.setColumns(30);
     saisieidentifiant.addKeyListener(this);
+    saisieidentifiant.addFocusListener(this);
 
     login.add(identifiant);
     login.add(saisieidentifiant);
@@ -57,9 +57,10 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
     mdp.setLayout(new FlowLayout(FlowLayout.CENTER,10,0));
     JLabel motdepasse = new JLabel("Mot de passe :");
     motdepasse.setForeground(Color.white);
-    saisiemotdepasse = new JPasswordField();
+    saisiemotdepasse = new JPasswordField("");
     saisiemotdepasse.setColumns(30);
     saisiemotdepasse.addKeyListener(this);
+    saisiemotdepasse.addFocusListener(this);
 
     mdp.add(motdepasse);
     mdp.add(saisiemotdepasse);
@@ -103,7 +104,7 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
 
   }
 
-  public final static ConnectionMenu getInstance(GlobalFrame frame) {
+  public static ConnectionMenu getInstance(GlobalFrame frame) {
     //Le "Double-Checked Singleton"/"Singleton doublement vérifié" permet
     //d'éviter un appel coûteux à synchronized,
     //une fois que l'instanciation est faite.
@@ -119,8 +120,12 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
     }
     else {
       INSTANCE.frame=frame;
-      INSTANCE.saisieidentifiant.setText("");
-      INSTANCE.saisiemotdepasse.setText("");
+      INSTANCE.saisieidentifiant.setText("Identifiant");
+      INSTANCE.saisiemotdepasse.setText("mot de passe");
+      INSTANCE.saisiemotdepasse.setForeground(Color.gray);
+      INSTANCE.saisiemotdepasse.setFont(INSTANCE.saisiemotdepasse.getFont().deriveFont(Font.ITALIC));
+      INSTANCE.saisieidentifiant.setForeground(Color.gray);
+      INSTANCE.saisieidentifiant.setFont(INSTANCE.saisieidentifiant.getFont().deriveFont(Font.ITALIC));
     }
     return INSTANCE;
   }
@@ -144,11 +149,9 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
     int idUser = DBUser.getidUser(idinput);
     if (isAdmin==1){
       ExecutorService service = Executors.newFixedThreadPool(4);
-      service.submit(new Runnable(){
-        public void run(){
-          while (true){
-            Admin.setServerAdmin(Main.idAdmin);
-          }
+      service.submit((Runnable) () -> {
+        while (true){
+          Admin.setServerAdmin(Main.idAdmin);
         }
       });
       Main.frame.mainMenuDisplay(Main.frame);
@@ -234,4 +237,39 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
     repaint();
   }
 
+  @Override
+  public void focusGained(FocusEvent e) {
+    if(e.getSource()==saisieidentifiant){
+      if(saisieidentifiant.getText().equals("Identifiant")){
+        saisieidentifiant.setText("");
+        saisieidentifiant.setForeground(Color.black);
+        saisieidentifiant.setFont(saisieidentifiant.getFont().deriveFont(Font.PLAIN));
+      }
+    }
+    else if(e.getSource()==saisiemotdepasse){
+      if(String.valueOf(saisiemotdepasse.getPassword()).equals("mot de passe")){
+        saisiemotdepasse.setText("");
+        saisiemotdepasse.setForeground(Color.black);
+        saisiemotdepasse.setFont(saisiemotdepasse.getFont().deriveFont(Font.PLAIN));
+      }
+    }
+  }
+
+  @Override
+  public void focusLost(FocusEvent e) {
+    if(e.getSource()==saisieidentifiant){
+      if(saisieidentifiant.getText().equals("")){
+        saisieidentifiant.setText("Identifiant");
+        saisieidentifiant.setForeground(Color.gray);
+        saisieidentifiant.setFont(saisieidentifiant.getFont().deriveFont(Font.ITALIC));
+      }
+    }
+    else if(e.getSource()==saisiemotdepasse){
+      if(String.valueOf(saisiemotdepasse.getPassword()).equals("")){
+        saisiemotdepasse.setText("mot de passe");
+        saisiemotdepasse.setForeground(Color.gray);
+        saisiemotdepasse.setFont(saisiemotdepasse.getFont().deriveFont(Font.ITALIC));
+      }
+    }
+  }
 }
