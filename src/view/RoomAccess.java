@@ -3,7 +3,6 @@
 package view;
 
 import Sockets.Client;
-import database.DBRoom;
 import launcher.Main;
 import model.Room;
 import model.RoomList;
@@ -101,7 +100,7 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
 
         /* Setup bouton retour */
         decoPanel.setLayout(decoLayout);
-        decoPanel.setBackground(ColorPerso.gris);
+        decoPanel.setBackground(ColorPerso.grisClair);
         decoPanel.add(returnButton);
         decoPanel.setBackground(ColorPerso.DARK_GRAY);
         returnButton.addActionListener(this);
@@ -110,7 +109,7 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
         /* Setup Fenêtre gestion des salles */
 
         this.setLayout(mainLayout);
-        this.setBackground(ColorPerso.gris);
+        this.setBackground(ColorPerso.grisClair);
         this.add(listPanel, BorderLayout.CENTER);
         this.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
         this.add(titlePanel, BorderLayout.PAGE_START);

@@ -10,6 +10,7 @@ import view.style.ColorPerso;
 import view.style.FontPerso;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.*;
@@ -54,7 +55,6 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
         /* Déclaration Layouts */
         BorderLayout mainLayout = new BorderLayout(10, 10);
         BorderLayout centerLayout = new BorderLayout(4, 4);
-        FlowLayout decoLayout = new FlowLayout(FlowLayout.LEADING);
         GridBagLayout listLayout = new GridBagLayout();
         roomPanel.setLayout(listLayout);
         roomPanel.setBackground(Color.LIGHT_GRAY);
@@ -67,14 +67,22 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
 
         /* Déclaration Boutons */
         returnButton = new JButton("Retour");
-        returnButton.setBackground(ColorPerso.rouge);
+
+        //returnButton.setBackground(ColorPerso.darkGray);
         returnButton.setForeground(Color.white);
+        returnButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        returnButton.setPreferredSize(new Dimension(100,30));
+
+
 
         newButton = new JButton("Nouvelle Salle");
-        newButton.setOpaque(false);
         newButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        newButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        newButton.setForeground(Color.white);
         newButton.addActionListener(this);
         newButton.addMouseListener(this);
+        newButton.setBackground(ColorPerso.grisFonce);
+        newButton.setPreferredSize(new Dimension(210,45));
 
         /* Affichage des salles */
         this.createList();
@@ -93,9 +101,10 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
         listPanel.setBackground(Color.LIGHT_GRAY);
 
 
-
+        newButtonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         newButtonPanel.add(newButton);
         newButtonPanel.setBackground(Color.LIGHT_GRAY);
+
         //roomPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
 
         /* Setup Titre */
@@ -105,7 +114,7 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
         titlePanel.add(titre);
 
         /* Setup bouton retour */
-        decoPanel.setLayout(decoLayout);
+        decoPanel.setLayout(new FlowLayout(0));
         decoPanel.setBackground(ColorPerso.DARK_GRAY);
         decoPanel.add(returnButton);
         returnButton.addActionListener(this);
@@ -168,11 +177,8 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
 
     private JPanel ajoutSalle(Room salle, GridBagConstraints gbc, int i) {
 
-        GridBagConstraints gbcTitle = new GridBagConstraints();
-        GridBagConstraints gbcName = new GridBagConstraints();
-        GridBagConstraints gbcLaunch = new GridBagConstraints();
-        GridBagConstraints gbcChoose = new GridBagConstraints();
-
+        BorderLayout layoutChoose = new BorderLayout();
+        BorderLayout layoutManage = new BorderLayout();
 
         /* Contraintes GridBag */
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -182,17 +188,20 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
 
         /* Ajout Panel */
         JPanel panelSalle = new JPanel();
-        JPanel panelName = new JPanel();
-        JPanel panelTitle = new JPanel();
-        JPanel panelLaunch = new JPanel();
+        JPanel panelManage = new JPanel();
         JPanel panelChoose = new JPanel();
+        JPanel nomSallePanel = new JPanel();
+        JPanel nomJeuPanel = new JPanel();
 
         /* Construction Panel Salle */
         GridLayout grille = new GridLayout(1,4,20,0);
-
+        BoxLayout layoutGrid = new BoxLayout(panelSalle,BoxLayout.LINE_AXIS);
 
         JLabel nomSalle = new JLabel("Salle " + i + " :");
         nomSalle.setHorizontalAlignment(SwingConstants.CENTER);
+        nomSalle.setVerticalAlignment(SwingConstants.CENTER);
+        nomSallePanel.setLayout(new BorderLayout());
+        nomSallePanel.add(nomSalle,BorderLayout.CENTER);
 
         JLabel nomJeu;
         if (salle.getGame() != null) {
@@ -206,9 +215,19 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
             nomJeu = new JLabel("Pas de jeu");
         }
         nomJeu.setHorizontalAlignment(SwingConstants.CENTER);
+        nomJeuPanel.setLayout(new BorderLayout());
+        nomJeuPanel.add(nomJeu,BorderLayout.CENTER);
+
+        panelChoose.setLayout(layoutChoose);
 
         JButton boutonJeu = new JButton("Choisir Jeu");
         boutonJeu.setBackground(ColorPerso.jaune);
+        boutonJeu.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+
+        panelChoose.add(boutonJeu,BorderLayout.CENTER);
+        panelChoose.setBorder(BorderFactory.createEmptyBorder(10,20,10,20));
+
+
         boutonJeu.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -240,12 +259,19 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
         });
 
         JButton boutonLancer = new JButton("Suivre Partie");
+
+        panelManage.setLayout(layoutManage);
         boutonLancer.setBackground(ColorPerso.vert);
+        boutonLancer.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+
+        panelManage.add(boutonLancer,BorderLayout.CENTER);
+        panelManage.setBorder(BorderFactory.createEmptyBorder(10,20,10,20));
 
 
         if (salle.getGame() == null  || salle.getUserInside() == -1 ) {
             boutonLancer.setEnabled(false);
-            boutonLancer.setBackground(Color.darkGray);
+            boutonLancer.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+            boutonLancer.setBackground(Color.DARK_GRAY);
             //boutonLancer.setText("Ouvrir la salle");
 
         }
@@ -293,11 +319,11 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
 
 
         /* Ajout Éléments au panel Salle */
-        panelSalle.add(nomSalle);
-        panelSalle.add(nomJeu);
-        panelSalle.add(boutonJeu);
-        panelSalle.add(boutonLancer);
         panelSalle.setLayout(grille);
+        panelSalle.add(nomSallePanel);
+        panelSalle.add(nomJeuPanel);
+        panelSalle.add(panelChoose);
+        panelSalle.add(panelManage);
 
         /* Configuration panelSalle */
         panelSalle.setBorder(BorderFactory.createLineBorder(Color.BLACK,3));
@@ -319,7 +345,7 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
         for (int i = 0; i < ListRoom.getSize(); i++) {
             listPanel.remove(newButtonPanel);
             JPanel panelSalle = this.ajoutSalle(ListRoom.getRoom(i), gbc,i+1);
-            panelSalle.setPreferredSize(new Dimension(listPanel.getWidth() - 45, 75));
+            panelSalle.setPreferredSize(new Dimension(listPanel.getWidth() - 45, 100));
             roomPanel.add(panelSalle, gbc);
             listPanel.add(newButtonPanel, BorderLayout.PAGE_END);
             listPanel.revalidate();
@@ -376,8 +402,8 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
             returnButton.setBackground(ColorPerso.rouge);
         }
         else if(e.getSource()==newButton){
-            newButton.setOpaque(false);
-            newButton.setForeground(Color.black);
+            newButton.setBackground(ColorPerso.grisFonce);
+            newButton.setForeground(Color.white);
         }
     }
 }

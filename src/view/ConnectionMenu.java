@@ -16,6 +16,7 @@ import java.awt.image.BufferedImage;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 
 
 public class ConnectionMenu extends JPanel implements ActionListener, MouseListener, KeyListener, FocusListener {
@@ -45,6 +46,7 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
     identifiant.setForeground(Color.white);
     saisieidentifiant = new JTextField("identifiant");
     saisieidentifiant.setColumns(30);
+    saisieidentifiant.setPreferredSize(new Dimension(200,20));
     saisieidentifiant.addKeyListener(this);
     saisieidentifiant.addFocusListener(this);
 
@@ -54,11 +56,12 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
     //creation de la partie motdepasse
 
     JPanel mdp = new JPanel();
-    mdp.setLayout(new FlowLayout(FlowLayout.CENTER,10,0));
+    mdp.setLayout(new FlowLayout(FlowLayout.CENTER,30,0));
     JLabel motdepasse = new JLabel("Mot de passe :");
     motdepasse.setForeground(Color.white);
     saisiemotdepasse = new JPasswordField("");
     saisiemotdepasse.setColumns(30);
+    saisiemotdepasse.setPreferredSize(new Dimension(200,20));
     saisiemotdepasse.addKeyListener(this);
     saisiemotdepasse.addFocusListener(this);
 
@@ -71,11 +74,15 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
     connection.addActionListener(this);
     connection.addMouseListener(this);
     connection.setBackground(ColorPerso.vert);
+    connection.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+    connection.setPreferredSize(new Dimension(100,30));
 
     inscription = new JButton("S'inscrire");
     inscription.addActionListener(this);
     inscription.addMouseListener(this);
     inscription.setBackground(ColorPerso.jaune);
+    inscription.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+    inscription.setPreferredSize(new Dimension(100,30));
 
     //création du lien vers l'inscription
     JPanel conteneurboutons = new JPanel();
@@ -88,14 +95,12 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
     login.setOpaque(false);
     mdp.setOpaque(false);
 
-
-
     this.add(Box.createRigidArea(new Dimension(0, 150)));
     this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
     login.setMaximumSize(new Dimension(800,50));
     this.add(login);
     this.add(Box.createRigidArea(new Dimension(0, 20)));
-    mdp.setMaximumSize(new Dimension(800,30));
+    mdp.setMaximumSize(new Dimension(800,50));
     this.add(mdp);
     this.add(Box.createRigidArea(new Dimension(0, 10)));
     this.add(conteneurboutons);
