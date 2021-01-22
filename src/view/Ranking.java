@@ -145,7 +145,7 @@ public class Ranking extends JFrame implements ActionListener{
         userLabel.setHorizontalAlignment(SwingConstants.CENTER);
         userLabel.setBorder(BorderFactory.createLineBorder(Color.black));
 
-        JLabel scoreLabel = new JLabel(String.valueOf(score.getScore()));
+        JLabel scoreLabel = new JLabel(score.getScore() + " pts");
         scoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
         scoreLabel.setBorder(BorderFactory.createLineBorder(Color.black));
 

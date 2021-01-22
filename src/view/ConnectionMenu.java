@@ -87,8 +87,6 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
     login.setOpaque(false);
     mdp.setOpaque(false);
 
-
-
     this.add(Box.createRigidArea(new Dimension(0, 150)));
     this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
     login.setMaximumSize(new Dimension(800,50));
