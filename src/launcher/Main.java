@@ -1,5 +1,6 @@
 package launcher;
 
+import database.DBConnexion;
 import database.DBEnigma;
 import database.DBGame;
 import database.DBRoom;
@@ -16,7 +17,6 @@ public class Main {
     public static RoomList ListRoom = new RoomList();
     public static GlobalFrame frame = null;
 
-
     public static int idAdmin;
 
     public static void main(String[] args) {
@@ -25,7 +25,7 @@ public class Main {
         //System.setProperty("sun.java2d.opengl","True");
 
         frame = GlobalFrame.getInstance();
-
+        DBConnexion.getConnexion();
 
        /* Thread thread = new Thread(){
             public void run(){
