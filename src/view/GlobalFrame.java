@@ -1,7 +1,10 @@
 package view;
 
+import database.DBRoom;
+import database.DBUser;
 import launcher.Main;
 import model.Game;
+import model.Room;
 import model.RoomList;
 import model.User;
 import view.SwingWorkers.ImageLoaderMainMenu;
@@ -132,13 +135,11 @@ public class GlobalFrame extends JFrame {
     }
 
     public void roomManagementDisplay(GlobalFrame frame){
-
         roommanagement = RoomManagement.getInstance(frame);
         setContentPane(roommanagement);
         frame.setResizable(true);
         frame.revalidate();
         frame.repaint();
-
     }
 
     public void mainMenuDisplay(GlobalFrame frame){
@@ -231,38 +232,34 @@ public class GlobalFrame extends JFrame {
 
     }
 
-    public boolean AcceptUser(String login, String salle) {
-        //si je suis administrateur
-        boolean admin = true;
-        String nomJeu = salle;
-        if (admin) {
-            String[] options = {"Oui", "Non"};
-            int reponse = JOptionPane.showOptionDialog
-                    (null, login + " souhaite se connecter a "+ nomJeu +"\nL'accepter ?",
-                            "Nouveau Joueur",
-                            JOptionPane.YES_NO_OPTION,
-                            JOptionPane.QUESTION_MESSAGE,
-                            null, // pas d'icone
-                            options, // titres des boutons
-                            null); // désactiver la touche ENTER
-            if (reponse == JOptionPane.YES_OPTION) {
-                return true;
-            } else {
-                return false;
-            }
+    public boolean AcceptUser(String login, Room salle) {
+        String nomJeu = salle.getGame().getTitre();
+        String[] options = {"Oui", "Non"};
+        int reponse = JOptionPane.showOptionDialog
+            (null, login + " souhaite se connecter a "+ nomJeu +"\nL'accepter ?",
+            "Nouveau Joueur",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE,
+            null, // pas d'icone
+            options, // titres des boutons
+            null); // désactiver la touche ENTER
+        if (reponse == JOptionPane.YES_OPTION) {
+            DBRoom.majRoom(salle.getId(),salle.getGame().getId(),salle.getCompetitive(),DBUser.getidUser(login));
+            roommanagement.refresh();
+            return true;
+        } else {
+            return false;
         }
-
-        return false;
     }
 
     public void setFullScreen(JPanel pane){
-        GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        GraphicsDevice device = env.getDefaultScreenDevice();
-        setVisible(false);
-        dispose();
+        //GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        //GraphicsDevice device = env.getDefaultScreenDevice();
+        //setVisible(false);
+        //dispose();
         setContentPane(pane);
-        setUndecorated(true);
-        device.setFullScreenWindow(this);
+        //setUndecorated(true);
+        //device.setFullScreenWindow(this);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setResizable(false);
     }

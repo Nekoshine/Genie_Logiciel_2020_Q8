@@ -211,8 +211,6 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
                         } catch (IOException | FontFormatException ioException) {
                             ioException.printStackTrace();
                         }
-                        salle.setUserInside(user.getId());
-                        DBRoom.majRoom(salle.getId(),salle.getGame().getId(),salle.getCompetitive(),salle.getUserInside());
                     }
                     else {
                         frame.roomAccessDisplay(frame,Main.ListRoom,user);

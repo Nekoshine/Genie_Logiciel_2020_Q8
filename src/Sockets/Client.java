@@ -23,7 +23,7 @@ public class Client {
       Socket socket = new Socket(host,port);
       ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
       
-      DemandeConnexion signal = new DemandeConnexion(idUser,false, salle.getGame().getTitre());
+      DemandeConnexion signal = new DemandeConnexion(idUser,false, salle);
       
       out.writeObject(signal);
       ObjectInputStream in = new ObjectInputStream(socket.getInputStream());

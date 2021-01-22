@@ -1,8 +1,11 @@
 package model;
+
+import java.io.Serializable;
+
 /**
 * * Codé par Esteban
 */
-public class Game{
+public class Game implements Serializable {
   private int id;
   private String titre;
   private int score;
