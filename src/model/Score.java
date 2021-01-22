@@ -18,7 +18,7 @@ public class Score{
   }
 
   public int getIdUser(){
-    return this.id;
+    return this.idUser;
   }
 
   public int getIdGame(){

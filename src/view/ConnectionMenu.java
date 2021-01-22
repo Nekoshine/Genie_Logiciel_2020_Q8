@@ -100,6 +100,7 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
     this.add(conteneurboutons);
     this.setVisible(true);
 
+
   }
 
   public final static ConnectionMenu getInstance(GlobalFrame frame) {

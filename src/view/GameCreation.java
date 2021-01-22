@@ -644,7 +644,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
             frame.gameManagementDisplay(frame,frame.roomNumber);
         }
         else if(e.getSource() == rankingButton){
-            Ranking ranking = new Ranking();
+            Ranking ranking = new Ranking(this.game);
         }
         else if (e.getSource()==deleteButton){
             DBEnigma.deleteEnigma( listEnigma.getLastEnigma().getId());

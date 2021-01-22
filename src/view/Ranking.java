@@ -1,6 +1,8 @@
 package view;
 
 import database.DBUser;
+import launcher.Main;
+import model.Game;
 import model.Score;
 import model.ScoreList;
 import view.style.ColorPerso;
@@ -8,13 +10,15 @@ import view.style.ColorPerso;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.InputStream;
 
-public class Ranking extends JFrame {
+public class Ranking extends JFrame implements ActionListener{
 
     private BorderLayout mainLayout;
+    private BorderLayout generalLayout;
     private GridBagLayout resultLayout;
 
     private GridBagConstraints gbc;
@@ -24,38 +28,77 @@ public class Ranking extends JFrame {
     private JPanel mainPanel;
     private JPanel rankingPanel;
     private JPanel generalPanel;
-    private JPanel closePanel;
+    private JPanel refreshPanel;
+    private JPanel titlePanel;
 
-    private JButton closeButton;
+    private JLabel titleLabel;
 
-    public Ranking(){
+    private JScrollPane scrollPane;
+    private JButton refreshButton;
+
+    private Dimension windowSize;
+
+    public Ranking(Game game){
+
+        this.setSize(500,700);
+        windowSize = this.getSize();
 
         scoreList = new ScoreList();
+        scoreList.addScore(new Score(1,2,10,20000));
+        scoreList.addScore(new Score(2,2,6,1000));
+        scoreList.addScore(new Score(3,2,4,200));
+        scoreList.addScore(new Score(4,2,6,1000));
+        scoreList.addScore(new Score(5,2,4,200));
+        scoreList.addScore(new Score(6,2,6,1000));
+        scoreList.addScore(new Score(7,2,4,200));
+        scoreList.addScore(new Score(8,2,6,1000));
+        scoreList.addScore(new Score(9,2,4,200));
+
+        generalLayout = new BorderLayout(10,10);
 
         mainPanel = new JPanel();
         generalPanel = new JPanel();
         rankingPanel = new JPanel();
-        closePanel = new JPanel();
+        refreshPanel = new JPanel();
+        titlePanel = new JPanel();
 
-        File fichier = new File("./res/image/logo.png");
+        titleLabel = new JLabel("MJ - Classement : "+game.getTitre());
+        titlePanel.add(titleLabel);
+        titlePanel.setBorder(BorderFactory.createLineBorder(Color.black,2));
+
+
+        resultLayout = new GridBagLayout();
+
+        gbc = new GridBagConstraints();
+
+        scrollPane = new JScrollPane(rankingPanel,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(10);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder());
+
+
+
+        InputStream is = Main.class.getResourceAsStream("/image/logo.png");
         try {
-            Image logo = ImageIO.read(fichier);
+            Image logo = ImageIO.read(is);
             this.setIconImage(logo);
         }
         catch (IOException e){
             e.printStackTrace();
         }
 
-        closeButton = new JButton("Fermer");
-        closeButton.setBackground(ColorPerso.rouge);
+        refreshButton = new JButton("Actualiser");
+        refreshButton.setBackground(ColorPerso.vert);
 
-        closePanel.add(closeButton);
+        refreshPanel.add(refreshButton);
 
-        mainLayout = new BorderLayout();
+        mainLayout = new BorderLayout(10,10);
+        rankingPanel.setLayout(resultLayout);
+        rankingPanel.setBorder(BorderFactory.createEmptyBorder(10,5,10,5));
 
         for (int i = 0;i< scoreList.getSize();i++){
 
             JPanel panel = ajoutResultat(scoreList.getScore(i),gbc);
+            panel.setPreferredSize(new Dimension((int) windowSize.getWidth()-85,50));
             rankingPanel.add(panel,gbc);
             mainPanel.revalidate();
             mainPanel.repaint();
@@ -63,16 +106,18 @@ public class Ranking extends JFrame {
         }
 
         mainPanel.setLayout(mainLayout);
-        mainPanel.add(rankingPanel,BorderLayout.CENTER);
-        mainPanel.add(closePanel,BorderLayout.SOUTH);
-        mainPanel.setSize(this.getWidth()-40,this.getHeight()-40);
+        mainPanel.add(scrollPane,BorderLayout.CENTER);
+        mainPanel.add(refreshPanel,BorderLayout.SOUTH);
+        mainPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
 
         generalPanel.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
         generalPanel.setBackground(ColorPerso.DARK_GRAY);
-        generalPanel.add(mainPanel);
+        generalPanel.setLayout(generalLayout);
+        generalPanel.add(titlePanel,BorderLayout.PAGE_START);
+        generalPanel.add(mainPanel,BorderLayout.CENTER);
 
         this.add(generalPanel);
-        this.setSize(400,700);
+        this.setTitle("Classement");
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setVisible(true);
@@ -82,10 +127,12 @@ public class Ranking extends JFrame {
 
     public JPanel ajoutResultat(Score score,GridBagConstraints gbc){
 
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.fill = GridBagConstraints.BOTH;
         gbc.weightx = 1.0;
-        gbc.gridy = score.getId() - 1;
-        gbc.gridx = 0;
+        gbc.gridx = GridBagConstraints.REMAINDER;
+        gbc.gridy = GridBagConstraints.RELATIVE;
+        gbc.insets = new Insets(0,0,10,0);
+
 
         JPanel panelResultat = new JPanel();
         GridLayout grid = new GridLayout(1,3);
@@ -108,12 +155,19 @@ public class Ranking extends JFrame {
         panelResultat.add(scoreLabel);
 
         panelResultat.setBorder(BorderFactory.createLineBorder(Color.black,2));
+        panelResultat.setPreferredSize(new Dimension((int) windowSize.getWidth()-85,(int) (windowSize.getHeight()* 0.2)));
+        System.out.println(windowSize.getWidth());
 
         return  panelResultat;
 
     }
 
 
-
-
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == refreshButton){
+            revalidate();
+            repaint();
+        }
+    }
 }
