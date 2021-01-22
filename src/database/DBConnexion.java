@@ -4,9 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-class DBConnexion {
+public class DBConnexion {
 
-    private static Connection connexion = null;
+    private static volatile Connection connexion = null;
 
     DBConnexion(){
         getConnexion();
@@ -15,7 +15,7 @@ class DBConnexion {
      * Fonction qui va initialiser la connexion avec la BDD
      * @return La connexion établie avec la bdd
      */
-    static Connection getConnexion(){
+    public static Connection getConnexion(){
         if (connexion==null){
             try{
                 Class.forName("com.mysql.jdbc.Driver");

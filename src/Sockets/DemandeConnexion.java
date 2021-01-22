@@ -3,23 +3,22 @@ package Sockets;
 import model.Room;
 
 import java.io.Serializable;
-import java.util.Random;
 
 public class DemandeConnexion implements Serializable {
   
   private int idUser;
   private boolean firstConn;
-  private String salle;
+  private Room salle;
   
   
-  public DemandeConnexion(int idUser,boolean firstConn, String salle){
+  public DemandeConnexion(int idUser,boolean firstConn, Room salle){
     this.idUser=idUser;
     this.firstConn=firstConn;
     this.salle=salle;
     
   }
 
-  public String getSalle() {
+  public Room getSalle() {
     return salle;
   }
 

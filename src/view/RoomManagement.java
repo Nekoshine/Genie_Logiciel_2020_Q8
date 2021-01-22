@@ -306,18 +306,6 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
 
     }
 
-    public void actionPerformed(ActionEvent e)
-    {
-        if(e.getSource() == returnButton) {
-
-            frame.mainMenuDisplay(frame);
-        }
-        else if(e.getSource()== newButton){
-            this.majRoom();
-        }
-
-    }
-
     private void majRoom() {
         ListRoom.addRoom(DBRoom.getMax()+1,null,false,-1);
         this.createList();
@@ -344,6 +332,22 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
 
     }
 
+    public void refresh(){
+        getInstance(frame);
+    }
+
+
+    public void actionPerformed(ActionEvent e)
+    {
+        if(e.getSource() == returnButton) {
+
+            frame.mainMenuDisplay(frame);
+        }
+        else if(e.getSource()== newButton){
+            this.majRoom();
+        }
+
+    }
 
     @Override
     public void mouseClicked(MouseEvent e) {}
