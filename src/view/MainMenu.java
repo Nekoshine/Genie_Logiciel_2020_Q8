@@ -8,6 +8,7 @@ import view.style.ColorPerso;
 import view.style.FontPerso;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -43,6 +44,7 @@ public class MainMenu extends JPanel implements ActionListener, MouseListener {
         deconnection.setBackground(ColorPerso.rouge);
         deconnection.setForeground(Color.WHITE);
         deconnection.setPreferredSize(new Dimension(150,60));
+        deconnection.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 
         /*création du conteneur pour le bouton deconnexion*/
         JPanel deconnectionPanel = new JPanel();
@@ -63,10 +65,12 @@ public class MainMenu extends JPanel implements ActionListener, MouseListener {
         creation = new JButtonImage(Main.class.getResourceAsStream("/image/creation.png"));
         creation.addActionListener(this);
         creation.addMouseListener(this);
+        creation.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 
         management = new JButtonImage(Main.class.getResourceAsStream("/image/gestion.png"));
         management.addActionListener(this);
         management.addMouseListener(this);
+        management.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         /*création du conteneur des menus*/
         menucontainer = new JPanel();
         menucontainer.setLayout(new GridLayout(1, 2, 30, 5));

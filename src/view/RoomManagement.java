@@ -76,11 +76,12 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
 
 
         newButton = new JButton("Nouvelle Salle");
-        newButton.setOpaque(true);
         newButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         newButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        newButton.setForeground(Color.white);
         newButton.addActionListener(this);
         newButton.addMouseListener(this);
+        newButton.setBackground(ColorPerso.grisFonce);
         newButton.setPreferredSize(new Dimension(210,45));
 
         /* Affichage des salles */
@@ -220,7 +221,6 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
         panelChoose.setLayout(layoutChoose);
 
         JButton boutonJeu = new JButton("Choisir Jeu");
-        boutonJeu.setPreferredSize(new Dimension( 200, 50));
         boutonJeu.setBackground(ColorPerso.jaune);
         boutonJeu.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 
@@ -402,8 +402,8 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
             returnButton.setBackground(ColorPerso.rouge);
         }
         else if(e.getSource()==newButton){
-            newButton.setBackground(Color.LIGHT_GRAY);
-            newButton.setForeground(Color.black);
+            newButton.setBackground(ColorPerso.grisFonce);
+            newButton.setForeground(Color.white);
         }
     }
 }

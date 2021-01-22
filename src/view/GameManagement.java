@@ -11,6 +11,7 @@ import view.style.ColorPerso;
 import view.style.FontPerso;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -53,7 +54,8 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
         JPanel titlePanel = new JPanel();
         JPanel returnPanel = new JPanel();
         newButtonPanel = new JPanel();
-        newButtonPanel.setBackground(ColorPerso.gris);
+        newButtonPanel.setBackground(ColorPerso.grisClair);
+        newButtonPanel.setLayout(new FlowLayout(1));
         JScrollPane scrollPane = new JScrollPane(gamePanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
         scrollPane.getVerticalScrollBar().setUnitIncrement(10);
@@ -61,10 +63,9 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
         /* Déclaration Layouts */
         BorderLayout mainLayout = new BorderLayout(10, 10);
         BorderLayout centerLayout = new BorderLayout(4, 4);
-        FlowLayout decoLayout = new FlowLayout(FlowLayout.LEADING);
         GridBagLayout listLayout = new GridBagLayout();
         gamePanel.setLayout(listLayout);
-        gamePanel.setBackground(ColorPerso.gris);
+        gamePanel.setBackground(ColorPerso.grisClair);
 
         /* Contraintes GridBag */
         GridBagConstraints gbc = new GridBagConstraints();
@@ -74,14 +75,18 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
         returnButton = new JButton("Retour");
         returnButton.setBackground(ColorPerso.rouge);
         returnButton.setForeground(Color.white);
+        returnButton.setPreferredSize(new Dimension(100,30));
+        returnButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 
         if(frame.roomNumber==-1) {
             newButton = new JButton("Créer un nouveau jeu");
-            newButton.setBackground(Color.GRAY);
-            newButton.setOpaque(false);
             newButton.setAlignmentX(Component.CENTER_ALIGNMENT);
             newButton.addActionListener(this);
             newButton.addMouseListener(this);
+            newButton.setBackground(ColorPerso.grisFonce);
+            newButton.setForeground(Color.white);
+            newButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+            newButton.setPreferredSize(new Dimension(210,45));
         }
 
         this.createList();
@@ -96,7 +101,7 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
         listPanel.setLayout(centerLayout);
         listPanel.add(scrollPane,BorderLayout.CENTER);
         listPanel.add(newButtonPanel, BorderLayout.PAGE_END);
-        listPanel.setBackground(ColorPerso.gris);
+        listPanel.setBackground(ColorPerso.grisClair);
         listPanel.setBorder(BorderFactory.createLineBorder(Color.black,2));
 
         if(frame.roomNumber==-1) {
@@ -109,9 +114,10 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
         titlePanel.add(titre);
 
         /* Setup bouton retour */
-        returnPanel.setLayout(decoLayout);
+        returnPanel.setLayout(new FlowLayout(0));
         returnPanel.setBackground(ColorPerso.darkGray);
         returnPanel.add(returnButton);
+
         returnButton.addActionListener(this);
         returnButton.addMouseListener(this);
 
@@ -152,9 +158,8 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
                 INSTANCE.newButton.setVisible(false);
             }
             INSTANCE.returnButton.setBackground(ColorPerso.rouge);
-            INSTANCE.newButton.setBackground(Color.GRAY);
-            INSTANCE.newButton.setOpaque(false);
-            INSTANCE.newButton.setForeground(Color.black);
+            INSTANCE.newButton.setBackground(ColorPerso.grisFonce);
+            INSTANCE.newButton.setForeground(Color.white);
         }
         return INSTANCE;
     }
@@ -169,6 +174,9 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
 
         /* Ajout Panel */
         JPanel panelJeu = new JPanel();
+        JPanel panelDelete = new JPanel();
+        JPanel panelModify = new JPanel();
+        JPanel panelChoose = new JPanel();
 
         GridLayout grille = new GridLayout(1,4,20,0);
 
@@ -182,8 +190,13 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
         panelJeu.add(numJeu);
         panelJeu.add(nomJeu);
         if(frame.roomNumber==-1) {
+            panelModify.setLayout(new BorderLayout());
             JButton buttonModify = new JButton("Modifier");
             buttonModify.setBackground(ColorPerso.jaune);
+            buttonModify.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+            panelModify.add(buttonModify,BorderLayout.CENTER);
+            panelModify.setBorder(BorderFactory.createEmptyBorder(10,20,10,20));
+            buttonModify.setPreferredSize(new Dimension( 200, 50));
             buttonModify.addActionListener(new AbstractAction() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -216,9 +229,15 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
                 }
             });
 
+
+            panelDelete.setLayout(new BorderLayout());
             JButton buttonDelete = new JButton("Supprimer");
             buttonDelete.setBackground(ColorPerso.rouge);
             buttonDelete.setForeground(Color.white);
+            buttonDelete.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+            buttonDelete.setPreferredSize(new Dimension( 200, 50));
+            panelDelete.add(buttonDelete,BorderLayout.CENTER);
+            panelDelete.setBorder(BorderFactory.createEmptyBorder(10,20,10,20));
             buttonDelete.addActionListener(new AbstractAction() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -265,18 +284,23 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
                 }
             });
 
-            panelJeu.add(buttonModify);
-            panelJeu.add(buttonDelete);
+            panelJeu.add(panelModify);
+            panelJeu.add(panelDelete);
         }
         else {
 
             BorderLayout checkLayout = new BorderLayout();
             JButton boutonChoix = new JButton("Choisir");
+            boutonChoix.setPreferredSize(new Dimension( 200, 50));
+            boutonChoix.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
             JPanel checkPanel = new JPanel();
             JCheckBox competitionCheck = new JCheckBox("Mode Compétitif");
             checkPanel.add(Box.createVerticalGlue());
             checkPanel.add(competitionCheck, BorderLayout.CENTER);
             checkPanel.add(Box.createVerticalGlue());
+            panelChoose.setLayout(checkLayout);
+            panelChoose.add(boutonChoix,BorderLayout.CENTER);
+            panelChoose.setBorder(BorderFactory.createEmptyBorder(10,20,10,20));
 
             boutonChoix.setBackground(ColorPerso.vert);
             boutonChoix.addActionListener(new AbstractAction() {
@@ -328,7 +352,7 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
                     boutonChoix.setBackground(ColorPerso.vert);
                 }
             });
-            panelJeu.add(boutonChoix);
+            panelJeu.add(panelChoose);
             panelJeu.add(checkPanel);
 
         }
@@ -350,7 +374,7 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
         for(int i = 0; i<nbGames; i++){
             listPanel.remove(newButtonPanel);
             JPanel panelGame = this.ajoutJeu(ListGame.getGame(i), gbc,i+1);
-            panelGame.setPreferredSize(new Dimension(listPanel.getWidth() - 45, 75));
+            panelGame.setPreferredSize(new Dimension(listPanel.getWidth() - 45, 100));
             gamePanel.add(panelGame, gbc);
             listPanel.add(newButtonPanel, BorderLayout.PAGE_END);
             listPanel.revalidate();
@@ -411,8 +435,9 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
             returnButton.setBackground(ColorPerso.rouge);
         }
         else if(e.getSource()==newButton){
-            newButton.setOpaque(false);
-            newButton.setForeground(Color.black);
+            newButton.setOpaque(true);
+            newButton.setBackground(ColorPerso.grisFonce);
+
         }
     }
 }
