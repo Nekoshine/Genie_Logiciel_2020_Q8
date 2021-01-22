@@ -25,3 +25,7 @@ hs_err_pid*
 #fichier IntelliJ
 *.iml
 /.idea/
+
+#fichier creation .jar
+/src/META-INF/
+/META-INF/
