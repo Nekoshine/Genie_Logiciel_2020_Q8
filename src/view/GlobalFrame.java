@@ -37,6 +37,9 @@ public class GlobalFrame extends JFrame {
     PlayerManagement playerManagement;
 
 
+    private boolean fullScrren = false;
+
+
 
     public int roomNumber;
     public boolean insideRoom;
@@ -159,7 +162,15 @@ public class GlobalFrame extends JFrame {
     public void connectionMenuDisplay(GlobalFrame frame){
 
         connectionmenu = ConnectionMenu.getInstance(frame);
-        removeFullScreen(connectionmenu);
+        GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice device = env.getDefaultScreenDevice();
+
+        if(fullScrren){
+            removeFullScreen(connectionmenu);
+        }
+        else {
+        setContentPane(connectionmenu);
+        }
         setVisible(true);
         frame.setMinimumSize(new Dimension(720,480));
         frame.setSize(720,480);
@@ -244,8 +255,8 @@ public class GlobalFrame extends JFrame {
             options, // titres des boutons
             null); // désactiver la touche ENTER
         if (reponse == JOptionPane.YES_OPTION) {
-            DBRoom.majRoom(salle.getId(),salle.getGame().getId(),salle.getCompetitive(),DBUser.getidUser(login));
-            roommanagement.refresh();
+            //DBRoom.majRoom(salle.getId(),salle.getGame().getId(),salle.getCompetitive(),DBUser.getidUser(login));
+            //roommanagement.refresh();
             return true;
         } else {
             return false;
@@ -253,6 +264,7 @@ public class GlobalFrame extends JFrame {
     }
 
     public void setFullScreen(JPanel pane){
+        fullScrren=true;
         //GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
         //GraphicsDevice device = env.getDefaultScreenDevice();
         //setVisible(false);
@@ -265,6 +277,7 @@ public class GlobalFrame extends JFrame {
     }
 
     public void removeFullScreen(JPanel pane){
+        fullScrren=false;
         GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice device = env.getDefaultScreenDevice();
         setVisible(false);
