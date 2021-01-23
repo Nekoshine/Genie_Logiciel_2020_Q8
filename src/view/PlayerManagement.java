@@ -9,6 +9,7 @@ import view.style.ColorPerso;
 import view.style.FontPerso;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -59,12 +60,14 @@ public class PlayerManagement extends JPanel implements ActionListener{
         helpButtonGM.addActionListener(this);
         helpButtonGM.setBackground(Color.LIGHT_GRAY);
         helpButtonGM.setForeground(Color.black);
+        helpButtonGM.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         helpButtonGM.setOpaque(true);
 
         buttonReturn = new JButton("Retour");
         buttonReturn.addActionListener(this);
         buttonReturn.setBackground(ColorPerso.rouge);
         buttonReturn.setForeground(Color.white);
+        buttonReturn.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         buttonReturn.setOpaque(true);
 
         buttonHint1 = this.hintButton(1);
@@ -302,6 +305,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
         }
         button.setForeground(Color.black);
         button.setOpaque(true);
+        button.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         return button;
     }
 
