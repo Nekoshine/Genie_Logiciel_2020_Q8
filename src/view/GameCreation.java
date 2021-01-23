@@ -13,6 +13,7 @@ import view.style.ColorPerso;
 import view.style.FontPerso;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.*;
@@ -115,8 +116,13 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
 
         //Center
 
-        newButton.setOpaque(false);
+        newButton.setOpaque(true);
+        newButton.setBackground(ColorPerso.grisFonce);
+        newButton.setForeground(Color.white);
         newButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        newButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        newButton.setPreferredSize(new Dimension(210,45));
+        buttonNewPanel.setLayout(new FlowLayout(1));
         buttonNewPanel.add(newButton);
 
         GridBagLayout gridWin = new GridBagLayout();
@@ -177,6 +183,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
 
         rankingButton.setHorizontalAlignment(JButton.CENTER);
         rankingButton.setForeground(Color.white);
+        rankingButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         rankingButton.addMouseListener(this);
         rankingButton.addActionListener(this);
 
@@ -219,20 +226,25 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
         titleNamePanel.setBorder(BorderFactory.createLineBorder(Color.black,2));
         defaultScorePanel.setBorder(BorderFactory.createLineBorder(Color.black,2));
 
+
         // Boutons
 
         exitButton.setBackground(ColorPerso.azur);
         exitButton.setForeground(Color.white);
+        exitButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         exitButton.addActionListener(this);
+
         exitButton.addMouseListener(this);
 
         saveButton.setBackground(ColorPerso.vert);
         saveButton.setForeground(Color.white);
+        saveButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         saveButton.addActionListener(this);
         saveButton.addMouseListener(this);
 
         deleteButton.setBackground(ColorPerso.rouge);
         deleteButton.setForeground(Color.white);
+        deleteButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         deleteButton.addActionListener(this);
         deleteButton.addMouseListener(this);
 
@@ -744,7 +756,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
             frame.gameManagementDisplay(frame,frame.roomNumber);
         }
         else if(e.getSource() == rankingButton){
-            new Ranking(this.game);
+            new Ranking(this.game,null);
         }
         else if (e.getSource()==deleteButton){
             DBEnigma.deleteEnigma( listEnigma.getLastEnigma().getId());
@@ -888,8 +900,8 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
             deleteButton.setBackground(ColorPerso.rouge);
         }
         else if(e.getSource()==newButton){
-            newButton.setForeground(Color.black);
-            newButton.setOpaque(false);
+            newButton.setForeground(ColorPerso.white);
+            newButton.setBackground(ColorPerso.grisFonce);
         }
         else if(e.getSource()==rankingButton && rankingButton.isEnabled()){
             rankingButton.setBackground(ColorPerso.azur);

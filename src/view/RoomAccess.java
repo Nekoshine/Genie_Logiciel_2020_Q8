@@ -12,6 +12,7 @@ import view.style.ColorPerso;
 import view.style.FontPerso;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -31,6 +32,7 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
 
     /* Boutons */
     private final JButton returnButton;
+    private JButton rankingButton;
 
     private GlobalFrame frame;
 
@@ -51,6 +53,9 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
         roomPanel = new JPanel();
         JPanel titlePanel = new JPanel();
         JPanel decoPanel = new JPanel();
+        JPanel buttonPanel = new JPanel();
+
+        JPanel panelRanking = new JPanel();
 
 
         JScrollPane scrollPane = new JScrollPane(roomPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -60,7 +65,7 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
         /* Déclaration Layouts */
         BorderLayout mainLayout = new BorderLayout(10, 10);
         BorderLayout centerLayout = new BorderLayout(4, 4);
-        FlowLayout decoLayout = new FlowLayout(FlowLayout.LEADING);
+        FlowLayout buttonLayout = new FlowLayout(FlowLayout.LEADING);
         GridBagLayout listLayout = new GridBagLayout();
         roomPanel.setLayout(listLayout);
         roomPanel.setBackground(Color.LIGHT_GRAY);
@@ -73,7 +78,14 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
         returnButton = new JButton("Deconnexion");
         returnButton.setBackground(ColorPerso.rouge);
         returnButton.setForeground(Color.white);
+        returnButton.setPreferredSize(new Dimension(140,30));
+        returnButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 
+        rankingButton = new JButton("Classements");
+        rankingButton.setBackground(ColorPerso.vert);
+        rankingButton.setForeground(ColorPerso.white);
+        rankingButton.setPreferredSize(new Dimension(140,30));
+        rankingButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 
         /* Affichage des salles */
         this.createList();
@@ -100,10 +112,21 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
         titlePanel.add(titre);
 
         /* Setup bouton retour */
-        decoPanel.setLayout(decoLayout);
-        decoPanel.setBackground(ColorPerso.grisClair);
+
         decoPanel.add(returnButton);
         decoPanel.setBackground(ColorPerso.DARK_GRAY);
+        panelRanking.setOpaque(false);
+        panelRanking.add(rankingButton);
+
+
+        buttonPanel.setLayout(new BorderLayout());
+        buttonPanel.add(decoPanel,BorderLayout.WEST);
+        buttonPanel.add(panelRanking,BorderLayout.EAST);
+        buttonPanel.setOpaque(false);
+
+        rankingButton.addActionListener(this);
+        rankingButton.addMouseListener(this);
+
         returnButton.addActionListener(this);
         returnButton.addMouseListener(this);
 
@@ -114,7 +137,7 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
         this.add(listPanel, BorderLayout.CENTER);
         this.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
         this.add(titlePanel, BorderLayout.PAGE_START);
-        this.add(decoPanel, BorderLayout.PAGE_END);
+        this.add(buttonPanel, BorderLayout.PAGE_END);
         this.setBackground(ColorPerso.darkGray);
         this.setVisible(true);
 
@@ -164,7 +187,8 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
 
         /* Ajout Panel */
         JPanel panelSalle = new JPanel();
-
+        JPanel joinPanel = new JPanel();
+        joinPanel.setLayout(new BorderLayout());
 
         /* Construction Panel Salle */
         GridLayout grille = new GridLayout(1,3,70,50);
@@ -187,6 +211,8 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
 
         JButton boutonJoin = new JButton();
 
+        boutonJoin.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+
         if(salle.getUserInside()==-1) {
             boutonJoin.setText("Rejoindre la salle");
             boutonJoin.setBackground(ColorPerso.azur);
@@ -198,7 +224,8 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
             boutonJoin.setBackground(ColorPerso.darkGray);
         }
 
-
+        joinPanel.add(boutonJoin,BorderLayout.CENTER);
+        joinPanel.setBorder(BorderFactory.createEmptyBorder(10,20,10,20));
         boutonJoin.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -257,7 +284,7 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
         /* Ajout Éléments au panel Salle */
         panelSalle.add(nomSalle);
         panelSalle.add(nomJeu);
-        panelSalle.add(boutonJoin);
+        panelSalle.add(joinPanel);
         panelSalle.setLayout(grille);
 
         /* Configuration panelSalle */
@@ -272,6 +299,10 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
         if(e.getSource() == returnButton) {
 
             frame.connectionMenuDisplay(frame);
+        }
+
+        if (e.getSource() == rankingButton){
+            ChooseRanking chooseRanking = new ChooseRanking(ListRoom,user);
         }
 
     }
@@ -309,6 +340,11 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
     public void mouseEntered(MouseEvent e) {
         if (e.getSource()==returnButton) {
             returnButton.setBackground(ColorPerso.rougeHoover);
+            returnButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+        }
+        if (e.getSource()==rankingButton){
+            rankingButton.setBackground(ColorPerso.vertHoover);
+            rankingButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
         }
     }
 
@@ -316,6 +352,11 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
     public void mouseExited(MouseEvent e) {
         if (e.getSource()==returnButton) {
             returnButton.setBackground(ColorPerso.rouge);
+            returnButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        }
+        if (e.getSource()==rankingButton){
+            rankingButton.setBackground(ColorPerso.vert);
+            rankingButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         }
 
     }

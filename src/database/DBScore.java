@@ -77,7 +77,7 @@ public class DBScore extends DBConnexion {
     public static ScoreList getScoreFromGame(int idGame){
         ScoreList scoreList = new ScoreList();
         try{
-            PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("Select * from Score WHERE idGame=? ORDER BY score ASC");
+            PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("Select * from Score WHERE idGame=? ORDER BY score DESC");
             requete.setString(1, String.valueOf(idGame));
             ResultSet resultat = requete.executeQuery();
             while (resultat.next()) { // On itère chaque résultat
@@ -99,7 +99,7 @@ public class DBScore extends DBConnexion {
     public static ScoreList getScoreFromUser(int idUser){
         ScoreList scoreList = new ScoreList();
         try{
-            PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("Select * from Score WHERE idUser=? ORDER BY score ASC");
+            PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("Select * from Score WHERE idUser=? ORDER BY score DESC");
             requete.setString(1, String.valueOf(idUser));
             ResultSet resultat = requete.executeQuery();
             while (resultat.next()) { // On itère chaque résultat

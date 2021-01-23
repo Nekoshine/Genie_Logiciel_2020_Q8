@@ -153,7 +153,7 @@ public class GlobalFrame extends JFrame {
             removeFullScreen(connectionmenu);
         }
         else {
-        setContentPane(connectionmenu);
+            setContentPane(connectionmenu);
         }
         setVisible(true);
         frame.setMinimumSize(new Dimension(720,480));

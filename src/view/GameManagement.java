@@ -297,9 +297,7 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
             boutonChoix.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
             JPanel checkPanel = new JPanel();
             JCheckBox competitionCheck = new JCheckBox("Mode Compétitif");
-            checkPanel.add(Box.createVerticalGlue());
             checkPanel.add(competitionCheck, BorderLayout.CENTER);
-            checkPanel.add(Box.createVerticalGlue());
             panelChoose.setLayout(checkLayout);
             panelChoose.add(boutonChoix,BorderLayout.CENTER);
             panelChoose.setBorder(BorderFactory.createEmptyBorder(10,20,10,20));
