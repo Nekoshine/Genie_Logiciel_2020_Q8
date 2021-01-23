@@ -148,9 +148,8 @@ public class PlayerManagement extends JPanel implements ActionListener{
         helpMessageGMPan.setBackground(Color.LIGHT_GRAY);
         helpMessageGMPan.add(helpMessageGM);
         JPanel helpButtonGMPanIn = new JPanel();
-        helpButtonGMPanIn.setBackground(Color.white);
+        helpButtonGMPanIn.setBackground(Color.LIGHT_GRAY);
         helpButtonGMPanIn.add(helpButtonGM);
-        helpButtonGMPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         JPanel helpButtonGMPan = new JPanel();
         helpButtonGMPan.setBackground(Color.LIGHT_GRAY);
         helpButtonGMPan.add(helpButtonGMPanIn);
@@ -168,33 +167,29 @@ public class PlayerManagement extends JPanel implements ActionListener{
         helpGMPan.setBorder(BorderFactory.createEmptyBorder(0,0,10,0));
 
         JPanel buttonReturnPanIn = new JPanel();
-        buttonReturnPanIn.setBackground(Color.white);
+        buttonReturnPanIn.setBackground(Color.LIGHT_GRAY);
         buttonReturnPanIn.add(buttonReturn);
-        buttonReturnPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         JPanel buttonReturnPan = new JPanel();
         buttonReturnPan.setBackground(Color.LIGHT_GRAY);
         buttonReturnPan.add(buttonReturnPanIn);
         buttonReturnPan.setBorder(BorderFactory.createEmptyBorder(20,0,0,20));
         JPanel buttonHint1PanIn = new JPanel();
-        buttonHint1PanIn.setBackground(Color.white);
+        buttonHint1PanIn.setBackground(Color.LIGHT_GRAY);
         buttonHint1PanIn.add(buttonHint1);
-        buttonHint1PanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         JPanel buttonHint1Pan = new JPanel();
         buttonHint1Pan.setBackground(Color.LIGHT_GRAY);
         buttonHint1Pan.add(buttonHint1PanIn);
         buttonHint1Pan.setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
         JPanel buttonHint2PanIn = new JPanel();
-        buttonHint2PanIn.setBackground(Color.white);
+        buttonHint2PanIn.setBackground(Color.LIGHT_GRAY);
         buttonHint2PanIn.add(buttonHint2);
-        buttonHint2PanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         JPanel buttonHint2Pan = new JPanel();
         buttonHint2Pan.setBackground(Color.LIGHT_GRAY);
         buttonHint2Pan.add(buttonHint2PanIn);
         buttonHint2Pan.setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
         JPanel buttonHint3PanIn = new JPanel();
-        buttonHint3PanIn.setBackground(Color.white);
+        buttonHint3PanIn.setBackground(Color.LIGHT_GRAY);
         buttonHint3PanIn.add(buttonHint3);
-        buttonHint3PanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         JPanel buttonHint3Pan = new JPanel();
         buttonHint3Pan.setBackground(Color.LIGHT_GRAY);
         buttonHint3Pan.add(buttonHint3PanIn);
@@ -298,7 +293,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
         if(!revealed){
             button = new JButton("Afficher l'indice "+i);
             button.addActionListener(this);
-            button.setBackground(Color.white);
+            button.setBackground(Color.LIGHT_GRAY);
         }else{
             button = new JButton("Indice " + i + " déjà affiché");
             button.setBackground(Color.lightGray);
