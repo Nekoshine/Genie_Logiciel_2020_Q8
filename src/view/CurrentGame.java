@@ -16,7 +16,7 @@ import javax.swing.*;
 import javax.swing.Timer;
 
 
-public class CurrentGame extends JPanel implements ActionListener, WindowListener{
+public class CurrentGame extends JPanel implements ActionListener, WindowListener, FocusListener{
 
     private JPanel firstRawPanel;
     private JPanel secondRawPanel;
@@ -217,10 +217,13 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
 
         // Champs de reponse + bouton de confirmation
 
-        answerTextField = new JTextField("your answer");
+        answerTextField = new JTextField("Réponse à l'énigme");
+        answerTextField.setForeground(Color.gray);
+        answerTextField.setFont(answerTextField.getFont().deriveFont(Font.ITALIC));
         answerTextField.setColumns(30);
         answerTextField.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         answerTextField.setFont(FontPerso.Oxanimum);
+        answerTextField.addFocusListener(this);
         //answerTextField.setMaximumSize(new Dimension(60,15));
 
         confirmButton = new JButton("Confirmer");
@@ -298,7 +301,9 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
         hintContainer3.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         hintContainer3.add(hint3Button);
 
-        hintMJTextArea = new JTextArea("aide envoyée par le MJ");
+        hintMJTextArea = new JTextArea("Ici, le MJ pourra t'envoyer de l'aide supplémentaire");
+        hintMJTextArea.setForeground(Color.gray);
+        hintMJTextArea.setFont(hintMJTextArea.getFont().deriveFont(Font.ITALIC));
         hintMJTextArea.setLineWrap(true);
         hintMJTextArea.setWrapStyleWord(true);
         hintMJTextArea.setEditable(false);
@@ -628,5 +633,30 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
 
     @Override
     public void windowDeactivated(WindowEvent e) {
+    }
+
+    @Override
+    public void focusGained(FocusEvent e) {
+        if(e.getSource()==answerTextField){
+            if(answerTextField.getText().equals("Réponse à l'énigme")){
+                answerTextField.setText("");
+                answerTextField.setForeground(Color.black);
+                answerTextField.setFont(answerTextField.getFont().deriveFont(Font.PLAIN));
+            }
+        }
+
+
+    }
+
+    @Override
+    public void focusLost(FocusEvent e) {
+        if(e.getSource()==answerTextField){
+            if(answerTextField.getText().equals("")){
+                answerTextField.setText("Réponse à l'énigme");
+                answerTextField.setForeground(Color.gray);
+                answerTextField.setFont(answerTextField.getFont().deriveFont(Font.ITALIC));
+            }
+        }
+
     }
 }
