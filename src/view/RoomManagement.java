@@ -21,13 +21,12 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
     private RoomList ListRoom;
 
     /* Panel */
-    private JPanel listPanel;
-    private JPanel newButtonPanel;
-    private JPanel roomPanel;
-    private JScrollPane scrollPane;
+    private final JPanel listPanel;
+    private final JPanel newButtonPanel;
+    private final JPanel roomPanel;
     /* Boutons */
-    private JButton returnButton;
-    private JButton newButton;
+    private final JButton returnButton;
+    private final JButton newButton;
 
     private GlobalFrame frame;
 
@@ -48,7 +47,7 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
         JPanel titlePanel = new JPanel();
         JPanel decoPanel = new JPanel();
         newButtonPanel = new JPanel();
-        scrollPane = new JScrollPane(roomPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        JScrollPane scrollPane = new JScrollPane(roomPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
         scrollPane.getVerticalScrollBar().setUnitIncrement(10);
 
@@ -114,7 +113,7 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
         titlePanel.add(titre);
 
         /* Setup bouton retour */
-        decoPanel.setLayout(new FlowLayout(0));
+        decoPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         decoPanel.setBackground(ColorPerso.DARK_GRAY);
         decoPanel.add(returnButton);
         returnButton.addActionListener(this);
@@ -141,7 +140,7 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
 
     }
 
-    public final static RoomManagement getInstance(GlobalFrame frame) {
+    public static RoomManagement getInstance(GlobalFrame frame) {
         //Le "Double-Checked Singleton"/"Singleton doublement vérifié" permet
         //d'éviter un appel coûteux à synchronized,
         //une fois que l'instanciation est faite.
@@ -161,6 +160,8 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
             INSTANCE.ListRoom = Main.ListRoom;
             INSTANCE.createList();
             INSTANCE.returnButton.setBackground(ColorPerso.rouge);
+            INSTANCE.returnButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+
         }
         return INSTANCE;
     }
@@ -195,7 +196,6 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
 
         /* Construction Panel Salle */
         GridLayout grille = new GridLayout(1,4,20,0);
-        BoxLayout layoutGrid = new BoxLayout(panelSalle,BoxLayout.LINE_AXIS);
 
         JLabel nomSalle = new JLabel("Salle " + i + " :");
         nomSalle.setHorizontalAlignment(SwingConstants.CENTER);
@@ -250,11 +250,13 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
             @Override
             public void mouseEntered(MouseEvent e) {
                 boutonJeu.setBackground(ColorPerso.jauneHoover);
+                boutonJeu.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 boutonJeu.setBackground(ColorPerso.jaune);
+                boutonJeu.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
             }
         });
 
@@ -308,11 +310,13 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
                 @Override
                 public void mouseEntered(MouseEvent e) {
                     boutonLancer.setBackground(ColorPerso.vertHoover);
+                    boutonLancer.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
                 }
 
                 @Override
                 public void mouseExited(MouseEvent e) {
                     boutonLancer.setBackground(ColorPerso.vert);
+                    boutonLancer.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
                 }
             });
         }
@@ -358,11 +362,6 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
 
     }
 
-    public void refresh(){
-        getInstance(frame);
-    }
-
-
     public void actionPerformed(ActionEvent e)
     {
         if(e.getSource() == returnButton) {
@@ -388,8 +387,10 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
     public void mouseEntered(MouseEvent e) {
         if (e.getSource()==returnButton) {
             returnButton.setBackground(ColorPerso.rougeHoover);
+            returnButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
         }
         else if(e.getSource()==newButton){
+            newButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
             newButton.setBackground(Color.BLACK);
             newButton.setOpaque(true);
             newButton.setForeground(Color.white);
@@ -400,10 +401,12 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
     public void mouseExited(MouseEvent e) {
         if (e.getSource()==returnButton) {
             returnButton.setBackground(ColorPerso.rouge);
+            returnButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         }
         else if(e.getSource()==newButton){
             newButton.setBackground(ColorPerso.grisFonce);
             newButton.setForeground(Color.white);
+            newButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         }
     }
 }

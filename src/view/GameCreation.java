@@ -4,129 +4,83 @@ package view;
 
 import database.DBEnigma;
 import database.DBGame;
-import database.DBRoom;
 import launcher.Main;
-import model.*;
+import model.Enigma;
+import model.EnigmaList;
+import model.Game;
+import model.Hint;
 import view.style.ColorPerso;
-import view.style.FontPerso;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.event.CaretEvent;
-import javax.swing.event.CaretListener;
-import javax.swing.plaf.BorderUIResource;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
+import java.awt.event.*;
 
-public class GameCreation extends JPanel implements ActionListener, MouseListener {
+public class GameCreation extends JPanel implements ActionListener, MouseListener, FocusListener {
 
     public EnigmaList listEnigma;
     public Game game;
 
-    private BorderLayout mainLayout;
-    private BorderLayout titleLayout;
-    private BorderLayout centerLayout;
-    private BorderLayout newLayout;
 
-    private GridBagLayout buttonLayout;
+    private final GridLayout gridHint;
 
-    private GridBagLayout gridInfo;
-    private GridBagLayout gridEnigma;
-    private GridBagLayout gridWin;
+    private final JScrollPane scrollEnigmas;
+
+    private final JPanel centerPanel;
+    private final JPanel enigmasPanel;
+    private final JPanel newPanel;
 
 
-    private GridBagConstraints gbcEnigma;
-    private GridBagConstraints gbcWin;
+    private final JButton exitButton;
+    private final JButton saveButton;
+    private final JButton deleteButton;
+    private final JButton newButton;
+    private final JButton rankingButton;
 
-    private GridLayout grid;
-    private GridLayout gridHint;
-
-
-    private JScrollPane scrollEnigmas;
-
-
-    private JPanel titlePanel;
-    private JPanel buttonPanel;
-    private JPanel infoPanel;
-    private JPanel titleNamePanel;
-    private JPanel defaultScorePanel;
-    private JPanel pointsPanel;
-    private JPanel winPanel;
-
-    private JPanel centerPanel;
-    private JPanel storyPanel;
-    private JPanel enigmasPanel;
-    private JPanel newPanel;
-    private JPanel answerPanel;
-    private JPanel hint1Panel;
-    private JPanel hint2Panel;
-    private JPanel hint3Panel;
-    private JPanel buttonNewPanel;
-    private JPanel winMessagePanel;
-    private JPanel namePanel;
-
-
-
-    private JButton exitButton;
-    private JButton saveButton;
-    private JButton deleteButton;
-    private JButton newButton;
-    private JButton rankingButton;
-
-    private JLabel windowName;
-    private JLabel winMessageLabel;
-
-    private JTextField initialScore;
-    private JTextField points;
-    private JTextField title;
-    private JTextField winMessage;
+    private final JTextField initialScore;
+    private final JTextField title;
+    private final JTextField winMessage;
 
     private GlobalFrame frame;
 
-    private static volatile GameCreation INSTANCE = new GameCreation(Main.frame,0,null);
+    private static volatile GameCreation INSTANCE = new GameCreation(Main.frame,null);
 
-    private GameCreation(GlobalFrame frame, int roomNumber, Game game){
+    private GameCreation(GlobalFrame frame, Game game){
 
         this.frame = frame;
         this.game=game;
         this.listEnigma = Main.ListEnigma;
 
-        mainLayout = new BorderLayout(10,10);
-        titleLayout= new BorderLayout(10,10);
-        newLayout = new BorderLayout(10,10);
+        BorderLayout mainLayout = new BorderLayout(10, 10);
+        BorderLayout titleLayout = new BorderLayout(10, 10);
+        BorderLayout newLayout = new BorderLayout(10, 10);
 
-        buttonNewPanel = new JPanel();
+        JPanel buttonNewPanel = new JPanel();
 
-        centerLayout = new BorderLayout(30,30);
+        BorderLayout centerLayout = new BorderLayout(30, 30);
 
         GridBagConstraints gbcTitle = new GridBagConstraints();
         GridBagConstraints gbcScores = new GridBagConstraints();
-        gbcEnigma = new GridBagConstraints();
 
-        gridEnigma = new GridBagLayout();
-        buttonLayout = new GridBagLayout();
-        gridInfo = new GridBagLayout();
+        GridBagLayout gridEnigma = new GridBagLayout();
+        GridBagLayout buttonLayout = new GridBagLayout();
+        GridBagLayout gridInfo = new GridBagLayout();
 
-        grid = new GridLayout(1,0);
+        GridLayout grid = new GridLayout(1, 0);
         gridHint = new GridLayout(2,0,10,10);
 
         centerPanel = new JPanel();
-        titlePanel = new JPanel();
-        buttonPanel = new JPanel();
-        infoPanel = new JPanel();
-        titleNamePanel = new JPanel();
-        defaultScorePanel = new JPanel();
-        pointsPanel = new JPanel();
+        JPanel titlePanel = new JPanel();
+        JPanel buttonPanel = new JPanel();
+        JPanel infoPanel = new JPanel();
+        JPanel titleNamePanel = new JPanel();
+        JPanel defaultScorePanel = new JPanel();
+        JPanel pointsPanel = new JPanel();
         newPanel = new JPanel();
         enigmasPanel = new JPanel();
-        winPanel = new JPanel();
-        winMessagePanel = new JPanel();
-        namePanel = new JPanel();
+        JPanel winPanel = new JPanel();
+        JPanel winMessagePanel = new JPanel();
+        JPanel namePanel = new JPanel();
 
         saveButton = new JButton("Enregistrer");
         exitButton = new JButton("Quitter");
@@ -135,7 +89,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
         rankingButton = new JButton("Classement");
 
         if(game==null) {
-            title = new JTextField("Titre", 45);
+            title = new JTextField("Titre du jeu", 50);
             initialScore = new JTextField("Score Initial", 7);
             winMessage = new JTextField();
         }
@@ -144,14 +98,16 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
             initialScore = new JTextField(String.valueOf(game.getScore()),7);
             winMessage = new JTextField(game.getEndMessage());
         }
-        points = new JTextField("Points (Si désiré)",7);
+        title.addFocusListener(this);
+        initialScore.addFocusListener(this);
+        winMessage.addFocusListener(this);
 
-        winMessageLabel = new JLabel("Message de fin :",SwingConstants.RIGHT);
+        JLabel winMessageLabel = new JLabel("Message de fin :", SwingConstants.RIGHT);
         JPanel winLabelPanel = new JPanel();
         winLabelPanel.add(winMessageLabel);
 
 
-        windowName = new JLabel("MJ - Création/Modification de Jeux",JLabel.CENTER);
+        JLabel windowName = new JLabel("MJ - Création/Modification de Jeux", JLabel.CENTER);
         namePanel.add(windowName);
         namePanel.setBackground(ColorPerso.grisOriginal);
         namePanel.setBorder(BorderFactory.createLineBorder(Color.black,2));
@@ -162,24 +118,24 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
         newButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         buttonNewPanel.add(newButton);
 
-        gridWin = new GridBagLayout();
-        gbcWin = new GridBagConstraints();
+        GridBagLayout gridWin = new GridBagLayout();
+        GridBagConstraints gbcWin = new GridBagConstraints();
 
         gbcWin.weightx = 1;
         gbcWin.insets = new Insets(0,0,0,100);
 
         winPanel.setLayout(gridWin);
         gbcWin.fill = GridBagConstraints.HORIZONTAL;
-        winPanel.add(winMessageLabel,gbcWin);
+        winPanel.add(winMessageLabel, gbcWin);
 
         gbcWin.weightx = 2;
         gbcWin.insets = new Insets(0,0,0,200);
 
 
         winMessagePanel.setLayout(gridWin);
-        winMessagePanel.add(winMessage,gbcWin);
+        winMessagePanel.add(winMessage, gbcWin);
 
-        winPanel.add(winMessagePanel,gbcWin);
+        winPanel.add(winMessagePanel, gbcWin);
 
         newPanel.setLayout(newLayout);
         newPanel.add(buttonNewPanel,BorderLayout.NORTH);
@@ -191,7 +147,6 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
         enigmasPanel.setLayout(gridEnigma);
 
         scrollEnigmas = new JScrollPane(enigmasPanel,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        //scrollEnigmas.setBorder(BorderFactory.createLineBorder(Color.red));
         scrollEnigmas.getVerticalScrollBar().setUnitIncrement(20);
         scrollEnigmas.setBorder(BorderFactory.createEmptyBorder());
 
@@ -209,19 +164,15 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
 
         /* Setup Marges */
 
-        Border listPadding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
-
-
         centerPanel.setBorder(BorderFactory.createLineBorder(Color.black,2));
         centerPanel.add(scrollEnigmas,BorderLayout.CENTER);
 
 
         title.setBorder(BorderFactory.createEmptyBorder());
         title.setHorizontalAlignment(JTextField.CENTER);
-        title.setFont(FontPerso.Oxanimum);
+
         initialScore.setBorder(BorderFactory.createEmptyBorder());
         initialScore.setHorizontalAlignment(JTextField.CENTER);
-        initialScore.setFont(FontPerso.Oxanimum);
 
         rankingButton.setHorizontalAlignment(JButton.CENTER);
         rankingButton.setForeground(Color.white);
@@ -301,24 +252,21 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
         titlePanel.setOpaque(false);
         titlePanel.add(infoPanel,BorderLayout.SOUTH);
 
-        title.addCaretListener(new CaretListener() {
-            @Override
-            public void caretUpdate(CaretEvent e) {
+        title.addCaretListener(e -> {
 
-                if (e.getSource()==title){
-                    if(game!=null) {
-                        game.setTitre(title.getText());
-                    }
+            if (e.getSource()==title){
+                if(game!=null) {
+                    game.setTitre(title.getText());
                 }
-                else
-                    try{
-                        game.setScore(Integer.parseInt(initialScore.getText()));
-                    }
-                    catch (Exception exception){
-                        System.out.println("Le score n'est pas un entier");
-                    }
-
             }
+            else
+                try{
+                    game.setScore(Integer.parseInt(initialScore.getText()));
+                }
+                catch (Exception exception){
+                    System.out.println("Le score n'est pas un entier");
+                }
+
         });
 
 
@@ -333,7 +281,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
 
 
     }
-    public static GameCreation getInstance(GlobalFrame frame, int roomNumber, Game game) {
+    public static GameCreation getInstance(GlobalFrame frame, Game game) {
         //Le "Double-Checked Singleton"/"Singleton doublement vérifié" permet
         //d'éviter un appel coûteux à synchronized,
         //une fois que l'instanciation est faite.
@@ -343,7 +291,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
             // Il est TRES important.
             synchronized(INSTANCE) {
                 if (INSTANCE == null) {
-                    INSTANCE = new GameCreation(frame, roomNumber,game);
+                    INSTANCE = new GameCreation(frame,game);
                 }
             }
         }
@@ -357,9 +305,9 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
                 INSTANCE.winMessage.setText(game.getEndMessage());
             }
             else{
-                INSTANCE.title.setText("Titre");
+                INSTANCE.title.setText("Titre du jeu");
                 INSTANCE.initialScore.setText("Score Initial");
-                INSTANCE.winMessage.setText("");
+                INSTANCE.winMessage.setText("Fin de l'histoire");
             }
             INSTANCE.listEnigma=Main.ListEnigma;
             INSTANCE.createList();
@@ -372,6 +320,13 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
                 INSTANCE.rankingButton.setBackground(ColorPerso.azur);
             }
             INSTANCE.game=game;
+
+            INSTANCE.title.setForeground(Color.gray);
+            INSTANCE.title.setFont(INSTANCE.title.getFont().deriveFont(Font.ITALIC));
+            INSTANCE.initialScore.setForeground(Color.gray);
+            INSTANCE.initialScore.setFont(INSTANCE.initialScore.getFont().deriveFont(Font.ITALIC));
+            INSTANCE.winMessage.setForeground(Color.gray);
+            INSTANCE.winMessage.setFont(INSTANCE.winMessage.getFont().deriveFont(Font.ITALIC));
         }
         return INSTANCE;
     }
@@ -402,29 +357,63 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
         BorderLayout enigmaInfoLayout = new BorderLayout(10,10);
 
         JTextArea story = new JTextArea(enigme.getText());
+        if(story.getText().equals("Énigme précédée de son histoire")){
+            story.setForeground(Color.gray);
+            story.setFont(story.getFont().deriveFont(Font.ITALIC));
+        }
         story.setLineWrap(true);
         story.setWrapStyleWord(true);
-        story.setFont(FontPerso.Oxanimum);
         story.setMargin(new Insets(5,5,5,5));
-        story.addCaretListener(new CaretListener() {
+        story.addFocusListener(new FocusListener() {
             @Override
-            public void caretUpdate(CaretEvent e) {
-                listEnigma.findByID(enigme.getId()).setQuestion(story.getText());
+            public void focusGained(FocusEvent e) {
+                if(story.getText().equals("Énigme précédée de son histoire")){
+                    story.setText("");
+                    story.setForeground(Color.black);
+                    story.setFont(story.getFont().deriveFont(Font.PLAIN));
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if(story.getText().equals("")){
+                    story.setText("Énigme précédée de son histoire");
+                    story.setForeground(Color.gray);
+                    story.setFont(story.getFont().deriveFont(Font.ITALIC));
+                }
             }
         });
+        story.addCaretListener(e -> listEnigma.findByID(enigme.getId()).setQuestion(story.getText()));
 
 
         // Answer Components
 
         JTextField answer = new JTextField(enigme.getAnswer());
         answer.setBorder(BorderFactory.createLineBorder(Color.black,2));
-        answer.setFont(FontPerso.Oxanimum);
-        answer.addCaretListener(new CaretListener() {
+        if(answer.getText().equals("Réponse à l'énigme")){
+            answer.setForeground(Color.gray);
+            answer.setFont(story.getFont().deriveFont(Font.ITALIC));
+        }
+        answer.addFocusListener(new FocusListener() {
             @Override
-            public void caretUpdate(CaretEvent e) {
-                listEnigma.findByID(enigme.getId()).setAnswer(answer.getText());
+            public void focusGained(FocusEvent e) {
+                if(answer.getText().equals("Réponse à l'énigme")){
+                    answer.setText("");
+                    answer.setForeground(Color.black);
+                    answer.setFont(answer.getFont().deriveFont(Font.PLAIN));
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if(answer.getText().equals("")){
+                    answer.setText("Réponse à l'énigme");
+                    answer.setForeground(Color.gray);
+                    answer.setFont(answer.getFont().deriveFont(Font.ITALIC));
+                }
             }
         });
+        answer.addCaretListener(e -> listEnigma.findByID(enigme.getId()).setAnswer(answer.getText()));
 
         // Timer Components
 
@@ -432,125 +421,227 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
         JTextField time1;
 
         if (enigme.getTimer1()==-1){
-            time1 = new JTextField("Timer 1 (en s)");
+            time1 = new JTextField("Temps (en s) au bout duquel l'indice n°1 est débloqué");
+            time1.setForeground(Color.gray);
+            time1.setFont(answer.getFont().deriveFont(Font.ITALIC));
         }
         else{
             time1 = new JTextField(String.valueOf(enigme.getTimer1()));
         }
 
-        time1.setFont(FontPerso.Oxanimum);
-
         JTextField time2;
 
         if (enigme.getTimer2()==-1){
-            time2 = new JTextField("Timer 2 (en s)");
+            time2 = new JTextField("Temps (en s) au bout duquel l'indice n°2 est débloqué");
+            time2.setForeground(Color.gray);
+            time2.setFont(answer.getFont().deriveFont(Font.ITALIC));
         }
         else{
             time2 = new JTextField(String.valueOf(enigme.getTimer2()));
         }
 
-        time2.setFont(FontPerso.Oxanimum);
-
         JTextField time3;
 
         if (enigme.getTimer3()==-1){
-            time3 = new JTextField("Timer 3 (en s)");
+            time3 = new JTextField("Temps (en s) au bout duquel l'indice n°3 est débloqué");
+            time3.setForeground(Color.gray);
+            time3.setFont(answer.getFont().deriveFont(Font.ITALIC));
 
         }
         else{
             time3 = new JTextField(String.valueOf(enigme.getTimer3()));
         }
 
-        time3.setFont(FontPerso.Oxanimum);
+        time1.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if(time1.getText().equals("Temps (en s) au bout duquel l'indice n°1 est débloqué")){
+                    time1.setText("");
+                    time1.setForeground(Color.black);
+                    time1.setFont(time1.getFont().deriveFont(Font.PLAIN));
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if(time1.getText().equals("")){
+                    time1.setText("Temps (en s) au bout duquel l'indice n°1 est débloqué");
+                    time1.setForeground(Color.gray);
+                    time1.setFont(time1.getFont().deriveFont(Font.ITALIC));
+                }
+            }
+        });
+
+        time2.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if(time2.getText().equals("Temps (en s) au bout duquel l'indice n°2 est débloqué")){
+                    time2.setText("");
+                    time2.setForeground(Color.black);
+                    time2.setFont(time2.getFont().deriveFont(Font.PLAIN));
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if(time2.getText().equals("")){
+                    time2.setText("Temps (en s) au bout duquel l'indice n°2 est débloqué");
+                    time2.setForeground(Color.gray);
+                    time2.setFont(time2.getFont().deriveFont(Font.ITALIC));
+                }
+            }
+        });
+
+        time3.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if(time3.getText().equals("Temps (en s) au bout duquel l'indice n°3 est débloqué")){
+                    time3.setText("");
+                    time3.setForeground(Color.black);
+                    time3.setFont(time3.getFont().deriveFont(Font.PLAIN));
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if(time3.getText().equals("")){
+                    time3.setText("Temps (en s) au bout duquel l'indice n°3 est débloqué");
+                    time3.setForeground(Color.gray);
+                    time3.setFont(time3.getFont().deriveFont(Font.ITALIC));
+                }
+            }
+        });
 
         // Clue Components
 
         JTextField hint1 = new JTextField(enigme.getClue1());
         hint1.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
-        hint1.setFont(FontPerso.Oxanimum);
-        hint1.addCaretListener(new CaretListener() {
+        if(hint1.getText().equals("1er indice")){
+            hint1.setForeground(Color.gray);
+            hint1.setFont(hint1.getFont().deriveFont(Font.ITALIC));
+        }
+        hint1.addFocusListener(new FocusListener() {
             @Override
-            public void caretUpdate(CaretEvent e) {
-                try{
-                    int i = Integer.parseInt(time1.getText());
-                    listEnigma.findByID(enigme.getId()).setClue1(new Hint(hint1.getText(), Integer.parseInt(time1.getText())));
+            public void focusGained(FocusEvent e) {
+                if(hint1.getText().equals("1er indice")){
+                    hint1.setText("");
+                    hint1.setForeground(Color.black);
+                    hint1.setFont(hint1.getFont().deriveFont(Font.PLAIN));
                 }
-                catch (Exception ex){
-                    System.out.println("Le timer n'est pas un entier");
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if(hint1.getText().equals("")){
+                    hint1.setText("1er indice");
+                    hint1.setForeground(Color.gray);
+                    hint1.setFont(hint1.getFont().deriveFont(Font.ITALIC));
                 }
+            }
+        });
+        hint1.addCaretListener(e -> {
+            try{
+                listEnigma.findByID(enigme.getId()).setClue1(new Hint(hint1.getText(), Integer.parseInt(time1.getText())));
+            }
+            catch (Exception ex){
+                System.out.println("Le timer n'est pas un entier");
             }
         });
 
         JTextField hint2 = new JTextField(enigme.getClue2());
         hint2.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
-        hint2.setFont(FontPerso.Oxanimum);
-        hint2.addCaretListener(new CaretListener() {
+        if(hint2.getText().equals("2eme indice")){
+            hint2.setForeground(Color.gray);
+            hint2.setFont(hint1.getFont().deriveFont(Font.ITALIC));
+        }
+        hint2.addFocusListener(new FocusListener() {
             @Override
-            public void caretUpdate(CaretEvent e) {
-                try{
-                    int i = Integer.parseInt(time2.getText());
-                    listEnigma.findByID(enigme.getId()).setClue2(new Hint(hint2.getText(), Integer.parseInt(time2.getText())));
+            public void focusGained(FocusEvent e) {
+                if(hint2.getText().equals("2eme indice")){
+                    hint2.setText("");
+                    hint2.setForeground(Color.black);
+                    hint2.setFont(hint2.getFont().deriveFont(Font.PLAIN));
                 }
-                catch (Exception ex){
-                    System.out.println("Le timer n'est pas un entier");
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if(hint2.getText().equals("")){
+                    hint2.setText("2eme indice");
+                    hint2.setForeground(Color.gray);
+                    hint2.setFont(hint2.getFont().deriveFont(Font.ITALIC));
                 }
+            }
+        });
+        hint2.addCaretListener(e -> {
+            try{
+                listEnigma.findByID(enigme.getId()).setClue2(new Hint(hint2.getText(), Integer.parseInt(time2.getText())));
+            }
+            catch (Exception ex){
+                System.out.println("Le timer n'est pas un entier");
             }
         });
 
         JTextField hint3 = new JTextField(enigme.getClue3());
         hint3.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
-        hint3.setFont(FontPerso.Oxanimum);
-        hint3.addCaretListener(new CaretListener() {
+        if(hint3.getText().equals("3eme indice")){
+            hint3.setForeground(Color.gray);
+            hint3.setFont(hint1.getFont().deriveFont(Font.ITALIC));
+        }
+        hint3.addFocusListener(new FocusListener() {
             @Override
-            public void caretUpdate(CaretEvent e) {
-                try{
-                    int i = Integer.parseInt(time3.getText());
-                    listEnigma.findByID(enigme.getId()).setClue3(new Hint(hint3.getText(), Integer.parseInt(time3.getText())));
+            public void focusGained(FocusEvent e) {
+                if(hint3.getText().equals("3eme indice")){
+                    hint3.setText("");
+                    hint3.setForeground(Color.black);
+                    hint3.setFont(hint3.getFont().deriveFont(Font.PLAIN));
                 }
-                catch (Exception ex){
-                    System.out.println("Le timer n'est pas un entier");
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if(hint3.getText().equals("")){
+                    hint3.setText("3eme indice");
+                    hint3.setForeground(Color.gray);
+                    hint3.setFont(hint3.getFont().deriveFont(Font.ITALIC));
                 }
+            }
+        });
+        hint3.addCaretListener(e -> {
+            try{
+                listEnigma.findByID(enigme.getId()).setClue3(new Hint(hint3.getText(), Integer.parseInt(time3.getText())));
+            }
+            catch (Exception ex){
+                System.out.println("Le timer n'est pas un entier");
             }
         });
 
         /* Caret Listener Time */
 
-        time1.addCaretListener(new CaretListener() {
-            @Override
-            public void caretUpdate(CaretEvent e) {
-                try{
-                    int i = Integer.parseInt(time1.getText());
-                    listEnigma.findByID(enigme.getId()).setClue1(new Hint(hint1.getText(), Integer.parseInt(time1.getText())));
-                }
-                catch (Exception ex){
-                    System.out.println("Le timer n'est pas un entier");
-                }
+        time1.addCaretListener(e -> {
+            try{
+                listEnigma.findByID(enigme.getId()).setClue1(new Hint(hint1.getText(), Integer.parseInt(time1.getText())));
+            }
+            catch (Exception ex){
+                System.out.println("Le timer n'est pas un entier");
             }
         });
 
-        time2.addCaretListener(new CaretListener() {
-            @Override
-            public void caretUpdate(CaretEvent e) {
-                try{
-                    int i = Integer.parseInt(time2.getText());
-                    listEnigma.findByID(enigme.getId()).setClue2(new Hint(hint2.getText(), Integer.parseInt(time2.getText())));
-                }
-                catch (Exception ex){
-                    System.out.println("Le timer n'est pas un entier");
-                }
+        time2.addCaretListener(e -> {
+            try{
+                listEnigma.findByID(enigme.getId()).setClue2(new Hint(hint2.getText(), Integer.parseInt(time2.getText())));
+            }
+            catch (Exception ex){
+                System.out.println("Le timer n'est pas un entier");
             }
         });
 
-        time3.addCaretListener(new CaretListener() {
-            @Override
-            public void caretUpdate(CaretEvent e) {
-                try{
-                    int i = Integer.parseInt(time3.getText());
-                    listEnigma.findByID(enigme.getId()).setClue3(new Hint(hint3.getText(), Integer.parseInt(time3.getText())));
-                }
-                catch (Exception ex){
-                    System.out.println("Le timer n'est pas un entier");
-                }
+        time3.addCaretListener(e -> {
+            try{
+                listEnigma.findByID(enigme.getId()).setClue3(new Hint(hint3.getText(), Integer.parseInt(time3.getText())));
+            }
+            catch (Exception ex){
+                System.out.println("Le timer n'est pas un entier");
             }
         });
 
@@ -610,9 +701,9 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
 
 
     private void majEnigma() {
-        listEnigma.addEnigma(-1,"Enigme","Réponse","indice 1",-1,"indice 2",-1,"indice 3",-1);
+        listEnigma.addEnigma(-1,"Énigme précédée de son histoire","Réponse à l'énigme","1er indice",-1,"2eme indice",-1,"3eme indice",-1);
         this.createList();
-        frame.gameCreationDisplay(frame,frame.roomNumber,game);
+        frame.gameCreationDisplay(frame,game);
     }
 
     public void createList(){
@@ -644,12 +735,12 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
             frame.gameManagementDisplay(frame,frame.roomNumber);
         }
         else if(e.getSource() == rankingButton){
-            Ranking ranking = new Ranking(this.game);
+            new Ranking(this.game);
         }
         else if (e.getSource()==deleteButton){
             DBEnigma.deleteEnigma( listEnigma.getLastEnigma().getId());
             listEnigma.removeEnigma(listEnigma.getSize()-1);
-            frame.gameCreationDisplay(frame,frame.roomNumber,game);
+            frame.gameCreationDisplay(frame,game);
 
         }
         else if (e.getSource()==saveButton){
@@ -659,7 +750,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
                 String clue1 = a.getClue1();
                 int timer1 = a.getTimer1();
                 System.out.println("indice : "+clue1 + "| timer : " +timer1);
-                if (clue1.equals("indice 1") || timer1 == -1){
+                if (clue1.equals("1er indice") || timer1 == -1){
                     JOptionPane.showMessageDialog(frame, "Un engime doit avoir au moins un indice associé a un timer", "", JOptionPane.INFORMATION_MESSAGE);
                     return;
                 }
@@ -678,7 +769,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
             boolean ready = true;
             String endMessage = winMessage.getText();
             if(game!=null){
-                DBGame. majGame(game.getId(), titre,score,timer,ready,endMessage);
+                DBGame.majGame(game.getId(), titre,score,timer,ready,endMessage);
             }
             else{
                 int id = DBGame.insertGame(titre,score,idUser,timer,ready,endMessage);
@@ -697,14 +788,14 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
                 String clue1 = enigme.getClue1();
                 String clue2 = enigme.getClue2();
                 String clue3 = enigme.getClue3();
-                if (clue1.equals("indice 1")){
+                if (clue1.equals("1er indice")){
                     clue1=null;
 
                 }
-                if (clue2==null ||clue2.equals("indice 2")){
+                if (clue2==null ||clue2.equals("2eme indice")){
                     clue2=null;
                 }
-                if (clue3==null || clue3.equals("indice 3")){
+                if (clue3==null || clue3.equals("3eme indice")){
                     clue3=null;
                 }
                 int timer1 = enigme.getTimer1();
@@ -793,6 +884,56 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
         }
         else if(e.getSource()==rankingButton && rankingButton.isEnabled()){
             rankingButton.setBackground(ColorPerso.azur);
+        }
+    }
+
+    @Override
+    public void focusGained(FocusEvent e) {
+        if(e.getSource()==title){
+            if(title.getText().equals("Titre du jeu")){
+                title.setText("");
+                title.setForeground(Color.black);
+                title.setFont(title.getFont().deriveFont(Font.PLAIN));
+            }
+        }
+        else if(e.getSource()==initialScore){
+            if(initialScore.getText().equals("Score Initial")){
+                initialScore.setText("");
+                initialScore.setForeground(Color.black);
+                initialScore.setFont(initialScore.getFont().deriveFont(Font.PLAIN));
+            }
+        }
+        else if(e.getSource()==winMessage){
+            if(winMessage.getText().equals("Fin de l'histoire")) {
+                winMessage.setText("");
+                winMessage.setForeground(Color.black);
+                winMessage.setFont(winMessage.getFont().deriveFont(Font.PLAIN));
+            }
+        }
+    }
+
+    @Override
+    public void focusLost(FocusEvent e) {
+        if(e.getSource()==title){
+            if(title.getText().equals("")){
+                title.setText("Titre du jeu");
+                title.setForeground(Color.gray);
+                title.setFont(title.getFont().deriveFont(Font.ITALIC));
+            }
+        }
+        else if(e.getSource()==initialScore){
+            if(initialScore.getText().equals("")){
+                initialScore.setText("Score Initial");
+                initialScore.setForeground(Color.gray);
+                initialScore.setFont(initialScore.getFont().deriveFont(Font.ITALIC));
+            }
+        }
+        else if(e.getSource()==winMessage){
+            if(winMessage.getText().equals("")) {
+                winMessage.setText("Fin de l'histoire");
+                winMessage.setForeground(Color.gray);
+                winMessage.setFont(winMessage.getFont().deriveFont(Font.ITALIC));
+            }
         }
     }
 }

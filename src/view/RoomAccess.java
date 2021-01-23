@@ -27,11 +27,11 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
     private RoomList ListRoom;
 
     /* Panel */
-    private JPanel listPanel;
-    private JPanel roomPanel;
+    private final JPanel listPanel;
+    private final JPanel roomPanel;
 
     /* Boutons */
-    private JButton returnButton;
+    private final JButton returnButton;
 
     private GlobalFrame frame;
 
