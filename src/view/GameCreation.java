@@ -10,6 +10,7 @@ import model.EnigmaList;
 import model.Game;
 import model.Hint;
 import view.style.ColorPerso;
+import view.style.FontPerso;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -303,11 +304,25 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
                 INSTANCE.title.setText(game.getTitre());
                 INSTANCE.initialScore.setText(String.valueOf(game.getScore()));
                 INSTANCE.winMessage.setText(game.getEndMessage());
+
+                INSTANCE.title.setForeground(Color.black);
+                INSTANCE.title.setFont(INSTANCE.title.getFont().deriveFont(Font.PLAIN));
+                INSTANCE.initialScore.setForeground(Color.black);
+                INSTANCE.initialScore.setFont(INSTANCE.initialScore.getFont().deriveFont(Font.PLAIN));
+                INSTANCE.winMessage.setForeground(Color.black);
+                INSTANCE.winMessage.setFont(INSTANCE.winMessage.getFont().deriveFont(Font.PLAIN));
             }
             else{
                 INSTANCE.title.setText("Titre du jeu");
                 INSTANCE.initialScore.setText("Score Initial");
                 INSTANCE.winMessage.setText("Fin de l'histoire");
+
+                INSTANCE.title.setForeground(Color.gray);
+                INSTANCE.title.setFont(INSTANCE.title.getFont().deriveFont(Font.ITALIC));
+                INSTANCE.initialScore.setForeground(Color.gray);
+                INSTANCE.initialScore.setFont(INSTANCE.initialScore.getFont().deriveFont(Font.ITALIC));
+                INSTANCE.winMessage.setForeground(Color.gray);
+                INSTANCE.winMessage.setFont(INSTANCE.winMessage.getFont().deriveFont(Font.ITALIC));
             }
             INSTANCE.listEnigma=Main.ListEnigma;
             INSTANCE.createList();
@@ -320,13 +335,6 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
                 INSTANCE.rankingButton.setBackground(ColorPerso.azur);
             }
             INSTANCE.game=game;
-
-            INSTANCE.title.setForeground(Color.gray);
-            INSTANCE.title.setFont(INSTANCE.title.getFont().deriveFont(Font.ITALIC));
-            INSTANCE.initialScore.setForeground(Color.gray);
-            INSTANCE.initialScore.setFont(INSTANCE.initialScore.getFont().deriveFont(Font.ITALIC));
-            INSTANCE.winMessage.setForeground(Color.gray);
-            INSTANCE.winMessage.setFont(INSTANCE.winMessage.getFont().deriveFont(Font.ITALIC));
         }
         return INSTANCE;
     }
@@ -357,6 +365,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
         BorderLayout enigmaInfoLayout = new BorderLayout(10,10);
 
         JTextArea story = new JTextArea(enigme.getText());
+        story.setFont(FontPerso.courierNew);
         if(story.getText().equals("Énigme précédée de son histoire")){
             story.setForeground(Color.gray);
             story.setFont(story.getFont().deriveFont(Font.ITALIC));
