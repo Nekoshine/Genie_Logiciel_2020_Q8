@@ -58,7 +58,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
         }
         helpButtonGM = new JButton("Envoyer");
         helpButtonGM.addActionListener(this);
-        helpButtonGM.setBackground(Color.LIGHT_GRAY);
+        helpButtonGM.setBackground(Color.white);
         helpButtonGM.setForeground(Color.black);
         helpButtonGM.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         helpButtonGM.setOpaque(true);
@@ -258,21 +258,27 @@ public class PlayerManagement extends JPanel implements ActionListener{
 
             if(INSTANCE.boolHint1){
                 INSTANCE.buttonHint1.setText("Indice 1 déjà affiché");
+                INSTANCE.buttonHint1.setBackground(Color.lightGray);
             }
             else{
                 INSTANCE.buttonHint1.setText("Afficher l'indice 1");
+                INSTANCE.buttonHint1.setBackground(Color.white);
             }
             if(INSTANCE.boolHint2){
                 INSTANCE.buttonHint2.setText("Indice 2 déjà affiché");
+                INSTANCE.buttonHint2.setBackground(Color.lightGray);
             }
             else{
                 INSTANCE.buttonHint2.setText("Afficher l'indice 2");
+                INSTANCE.buttonHint2.setBackground(Color.white);
             }
             if(INSTANCE.boolHint3){
                 INSTANCE.buttonHint3.setText("Indice 3 déjà affiché");
+                INSTANCE.buttonHint3.setBackground(Color.lightGray);
             }
             else{
                 INSTANCE.buttonHint3.setText("Afficher l'indice 3");
+                INSTANCE.buttonHint3.setBackground(Color.white);
             }
         }
         return INSTANCE;
@@ -293,7 +299,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
         if(!revealed){
             button = new JButton("Afficher l'indice "+i);
             button.addActionListener(this);
-            button.setBackground(Color.LIGHT_GRAY);
+            button.setBackground(Color.white);
         }else{
             button = new JButton("Indice " + i + " déjà affiché");
             button.setBackground(Color.lightGray);
@@ -313,12 +319,15 @@ public class PlayerManagement extends JPanel implements ActionListener{
         }else if(e.getSource()==buttonHint1){
             boolHint1=true;
             buttonHint1.setText("Indice 1 déjà affiché");
+            buttonHint1.setBackground(Color.lightGray);
         }else if(e.getSource()==buttonHint2){
             boolHint2=true;
             buttonHint2.setText("Indice 2 déjà affiché");
+            buttonHint2.setBackground(Color.lightGray);
         }else if(e.getSource()==buttonHint3){
             boolHint3=true;
             buttonHint3.setText("Indice 3 déjà affiché");
+            buttonHint3.setBackground(Color.lightGray);
         }
     }
 }
