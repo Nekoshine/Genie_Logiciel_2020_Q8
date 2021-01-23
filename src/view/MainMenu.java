@@ -14,7 +14,7 @@ import java.awt.event.*;
 
 public class MainMenu extends JPanel implements ActionListener, MouseListener {
 
-    private JButton deconnection;
+    private final JButton deconnection;
     public JButtonImage management;
     public JPanel menucontainer;
     public JButtonImage creation;
@@ -48,7 +48,7 @@ public class MainMenu extends JPanel implements ActionListener, MouseListener {
 
         /*création du conteneur pour le bouton deconnexion*/
         JPanel deconnectionPanel = new JPanel();
-        deconnectionPanel.setLayout(new FlowLayout(0));
+        deconnectionPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         deconnectionPanel.setOpaque(false);
 
         /*création du titre*/
@@ -164,12 +164,15 @@ public class MainMenu extends JPanel implements ActionListener, MouseListener {
     public void mouseEntered(MouseEvent e) {
         if(e.getSource() == management ){
             management.setBackground(Main.class.getResourceAsStream("/image/gestionHoover.png"));
+            management.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
         }
         else if(e.getSource() == creation){
             creation.setBackground(Main.class.getResourceAsStream("/image/creationHoover.png"));
+            creation.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
         }
         else if(e.getSource() == deconnection){
             deconnection.setBackground(ColorPerso.rougeHoover);
+            deconnection.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
         }
     }
 
@@ -177,12 +180,15 @@ public class MainMenu extends JPanel implements ActionListener, MouseListener {
     public void mouseExited(MouseEvent e) {
         if(e.getSource() == management ){
             management.setBackground(Main.class.getResourceAsStream("/image/gestion.png"));
+            management.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         }
         else if(e.getSource() == creation){
             creation.setBackground(Main.class.getResourceAsStream("/image/creation.png"));
+            creation.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         }
         else if(e.getSource() == deconnection){
             deconnection.setBackground(ColorPerso.rouge);
+            deconnection.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         }
 
     }

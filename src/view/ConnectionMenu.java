@@ -21,7 +21,7 @@ import javax.swing.border.BevelBorder;
 
 public class ConnectionMenu extends JPanel implements ActionListener, MouseListener, KeyListener, FocusListener {
 
-  private static JButton connection;
+  private final JButton connection;
   private final JButton inscription;
   private BufferedImage backgroundConnexion;
 
@@ -75,14 +75,14 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
     connection.addMouseListener(this);
     connection.setBackground(ColorPerso.vert);
     connection.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-    connection.setPreferredSize(new Dimension(100,30));
+    connection.setPreferredSize(new Dimension(100,35));
 
     inscription = new JButton("S'inscrire");
     inscription.addActionListener(this);
     inscription.addMouseListener(this);
     inscription.setBackground(ColorPerso.jaune);
     inscription.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-    inscription.setPreferredSize(new Dimension(100,30));
+    inscription.setPreferredSize(new Dimension(100,35));
 
     //création du lien vers l'inscription
     JPanel conteneurboutons = new JPanel();
@@ -125,12 +125,21 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
     }
     else {
       INSTANCE.frame=frame;
+
+      /*indication pour les champs*/
       INSTANCE.saisieidentifiant.setText("Identifiant");
       INSTANCE.saisiemotdepasse.setText("mot de passe");
       INSTANCE.saisiemotdepasse.setForeground(Color.gray);
       INSTANCE.saisiemotdepasse.setFont(INSTANCE.saisiemotdepasse.getFont().deriveFont(Font.ITALIC));
       INSTANCE.saisieidentifiant.setForeground(Color.gray);
       INSTANCE.saisieidentifiant.setFont(INSTANCE.saisieidentifiant.getFont().deriveFont(Font.ITALIC));
+
+      /*remettre les boutons*/
+      INSTANCE.connection.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+      INSTANCE.connection.setBackground(ColorPerso.vert);
+      INSTANCE.inscription.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+      INSTANCE.inscription.setBackground(ColorPerso.jaune);
+
     }
     return INSTANCE;
   }
@@ -201,9 +210,11 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
   public void mouseEntered(MouseEvent e) {
     if(e.getSource()==inscription){
       inscription.setBackground(ColorPerso.jauneHoover);
+      inscription.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
     }
     else if (e.getSource()==connection){
       connection.setBackground(ColorPerso.vertHoover);
+      connection.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
     }
   }
 
@@ -211,9 +222,11 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
   public void mouseExited(MouseEvent e) {
     if(e.getSource()==inscription){
       inscription.setBackground(ColorPerso.jaune);
+      inscription.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
     }
     else if (e.getSource()==connection){
       connection.setBackground(ColorPerso.vert);
+      connection.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
     }
   }
 
