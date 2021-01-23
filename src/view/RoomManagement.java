@@ -250,11 +250,13 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
             @Override
             public void mouseEntered(MouseEvent e) {
                 boutonJeu.setBackground(ColorPerso.jauneHoover);
+                boutonJeu.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 boutonJeu.setBackground(ColorPerso.jaune);
+                boutonJeu.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
             }
         });
 
