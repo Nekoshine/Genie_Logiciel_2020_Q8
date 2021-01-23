@@ -16,6 +16,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
+import java.text.Normalizer;
 
 
 public class CurrentGame extends JPanel implements ActionListener, WindowListener, FocusListener, KeyListener{
@@ -79,10 +80,6 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
         /* Icon perso pour les pop up*/
         try {
             imageIconValide = new ImageIcon(new ImageIcon(ImageIO.read(Main.class.getResourceAsStream("/image/valide.png"))).getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
             imageIconRefus = new ImageIcon(new ImageIcon(ImageIO.read(Main.class.getResourceAsStream("/image/refus.png"))).getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT));
         } catch (IOException e) {
             e.printStackTrace();
@@ -409,7 +406,6 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
                 }
 
                 enigmatimevalue++;
-                System.out.println(enigmatimevalue);
             }
         };
 
@@ -528,7 +524,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
         }
 
         else if (event.getSource() == confirmButton){
-            String answer = answerTextField.getText().toLowerCase();
+            String answer = removeAccents(answerTextField.getText().toLowerCase());
             String[] possibility = allEnigmas.getEnigma(enigmalistflag).getAnswers();
             boolean find = false;
             for(int i=0;i<possibility.length;i++){
@@ -603,7 +599,6 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
                     }
                     isused3 = false;
                     ishint3present = !(allEnigmas.getEnigma(enigmalistflag).getClue3().isEmpty());
-                    System.out.print(ishint3present);
                     if (ishint3present) {
                         hint3Button.setEnabled(false);
                         timerclue3 = allEnigmas.getEnigma(enigmalistflag).getTimer3();
@@ -706,5 +701,11 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
     @Override
     public void keyReleased(KeyEvent e) {
 
+    }
+
+    public static String removeAccents(String text) {
+        return text == null ? null :
+                Normalizer.normalize(text, Normalizer.Form.NFD)
+                        .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
     }
 }

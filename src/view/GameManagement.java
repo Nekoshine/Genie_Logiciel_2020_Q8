@@ -10,14 +10,13 @@ import model.GameList;
 import view.style.ColorPerso;
 import view.style.FontPerso;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
+import java.io.IOException;
 
 
 public class GameManagement extends JPanel implements ActionListener, MouseListener {
@@ -297,6 +296,28 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
             boutonChoix.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
             JPanel checkPanel = new JPanel();
             JCheckBox competitionCheck = new JCheckBox("Mode Compétitif");
+            ImageIcon selected = null;
+            ImageIcon unselected = null;
+            try {
+                selected = new ImageIcon(new ImageIcon(ImageIO.read(Main.class.getResourceAsStream("/image/checkboxON.png"))).getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+                unselected = new ImageIcon(new ImageIcon(ImageIO.read(Main.class.getResourceAsStream("/image/checkboxOFF.png"))).getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            ImageIcon finalSelected = selected;
+            ImageIcon finalUnselected = unselected;
+            competitionCheck.setIcon(finalUnselected);
+            competitionCheck.addItemListener(new ItemListener() {
+                @Override
+                public void itemStateChanged(ItemEvent e) {
+                    if (competitionCheck.isSelected()) {
+                        competitionCheck.setIcon(finalSelected);
+                    }
+                    else {
+                        competitionCheck.setIcon(finalUnselected);
+                    }
+                }
+            });
             checkPanel.add(competitionCheck, BorderLayout.CENTER);
             panelChoose.setLayout(checkLayout);
             panelChoose.add(boutonChoix,BorderLayout.CENTER);
