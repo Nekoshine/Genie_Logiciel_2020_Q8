@@ -3,6 +3,7 @@
 package view;
 
 import Sockets.Client;
+import database.DBRoom;
 import launcher.Main;
 import model.Room;
 import model.RoomList;
@@ -11,6 +12,7 @@ import view.style.ColorPerso;
 import view.style.FontPerso;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -72,6 +74,8 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
         returnButton = new JButton("Deconnexion");
         returnButton.setBackground(ColorPerso.rouge);
         returnButton.setForeground(Color.white);
+        returnButton.setPreferredSize(new Dimension(100,30));
+        returnButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 
 
         /* Affichage des salles */
