@@ -10,7 +10,7 @@ public class ScoreList {
      * Initialisation d'une liste vide
      */
 
-    public ScoreList (){List = new ArrayList<>();}
+    public ScoreList (){List = new ArrayList<Score>();}
 
     /**
      * Procédure qui ajoute un Score à la liste
