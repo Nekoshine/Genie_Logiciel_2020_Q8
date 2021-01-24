@@ -43,12 +43,12 @@ public class GlobalFrame extends JFrame {
 
     private GlobalFrame() {
         /*Font*/
-        UIManager.put("Label.font", FontPerso.Oxanimum);
+        UIManager.put("Label.font", FontPerso.lato);
         UIManager.put("Button.font",FontPerso.SirensDEMO);
-        UIManager.put("TextArea.font",FontPerso.Oxanimum);
-        UIManager.put("TextField.font",FontPerso.Oxanimum);
+        UIManager.put("TextArea.font",FontPerso.lato);
+        UIManager.put("TextField.font",FontPerso.lato);
         UIManager.put("Button.background", ColorPerso.grisOriginal);
-        UIManager.put("CheckBox.font", FontPerso.Oxanimum);
+        UIManager.put("CheckBox.font", FontPerso.lato);
 
         Toolkit.getDefaultToolkit().setDynamicLayout(true);
 

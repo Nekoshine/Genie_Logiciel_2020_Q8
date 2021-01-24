@@ -35,12 +35,14 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
 
     private GlobalFrame frame;
 
+    private Dimension windowSize;
+
     private static volatile GameManagement INSTANCE = new GameManagement(Main.frame,-1);
 
     private GameManagement(GlobalFrame frame, int roomNumber){
 
         this.frame = frame;
-
+        windowSize = frame.getSize();
         /* Provenance */
         frame.roomNumber = roomNumber;
 
@@ -119,6 +121,15 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
 
         returnButton.addActionListener(this);
         returnButton.addMouseListener(this);
+
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                windowSize = Main.frame.getSize();
+                INSTANCE.revalidate();
+                INSTANCE.repaint();
+            }
+        });
 
         this.setLayout(mainLayout);
         this.setBackground(ColorPerso.darkGray);
@@ -295,7 +306,8 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
             boutonChoix.setPreferredSize(new Dimension( 200, 50));
             boutonChoix.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
             JPanel checkPanel = new JPanel();
-            JCheckBox competitionCheck = new JCheckBox("Mode Compétitif");
+            checkPanel.setLayout(new BorderLayout());
+            JCheckBox competitionCheck = new JCheckBox("  Mode Compétitif");
             ImageIcon selected = null;
             ImageIcon unselected = null;
             try {
@@ -318,6 +330,8 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
                     }
                 }
             });
+            competitionCheck.setHorizontalAlignment(SwingConstants.CENTER);
+            competitionCheck.setVerticalAlignment(SwingConstants.CENTER);
             checkPanel.add(competitionCheck, BorderLayout.CENTER);
             panelChoose.setLayout(checkLayout);
             panelChoose.add(boutonChoix,BorderLayout.CENTER);
