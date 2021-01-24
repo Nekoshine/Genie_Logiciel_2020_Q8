@@ -1,7 +1,5 @@
 package view;
 
-import com.sun.xml.internal.messaging.saaj.soap.JpegDataContentHandler;
-import com.sun.xml.internal.ws.api.addressing.OneWayFeature;
 import launcher.Main;
 import model.Game;
 import view.style.ColorPerso;

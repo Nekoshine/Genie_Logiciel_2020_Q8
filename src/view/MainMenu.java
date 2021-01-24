@@ -88,7 +88,7 @@ public class MainMenu extends JPanel implements ActionListener, MouseListener {
             @Override
             public void componentResized(ComponentEvent e) {
                 GlobalFrame.windowSize = Main.frame.getSize();
-                menucontainer.setBorder(BorderFactory.createEmptyBorder((int) (GlobalFrame.windowSize.getHeight()*0.10), 30, (int) (GlobalFrame.windowSize.getHeight()*0.10), 30));
+                menucontainer.setBorder(BorderFactory.createEmptyBorder((int) (windowSize.getHeight()*0.10), 30, (int) (windowSize.getHeight()*0.10), 30));
                 INSTANCE.revalidate();
                 INSTANCE.repaint();
             }

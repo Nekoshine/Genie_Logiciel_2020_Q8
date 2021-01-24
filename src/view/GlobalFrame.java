@@ -33,6 +33,8 @@ public class GlobalFrame extends JFrame {
     CurrentGame currentGame;
     RoomAccess roomAccess;
     PlayerManagement playerManagement;
+    Defeatscreennocompetitive defeatscreen;
+    Victoryscreennocompetitive victory;
 
 
     private boolean fullScrren = false;
@@ -69,10 +71,7 @@ public class GlobalFrame extends JFrame {
         this.setVisible(true);
         windowSize = new Dimension(720,480);
 
-
         connectionMenuDisplay(this);
-
-
 
         this.setLocationRelativeTo(null);
         this.setMinimumSize(new Dimension(720,480));
@@ -229,6 +228,31 @@ public class GlobalFrame extends JFrame {
         frame.repaint();
 
     }
+
+    public void defeatscreenDisplay(GlobalFrame frame) {
+        defeatscreen = new Defeatscreennocompetitive(frame);
+
+        //setFullScreen(currentGame);
+        setContentPane(defeatscreen);
+        frame.setSize(800,830);
+        frame.setLocationRelativeTo(null);
+        frame.revalidate();
+        frame.repaint();
+        setVisible(true);
+    }
+
+    public void victoryNoCompetitionScreenDisplay(GlobalFrame frame) {
+        victory = new Victoryscreennocompetitive(frame);
+
+        //setFullScreen(currentGame);
+        setContentPane(victory);
+        frame.setSize(900,630);
+        frame.setLocationRelativeTo(null);
+        frame.revalidate();
+        frame.repaint();
+        setVisible(true);
+    }
+
 
     public boolean AcceptUser(String login, Room salle) {
         String nomJeu = salle.getGame().getTitre();
