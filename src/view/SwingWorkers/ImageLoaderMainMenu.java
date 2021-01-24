@@ -33,6 +33,7 @@ public class ImageLoaderMainMenu extends SwingWorker<Image,Image> {
         InputStream stream = Main.class.getResourceAsStream("/image/FondPrincipal.png");
         ImageIcon icon= null;
         Image backgroundMenu = null;
+
         try {
             icon = new ImageIcon(new ImageIcon(ImageIO.read(stream)).getImage().getScaledInstance((int)dimension.getWidth(),(int)dimension.getHeight()-30, Image.SCALE_DEFAULT));
         } catch (IOException e) {
