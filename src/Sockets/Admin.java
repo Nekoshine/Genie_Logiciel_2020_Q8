@@ -71,16 +71,17 @@ public class Admin {
 
 
 
-public static void envoiInfoClient(String message,int idIndice){
+public static void envoiInfoClient(String message,int idIndice,int portC){
+    System.out.println(portC);
   try{
     if(message != null ){      
-      Socket socket = new Socket(host,portS);
+      Socket socket = new Socket(host,portC);
       ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
       Message msgSend = new Message(message);
       out.writeObject(msgSend);
       socket.close();
     }else{
-      Socket socket = new Socket(host,portS);
+      Socket socket = new Socket(host,portC);
       ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
       Indice indiceS = new Indice(idIndice);
       out.writeObject(indiceS);

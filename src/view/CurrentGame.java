@@ -76,8 +76,9 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
     Dimension windowSize;
 
     private int nbErreur =0;
+    private int idUser;
 
-    public CurrentGame (GlobalFrame frame, Game partiechoisie,int idRoom) {
+    public CurrentGame (GlobalFrame frame, Game partiechoisie,int idRoom,int idUser) {
 
         /* Icon perso pour les pop up*/
         try {
@@ -89,6 +90,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
 
         windowSize = frame.getSize();
         this.frame = frame;
+        this.idUser = idUser;
 
         /* si premier instance*/
         if(partiechoisie!=null) {
@@ -428,24 +430,25 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
             @Override
             public void run() {
                 while (true) {
-                    Object help = Client.recepGameInfo();
+                    System.out.println(room.getId() + "   "+idUser);
+                    Object help = Client.recepGameInfo(5201+idUser);
                     try {
-                        Message mj = (Message) help;
-                        hintMJTextArea.setText(mj.getMessage());
-                        hintMJTextArea.setForeground(Color.black);
-                        hintMJContainer.setFont(hintMJTextArea.getFont().deriveFont(Font.PLAIN));
-                    } catch (ClassCastException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        Indice mj = (Indice) help;
-                        int indice = mj.getIdIndice();
-                        if (indice == 1) {
-                            hint1Button.setEnabled(true);
-                        } else if (indice == 2) {
-                            hint2Button.setEnabled(true);
-                        } else if (indice == 3) {
-                            hint3Button.setEnabled(true);
+                        if (help instanceof Message) {
+                            Message mj = (Message) help;
+                            hintMJTextArea.setText(mj.getMessage());
+                            hintMJTextArea.setForeground(Color.black);
+                            hintMJContainer.setFont(hintMJTextArea.getFont().deriveFont(Font.PLAIN));
+                        }
+                        else{
+                            Indice mj = (Indice) help;
+                            int indice = mj.getIdIndice();
+                            if (indice == 1) {
+                                hint1Button.setEnabled(true);
+                            } else if (indice == 2) {
+                                hint2Button.setEnabled(true);
+                            } else if (indice == 3) {
+                                hint3Button.setEnabled(true);
+                            }
                         }
                     } catch (ClassCastException e) {
                         e.printStackTrace();

@@ -282,7 +282,7 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Bouton lancer " + salle.getId());
-                frame.playerManagementDisplay(frame,salle.getGame().getId(), 1,false,false,false);
+                frame.playerManagementDisplay(frame,salle,salle.getGame().getId(), 1,false,false,false);
 
 
                 /*if (boutonLancer.getText()=="Ouvrir la salle"){

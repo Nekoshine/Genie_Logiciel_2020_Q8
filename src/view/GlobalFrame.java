@@ -197,8 +197,8 @@ public class GlobalFrame extends JFrame {
         frame.repaint();
     }
 
-    public void currentGameDisplay(GlobalFrame frame,Game partie,int idRoom) {
-        currentGame = new CurrentGame(frame,partie,idRoom);
+    public void currentGameDisplay(GlobalFrame frame,Game partie,int idRoom,int idUser) {
+        currentGame = new CurrentGame(frame,partie,idRoom,idUser);
 
         setFullScreen(currentGame);
 
@@ -219,9 +219,9 @@ public class GlobalFrame extends JFrame {
 
     }
 
-    public void playerManagementDisplay(GlobalFrame frame,int gameNb, int riddleNb, boolean boolHint1Revealed, boolean boolHint2Revealed,
+    public void playerManagementDisplay(GlobalFrame frame,Room room,int gameNb, int riddleNb, boolean boolHint1Revealed, boolean boolHint2Revealed,
                                  boolean boolHint3Revealed){
-        playerManagement = PlayerManagement.getInstance(frame, gameNb, riddleNb, boolHint1Revealed, boolHint2Revealed, boolHint3Revealed);
+        playerManagement = PlayerManagement.getInstance(frame, room,gameNb, riddleNb, boolHint1Revealed, boolHint2Revealed, boolHint3Revealed);
         setContentPane(playerManagement);
         frame.setSize(1280,720);
         frame.setResizable(true);

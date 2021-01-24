@@ -79,10 +79,13 @@ public class Client {
     return idUserAdmin;
   }
   
-  public static Object recepGameInfo(){
+  public static Object recepGameInfo(int portC){
+
+    System.out.println(portC);
+
     Object obj= null;
     try{
-      ServerSocket s = new ServerSocket(portS);
+      ServerSocket s = new ServerSocket(portC);
       Socket socket = s.accept();
       
       ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
