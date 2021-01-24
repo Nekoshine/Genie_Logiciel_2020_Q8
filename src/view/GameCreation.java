@@ -872,12 +872,15 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
     public void mouseEntered(MouseEvent e) {
         if(e.getSource()==exitButton){
             exitButton.setBackground(ColorPerso.azurHoover);
+            exitButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
         }
         else if(e.getSource()==saveButton){
             saveButton.setBackground(ColorPerso.vertHoover);
+            saveButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
         }
         else if(e.getSource()==deleteButton){
             deleteButton.setBackground(ColorPerso.rougeHoover);
+            deleteButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
         }
         else if(e.getSource()==newButton){
             newButton.setBackground(Color.black);
@@ -886,6 +889,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
         }
         else if(e.getSource()==rankingButton && rankingButton.isEnabled()){
             rankingButton.setBackground(ColorPerso.azurHoover);
+            rankingButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
         }
     }
 
@@ -893,12 +897,15 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
     public void mouseExited(MouseEvent e) {
         if(e.getSource()==exitButton){
             exitButton.setBackground(ColorPerso.azur);
+            exitButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         }
         else if(e.getSource()==saveButton){
             saveButton.setBackground(ColorPerso.vert);
+            saveButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         }
         else if(e.getSource()==deleteButton){
             deleteButton.setBackground(ColorPerso.rouge);
+            deleteButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         }
         else if(e.getSource()==newButton){
             newButton.setForeground(ColorPerso.white);
@@ -906,6 +913,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
         }
         else if(e.getSource()==rankingButton && rankingButton.isEnabled()){
             rankingButton.setBackground(ColorPerso.azur);
+            rankingButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         }
     }
 

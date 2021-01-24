@@ -35,14 +35,13 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
 
     private GlobalFrame frame;
 
-    private Dimension windowSize;
+
 
     private static volatile GameManagement INSTANCE = new GameManagement(Main.frame,-1);
 
     private GameManagement(GlobalFrame frame, int roomNumber){
 
         this.frame = frame;
-        windowSize = frame.getSize();
         /* Provenance */
         frame.roomNumber = roomNumber;
 
@@ -125,7 +124,7 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
         this.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                windowSize = Main.frame.getSize();
+                GlobalFrame.windowSize = Main.frame.getSize();
                 INSTANCE.revalidate();
                 INSTANCE.repaint();
             }
@@ -230,12 +229,15 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
 
                 @Override
                 public void mouseEntered(MouseEvent e) {
+
                     buttonModify.setBackground(ColorPerso.jauneHoover);
+                    buttonModify.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
                 }
 
                 @Override
                 public void mouseExited(MouseEvent e) {
                     buttonModify.setBackground(ColorPerso.jaune);
+                    buttonModify.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
                 }
             });
 
@@ -411,7 +413,7 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
         for(int i = 0; i<nbGames; i++){
             listPanel.remove(newButtonPanel);
             JPanel panelGame = this.ajoutJeu(ListGame.getGame(i), gbc,i+1);
-            panelGame.setPreferredSize(new Dimension(listPanel.getWidth() - 45, 100));
+            panelGame.setPreferredSize(new Dimension((int) (GlobalFrame.windowSize.getWidth() - 85), 100));
             gamePanel.add(panelGame, gbc);
             listPanel.add(newButtonPanel, BorderLayout.PAGE_END);
             listPanel.revalidate();

@@ -411,8 +411,6 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
         timeonenigma = new Timer(1000, timeonenigmaTask);
 
 
-
-
         Main.frame.addWindowListener(this);
         this.setLayout(new BorderLayout(10,20));
         this.setBorder(BorderFactory.createEmptyBorder(20,20,40,20));
