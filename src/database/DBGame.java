@@ -31,6 +31,13 @@ public class DBGame extends DBConnexion {
                 return false; // Alors on arrete tout
             }
 
+            PreparedStatement reqScore = DBConnexion.getConnexion().prepareStatement("SELECT * from Score WHERE idGame = ?");
+            reqScore.setInt(1,idGame);
+            ResultSet resScore = reqScore.executeQuery();
+            while(resScore.next()){ // Si il a des score
+                DBScore.deleteScore(idGame, resScore.getInt("idUser"));
+            }
+
             PreparedStatement req = DBConnexion.getConnexion().prepareStatement("SELECT * from Enigma WHERE idGame = ?");
             req.setInt(1, idGame);
             ResultSet res = req.executeQuery();
