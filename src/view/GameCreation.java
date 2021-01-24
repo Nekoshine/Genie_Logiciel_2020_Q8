@@ -411,14 +411,14 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
 
         JTextField answer = new JTextField(enigme.getAnswer());
         answer.setBorder(BorderFactory.createLineBorder(Color.black,2));
-        if(answer.getText().equals("Réponse à l'énigme")){
+        if(answer.getText().equals("Réponse(s) à l'énigme séparée par \" \\ \"")){
             answer.setForeground(Color.gray);
             answer.setFont(story.getFont().deriveFont(Font.ITALIC));
         }
         answer.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                if(answer.getText().equals("Réponse à l'énigme")){
+                if(answer.getText().equals("Réponse(s) à l'énigme séparée par \" \\ \"")){
                     answer.setText("");
                     answer.setForeground(Color.black);
                     answer.setFont(answer.getFont().deriveFont(Font.PLAIN));
@@ -428,7 +428,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
             @Override
             public void focusLost(FocusEvent e) {
                 if(answer.getText().equals("")){
-                    answer.setText("Réponse à l'énigme");
+                    answer.setText("Réponse(s) à l'énigme séparée par \" \\ \"");
                     answer.setForeground(Color.gray);
                     answer.setFont(answer.getFont().deriveFont(Font.ITALIC));
                 }
@@ -722,7 +722,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
 
 
     private void majEnigma() {
-        listEnigma.addEnigma(-1,"Énigme précédée de son histoire","Réponse à l'énigme","1er indice",-1,"2eme indice",-1,"3eme indice",-1);
+        listEnigma.addEnigma(-1,"Énigme précédée de son histoire","Réponse(s) à l'énigme séparée par \" \\ \"","1er indice",-1,"2eme indice",-1,"3eme indice",-1);
         this.createList();
         frame.gameCreationDisplay(frame,game);
     }
@@ -840,6 +840,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
                 message = "Mise à jour effectuée";
             }
             JOptionPane.showMessageDialog(frame, message, "", JOptionPane.INFORMATION_MESSAGE);
+            frame.gameCreationDisplay(frame,game);
         }
         else if(e.getSource()==rankingButton){
             System.out.println("nb enigme : "+listEnigma.getSize());
