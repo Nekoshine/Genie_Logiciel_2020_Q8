@@ -132,10 +132,4 @@ public class ChooseRanking extends JFrame {
         return panelGame;
     }
 
-
-
-    public static void main(String[] args) {
-        ChooseRanking chooseRanking = new ChooseRanking(Main.ListRoom, DBUser.getUser(10));
-    }
-
 }
