@@ -1,5 +1,6 @@
 package view;
 
+import Sockets.Admin;
 import database.DBEnigma;
 import database.DBGame;
 import launcher.Main;
@@ -33,6 +34,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
     private boolean boolHint3;
 
     private JTextArea currentStory;
+    private JTextArea helpMessageGM;
     private EnigmaList currentRiddles;
     private JLabel title;
     private JLabel answers;
@@ -136,7 +138,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
         answersPan.add(scrollAnswersPanIn);
         answersPan.setBorder(BorderFactory.createEmptyBorder(0,0,20,0));
 
-        JTextArea helpMessageGM = new JTextArea();
+        helpMessageGM = new JTextArea();
         helpMessageGM.setLineWrap(true);
         helpMessageGM.setWrapStyleWord(true);
         helpMessageGM.setFont(FontPerso.Oxanimum);
@@ -276,6 +278,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
             else{
                 INSTANCE.buttonHint3.setText("Afficher l'indice 3");
             }
+            INSTANCE.helpMessageGM.setText("");
         }
         return INSTANCE;
     }
@@ -308,18 +311,24 @@ public class PlayerManagement extends JPanel implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==helpButtonGM){
             //Baptiste fonction envoyer le message aux joueurs
-            String messageFromMJ = helpButtonGM.getText();
+            String messageFromMJ = helpMessageGM.getText();
+            System.out.println(messageFromMJ);
+            Admin.envoiInfoClient(messageFromMJ,0);
+            System.out.println("send");
         }else if(e.getSource() == buttonReturn){
             frame.roomManagementDisplay(frame);
         }else if(e.getSource()==buttonHint1){
             boolHint1=true;
             buttonHint1.setText("Indice 1 déjà affiché");
+            Admin.envoiInfoClient(null,1);
         }else if(e.getSource()==buttonHint2){
             boolHint2=true;
             buttonHint2.setText("Indice 2 déjà affiché");
+            Admin.envoiInfoClient(null,2);
         }else if(e.getSource()==buttonHint3){
             boolHint3=true;
             buttonHint3.setText("Indice 3 déjà affiché");
+            Admin.envoiInfoClient(null,3);
         }
     }
 }

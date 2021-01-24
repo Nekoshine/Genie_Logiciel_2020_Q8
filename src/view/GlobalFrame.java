@@ -195,7 +195,7 @@ public class GlobalFrame extends JFrame {
         frame.repaint();
     }
 
-    public void currentGameDisplay(GlobalFrame frame,Game partie,int idRoom) throws IOException, FontFormatException {
+    public void currentGameDisplay(GlobalFrame frame,Game partie,int idRoom) {
         currentGame = new CurrentGame(frame,partie,idRoom);
 
         setFullScreen(currentGame);
