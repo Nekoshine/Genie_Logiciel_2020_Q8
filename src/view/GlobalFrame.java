@@ -1,5 +1,7 @@
 package view;
 
+import database.DBRoom;
+import database.DBUser;
 import launcher.Main;
 import model.Game;
 import model.Room;
@@ -247,8 +249,11 @@ public class GlobalFrame extends JFrame {
                         options, // titres des boutons
                         null); // désactiver la touche ENTER
         if (reponse == JOptionPane.YES_OPTION) {
-            //DBRoom.majRoom(salle.getId(),salle.getGame().getId(),salle.getCompetitive(),DBUser.getidUser(login));
-            //roommanagement.refresh();
+            DBRoom.majRoom(salle.getId(),salle.getGame().getId(),salle.getCompetitive(), DBUser.getidUser(login));
+            if (getContentPane() instanceof RoomManagement) {
+                roommanagement = RoomManagement.getInstance(frame);
+                setContentPane(roommanagement);
+            }
             return true;
         } else {
             return false;

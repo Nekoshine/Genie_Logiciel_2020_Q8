@@ -57,13 +57,6 @@ public class Score{
     if(newScore < 0){
       newScore = 0;
     }
-
-    System.out.println(scoreInit);
-    System.out.println(timer);
-    System.out.println(nbErreur);
-    System.out.println("temps en jeu : "+ deltaTime);
-    System.out.println(newScore);
-
     this.score = newScore;
   }
 }
