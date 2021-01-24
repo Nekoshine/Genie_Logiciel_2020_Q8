@@ -49,14 +49,21 @@ public class Score{
    * Fonction qui permet de calculé le score en fonction du temps
    * @param scoreInit le score initial d'un jeu
    * @param timer le temps qu'a mis le joueur
-   * @param timerMax le temps maximal que peu mêtre un joueur
+   * @param nbErreur le nombre d'erreur du joueur
    */
-  public void calculScore(int scoreInit, int timer, int timerMax){
-    int deltaScore = scoreInit/timerMax;
-    int newScore = scoreInit - deltaScore * timer;
+  public void calculScore(int scoreInit, int timer, int nbErreur){
+    int deltaTime = 3600-timer;
+    int newScore = scoreInit - deltaTime - 100*nbErreur;
     if(newScore < 0){
       newScore = 0;
     }
+
+    System.out.println(scoreInit);
+    System.out.println(timer);
+    System.out.println(nbErreur);
+    System.out.println("temps en jeu : "+ deltaTime);
+    System.out.println(newScore);
+
     this.score = newScore;
   }
 }

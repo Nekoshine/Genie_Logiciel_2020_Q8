@@ -1,13 +1,14 @@
 package view;
 
+import Sockets.Client;
+import Sockets.Indice;
+import Sockets.Message;
 import database.DBEnigma;
 import database.DBGame;
 import database.DBRoom;
+import database.DBScore;
 import launcher.Main;
-import model.Enigma;
-import model.EnigmaList;
-import model.Game;
-import model.Room;
+import model.*;
 import view.style.ColorPerso;
 import view.style.FontPerso;
 
@@ -72,8 +73,6 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
     private GlobalFrame frame;
 
     Dimension windowSize;
-
-    private static volatile CurrentGame INSTANCE = new CurrentGame(Main.frame, null,-1);
 
     public CurrentGame (GlobalFrame frame, Game partiechoisie,int idRoom) {
 
@@ -423,57 +422,40 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
         countdowngame.start();
         timeonenigma.start();
 
-    }
 
-    public static CurrentGame getInstance(GlobalFrame frame, Game partiechoisie, int idRoom) throws IOException {
-        //Le "Double-Checked Singleton"/"Singleton doublement vérifié" permet
-        //d'éviter un appel coûteux à synchronized,
-        //une fois que l'instanciation est faite.
-        if (INSTANCE == null) {
-            // Le mot-clé synchronized sur ce bloc empêche toute instanciation
-            // multiple même par différents "threads".
-            // Il est TRES important.
-            synchronized(INSTANCE) {
-                if (INSTANCE == null) {
-                    INSTANCE = new CurrentGame(frame,partiechoisie,idRoom);
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    Object help = Client.recepGameInfo();
+                    try {
+                        Message mj = (Message) help;
+                        hintMJTextArea.setText(mj.getMessage());
+                        hintMJTextArea.setForeground(Color.black);
+                        hintMJContainer.setFont(hintMJTextArea.getFont().deriveFont(Font.PLAIN));
+                    } catch (ClassCastException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        Indice mj = (Indice) help;
+                        int indice = mj.getIdIndice();
+                        if (indice == 1) {
+                            hint1Button.setEnabled(true);
+                        } else if (indice == 2) {
+                            hint2Button.setEnabled(true);
+                        } else if (indice == 3) {
+                            hint3Button.setEnabled(true);
+                        }
+                    } catch (ClassCastException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
-        }
-        else {
-            INSTANCE.enigmalistflag=0;
-            int enigmalistflag = INSTANCE.enigmalistflag;
-            INSTANCE.frame=frame;
-            INSTANCE.allEnigmas = DBEnigma.getEnigmas(partiechoisie.getId());
-            EnigmaList allEnigmas = INSTANCE.allEnigmas;
-
-            INSTANCE.game = DBGame.getGame(partiechoisie.getId());
-            INSTANCE.titleLabel.setText(partiechoisie.getTitre());
-            INSTANCE.currentEnigmaTextArea.setText(allEnigmas.getEnigma(enigmalistflag).getText());
-
-            INSTANCE.room = Main.ListRoom.findByID(idRoom);
-
-            INSTANCE.hintContainer1.removeAll();
-            INSTANCE.hint1Button.setEnabled(false);
-            INSTANCE.hint1Button.setBackground(ColorPerso.GRAY);
-            INSTANCE.hintContainer1.add(INSTANCE.hint1Button);
-
-            INSTANCE.hintContainer2.removeAll();
-            INSTANCE.hint2Button.setEnabled(false);
-            INSTANCE.hint2Button.setBackground(ColorPerso.GRAY);
-            INSTANCE.hintContainer2.add(INSTANCE.hint2Button);
-
-            INSTANCE.hintContainer3.removeAll();
-            INSTANCE.hint3Button.setEnabled(false);
-            INSTANCE.hint3Button.setBackground(ColorPerso.GRAY);
-            INSTANCE.hintContainer3.add(INSTANCE.hint3Button);
-
-            INSTANCE.answerTextField.setText("");
-
-            INSTANCE.oldEnigmaTextArea.setText("");
+        };
+        Thread t = new Thread(runnable);
+        t.start();
 
 
-        }
-        return INSTANCE;
     }
 
     //listener des boutons
@@ -630,6 +612,9 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
                 }
                 //si derniere enigme
                 else{
+                    Score score = new Score(-1,game.getId(),room.getUserInside(),0);
+                    score.calculScore(room.getGame().getScore(), countdownvalue,0);
+
                     String message = game.getEndMessage();
                     JTextArea engMessage = new JTextArea(message);
                     engMessage.setPreferredSize(new Dimension(400,150));
@@ -644,6 +629,15 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
                     frame.insideRoom = false;
                     room.setUserInside(-1);
                     DBRoom.majRoom(room.getId(),room.getGame().getId(),room.getCompetitive(),room.getUserInside());
+
+                    if(room.getCompetitive()){
+                        DBScore.insertScore(score);
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(frame, "Score : " + score.getScore(),"Score", JOptionPane.INFORMATION_MESSAGE);
+
+                    }
+                    System.out.println(score.getScore());
                     frame.connectionMenuDisplay(frame);
                 }
 

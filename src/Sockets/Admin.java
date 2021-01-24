@@ -71,7 +71,7 @@ public class Admin {
 
 
 
-public void envoiInfoClient(String message,int idIndice){
+public static void envoiInfoClient(String message,int idIndice){
   try{
     if(message != null ){      
       Socket socket = new Socket(host,portS);
