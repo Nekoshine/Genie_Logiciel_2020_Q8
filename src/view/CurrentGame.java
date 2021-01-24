@@ -246,7 +246,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
         hint1Button.setEnabled(false);
         hint1Button.setBackground(Color.GRAY);
         hint1Button.addActionListener(this);
-//        hint1Button.setFont(FontPerso.Oxanimum);
+        hint1Button.setFont(FontPerso.Oxanimum);
 
         hintContainer1 = new JPanel();
         hintContainer1.setLayout(new GridLayout(1,1));
@@ -453,12 +453,18 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
             INSTANCE.room = Main.ListRoom.findByID(idRoom);
 
             INSTANCE.hintContainer1.removeAll();
+            INSTANCE.hint1Button.setEnabled(false);
+            INSTANCE.hint1Button.setBackground(ColorPerso.GRAY);
             INSTANCE.hintContainer1.add(INSTANCE.hint1Button);
 
             INSTANCE.hintContainer2.removeAll();
+            INSTANCE.hint2Button.setEnabled(false);
+            INSTANCE.hint2Button.setBackground(ColorPerso.GRAY);
             INSTANCE.hintContainer2.add(INSTANCE.hint2Button);
 
             INSTANCE.hintContainer3.removeAll();
+            INSTANCE.hint3Button.setEnabled(false);
+            INSTANCE.hint3Button.setBackground(ColorPerso.GRAY);
             INSTANCE.hintContainer3.add(INSTANCE.hint3Button);
 
             INSTANCE.answerTextField.setText("");
@@ -569,8 +575,12 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
                     }
                     isused1 = false;
                     timerclue1 = allEnigmas.getEnigma(enigmalistflag).getTimer1();
-                    hint1Button.setEnabled(false);
 
+
+                    // on descative tous les boutons
+                    hint1Button.setEnabled(false);
+                    hint2Button.setEnabled(false);
+                    hint3Button.setEnabled(false);
 
                     //maj hint 2
 
@@ -582,11 +592,9 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
                     }
                     isused2 = false;
                     ishint2present = !(allEnigmas.getEnigma(enigmalistflag).getClue2().isEmpty());
+
                     if (ishint2present) {
-                        hint2Button.setEnabled(false);
                         timerclue2 = allEnigmas.getEnigma(enigmalistflag).getTimer2();
-                    } else {
-                        hint3Button.setEnabled(false);
                     }
 
                     //maj hint 3
@@ -602,8 +610,6 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
                     if (ishint3present) {
                         hint3Button.setEnabled(false);
                         timerclue3 = allEnigmas.getEnigma(enigmalistflag).getTimer3();
-                    } else {
-                        hint3Button.setEnabled(false);
                     }
 
                     timeonenigma.stop();
@@ -614,7 +620,18 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
                     frame.repaint();
                 }
                 //si derniere enigme
-                else{JOptionPane.showMessageDialog(frame, game.getEndMessage(),"Félicitation", JOptionPane.WARNING_MESSAGE,imageIconValide);
+                else{
+                    String message = game.getEndMessage();
+                    JTextArea engMessage = new JTextArea(message);
+                    engMessage.setPreferredSize(new Dimension(400,150));
+                    engMessage.setLineWrap(true);
+                    engMessage.setWrapStyleWord(true);
+                    engMessage.setEditable(false);
+                    engMessage.setForeground(Color.black);
+                    JScrollPane engMessageScroll = new JScrollPane(engMessage, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+                    engMessageScroll.getVerticalScrollBar().setUnitIncrement(20);
+
+                    JOptionPane.showMessageDialog(frame, engMessageScroll,"Félicitation", JOptionPane.WARNING_MESSAGE,imageIconValide);
                     frame.insideRoom = false;
                     room.setUserInside(-1);
                     DBRoom.majRoom(room.getId(),room.getGame().getId(),room.getCompetitive(),room.getUserInside());
