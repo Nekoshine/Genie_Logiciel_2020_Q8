@@ -3,11 +3,9 @@ package view;
 import database.DBEnigma;
 import database.DBGame;
 import database.DBRoom;
+import database.DBScore;
 import launcher.Main;
-import model.Enigma;
-import model.EnigmaList;
-import model.Game;
-import model.Room;
+import model.*;
 import view.style.ColorPerso;
 import view.style.FontPerso;
 
@@ -630,6 +628,9 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
                 }
                 //si derniere enigme
                 else{
+                    Score score = new Score(-1,game.getId(),room.getUserInside(),0);
+                    score.calculScore(room.getGame().getScore(), countdownvalue,0);
+
                     String message = game.getEndMessage();
                     JTextArea engMessage = new JTextArea(message);
                     engMessage.setPreferredSize(new Dimension(400,150));
@@ -644,6 +645,15 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
                     frame.insideRoom = false;
                     room.setUserInside(-1);
                     DBRoom.majRoom(room.getId(),room.getGame().getId(),room.getCompetitive(),room.getUserInside());
+
+                    if(room.getCompetitive()){
+                        DBScore.insertScore(score);
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(frame, "Score : " + score.getScore(),"Score", JOptionPane.INFORMATION_MESSAGE);
+
+                    }
+                    System.out.println(score.getScore());
                     frame.connectionMenuDisplay(frame);
                 }
 
