@@ -41,6 +41,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
 
     private JTextArea currentEnigmaTextArea;
     private final JTextArea oldEnigmaTextArea;
+    private JTextArea hintMJTextArea;
 
 
     private final JLabel titleLabel;
@@ -73,6 +74,8 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
     private GlobalFrame frame;
 
     Dimension windowSize;
+
+    private int nbErreur =0;
 
     public CurrentGame (GlobalFrame frame, Game partiechoisie,int idRoom) {
 
@@ -277,7 +280,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
         hintContainer3.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         hintContainer3.add(hint3Button);
 
-        JTextArea hintMJTextArea = new JTextArea("Ici, le MJ pourra t'envoyer de l'aide supplémentaire");
+        hintMJTextArea = new JTextArea("Ici, le MJ pourra t'envoyer de l'aide supplémentaire");
         hintMJTextArea.setForeground(Color.gray);
         hintMJTextArea.setFont(hintMJTextArea.getFont().deriveFont(Font.ITALIC));
         hintMJTextArea.setLineWrap(true);
@@ -510,6 +513,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
         }
 
         else if (event.getSource() == confirmButton){
+            nbErreur++;
             String answer = removeAccents(answerTextField.getText().toLowerCase());
             String[] possibility = allEnigmas.getEnigma(enigmalistflag).getAnswers1(); //reponse séparé par '/'
             boolean find = false;
@@ -530,6 +534,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
             }
             //si bonne reponse
             if (find) {
+                nbErreur --;
                 //si ce n'etait pas la derniere
                 if (enigmalistflag < allEnigmas.getSize() - 1) {
 
@@ -601,6 +606,10 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
                         timerclue3 = allEnigmas.getEnigma(enigmalistflag).getTimer3();
                     }
 
+                    hintMJTextArea.setText("Ici, le MJ pourra t'envoyer de l'aide supplémentaire");
+                    hintMJTextArea.setForeground(Color.gray);
+                    hintMJTextArea.setFont(hintMJTextArea.getFont().deriveFont(Font.ITALIC));
+
                     timeonenigma.stop();
                     enigmatimevalue = 0;
                     timeonenigma.start();
@@ -611,7 +620,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
                 //si derniere enigme
                 else{
                     Score score = new Score(-1,game.getId(),room.getUserInside(),0);
-                    score.calculScore(room.getGame().getScore(), countdownvalue,0);
+                    score.calculScore(room.getGame().getScore(), countdownvalue,nbErreur);
 
                     String message = game.getEndMessage();
                     JTextArea engMessage = new JTextArea(message);
@@ -631,10 +640,17 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
                     if(room.getCompetitive()){
                         DBScore.insertScore(score);
                     }
-                    else {
-                        JOptionPane.showMessageDialog(frame, "Score : " + score.getScore(),"Score", JOptionPane.INFORMATION_MESSAGE);
 
+                    int seconde = (3600-countdownvalue) % 60;
+                    int minute = ((3600-countdownvalue) - seconde) / 60;
+                    String time;
+                    if (seconde < 10) {
+                        time = minute + ":0" + seconde;
+                    } else {
+                        time = minute + ":" + seconde;
                     }
+                    String messageFin = "Score : "+score.getScore() + "\nTemps : "+time + "\nErreur : "+nbErreur;
+                    JOptionPane.showMessageDialog(frame, messageFin,"Score", JOptionPane.INFORMATION_MESSAGE);
                     System.out.println(score.getScore());
                     frame.connectionMenuDisplay(frame);
                 }

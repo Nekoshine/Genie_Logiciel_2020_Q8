@@ -840,7 +840,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
                 message = "Mise à jour effectuée";
             }
             JOptionPane.showMessageDialog(frame, message, "", JOptionPane.INFORMATION_MESSAGE);
-            frame.gameCreationDisplay(frame,game);
+            frame.gameManagementDisplay(frame,-1);
         }
         else if(e.getSource()==rankingButton){
             System.out.println("nb enigme : "+listEnigma.getSize());
