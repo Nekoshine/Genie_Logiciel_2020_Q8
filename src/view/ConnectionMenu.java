@@ -56,17 +56,20 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
     //creation de la partie motdepasse
 
     JPanel mdp = new JPanel();
-    mdp.setLayout(new FlowLayout(FlowLayout.CENTER,30,0));
+    mdp.setLayout(new FlowLayout(FlowLayout.CENTER,9,0));
     JLabel motdepasse = new JLabel("Mot de passe :");
     motdepasse.setForeground(Color.white);
+    JPanel panelSaisie = new JPanel(new FlowLayout(1));
     saisiemotdepasse = new JPasswordField("");
-    saisiemotdepasse.setColumns(30);
-    saisiemotdepasse.setPreferredSize(new Dimension(200,20));
+    saisiemotdepasse.setColumns(38);
+    panelSaisie.add(saisiemotdepasse);
+    panelSaisie.setOpaque(false);
+    saisiemotdepasse.setPreferredSize(new Dimension(500,20));
     saisiemotdepasse.addKeyListener(this);
     saisiemotdepasse.addFocusListener(this);
 
     mdp.add(motdepasse);
-    mdp.add(saisiemotdepasse);
+    mdp.add(panelSaisie);
 
     //creation du bouton de connexion
 
@@ -97,6 +100,7 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
 
     this.add(Box.createRigidArea(new Dimension(0, 150)));
     this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+    this.setBorder(BorderFactory.createEmptyBorder(0,20,0,0));
     login.setMaximumSize(new Dimension(800,50));
     this.add(login);
     this.add(Box.createRigidArea(new Dimension(0, 20)));

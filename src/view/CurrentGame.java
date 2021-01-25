@@ -381,6 +381,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
 
                 if (countdownvalue == 0) {
                     countdowngame.stop();
+                    frame.defeatscreenDisplay(frame);
                 }
             }
         };
@@ -637,14 +638,16 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
                     JScrollPane engMessageScroll = new JScrollPane(engMessage, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
                     engMessageScroll.getVerticalScrollBar().setUnitIncrement(20);
 
-                    JOptionPane.showMessageDialog(frame, engMessageScroll,"Félicitation", JOptionPane.WARNING_MESSAGE,imageIconValide);
                     frame.insideRoom = false;
                     room.setUserInside(-1);
                     DBRoom.majRoom(room.getId(),room.getGame().getId(),room.getCompetitive(),room.getUserInside());
 
+
                     if(room.getCompetitive()){
                         DBScore.insertScore(score);
                     }
+
+                    frame.victoryNoCompetitionScreenDisplay(frame,score.getScore());
 
                     int seconde = (3600-countdownvalue) % 60;
                     int minute = ((3600-countdownvalue) - seconde) / 60;

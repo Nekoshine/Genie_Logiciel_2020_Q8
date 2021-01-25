@@ -15,6 +15,7 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.util.regex.Pattern;
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 
 
 public class SignupMenu extends JPanel implements ActionListener, MouseListener, KeyListener {
@@ -41,12 +42,12 @@ public class SignupMenu extends JPanel implements ActionListener, MouseListener,
     
     
     JPanel logincontainer = new JPanel();
-    logincontainer.setLayout(new FlowLayout(FlowLayout.CENTER,30,0));
+    logincontainer.setLayout(new FlowLayout(FlowLayout.CENTER,70,0));
     
     JLabel id = new JLabel("Identifiant :");
     id.setForeground(Color.white);
     idtextfiled = new JTextField();
-    idtextfiled.setColumns(30);
+    idtextfiled.setColumns(25);
     idtextfiled.addKeyListener(this);
 
     
@@ -57,11 +58,11 @@ public class SignupMenu extends JPanel implements ActionListener, MouseListener,
     //creation de la partie motdepasse
     
     JPanel passwordcontainer = new JPanel();
-    passwordcontainer.setLayout(new FlowLayout(FlowLayout.CENTER,10,0));
+    passwordcontainer.setLayout(new FlowLayout(FlowLayout.CENTER,52,0));
     JLabel password = new JLabel("Mot de passe :");
     password.setForeground(Color.white);
     passwordtextfield = new JPasswordField();
-    passwordtextfield.setColumns(30);
+    passwordtextfield.setColumns(32);
     passwordtextfield.addKeyListener(this);
 
     
@@ -72,7 +73,7 @@ public class SignupMenu extends JPanel implements ActionListener, MouseListener,
     //creation de la partie clé admin
     
     JPanel keycontainer = new JPanel();
-    keycontainer.setLayout(new FlowLayout(FlowLayout.CENTER,25,0));
+    keycontainer.setLayout(new FlowLayout(FlowLayout.CENTER,5,0));
     JLabel key = new JLabel("Clé (compte admin) :");
     key.setForeground(Color.white);
     keytextfield = new JTextField();
@@ -85,11 +86,17 @@ public class SignupMenu extends JPanel implements ActionListener, MouseListener,
     keycontainer.setOpaque(false);
     
     //creation du bouton de confirmation
-    
+
+    JPanel panelButton = new JPanel();
+    panelButton.setLayout(new FlowLayout(1));
     confirm = new JButton("Confirmation");
     confirm.addActionListener(this);
     confirm.addMouseListener(this);
     confirm.setBackground(ColorPerso.vert);
+    panelButton.add(confirm);
+    panelButton.setOpaque(false);
+    confirm.setPreferredSize(new Dimension(130,35));
+    confirm.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
     
     //creation du bouton de retour
     
@@ -98,11 +105,13 @@ public class SignupMenu extends JPanel implements ActionListener, MouseListener,
     back.addMouseListener(this);
     back.setBackground(ColorPerso.rouge);
     back.setForeground(Color.white);
+    back.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 
     
     JPanel backcontainer = new JPanel();
     backcontainer.setLayout(new FlowLayout(FlowLayout.LEADING));
     backcontainer.add(back);
+    back.setPreferredSize(new Dimension(70,35));
     backcontainer.setOpaque(false);
     
     //ajout des composants
@@ -117,9 +126,10 @@ public class SignupMenu extends JPanel implements ActionListener, MouseListener,
     this.add(Box.createRigidArea(new Dimension(0, 20)));
     //key.setMaximumSize(new Dimension(1000,30));
     this.add(keycontainer);
-    this.add(Box.createRigidArea(new Dimension(0, 10)));
-    this.add(confirm);
-    this.add(Box.createRigidArea(new Dimension(0, 100)));
+    this.add(Box.createRigidArea(new Dimension(0, 20)));
+    this.add(panelButton);
+    this.add(Box.createRigidArea(new Dimension(20, 60)));
+    this.setBorder(BorderFactory.createEmptyBorder(0,10,0,0));
     this.add(backcontainer);
     this.setVisible(true);
     
@@ -219,19 +229,24 @@ public class SignupMenu extends JPanel implements ActionListener, MouseListener,
   public void mouseEntered(MouseEvent e) {
     if(e.getSource()==back){
       back.setBackground(ColorPerso.rougeHoover);
+      back.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
     }
     else if(e.getSource()==confirm){
       confirm.setBackground(ColorPerso.vertHoover);
+      confirm.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
     }
+
   }
 
   @Override
   public void mouseExited(MouseEvent e) {
     if(e.getSource()==back){
       back.setBackground(ColorPerso.rouge);
+      back.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
     }
     else if(e.getSource()==confirm){
       confirm.setBackground(ColorPerso.vert);
+      confirm.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
     }
   }
 
