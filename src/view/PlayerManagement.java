@@ -244,20 +244,6 @@ public class PlayerManagement extends JPanel implements ActionListener{
         this.add(Box.createRigidArea(new Dimension(0, 20)));
         this.add(bottomPan);
 
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    //int idAdmin = Client.refreshRoomAccess(user.getId());
-                    System.out.println(room.getUserInside());
-                    if(Admin.newRiddle(room.getUserInside())!=null) {
-                        frame.playerManagementDisplay(frame, room, gameNb, riddleNb+1, false, false, false);
-                    }
-                }
-            }
-        };
-        Thread t = new Thread(runnable);
-        t.start();
     }
 
   /*  public static PlayerManagement getInstance(GlobalFrame frame,Room room,int gameNb, int riddleNb, boolean boolHint1Revealed, boolean boolHint2Revealed,
@@ -341,11 +327,11 @@ public class PlayerManagement extends JPanel implements ActionListener{
                 button = new JButton("Envoyer l'indice " + i);
             }else{
                 if(i==1) {
-                    button = new JButton(DBEnigma.getEnigmas(room.getGame().getId()).getEnigma(enigmalistflag).getClue1());
+                    button = new JButton("Indice 1 :\n" + DBEnigma.getEnigmas(room.getGame().getId()).getEnigma(enigmalistflag).getClue1());
                 }else if(i==2){
-                    button = new JButton(DBEnigma.getEnigmas(room.getGame().getId()).getEnigma(enigmalistflag).getClue2());
+                    button = new JButton("Indice 2 :\n" + DBEnigma.getEnigmas(room.getGame().getId()).getEnigma(enigmalistflag).getClue2());
                 }else if(i==3){
-                    button = new JButton(DBEnigma.getEnigmas(room.getGame().getId()).getEnigma(enigmalistflag).getClue3());
+                    button = new JButton("Indice 3 :\n" + DBEnigma.getEnigmas(room.getGame().getId()).getEnigma(enigmalistflag).getClue3());
                 }
             }
             button.addActionListener(this);
@@ -369,17 +355,17 @@ public class PlayerManagement extends JPanel implements ActionListener{
             frame.roomManagementDisplay(frame);
         }else if(e.getSource()==buttonHint1){
             boolHint1=true;
-            buttonHint1.setText(DBEnigma.getEnigmas(room.getGame().getId()).getEnigma(enigmalistflag).getClue1());
+            buttonHint1.setText("Indice 1 : \n" + DBEnigma.getEnigmas(room.getGame().getId()).getEnigma(enigmalistflag).getClue1());
             Admin.envoiAideJoueur(null,1,room.getUserInside());
             buttonHint1.setBackground(Color.lightGray);
         }else if(e.getSource()==buttonHint2){
             boolHint2=true;
-            buttonHint2.setText(DBEnigma.getEnigmas(room.getGame().getId()).getEnigma(enigmalistflag).getClue2());
+            buttonHint2.setText("Indice 2 : \n" + DBEnigma.getEnigmas(room.getGame().getId()).getEnigma(enigmalistflag).getClue2());
             Admin.envoiAideJoueur(null,2,room.getUserInside());
             buttonHint2.setBackground(Color.lightGray);
         }else if(e.getSource()==buttonHint3){
             boolHint3=true;
-            buttonHint3.setText(DBEnigma.getEnigmas(room.getGame().getId()).getEnigma(enigmalistflag).getClue3());
+            buttonHint3.setText("Indice 3 : \n" + DBEnigma.getEnigmas(room.getGame().getId()).getEnigma(enigmalistflag).getClue3());
             Admin.envoiAideJoueur(null,3,room.getUserInside());
             buttonHint3.setBackground(Color.lightGray);
         }
