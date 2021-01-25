@@ -241,8 +241,8 @@ public class GlobalFrame extends JFrame {
         setVisible(true);
     }
 
-    public void victoryNoCompetitionScreenDisplay(GlobalFrame frame) {
-        victory = new Victoryscreennocompetitive(frame);
+    public void victoryNoCompetitionScreenDisplay(GlobalFrame frame,int score) {
+        victory = new Victoryscreennocompetitive(frame,score);
 
         //setFullScreen(currentGame);
         setContentPane(victory);

@@ -321,7 +321,7 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
         for (int i = 0; i < ListRoom.getSize(); i++) {
 
             JPanel panelSalle = this.ajoutSalle(ListRoom.getRoom(i), gbc,i+1);
-            panelSalle.setPreferredSize(new Dimension(listPanel.getWidth() - 45, 75));
+            panelSalle.setPreferredSize(new Dimension((int) (GlobalFrame.windowSize.getWidth() - 45), 75));
             roomPanel.add(panelSalle, gbc);
             listPanel.revalidate();
             listPanel.repaint();
