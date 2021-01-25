@@ -133,13 +133,6 @@ public class Client {
    * @return idadmin
    */
   public static RoomList refreshRoomAccess(int idUser){
-    System.out.println("idUser : " +idUser);
-    System.out.println("idUser : " +idUser);
-    System.out.println("idUser : " +idUser);
-    System.out.println("idUser : " +idUser);
-    System.out.println("idUser : " +idUser);
-    System.out.println("idUser : " +idUser);
-    if(idUser!=9){idUser=9;}
     Object obj= null;
     try{
       ServerSocket s = new ServerSocket(1629+idUser);

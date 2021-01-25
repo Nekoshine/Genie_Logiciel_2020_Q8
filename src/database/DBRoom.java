@@ -173,4 +173,23 @@ public class DBRoom extends DBConnexion{
         return max;
     }
 
+    /**
+     * Fonction qui change le jeu d'une salle dans la BDD
+     * @param id l'identifiant de la salle
+     * @param userInside le joueur dans la salle
+     * @return true si la mise à jour a fonctionné
+     */
+    public static void majUserRoom(int id, int userInside){
+        try{
+            PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("UPDATE Room SET UserInside=? WHERE id=?");
+            requete.setInt(1, userInside);
+            requete.setInt(2, id);
+            requete.executeUpdate();
+            requete.close();
+
+        } catch(SQLException e ){
+            System.err.println("Erreur requete majGame: " + e.getMessage());
+        }
+    }
+
 }

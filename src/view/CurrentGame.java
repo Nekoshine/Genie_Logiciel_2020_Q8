@@ -616,6 +616,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
                 //si derniere enigme
                 else{
                     Score score = new Score(-1,game.getId(),idUser,0);
+                    System.out.println("titre du jeu : "+game.getTitre());
                     score.calculScore(room.getGame().getScore(), countdownvalue,nbErreur);
 
                     String message = game.getEndMessage();
@@ -629,8 +630,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
                     engMessageScroll.getVerticalScrollBar().setUnitIncrement(20);
 
                     frame.insideRoom = false;
-                    room.setUserInside(-1);
-                    DBRoom.majRoom(room.getId(),room.getGame().getId(),room.getCompetitive(),room.getUserInside());
+                    DBRoom.majUserRoom(room.getId(),-1);
 
 
                     if(room.getCompetitive()){
@@ -670,7 +670,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
     @Override
     public void windowClosing(WindowEvent e) {
         room.setUserInside(-1);
-        DBRoom.majRoom(room.getId(),room.getGame().getId(),room.getCompetitive(),room.getUserInside());
+        DBRoom.majUserRoom(room.getId(),-1);
 
     }
 

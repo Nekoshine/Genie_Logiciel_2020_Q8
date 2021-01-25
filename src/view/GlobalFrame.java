@@ -273,7 +273,7 @@ public class GlobalFrame extends JFrame {
                         options, // titres des boutons
                         null); // désactiver la touche ENTER
         if (reponse == JOptionPane.YES_OPTION) {
-            DBRoom.majRoom(salle.getId(),salle.getGame().getId(),salle.getCompetitive(), DBUser.getidUser(login));
+            DBRoom.majUserRoom(salle.getId(), DBUser.getidUser(login));
             if (getContentPane() instanceof RoomManagement) {
                 roommanagement = RoomManagement.getInstance(frame);
                 setContentPane(roommanagement);
