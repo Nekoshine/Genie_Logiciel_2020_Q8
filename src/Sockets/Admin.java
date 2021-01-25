@@ -26,9 +26,9 @@ System.out.println(map.get("dog"));
 
   /**
    * autoriser un joueur à jouer
-   * @param idUserAdmin l'id de l'admin sur le reseau
+   * @param idAdmin l'id de l'admin sur le reseau
    */
-  public static void setServerAdmin(int idUserAdmin){
+  public static void setServerAdmin(int idAdmin){
     try{
       ServerSocket s = new ServerSocket(1096);
       Socket socket = s.accept();
@@ -42,30 +42,20 @@ System.out.println(map.get("dog"));
         System.out.println("adresse ip du client :" + host.get(user.getIdUser()));
 
         if(user.getFirstConn()){
-          System.out.println("Je renvoie l'id de l'admin " + idUserAdmin);
+          System.out.println("Je renvoie l'id de l'admin " + idAdmin);
           ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-          AdminInfo signal = new AdminInfo(idUserAdmin);
-          out.writeObject(signal);
+          out.writeObject(idAdmin);
         }else{
           boolean reponse = false;
 
           
-          System.out.println("Veux tu autoriser la connexion  de ? " + user.getIdUser());/*
-          Scanner sc = new Scanner (System.in);
-          int reponseVal = sc.nextInt();
-          if (reponseVal==1){
-          reponse=true;
-        }*/
-        User logged = DBUser.getUser(user.getIdUser()); // On récupere le login de l'user qui demande à se connecter
-        reponse = Main.frame.AcceptUser(logged.getLogin(),user.getSalle()); //pop up demande de connexion
-        
-        
-        ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-        if (reponse){ // Si cest le bon user alors on lui dit quon accepte sa demande de jeu
-          System.out.println("Je renvoie oui");
-          Reponse signal = new Reponse("Oui");
-          out.writeObject(signal);
-        }
+          System.out.println("Veux tu autoriser la connexion  de ? " + user.getIdUser());
+          User logged = DBUser.getUser(user.getIdUser()); // On récupere le login de l'user qui demande à se connecter
+          reponse = Main.frame.AcceptUser(logged.getLogin(),user.getSalle()); //pop up demande de connexion
+
+          ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+          out.writeObject(reponse);
+
       }
     }
     Thread.sleep(4);

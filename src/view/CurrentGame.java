@@ -430,9 +430,6 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
             @Override
             public void run() {
                 while (true) {
-                    System.out.println("ide de la room : "+room.getId());
-                    System.out.println("id du jkouer "+idUser);
-                    //problem des fois
                     Object help = Client.recepHelpGame(idUser);
                     try {
                         if (help instanceof Message) {
@@ -518,7 +515,6 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
         }
 
         else if (event.getSource() == confirmButton){
-            nbErreur++;
             String answer = removeAccents(answerTextField.getText().toLowerCase());
             String[] possibility = allEnigmas.getEnigma(enigmalistflag).getAnswers1(); //reponse séparé par '/'
             boolean find = false;
@@ -539,7 +535,6 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
             }
             //si bonne reponse
             if (find) {
-                nbErreur --;
                 //si ce n'etait pas la derniere
                 if (enigmalistflag < allEnigmas.getSize() - 1) {
 
@@ -624,7 +619,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
                 }
                 //si derniere enigme
                 else{
-                    Score score = new Score(-1,game.getId(),room.getUserInside(),0);
+                    Score score = new Score(-1,game.getId(),idUser,0);
                     score.calculScore(room.getGame().getScore(), countdownvalue,nbErreur);
 
                     String message = game.getEndMessage();
@@ -662,7 +657,9 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
 
             }
             //si mauvaise reponse
-            else{JOptionPane.showMessageDialog(frame, "Ce n'est pas la bonne reponse", "Raté !", JOptionPane.WARNING_MESSAGE,imageIconRefus);
+            else{
+                nbErreur++;
+                JOptionPane.showMessageDialog(frame, "Ce n'est pas la bonne reponse", "Raté !", JOptionPane.WARNING_MESSAGE,imageIconRefus);
             }
         }
 

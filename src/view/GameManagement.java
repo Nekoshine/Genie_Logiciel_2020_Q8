@@ -168,8 +168,10 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
                 INSTANCE.newButton.setVisible(false);
             }
             INSTANCE.returnButton.setBackground(ColorPerso.rouge);
+            INSTANCE.returnButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
             INSTANCE.newButton.setBackground(ColorPerso.grisFonce);
             INSTANCE.newButton.setForeground(Color.white);
+            INSTANCE.newButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         }
         return INSTANCE;
     }
