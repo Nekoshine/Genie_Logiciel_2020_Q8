@@ -117,21 +117,21 @@ public class PlayerManagement extends JPanel implements ActionListener{
         currentStory.setBackground(Color.LIGHT_GRAY);
         currentStory.setFont(FontPerso.Oxanimum);
         currentStory.setEditable(false);
-        currentStory.setPreferredSize(new Dimension(width-20,(height-90)*30/100-10));
+        currentStory.setPreferredSize(new Dimension(width-20,(height-90)*40/100-10));
         currentStory.setText((currentRiddles.getEnigma(riddleNb - 1)).getText());
 
 
         JScrollPane scrollCurrentStoryPanIn = new JScrollPane(currentStoryPanIn,
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollCurrentStoryPanIn.setPreferredSize(new Dimension(width-20,(height-90)*30/100));
+        scrollCurrentStoryPanIn.setPreferredSize(new Dimension(width-20,(height-90)*40/100));
         scrollCurrentStoryPanIn.setBackground(Color.LIGHT_GRAY);
         currentStoryPanIn.setBackground(Color.LIGHT_GRAY);
         currentStoryPanIn.add(currentStory);
         scrollCurrentStoryPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         JPanel currentStoryPan = new JPanel();
         currentStoryPan.setBackground(ColorPerso.darkGray);
+        currentStoryPan.setLayout(new FlowLayout(1));
         currentStoryPan.add(scrollCurrentStoryPanIn);
-        currentStoryPan.setPreferredSize(new Dimension(width-20,(height-90)*30/100));
         //currentStoryPan.setBorder(BorderFactory.createEmptyBorder(0,0,20,0));
 
         answers = new JLabel();
@@ -153,9 +153,10 @@ public class PlayerManagement extends JPanel implements ActionListener{
         helpMessageGM.setLineWrap(true);
         helpMessageGM.setWrapStyleWord(true);
         helpMessageGM.setFont(FontPerso.Oxanimum);
-        helpMessageGM.setPreferredSize(new Dimension((int) (width-200-helpButtonGM.getWidth()), (int) ((height-150)*0.30)));
+        helpMessageGM.setPreferredSize(new Dimension((int) (width-200-helpButtonGM.getWidth()), (int) ((height-150)*0.40)));
         JPanel helpMessageGMPan = new JPanel();
         helpMessageGMPan.setBackground(Color.LIGHT_GRAY);
+        helpMessageGMPan.setLayout(new FlowLayout(1));
         helpMessageGMPan.add(helpMessageGM);
         JPanel helpButtonGMPanIn = new JPanel();
         helpButtonGMPanIn.setBackground(Color.LIGHT_GRAY);
@@ -166,16 +167,17 @@ public class PlayerManagement extends JPanel implements ActionListener{
         helpButtonGMPan.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
         JPanel helpGMPanIn = new JPanel();
         helpGMPanIn.setBackground(Color.LIGHT_GRAY);
-        helpGMPanIn.setPreferredSize(new Dimension((int) (width-20), (int) ((height-90)*0.30)));
+        helpGMPanIn.setPreferredSize(new Dimension((int) (width-20), (int) ((height-90)*0.40)));
         helpGMPanIn.setLayout(new BoxLayout(helpGMPanIn, BoxLayout.LINE_AXIS));
         helpGMPanIn.add(helpMessageGMPan);
         helpGMPanIn.add(helpButtonGMPan);
         helpGMPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         JPanel helpGMPan = new JPanel();
         helpGMPan.setBackground(ColorPerso.darkGray);
+        helpGMPan.setLayout(new FlowLayout(1));
         helpGMPan.add(helpGMPanIn);
         //helpGMPan.setBorder(BorderFactory.createEmptyBorder(0,0,20,0));
-        helpGMPan.setPreferredSize(new Dimension(width-20,(height-90)*30/100));
+        //helpGMPan.setPreferredSize(new Dimension(width-20,(height-90)*40/100));
 
         JPanel buttonReturnPanIn = new JPanel();
         buttonReturnPanIn.setBackground(Color.LIGHT_GRAY);
@@ -207,7 +209,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
         buttonHint3Pan.setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
         JPanel bottomPan = new JPanel();
         bottomPan.setBackground(ColorPerso.darkGray);
-        bottomPan.setPreferredSize(new Dimension((int) (width-20),(int) ((height)*0.30)));
+        bottomPan.setPreferredSize(new Dimension((int) (width-20),(int) ((height)*0.40)));
         JPanel bottomPanIn = new JPanel();
         bottomPanIn.setBackground(Color.LIGHT_GRAY);
         bottomPanIn.setLayout(new BoxLayout(bottomPanIn, BoxLayout.LINE_AXIS));
@@ -349,7 +351,6 @@ public class PlayerManagement extends JPanel implements ActionListener{
             button.addActionListener(this);
             button.setBackground(Color.white);
         }else{
-            button = new JButton("Indice " + i + " déjà affiché");
             button.setBackground(Color.lightGray);
         }
         button.setForeground(Color.black);
@@ -368,21 +369,18 @@ public class PlayerManagement extends JPanel implements ActionListener{
             frame.roomManagementDisplay(frame);
         }else if(e.getSource()==buttonHint1){
             boolHint1=true;
-            buttonHint1.setText("Indice 1 déjà affiché");
+            buttonHint1.setText(DBEnigma.getEnigmas(room.getGame().getId()).getEnigma(enigmalistflag).getClue1());
             Admin.envoiAideJoueur(null,1,room.getUserInside());
-            Admin.envoiInfoClient(null,1,room.getUserInside());
             buttonHint1.setBackground(Color.lightGray);
         }else if(e.getSource()==buttonHint2){
             boolHint2=true;
-            buttonHint2.setText("Indice 2 déjà affiché");
+            buttonHint2.setText(DBEnigma.getEnigmas(room.getGame().getId()).getEnigma(enigmalistflag).getClue2());
             Admin.envoiAideJoueur(null,2,room.getUserInside());
-            Admin.envoiInfoClient(null,2,room.getUserInside());
             buttonHint2.setBackground(Color.lightGray);
         }else if(e.getSource()==buttonHint3){
             boolHint3=true;
-            buttonHint3.setText("Indice 3 déjà affiché");
+            buttonHint3.setText(DBEnigma.getEnigmas(room.getGame().getId()).getEnigma(enigmalistflag).getClue3());
             Admin.envoiAideJoueur(null,3,room.getUserInside());
-            Admin.envoiInfoClient(null,3,room.getUserInside());
             buttonHint3.setBackground(Color.lightGray);
         }
     }
