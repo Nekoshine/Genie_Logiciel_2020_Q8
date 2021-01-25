@@ -93,7 +93,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
         titlePanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         JPanel titlePan = new JPanel();
         titlePan.setBackground(ColorPerso.darkGray);
-        titlePan.setBorder(BorderFactory.createEmptyBorder(0,0,10,10));
+        titlePan.setBorder(BorderFactory.createEmptyBorder(0,0,0,10));
         titlePan.add(titlePanIn);
         JLabel timer = new JLabel();
         JPanel timerPanIn = new JPanel();
@@ -103,7 +103,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
         timerPanIn.add(timer);
         JPanel timerPan = new JPanel();
         timerPan.setBackground(ColorPerso.darkGray);
-        timerPan.setBorder(BorderFactory.createEmptyBorder(0,0,20,0));
+        timerPan.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
         timerPan.add(timerPanIn);
         JPanel topPan = new JPanel();
         topPan.setBackground(ColorPerso.darkGray);
@@ -233,13 +233,13 @@ public class PlayerManagement extends JPanel implements ActionListener{
         this.setBackground(ColorPerso.darkGray);
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         this.add(topPan);
-        this.add(Box.createRigidArea(new Dimension(0, 10)));
+        this.add(Box.createRigidArea(new Dimension(0, 20)));
         this.add(currentStoryPan);
-        this.add(Box.createRigidArea(new Dimension(0, 10)));
+        this.add(Box.createRigidArea(new Dimension(0, 20)));
         this.add(answersPan);
-        this.add(Box.createRigidArea(new Dimension(0, 10)));
+        this.add(Box.createRigidArea(new Dimension(0, 20)));
         this.add(helpGMPan);
-        this.add(Box.createRigidArea(new Dimension(0, 10)));
+        this.add(Box.createRigidArea(new Dimension(0, 20)));
         this.add(bottomPan);
 
         Runnable runnable = new Runnable() {
