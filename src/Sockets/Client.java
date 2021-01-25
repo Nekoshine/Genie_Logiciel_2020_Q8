@@ -154,4 +154,15 @@ public class Client {
     return 0;
   }
 
+  public static void endRiddle(int idUser, Game game){
+    try{
+      Socket socket = new Socket(host,idUser+3020);
+      ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+      out.writeObject(game);
+      socket.close();
+    } catch(IOException e){
+      System.out.println("IOException :" + e.getMessage());
+    }
+  }
+
 }
