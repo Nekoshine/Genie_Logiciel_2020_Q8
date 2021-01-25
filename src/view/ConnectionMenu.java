@@ -166,14 +166,24 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
     }
     int idUser = DBUser.getidUser(idinput);
     if (isAdmin==1){
+
       ExecutorService service = Executors.newFixedThreadPool(4);
       service.submit((Runnable) () -> {
         while (true){
           Admin.setServerAdmin(Main.idAdmin);
         }
       });
+
+      ExecutorService serviceFin = Executors.newFixedThreadPool(4);
+      serviceFin.submit((Runnable) () -> {
+        while (true){
+          Admin.acceptFin();
+        }
+      });
+
       Main.frame.mainMenuDisplay(Main.frame);
       Main.ListRoom = DBRoom.getRooms(Main.idAdmin); // recherche des salles dans la BDD apres la connection
+
     }
     else if( isAdmin==0){
       int idAdmin=Client.recepIpIdAdmin(idUser);

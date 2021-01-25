@@ -123,7 +123,7 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
         this.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                windowSize = Main.frame.getSize();
+                GlobalFrame.windowSize = getSize();
                 INSTANCE.revalidate();
                 INSTANCE.repaint();
             }
@@ -353,7 +353,7 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
         for (int i = 0; i < ListRoom.getSize(); i++) {
             listPanel.remove(newButtonPanel);
             JPanel panelSalle = this.ajoutSalle(ListRoom.getRoom(i), gbc,i+1);
-            panelSalle.setPreferredSize(new Dimension((int) (GlobalFrame.windowSize.getWidth() - 85), 100));
+            panelSalle.setPreferredSize(new Dimension((int) (listPanel.getWidth() - 85), 100));
             roomPanel.add(panelSalle, gbc);
             listPanel.add(newButtonPanel, BorderLayout.PAGE_END);
             listPanel.revalidate();

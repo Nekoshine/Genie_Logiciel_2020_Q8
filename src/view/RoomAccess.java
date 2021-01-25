@@ -142,10 +142,9 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                    RoomList a = Client.refreshRoomAccess(user.getId());
-                    if(a!=null) {
-                        frame.roomAccessDisplay(frame, a, user);
-                    }
+                    RoomList list = Client.refreshRoomAccess(user.getId());
+                    if (list!=null)
+                        frame.roomAccessDisplay(frame,list,user);
             }
         };
         Thread t = new Thread(runnable);

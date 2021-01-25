@@ -417,7 +417,7 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
         for(int i = 0; i<nbGames; i++){
             listPanel.remove(newButtonPanel);
             JPanel panelGame = this.ajoutJeu(ListGame.getGame(i), gbc,i+1);
-            panelGame.setPreferredSize(new Dimension((int) (GlobalFrame.windowSize.getWidth() - 85), 100));
+            panelGame.setPreferredSize(new Dimension((int) (listPanel.getWidth() - 85), 100));
             gamePanel.add(panelGame, gbc);
             listPanel.add(newButtonPanel, BorderLayout.PAGE_END);
             listPanel.revalidate();
