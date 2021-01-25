@@ -1,8 +1,10 @@
 package view;
 
 import Sockets.Admin;
+import Sockets.Client;
 import database.DBEnigma;
 import database.DBGame;
+import database.DBRoom;
 import launcher.Main;
 import model.Enigma;
 import model.EnigmaList;
@@ -34,6 +36,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
     private boolean boolHint1;
     private boolean boolHint2;
     private boolean boolHint3;
+    private final int riddleNb;
 
     private JTextArea currentStory;
     private JTextArea helpMessageGM;
@@ -44,14 +47,13 @@ public class PlayerManagement extends JPanel implements ActionListener{
     private Room room;
     private int enigmalistflag = 0;
 
-    private static volatile PlayerManagement INSTANCE = new PlayerManagement(Main.frame,null,-1,1,false,false,false);
-
     public PlayerManagement(GlobalFrame frame, Room room, int gameNb, int riddleNb, boolean boolHint1Revealed, boolean boolHint2Revealed, boolean boolHint3Revealed){
         this.frame = frame;
         this.boolHint1 = boolHint1Revealed;
         this.boolHint2 = boolHint2Revealed;
         this.boolHint3 = boolHint3Revealed;
-        this.room = room;
+        this.room = DBRoom.getRooms(Main.idAdmin).findByID(room.getId());
+        this.riddleNb=riddleNb;
 
         int width = (int) frame.windowSize.getWidth();
         int height = (int) frame.windowSize.getHeight();
@@ -222,8 +224,8 @@ public class PlayerManagement extends JPanel implements ActionListener{
         this.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                INSTANCE.revalidate();
-                INSTANCE.repaint();
+                frame.revalidate();
+                frame.repaint();
             }
         });
 
@@ -240,9 +242,23 @@ public class PlayerManagement extends JPanel implements ActionListener{
         this.add(Box.createRigidArea(new Dimension(0, 10)));
         this.add(bottomPan);
 
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    //int idAdmin = Client.refreshRoomAccess(user.getId());
+                    System.out.println(room.getUserInside());
+                    if(Admin.newRiddle(room.getUserInside())!=null) {
+                        frame.playerManagementDisplay(frame, room, gameNb, riddleNb+1, false, false, false);
+                    }
+                }
+            }
+        };
+        Thread t = new Thread(runnable);
+        t.start();
     }
 
-    public static PlayerManagement getInstance(GlobalFrame frame,Room room,int gameNb, int riddleNb, boolean boolHint1Revealed, boolean boolHint2Revealed,
+  /*  public static PlayerManagement getInstance(GlobalFrame frame,Room room,int gameNb, int riddleNb, boolean boolHint1Revealed, boolean boolHint2Revealed,
                                                boolean boolHint3Revealed){
         //Le "Double-Checked Singleton"/"Singleton doublement vérifié" permet
         //d'éviter un appel coûteux à synchronized,
@@ -265,7 +281,11 @@ public class PlayerManagement extends JPanel implements ActionListener{
             INSTANCE.boolHint3 = boolHint3Revealed;
 
             INSTANCE.title.setText(DBGame.getTitleGame(gameNb));
-            INSTANCE.room = room;
+            if(room!=null) {
+                System.out.println("id de ladmin "+Main.idAdmin);
+                System.out.println("room id"+room.getId());
+                INSTANCE.room = DBRoom.getRooms(Main.idAdmin).findByID(room.getId());
+            }
             INSTANCE.currentRiddles = DBEnigma.getEnigmas(gameNb);
             INSTANCE.currentStory.setText((INSTANCE.currentRiddles.getEnigma(riddleNb - 1)).getText());
             INSTANCE.answers.setText((INSTANCE.currentRiddles.getEnigma(riddleNb -1)).getAnswer());
@@ -296,8 +316,11 @@ public class PlayerManagement extends JPanel implements ActionListener{
             }
             INSTANCE.helpMessageGM.setText("");
         }
+
+
+
         return INSTANCE;
-    }
+    }*/
 
     private JButton hintButton(int i){
         JButton button = null;
@@ -331,7 +354,6 @@ public class PlayerManagement extends JPanel implements ActionListener{
         }
         button.setForeground(Color.black);
         button.setOpaque(true);
-        button.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         return button;
     }
 
@@ -340,23 +362,26 @@ public class PlayerManagement extends JPanel implements ActionListener{
             //Baptiste fonction envoyer le message aux joueurs
             String messageFromMJ = helpMessageGM.getText();
             System.out.println(messageFromMJ);
-            Admin.envoiInfoClient(messageFromMJ,0,room.getUserInside());
+            Admin.envoiAideJoueur(messageFromMJ,0,room.getUserInside());
             System.out.println("send");
         }else if(e.getSource() == buttonReturn){
             frame.roomManagementDisplay(frame);
         }else if(e.getSource()==buttonHint1){
             boolHint1=true;
             buttonHint1.setText("Indice 1 déjà affiché");
+            Admin.envoiAideJoueur(null,1,room.getUserInside());
             Admin.envoiInfoClient(null,1,room.getUserInside());
             buttonHint1.setBackground(Color.lightGray);
         }else if(e.getSource()==buttonHint2){
             boolHint2=true;
             buttonHint2.setText("Indice 2 déjà affiché");
+            Admin.envoiAideJoueur(null,2,room.getUserInside());
             Admin.envoiInfoClient(null,2,room.getUserInside());
             buttonHint2.setBackground(Color.lightGray);
         }else if(e.getSource()==buttonHint3){
             boolHint3=true;
             buttonHint3.setText("Indice 3 déjà affiché");
+            Admin.envoiAideJoueur(null,3,room.getUserInside());
             Admin.envoiInfoClient(null,3,room.getUserInside());
             buttonHint3.setBackground(Color.lightGray);
         }

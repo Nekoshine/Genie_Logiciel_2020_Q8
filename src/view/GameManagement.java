@@ -1,5 +1,6 @@
 package view;
 
+import Sockets.Admin;
 import database.DBEnigma;
 import database.DBGame;
 import database.DBRoom;
@@ -167,8 +168,10 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
                 INSTANCE.newButton.setVisible(false);
             }
             INSTANCE.returnButton.setBackground(ColorPerso.rouge);
+            INSTANCE.returnButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
             INSTANCE.newButton.setBackground(ColorPerso.grisFonce);
             INSTANCE.newButton.setForeground(Color.white);
+            INSTANCE.newButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         }
         return INSTANCE;
     }
@@ -362,6 +365,7 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
                     else{
                         DBRoom.insertRoom(Main.ListRoom.findByID(frame.roomNumber).getId(), jeu.getId(),competitionCheck.isSelected(),-1);
                     }
+                    Admin.refreshRoomAccess(Main.idAdmin);
                     frame.roomManagementDisplay(frame);
 
                 }

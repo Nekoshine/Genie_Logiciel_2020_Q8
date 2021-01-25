@@ -381,6 +381,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
 
                 if (countdownvalue == 0) {
                     countdowngame.stop();
+                    frame.defeatscreenDisplay(frame);
                 }
             }
         };
@@ -430,8 +431,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
             @Override
             public void run() {
                 while (true) {
-                    System.out.println(room.getId() + "   "+idUser);
-                    Object help = Client.recepGameInfo(5201+idUser);
+                    Object help = Client.recepHelpGame(idUser);
                     try {
                         if (help instanceof Message) {
                             Message mj = (Message) help;
@@ -516,7 +516,6 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
         }
 
         else if (event.getSource() == confirmButton){
-            nbErreur++;
             String answer = removeAccents(answerTextField.getText().toLowerCase());
             String[] possibility = allEnigmas.getEnigma(enigmalistflag).getAnswers1(); //reponse séparé par '/'
             boolean find = false;
@@ -537,7 +536,6 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
             }
             //si bonne reponse
             if (find) {
-                nbErreur --;
                 //si ce n'etait pas la derniere
                 if (enigmalistflag < allEnigmas.getSize() - 1) {
 
@@ -622,7 +620,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
                 }
                 //si derniere enigme
                 else{
-                    Score score = new Score(-1,game.getId(),room.getUserInside(),0);
+                    Score score = new Score(-1,game.getId(),idUser,0);
                     score.calculScore(room.getGame().getScore(), countdownvalue,nbErreur);
 
                     String message = game.getEndMessage();
@@ -635,14 +633,16 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
                     JScrollPane engMessageScroll = new JScrollPane(engMessage, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
                     engMessageScroll.getVerticalScrollBar().setUnitIncrement(20);
 
-                    JOptionPane.showMessageDialog(frame, engMessageScroll,"Félicitation", JOptionPane.WARNING_MESSAGE,imageIconValide);
                     frame.insideRoom = false;
                     room.setUserInside(-1);
                     DBRoom.majRoom(room.getId(),room.getGame().getId(),room.getCompetitive(),room.getUserInside());
 
+
                     if(room.getCompetitive()){
                         DBScore.insertScore(score);
                     }
+
+                    frame.victoryNoCompetitionScreenDisplay(frame,score.getScore());
 
                     int seconde = (3600-countdownvalue) % 60;
                     int minute = ((3600-countdownvalue) - seconde) / 60;
@@ -660,7 +660,9 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
 
             }
             //si mauvaise reponse
-            else{JOptionPane.showMessageDialog(frame, "Ce n'est pas la bonne reponse", "Raté !", JOptionPane.WARNING_MESSAGE,imageIconRefus);
+            else{
+                nbErreur++;
+                JOptionPane.showMessageDialog(frame, "Ce n'est pas la bonne reponse", "Raté !", JOptionPane.WARNING_MESSAGE,imageIconRefus);
             }
         }
 

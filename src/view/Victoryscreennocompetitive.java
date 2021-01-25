@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class Victoryscreennocompetitive extends JPanel implements ActionListener {
 
@@ -21,12 +22,32 @@ public class Victoryscreennocompetitive extends JPanel implements ActionListener
 
     private Image backgroundVictoire;
 
-    public Victoryscreennocompetitive(GlobalFrame frame) {
+    public Victoryscreennocompetitive(GlobalFrame frame,int score) {
 
         this.frame = frame;
         windowSize = frame.getSize();
         new ImageLoaderVictoryNoCo(this).execute();
 
+        JPanel panelScore = new JPanel();
+        JLabel labelScore = new JLabel("Votre score : " + score );
+        panelScore.setLayout(new FlowLayout(1));
+        labelScore.setForeground(Color.white);
+
+        try {
+            labelScore.setFont(Font.createFont(Font.TRUETYPE_FONT, Main.class.getResourceAsStream("/font/Lato.ttf")).deriveFont(Font.PLAIN,50));
+        } catch (FontFormatException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        panelScore.add(labelScore);
+        panelScore.setOpaque(false);
+        labelScore.setOpaque(false);
+
+        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+        this.add(Box.createRigidArea(new Dimension(0, 480)));
+        this.add(panelScore);
         this.setVisible(true);
     }
 

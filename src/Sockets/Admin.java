@@ -17,8 +17,6 @@ import java.util.Map;
 import static java.lang.Thread.sleep;
 
 public class Admin {
-  private static int port = 1096;
-  private static int portS=1100;
   private static Map<Integer,String> host = new HashMap<Integer, String>();
 
 /*  Map<String, String> map = new HashMap<String, String>();
@@ -26,10 +24,13 @@ map.put("dog", "type of animal");
 System.out.println(map.get("dog"));
   */
 
-
-  public static void setServerAdmin(int idUserAdmin){
+  /**
+   * autoriser un joueur à jouer
+   * @param idAdmin l'id de l'admin sur le reseau
+   */
+  public static void setServerAdmin(int idAdmin){
     try{
-      ServerSocket s = new ServerSocket(port);
+      ServerSocket s = new ServerSocket(1096);
       Socket socket = s.accept();
       
       ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
@@ -41,30 +42,20 @@ System.out.println(map.get("dog"));
         System.out.println("adresse ip du client :" + host.get(user.getIdUser()));
 
         if(user.getFirstConn()){
-          System.out.println("Je renvoie l'id de l'admin " + idUserAdmin);
+          System.out.println("Je renvoie l'id de l'admin " + idAdmin);
           ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-          AdminInfo signal = new AdminInfo(idUserAdmin);
-          out.writeObject(signal);
+          out.writeObject(idAdmin);
         }else{
           boolean reponse = false;
 
           
-          System.out.println("Veux tu autoriser la connexion  de ? " + user.getIdUser());/*
-          Scanner sc = new Scanner (System.in);
-          int reponseVal = sc.nextInt();
-          if (reponseVal==1){
-          reponse=true;
-        }*/
-        User logged = DBUser.getUser(user.getIdUser()); // On récupere le login de l'user qui demande à se connecter
-        reponse = Main.frame.AcceptUser(logged.getLogin(),user.getSalle()); //pop up demande de connexion
-        
-        
-        ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-        if (reponse){ // Si cest le bon user alors on lui dit quon accepte sa demande de jeu
-          System.out.println("Je renvoie oui");
-          Reponse signal = new Reponse("Oui");
-          out.writeObject(signal);
-        }
+          System.out.println("Veux tu autoriser la connexion  de ? " + user.getIdUser());
+          User logged = DBUser.getUser(user.getIdUser()); // On récupere le login de l'user qui demande à se connecter
+          reponse = Main.frame.AcceptUser(logged.getLogin(),user.getSalle()); //pop up demande de connexion
+
+          ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+          out.writeObject(reponse);
+
       }
     }
     Thread.sleep(4);
@@ -80,8 +71,13 @@ System.out.println(map.get("dog"));
 }
 
 
-
-public static void envoiInfoClient(String message,int idIndice,int idUser){
+  /**
+   * envoyer de l'aide au joueur
+   * @param message helper
+   * @param idIndice l'inde a deveroullé
+   * @param idUser le joueur
+   */
+  public static void envoiAideJoueur(String message, int idIndice, int idUser){
     System.out.println(idUser);
   try{
     if(message != null ){      
@@ -103,4 +99,25 @@ public static void envoiInfoClient(String message,int idIndice,int idUser){
     System.out.println("IOException :" + e.getMessage());
   }
 }
+
+  /**
+   * ordre d'actualisé l'affichage de roomAccess
+   * @param iAdmin sur le reseau
+   */
+  public static void refreshRoomAccess(int iAdmin){
+    try{
+      for (Map.Entry mapentry : host.entrySet()) {
+        System.out.println("clé: " + mapentry.getKey()
+                + " | valeur: " + mapentry.getValue());
+
+        int idUser = (int)mapentry.getKey();
+        Socket socket = new Socket((String) mapentry.getValue(), 1629+idUser);
+        ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+        out.writeObject(iAdmin);
+        socket.close();
+      }
+    } catch(IOException e){
+      System.out.println("IOException :" + e.getMessage());
+    }
+  }
 }

@@ -19,7 +19,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.IOException;
 
 public class RoomAccess extends JPanel implements ActionListener,MouseListener {
 
@@ -141,6 +140,18 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
         this.setBackground(ColorPerso.darkGray);
         this.setVisible(true);
 
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    System.out.println(user.getLogin());
+                    int idAdmin = Client.refreshRoomAccess(user.getId());
+                    frame.roomAccessDisplay(frame,DBRoom.getRooms(idAdmin),user);
+                }
+            }
+        };
+        Thread t = new Thread(runnable);
+        t.start();
     }
 
     public static RoomAccess getInstance(GlobalFrame frame, RoomList roomList,User user) {
@@ -232,7 +243,7 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
 
                 if(salle.getUserInside()==-1){
                     JOptionPane.showMessageDialog(null, "Le MJ va valider votre connection", "Connexion en cours", JOptionPane.INFORMATION_MESSAGE,null);
-                    if(Client.connectToServer(user.getId(),salle)){
+                    if(Client.connexionRoom(user.getId(),salle)){
                         frame.currentGameDisplay(frame,salle.getGame(),salle.getId(),user.getId());
                         salle.setUserInside(user.getId());
                         //DBRoom.majRoom(salle.getId(),salle.getGame().getId(),salle.getCompetitive(),salle.getUserInside());
@@ -310,7 +321,7 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
         for (int i = 0; i < ListRoom.getSize(); i++) {
 
             JPanel panelSalle = this.ajoutSalle(ListRoom.getRoom(i), gbc,i+1);
-            panelSalle.setPreferredSize(new Dimension(listPanel.getWidth() - 45, 75));
+            panelSalle.setPreferredSize(new Dimension((int) (GlobalFrame.windowSize.getWidth() - 45), 75));
             roomPanel.add(panelSalle, gbc);
             listPanel.revalidate();
             listPanel.repaint();
