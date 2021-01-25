@@ -211,7 +211,7 @@ public class GlobalFrame extends JFrame {
         roomAccess = new RoomAccess(frame,roomList,user);
         setContentPane(roomAccess);
         frame.setSize(1280,720);
-        frame.setLocationRelativeTo(null);
+        frame.setExtendedState(MAXIMIZED_BOTH);
         frame.setResizable(true);
         frame.revalidate();
         frame.repaint();
