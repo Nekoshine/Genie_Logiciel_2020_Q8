@@ -35,10 +35,10 @@ public class Client {
       out.writeObject(signal);
       ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
       Object oserver =  in.readObject();
-      Reponse reponse = new Reponse("");
-      if(oserver instanceof Reponse){
-        reponse = (Reponse) oserver;
-        if((reponse.getReponse()).equals("Oui")){
+      boolean reponse = false;
+      if(oserver instanceof Boolean){
+        reponse = (boolean) oserver;
+        if(reponse){
           System.out.println("C'est autorisé");
           accept=true;
         }else{
@@ -77,11 +77,11 @@ public class Client {
       
       ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
       Object oserver =  in.readObject();
-      AdminInfo user = new AdminInfo(0);
-      if(oserver instanceof AdminInfo){
-        user = (AdminInfo) oserver;
-        System.out.println("RAI idUser : "+user.getIdUserAdmin());
-        idAdmin=user.getIdUserAdmin();
+      int user;
+      if(oserver instanceof Integer){
+        user = (int) oserver;
+        System.out.println("RAI idUser : "+user);
+        idAdmin=user;
       }
       socket.close();
     }catch(IOException e){
@@ -152,6 +152,17 @@ public class Client {
       return (int) obj;
     }
     return 0;
+  }
+
+  public static void endRiddle(int idUser, Game game){
+    try{
+      Socket socket = new Socket(host,idUser+3020);
+      ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+      out.writeObject(game);
+      socket.close();
+    } catch(IOException e){
+      System.out.println("IOException :" + e.getMessage());
+    }
   }
 
 }

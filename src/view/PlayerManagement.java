@@ -1,8 +1,10 @@
 package view;
 
 import Sockets.Admin;
+import Sockets.Client;
 import database.DBEnigma;
 import database.DBGame;
+import database.DBRoom;
 import launcher.Main;
 import model.Enigma;
 import model.EnigmaList;
@@ -33,6 +35,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
     private boolean boolHint1;
     private boolean boolHint2;
     private boolean boolHint3;
+    private final int riddleNb;
 
     private JTextArea currentStory;
     private JTextArea helpMessageGM;
@@ -42,14 +45,13 @@ public class PlayerManagement extends JPanel implements ActionListener{
 
     private Room room;
 
-    private static volatile PlayerManagement INSTANCE = new PlayerManagement(Main.frame,null,-1,1,false,false,false);
-
     public PlayerManagement(GlobalFrame frame, Room room, int gameNb, int riddleNb, boolean boolHint1Revealed, boolean boolHint2Revealed, boolean boolHint3Revealed){
         this.frame = frame;
         this.boolHint1 = boolHint1Revealed;
         this.boolHint2 = boolHint2Revealed;
         this.boolHint3 = boolHint3Revealed;
-        this.room = room;
+        this.room = DBRoom.getRooms(Main.idAdmin).findByID(room.getId());
+        this.riddleNb=riddleNb;
 
         int width = (int) frame.windowSize.getWidth();
         int height = (int) frame.windowSize.getHeight();
@@ -221,8 +223,8 @@ public class PlayerManagement extends JPanel implements ActionListener{
         this.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                INSTANCE.revalidate();
-                INSTANCE.repaint();
+                frame.revalidate();
+                frame.repaint();
             }
         });
 
@@ -235,9 +237,23 @@ public class PlayerManagement extends JPanel implements ActionListener{
         this.add(helpGMPan);
         this.add(bottomPan);
 
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    //int idAdmin = Client.refreshRoomAccess(user.getId());
+                    System.out.println(room.getUserInside());
+                    if(Admin.newRiddle(room.getUserInside())!=null) {
+                        frame.playerManagementDisplay(frame, room, gameNb, riddleNb+1, false, false, false);
+                    }
+                }
+            }
+        };
+        Thread t = new Thread(runnable);
+        t.start();
     }
 
-    public static PlayerManagement getInstance(GlobalFrame frame,Room room,int gameNb, int riddleNb, boolean boolHint1Revealed, boolean boolHint2Revealed,
+  /*  public static PlayerManagement getInstance(GlobalFrame frame,Room room,int gameNb, int riddleNb, boolean boolHint1Revealed, boolean boolHint2Revealed,
                                                boolean boolHint3Revealed){
         //Le "Double-Checked Singleton"/"Singleton doublement vérifié" permet
         //d'éviter un appel coûteux à synchronized,
@@ -260,7 +276,11 @@ public class PlayerManagement extends JPanel implements ActionListener{
             INSTANCE.boolHint3 = boolHint3Revealed;
 
             INSTANCE.title.setText(DBGame.getTitleGame(gameNb));
-            INSTANCE.room = room;
+            if(room!=null) {
+                System.out.println("id de ladmin "+Main.idAdmin);
+                System.out.println("room id"+room.getId());
+                INSTANCE.room = DBRoom.getRooms(Main.idAdmin).findByID(room.getId());
+            }
             INSTANCE.currentRiddles = DBEnigma.getEnigmas(gameNb);
             INSTANCE.currentStory.setText((INSTANCE.currentRiddles.getEnigma(riddleNb - 1)).getText());
             INSTANCE.answers.setText((INSTANCE.currentRiddles.getEnigma(riddleNb -1)).getAnswer());
@@ -285,8 +305,11 @@ public class PlayerManagement extends JPanel implements ActionListener{
             }
             INSTANCE.helpMessageGM.setText("");
         }
+
+
+
         return INSTANCE;
-    }
+    }*/
 
     private JButton hintButton(int i){
         JButton button;
