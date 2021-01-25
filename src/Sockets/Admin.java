@@ -17,7 +17,7 @@ import static java.lang.Thread.sleep;
 public class Admin {
   private static int port = 1096;
   private static int portS=1100;
-  private static String host = "127.0.0.1"; //localhost
+  private static String host;
   
   public static void setServerAdmin(int idUserAdmin){
     try{
@@ -28,8 +28,10 @@ public class Admin {
       Object oserver =  in.readObject();
       if(oserver instanceof DemandeConnexion){
         DemandeConnexion user = (DemandeConnexion) oserver;
+        host=user.getIp();
         System.out.println("SSA idUser : "+user.getIdUser());
-        
+        System.out.println("adresse ip du client :" + host);
+
         if(user.getFirstConn()){
           System.out.println("Je renvoie l'id de l'admin " + idUserAdmin);
           ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
@@ -61,7 +63,7 @@ public class Admin {
     socket.close();
     
   }catch(IOException e){
-    System.out.println("IOException : "+ e.getMessage());
+    //System.out.println("IOException : "+ e.getMessage());
   }catch(ClassNotFoundException e){
     System.out.println("ClassNotFoundException : "+ e.getMessage());
   }catch(InterruptedException  e){
@@ -76,6 +78,8 @@ public static void envoiInfoClient(String message,int idIndice,int portC){
   try{
     if(message != null ){      
       Socket socket = new Socket(host,portC);
+      System.out.println("ip du client" + host);
+
       ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
       Message msgSend = new Message(message);
       out.writeObject(msgSend);
