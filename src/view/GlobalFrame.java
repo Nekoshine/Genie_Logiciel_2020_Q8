@@ -208,7 +208,7 @@ public class GlobalFrame extends JFrame {
 
     public void roomAccessDisplay(GlobalFrame frame, RoomList roomList, User user){
 
-        roomAccess = RoomAccess.getInstance(frame,roomList,user);
+        roomAccess = new RoomAccess(frame,roomList,user);
         setContentPane(roomAccess);
         frame.setSize(1280,720);
         frame.setLocationRelativeTo(null);

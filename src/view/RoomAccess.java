@@ -37,8 +37,7 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
 
     public User user;
 
-    private static volatile RoomAccess INSTANCE = new RoomAccess(Main.frame,Main.ListRoom,new User(1,"","",false));
-    private RoomAccess(GlobalFrame frame,RoomList roomList,User user){
+    RoomAccess(GlobalFrame frame,RoomList roomList,User user){
 
         this.frame = frame;
         this.user = user;
@@ -143,40 +142,13 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                while (true) {
-                    System.out.println(user.getLogin());
-                    int idAdmin = Client.refreshRoomAccess(user.getId());
-                    frame.roomAccessDisplay(frame,DBRoom.getRooms(idAdmin),user);
-                }
+                    RoomList a = Client.refreshRoomAccess(user.getId());
+                    frame.roomAccessDisplay(frame,a,user);
             }
         };
         Thread t = new Thread(runnable);
         t.start();
     }
-
-    public static RoomAccess getInstance(GlobalFrame frame, RoomList roomList,User user) {
-        //Le "Double-Checked Singleton"/"Singleton doublement vérifié" permet
-        //d'éviter un appel coûteux à synchronized,
-        //une fois que l'instanciation est faite.
-        if (INSTANCE == null) {
-            // Le mot-clé synchronized sur ce bloc empêche toute instanciation
-            // multiple même par différents "threads".
-            // Il est TRES important.
-            synchronized(INSTANCE) {
-                if (INSTANCE == null) {
-                    INSTANCE = new RoomAccess(frame,roomList,user);
-                }
-            }
-        }
-        else {
-            INSTANCE.frame=frame;
-            INSTANCE.ListRoom=roomList;
-            INSTANCE.createList();
-            INSTANCE.user=user;
-        }
-        return INSTANCE;
-    }
-
 
     /**
      * La méthode ajoutSalle() permet l'ajout d'une salle à l'interface de gestion des salles.

@@ -107,9 +107,6 @@ System.out.println(map.get("dog"));
   public static void refreshRoomAccess(int iAdmin){
     try{
       for (Map.Entry mapentry : host.entrySet()) {
-        System.out.println("clé: " + mapentry.getKey()
-                + " | valeur: " + mapentry.getValue());
-
         int idUser = (int)mapentry.getKey();
         Socket socket = new Socket((String) mapentry.getValue(), 1629+idUser);
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
@@ -121,20 +118,4 @@ System.out.println(map.get("dog"));
     }
   }
 
-  public static Game newRiddle(int idUser) {
-      try{
-        ServerSocket s = new ServerSocket(3020+idUser);
-        Socket socket = s.accept();
-
-        ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-        Object oserver =  in.readObject();
-
-        if(oserver instanceof Game){
-          return (Game) oserver;
-        }
-      } catch(IOException | ClassNotFoundException e){
-        System.out.println("IOException :" + e.getMessage());
-      }
-    return null;
-  }
 }

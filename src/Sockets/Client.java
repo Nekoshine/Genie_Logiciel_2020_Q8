@@ -4,6 +4,7 @@ import database.DBRoom;
 import launcher.Main;
 import model.Game;
 import model.Room;
+import model.RoomList;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -131,10 +132,14 @@ public class Client {
    * @param idUser qui recoit l'ordre
    * @return idadmin
    */
-  public static int refreshRoomAccess(int idUser){
+  public static RoomList refreshRoomAccess(int idUser){
+    System.out.println("idUser : " +idUser);
+    System.out.println("idUser : " +idUser);
+    System.out.println("idUser : " +idUser);
+    System.out.println("idUser : " +idUser);
+    System.out.println("idUser : " +idUser);
     System.out.println("idUser : " +idUser);
     if(idUser!=9){idUser=9;}
-    Main.ListRoom= DBRoom.getRooms(Main.idAdmin);
     Object obj= null;
     try{
       ServerSocket s = new ServerSocket(1629+idUser);
@@ -149,20 +154,9 @@ public class Client {
       System.out.println("ClassNotFoundException : "+ e.getMessage());
     }
     if(obj instanceof Integer){
-      return (int) obj;
+      return DBRoom.getRooms((int) obj);
     }
-    return 0;
-  }
-
-  public static void endRiddle(int idUser, Game game){
-    try{
-      Socket socket = new Socket(host,idUser+3020);
-      ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-      out.writeObject(game);
-      socket.close();
-    } catch(IOException e){
-      System.out.println("IOException :" + e.getMessage());
-    }
+    return null;
   }
 
 }
