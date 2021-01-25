@@ -1,10 +1,12 @@
 package view;
 
+import Sockets.Admin;
 import database.DBEnigma;
 import database.DBGame;
 import launcher.Main;
 import model.Enigma;
 import model.EnigmaList;
+import model.Room;
 import view.style.ColorPerso;
 import view.style.FontPerso;
 
@@ -34,17 +36,21 @@ public class PlayerManagement extends JPanel implements ActionListener{
     private boolean boolHint3;
 
     private JTextArea currentStory;
+    private JTextArea helpMessageGM;
     private EnigmaList currentRiddles;
     private JLabel title;
     private JLabel answers;
 
-    private static volatile PlayerManagement INSTANCE = new PlayerManagement(Main.frame,-1,1,false,false,false);
+    private Room room;
 
-    public PlayerManagement(GlobalFrame frame,int gameNb, int riddleNb, boolean boolHint1Revealed, boolean boolHint2Revealed, boolean boolHint3Revealed){
+    private static volatile PlayerManagement INSTANCE = new PlayerManagement(Main.frame,null,-1,1,false,false,false);
+
+    public PlayerManagement(GlobalFrame frame, Room room, int gameNb, int riddleNb, boolean boolHint1Revealed, boolean boolHint2Revealed, boolean boolHint3Revealed){
         this.frame = frame;
         this.boolHint1 = boolHint1Revealed;
         this.boolHint2 = boolHint2Revealed;
         this.boolHint3 = boolHint3Revealed;
+        this.room = room;
 
         int width = (int) frame.windowSize.getWidth();
         int height = (int) frame.windowSize.getHeight();
@@ -139,7 +145,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
         answersPan.add(scrollAnswersPanIn);
         answersPan.setBorder(BorderFactory.createEmptyBorder(0,0,20,0));
 
-        JTextArea helpMessageGM = new JTextArea();
+        helpMessageGM = new JTextArea();
         helpMessageGM.setLineWrap(true);
         helpMessageGM.setWrapStyleWord(true);
         helpMessageGM.setFont(FontPerso.Oxanimum);
@@ -229,7 +235,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
 
     }
 
-    public static PlayerManagement getInstance(GlobalFrame frame,int gameNb, int riddleNb, boolean boolHint1Revealed, boolean boolHint2Revealed,
+    public static PlayerManagement getInstance(GlobalFrame frame,Room room,int gameNb, int riddleNb, boolean boolHint1Revealed, boolean boolHint2Revealed,
                                                boolean boolHint3Revealed){
         //Le "Double-Checked Singleton"/"Singleton doublement vérifié" permet
         //d'éviter un appel coûteux à synchronized,
@@ -240,7 +246,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
             // Il est TRES important.
             synchronized(INSTANCE) {
                 if (INSTANCE == null) {
-                    INSTANCE = new PlayerManagement(frame,gameNb, riddleNb, boolHint1Revealed, boolHint2Revealed,
+                    INSTANCE = new PlayerManagement(frame,room,gameNb, riddleNb, boolHint1Revealed, boolHint2Revealed,
                     boolHint3Revealed);
                 }
             }
@@ -252,6 +258,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
             INSTANCE.boolHint3 = boolHint3Revealed;
 
             INSTANCE.title.setText(DBGame.getTitleGame(gameNb));
+            INSTANCE.room = room;
             INSTANCE.currentRiddles = DBEnigma.getEnigmas(gameNb);
             INSTANCE.currentStory.setText((INSTANCE.currentRiddles.getEnigma(riddleNb - 1)).getText());
             INSTANCE.answers.setText((INSTANCE.currentRiddles.getEnigma(riddleNb -1)).getAnswer());
@@ -280,6 +287,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
                 INSTANCE.buttonHint3.setText("Afficher l'indice 3");
                 INSTANCE.buttonHint3.setBackground(Color.white);
             }
+            INSTANCE.helpMessageGM.setText("");
         }
         return INSTANCE;
     }
@@ -313,20 +321,26 @@ public class PlayerManagement extends JPanel implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==helpButtonGM){
             //Baptiste fonction envoyer le message aux joueurs
-            String messageFromMJ = helpButtonGM.getText();
+            String messageFromMJ = helpMessageGM.getText();
+            System.out.println(messageFromMJ);
+            Admin.envoiInfoClient(messageFromMJ,0,room.getUserInside());
+            System.out.println("send");
         }else if(e.getSource() == buttonReturn){
             frame.roomManagementDisplay(frame);
         }else if(e.getSource()==buttonHint1){
             boolHint1=true;
             buttonHint1.setText("Indice 1 déjà affiché");
+            Admin.envoiInfoClient(null,1,room.getUserInside());
             buttonHint1.setBackground(Color.lightGray);
         }else if(e.getSource()==buttonHint2){
             boolHint2=true;
             buttonHint2.setText("Indice 2 déjà affiché");
+            Admin.envoiInfoClient(null,2,room.getUserInside());
             buttonHint2.setBackground(Color.lightGray);
         }else if(e.getSource()==buttonHint3){
             boolHint3=true;
             buttonHint3.setText("Indice 3 déjà affiché");
+            Admin.envoiInfoClient(null,3,room.getUserInside());
             buttonHint3.setBackground(Color.lightGray);
         }
     }

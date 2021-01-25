@@ -10,14 +10,13 @@ import model.GameList;
 import view.style.ColorPerso;
 import view.style.FontPerso;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
+import java.io.IOException;
 
 
 public class GameManagement extends JPanel implements ActionListener, MouseListener {
@@ -36,12 +35,13 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
 
     private GlobalFrame frame;
 
+
+
     private static volatile GameManagement INSTANCE = new GameManagement(Main.frame,-1);
 
     private GameManagement(GlobalFrame frame, int roomNumber){
 
         this.frame = frame;
-
         /* Provenance */
         frame.roomNumber = roomNumber;
 
@@ -120,6 +120,15 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
 
         returnButton.addActionListener(this);
         returnButton.addMouseListener(this);
+
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                GlobalFrame.windowSize = Main.frame.getSize();
+                INSTANCE.revalidate();
+                INSTANCE.repaint();
+            }
+        });
 
         this.setLayout(mainLayout);
         this.setBackground(ColorPerso.darkGray);
@@ -220,12 +229,15 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
 
                 @Override
                 public void mouseEntered(MouseEvent e) {
+
                     buttonModify.setBackground(ColorPerso.jauneHoover);
+                    buttonModify.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
                 }
 
                 @Override
                 public void mouseExited(MouseEvent e) {
                     buttonModify.setBackground(ColorPerso.jaune);
+                    buttonModify.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
                 }
             });
 
@@ -296,10 +308,33 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
             boutonChoix.setPreferredSize(new Dimension( 200, 50));
             boutonChoix.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
             JPanel checkPanel = new JPanel();
-            JCheckBox competitionCheck = new JCheckBox("Mode Compétitif");
-            checkPanel.add(Box.createVerticalGlue());
+            checkPanel.setLayout(new BorderLayout());
+            JCheckBox competitionCheck = new JCheckBox("  Mode Compétitif");
+            ImageIcon selected = null;
+            ImageIcon unselected = null;
+            try {
+                selected = new ImageIcon(new ImageIcon(ImageIO.read(Main.class.getResourceAsStream("/image/checkboxON.png"))).getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+                unselected = new ImageIcon(new ImageIcon(ImageIO.read(Main.class.getResourceAsStream("/image/checkboxOFF.png"))).getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            ImageIcon finalSelected = selected;
+            ImageIcon finalUnselected = unselected;
+            competitionCheck.setIcon(finalUnselected);
+            competitionCheck.addItemListener(new ItemListener() {
+                @Override
+                public void itemStateChanged(ItemEvent e) {
+                    if (competitionCheck.isSelected()) {
+                        competitionCheck.setIcon(finalSelected);
+                    }
+                    else {
+                        competitionCheck.setIcon(finalUnselected);
+                    }
+                }
+            });
+            competitionCheck.setHorizontalAlignment(SwingConstants.CENTER);
+            competitionCheck.setVerticalAlignment(SwingConstants.CENTER);
             checkPanel.add(competitionCheck, BorderLayout.CENTER);
-            checkPanel.add(Box.createVerticalGlue());
             panelChoose.setLayout(checkLayout);
             panelChoose.add(boutonChoix,BorderLayout.CENTER);
             panelChoose.setBorder(BorderFactory.createEmptyBorder(10,20,10,20));
@@ -378,7 +413,7 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
         for(int i = 0; i<nbGames; i++){
             listPanel.remove(newButtonPanel);
             JPanel panelGame = this.ajoutJeu(ListGame.getGame(i), gbc,i+1);
-            panelGame.setPreferredSize(new Dimension(listPanel.getWidth() - 45, 100));
+            panelGame.setPreferredSize(new Dimension((int) (GlobalFrame.windowSize.getWidth() - 85), 100));
             gamePanel.add(panelGame, gbc);
             listPanel.add(newButtonPanel, BorderLayout.PAGE_END);
             listPanel.revalidate();

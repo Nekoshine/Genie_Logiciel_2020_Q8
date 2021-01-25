@@ -10,6 +10,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
 
 
 import static java.lang.Thread.sleep;
@@ -17,8 +19,14 @@ import static java.lang.Thread.sleep;
 public class Admin {
   private static int port = 1096;
   private static int portS=1100;
-  private static String host = "127.0.0.1"; //localhost
-  
+  private static Map<Integer,String> host = new HashMap<Integer, String>();
+
+/*  Map<String, String> map = new HashMap<String, String>();
+map.put("dog", "type of animal");
+System.out.println(map.get("dog"));
+  */
+
+
   public static void setServerAdmin(int idUserAdmin){
     try{
       ServerSocket s = new ServerSocket(port);
@@ -28,8 +36,10 @@ public class Admin {
       Object oserver =  in.readObject();
       if(oserver instanceof DemandeConnexion){
         DemandeConnexion user = (DemandeConnexion) oserver;
+        host.put(user.getIdUser(),user.getIp());
         System.out.println("SSA idUser : "+user.getIdUser());
-        
+        System.out.println("adresse ip du client :" + host.get(user.getIdUser()));
+
         if(user.getFirstConn()){
           System.out.println("Je renvoie l'id de l'admin " + idUserAdmin);
           ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
@@ -61,7 +71,7 @@ public class Admin {
     socket.close();
     
   }catch(IOException e){
-    System.out.println("IOException : "+ e.getMessage());
+    //System.out.println("IOException : "+ e.getMessage());
   }catch(ClassNotFoundException e){
     System.out.println("ClassNotFoundException : "+ e.getMessage());
   }catch(InterruptedException  e){
@@ -71,16 +81,19 @@ public class Admin {
 
 
 
-public void envoiInfoClient(String message,int idIndice){
+public static void envoiInfoClient(String message,int idIndice,int idUser){
+    System.out.println(idUser);
   try{
     if(message != null ){      
-      Socket socket = new Socket(host,portS);
+      Socket socket = new Socket(host.get(idUser),idUser+5201);
+      System.out.println("ip du client" + host.get(idUser));
+
       ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
       Message msgSend = new Message(message);
       out.writeObject(msgSend);
       socket.close();
     }else{
-      Socket socket = new Socket(host,portS);
+      Socket socket = new Socket(host.get(idUser),idUser+5201);
       ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
       Indice indiceS = new Indice(idIndice);
       out.writeObject(indiceS);

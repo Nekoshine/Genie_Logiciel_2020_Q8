@@ -1,10 +1,12 @@
 package view;
 
+import database.DBScore;
 import database.DBUser;
 import launcher.Main;
 import model.Game;
 import model.Score;
 import model.ScoreList;
+import model.User;
 import view.style.ColorPerso;
 
 import javax.imageio.ImageIO;
@@ -12,8 +14,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.Buffer;
 
 public class Ranking extends JFrame implements ActionListener{
 
@@ -38,21 +42,45 @@ public class Ranking extends JFrame implements ActionListener{
 
     private Dimension windowSize;
 
-    public Ranking(Game game){
+    private Icon iconOr;
+    private Icon iconArgent;
+    private Icon iconBronze;
+
+    private User user;
+
+    public Ranking(Game game,User user){
 
         this.setSize(500,700);
         windowSize = this.getSize();
 
-        scoreList = new ScoreList();
-        scoreList.addScore(new Score(1,2,10,20000));
-        scoreList.addScore(new Score(2,2,6,1000));
-        scoreList.addScore(new Score(3,2,4,200));
-        scoreList.addScore(new Score(4,2,6,1000));
-        scoreList.addScore(new Score(5,2,4,200));
-        scoreList.addScore(new Score(6,2,6,1000));
-        scoreList.addScore(new Score(7,2,4,200));
-        scoreList.addScore(new Score(8,2,6,1000));
-        scoreList.addScore(new Score(9,2,4,200));
+        this.user = user;
+
+        InputStream isOr = Main.class.getResourceAsStream("/image/or.png");
+        InputStream isArgent = Main.class.getResourceAsStream("/image/argent.png");
+        InputStream isBronze = Main.class.getResourceAsStream("/image/bronze.png");
+
+        BufferedImage or = null;
+        BufferedImage argent = null;
+        BufferedImage bronze = null;
+
+        try {
+            or = ImageIO.read(isOr);
+            argent = ImageIO.read(isArgent);
+            bronze = ImageIO.read(isBronze);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        or.getScaledInstance(10,10,Image.SCALE_DEFAULT);
+        argent.getScaledInstance(10,10,Image.SCALE_DEFAULT);
+        bronze.getScaledInstance(10,10,Image.SCALE_DEFAULT);
+
+        iconOr = new ImageIcon(or);
+        iconArgent = new ImageIcon(argent);
+        iconBronze = new ImageIcon(bronze);
+
+        scoreList = DBScore.getScoreFromGame(game.getId());
 
         generalLayout = new BorderLayout(10,10);
 
@@ -97,8 +125,12 @@ public class Ranking extends JFrame implements ActionListener{
 
         for (int i = 0;i< scoreList.getSize();i++){
 
-            JPanel panel = ajoutResultat(scoreList.getScore(i),gbc);
-            panel.setPreferredSize(new Dimension((int) windowSize.getWidth()-85,50));
+            JPanel panel = ajoutResultat(scoreList.getScore(i),gbc,i);
+            if (i==0 || i==1 || i==2)
+                panel.setPreferredSize(new Dimension((int) windowSize.getWidth()-85,75));
+            else
+                panel.setPreferredSize(new Dimension((int) windowSize.getWidth() - 85, 50));
+
             rankingPanel.add(panel,gbc);
             mainPanel.revalidate();
             mainPanel.repaint();
@@ -107,7 +139,6 @@ public class Ranking extends JFrame implements ActionListener{
 
         mainPanel.setLayout(mainLayout);
         mainPanel.add(scrollPane,BorderLayout.CENTER);
-        mainPanel.add(refreshPanel,BorderLayout.SOUTH);
         mainPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
 
         generalPanel.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
@@ -125,7 +156,7 @@ public class Ranking extends JFrame implements ActionListener{
 
     }
 
-    public JPanel ajoutResultat(Score score,GridBagConstraints gbc){
+    public JPanel ajoutResultat(Score score,GridBagConstraints gbc,int i){
 
         gbc.fill = GridBagConstraints.BOTH;
         gbc.weightx = 1.0;
@@ -137,17 +168,36 @@ public class Ranking extends JFrame implements ActionListener{
         JPanel panelResultat = new JPanel();
         GridLayout grid = new GridLayout(1,3);
 
-        JLabel placeLabel = new JLabel(String.valueOf(score.getId()));
+        JLabel placeLabel = new JLabel();
+
+        if (i==0){
+            placeLabel.setIcon(iconOr);
+        }
+        else if (i==1){
+            placeLabel.setIcon(iconArgent);
+        }
+        else if (i==2){
+            placeLabel.setIcon(iconBronze);
+        }
+
+        else{
+            int rank = i+1;
+            placeLabel.setText("<html><body><strong>" + rank +"</strong></body></html>");
+        }
+
         placeLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        placeLabel.setBorder(BorderFactory.createLineBorder(Color.black));
 
         JLabel userLabel = new JLabel(DBUser.getUser(score.getIdUser()).getLogin());
         userLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        userLabel.setBorder(BorderFactory.createLineBorder(Color.black));
 
         JLabel scoreLabel = new JLabel(score.getScore() + " pts");
         scoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        scoreLabel.setBorder(BorderFactory.createLineBorder(Color.black));
+
+        if (user !=null){
+            if (DBUser.getUser(score.getIdUser()).getLogin().equals(user.getLogin())){
+                panelResultat.setBackground(ColorPerso.bleu);
+            }
+        }
 
         panelResultat.setLayout(grid);
         panelResultat.add(placeLabel);
@@ -155,10 +205,10 @@ public class Ranking extends JFrame implements ActionListener{
         panelResultat.add(scoreLabel);
 
         panelResultat.setBorder(BorderFactory.createLineBorder(Color.black,2));
-        panelResultat.setPreferredSize(new Dimension((int) windowSize.getWidth()-85,(int) (windowSize.getHeight()* 0.2)));
+        panelResultat.setPreferredSize(new Dimension((int) windowSize.getWidth()-85,40));
         System.out.println(windowSize.getWidth());
 
-        return  panelResultat;
+        return panelResultat;
 
     }
 

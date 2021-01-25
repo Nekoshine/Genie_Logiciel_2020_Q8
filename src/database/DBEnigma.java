@@ -104,14 +104,14 @@ public class DBEnigma extends DBConnexion{
                   requete.setString(2,text);
                   requete.setString(3,answer);
                   requete.setString(4,clue1);
-                  if(timer1==-1){
-                        requete.setNull(5, Types.INTEGER);
+                  requete.setInt(5,timer1);
+
+                  if(clue2=="" || clue2==null){
+                        requete.setNull(6, Types.NULL);
                   }
                   else {
-                        requete.setInt(5,timer1);
+                        requete.setString(6,clue2);
                   }
-
-                  requete.setString(6,clue2);
 
                   if(timer2==-1){
                         requete.setNull(7, Types.INTEGER);
@@ -120,7 +120,12 @@ public class DBEnigma extends DBConnexion{
                         requete.setInt(7,timer2);
                   }
 
-                  requete.setString(8,clue3);
+                  if(clue3=="" || clue3==null){
+                        requete.setNull(8, Types.NULL);
+                  }
+                  else {
+                        requete.setString(8,clue3);
+                  }
 
                   if(timer3==-1){
                         requete.setNull(9, Types.INTEGER);
@@ -166,10 +171,35 @@ public class DBEnigma extends DBConnexion{
                   requete.setString(2, answer);
                   requete.setString(3, clue1);
                   requete.setInt(4, timer1);
-                  requete.setString(5, clue2);
-                  requete.setInt(6, timer2);
-                  requete.setString(7, clue3);
-                  requete.setInt(8, timer3);
+
+                  if(clue2=="" || clue2==null){
+                        requete.setNull(5, Types.NULL);
+                  }
+                  else {
+                        requete.setString(5,clue2);
+                  }
+
+                  if(timer2==-1){
+                        requete.setNull(6, Types.INTEGER);
+                  }
+                  else {
+                        requete.setInt(6,timer2);
+                  }
+
+                  if(clue3=="" || clue3==null){
+                        requete.setNull(7, Types.NULL);
+                  }
+                  else {
+                        requete.setString(7,clue3);
+                  }
+
+                  if(timer3==-1){
+                        requete.setNull(8, Types.INTEGER);
+                  }
+                  else {
+                        requete.setInt(8,timer3);
+                  }
+
                   requete.setInt(9, id);
 
                   requete.executeUpdate();

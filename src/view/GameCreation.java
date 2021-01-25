@@ -10,8 +10,10 @@ import model.EnigmaList;
 import model.Game;
 import model.Hint;
 import view.style.ColorPerso;
+import view.style.FontPerso;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.*;
@@ -114,8 +116,13 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
 
         //Center
 
-        newButton.setOpaque(false);
+        newButton.setOpaque(true);
+        newButton.setBackground(ColorPerso.grisFonce);
+        newButton.setForeground(Color.white);
         newButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        newButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        newButton.setPreferredSize(new Dimension(210,45));
+        buttonNewPanel.setLayout(new FlowLayout(1));
         buttonNewPanel.add(newButton);
 
         GridBagLayout gridWin = new GridBagLayout();
@@ -176,6 +183,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
 
         rankingButton.setHorizontalAlignment(JButton.CENTER);
         rankingButton.setForeground(Color.white);
+        rankingButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         rankingButton.addMouseListener(this);
         rankingButton.addActionListener(this);
 
@@ -218,20 +226,25 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
         titleNamePanel.setBorder(BorderFactory.createLineBorder(Color.black,2));
         defaultScorePanel.setBorder(BorderFactory.createLineBorder(Color.black,2));
 
+
         // Boutons
 
         exitButton.setBackground(ColorPerso.azur);
         exitButton.setForeground(Color.white);
+        exitButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         exitButton.addActionListener(this);
+
         exitButton.addMouseListener(this);
 
         saveButton.setBackground(ColorPerso.vert);
         saveButton.setForeground(Color.white);
+        saveButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         saveButton.addActionListener(this);
         saveButton.addMouseListener(this);
 
         deleteButton.setBackground(ColorPerso.rouge);
         deleteButton.setForeground(Color.white);
+        deleteButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         deleteButton.addActionListener(this);
         deleteButton.addMouseListener(this);
 
@@ -303,11 +316,25 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
                 INSTANCE.title.setText(game.getTitre());
                 INSTANCE.initialScore.setText(String.valueOf(game.getScore()));
                 INSTANCE.winMessage.setText(game.getEndMessage());
+
+                INSTANCE.title.setForeground(Color.black);
+                INSTANCE.title.setFont(INSTANCE.title.getFont().deriveFont(Font.PLAIN));
+                INSTANCE.initialScore.setForeground(Color.black);
+                INSTANCE.initialScore.setFont(INSTANCE.initialScore.getFont().deriveFont(Font.PLAIN));
+                INSTANCE.winMessage.setForeground(Color.black);
+                INSTANCE.winMessage.setFont(INSTANCE.winMessage.getFont().deriveFont(Font.PLAIN));
             }
             else{
                 INSTANCE.title.setText("Titre du jeu");
                 INSTANCE.initialScore.setText("Score Initial");
                 INSTANCE.winMessage.setText("Fin de l'histoire");
+
+                INSTANCE.title.setForeground(Color.gray);
+                INSTANCE.title.setFont(INSTANCE.title.getFont().deriveFont(Font.ITALIC));
+                INSTANCE.initialScore.setForeground(Color.gray);
+                INSTANCE.initialScore.setFont(INSTANCE.initialScore.getFont().deriveFont(Font.ITALIC));
+                INSTANCE.winMessage.setForeground(Color.gray);
+                INSTANCE.winMessage.setFont(INSTANCE.winMessage.getFont().deriveFont(Font.ITALIC));
             }
             INSTANCE.listEnigma=Main.ListEnigma;
             INSTANCE.createList();
@@ -320,13 +347,6 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
                 INSTANCE.rankingButton.setBackground(ColorPerso.azur);
             }
             INSTANCE.game=game;
-
-            INSTANCE.title.setForeground(Color.gray);
-            INSTANCE.title.setFont(INSTANCE.title.getFont().deriveFont(Font.ITALIC));
-            INSTANCE.initialScore.setForeground(Color.gray);
-            INSTANCE.initialScore.setFont(INSTANCE.initialScore.getFont().deriveFont(Font.ITALIC));
-            INSTANCE.winMessage.setForeground(Color.gray);
-            INSTANCE.winMessage.setFont(INSTANCE.winMessage.getFont().deriveFont(Font.ITALIC));
         }
         return INSTANCE;
     }
@@ -357,6 +377,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
         BorderLayout enigmaInfoLayout = new BorderLayout(10,10);
 
         JTextArea story = new JTextArea(enigme.getText());
+        story.setFont(FontPerso.courierNew);
         if(story.getText().equals("Énigme précédée de son histoire")){
             story.setForeground(Color.gray);
             story.setFont(story.getFont().deriveFont(Font.ITALIC));
@@ -390,14 +411,14 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
 
         JTextField answer = new JTextField(enigme.getAnswer());
         answer.setBorder(BorderFactory.createLineBorder(Color.black,2));
-        if(answer.getText().equals("Réponse à l'énigme")){
+        if(answer.getText().equals("Réponse(s) à l'énigme séparée par \" \\ \"")){
             answer.setForeground(Color.gray);
             answer.setFont(story.getFont().deriveFont(Font.ITALIC));
         }
         answer.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                if(answer.getText().equals("Réponse à l'énigme")){
+                if(answer.getText().equals("Réponse(s) à l'énigme séparée par \" \\ \"")){
                     answer.setText("");
                     answer.setForeground(Color.black);
                     answer.setFont(answer.getFont().deriveFont(Font.PLAIN));
@@ -407,7 +428,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
             @Override
             public void focusLost(FocusEvent e) {
                 if(answer.getText().equals("")){
-                    answer.setText("Réponse à l'énigme");
+                    answer.setText("Réponse(s) à l'énigme séparée par \" \\ \"");
                     answer.setForeground(Color.gray);
                     answer.setFont(answer.getFont().deriveFont(Font.ITALIC));
                 }
@@ -701,7 +722,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
 
 
     private void majEnigma() {
-        listEnigma.addEnigma(-1,"Énigme précédée de son histoire","Réponse à l'énigme","1er indice",-1,"2eme indice",-1,"3eme indice",-1);
+        listEnigma.addEnigma(-1,"Énigme précédée de son histoire","Réponse(s) à l'énigme séparée par \" \\ \"","1er indice",-1,"2eme indice",-1,"3eme indice",-1);
         this.createList();
         frame.gameCreationDisplay(frame,game);
     }
@@ -735,7 +756,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
             frame.gameManagementDisplay(frame,frame.roomNumber);
         }
         else if(e.getSource() == rankingButton){
-            new Ranking(this.game);
+            new Ranking(this.game,null);
         }
         else if (e.getSource()==deleteButton){
             DBEnigma.deleteEnigma( listEnigma.getLastEnigma().getId());
@@ -819,6 +840,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
                 message = "Mise à jour effectuée";
             }
             JOptionPane.showMessageDialog(frame, message, "", JOptionPane.INFORMATION_MESSAGE);
+            frame.gameManagementDisplay(frame,-1);
         }
         else if(e.getSource()==rankingButton){
             System.out.println("nb enigme : "+listEnigma.getSize());
@@ -850,12 +872,15 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
     public void mouseEntered(MouseEvent e) {
         if(e.getSource()==exitButton){
             exitButton.setBackground(ColorPerso.azurHoover);
+            exitButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
         }
         else if(e.getSource()==saveButton){
             saveButton.setBackground(ColorPerso.vertHoover);
+            saveButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
         }
         else if(e.getSource()==deleteButton){
             deleteButton.setBackground(ColorPerso.rougeHoover);
+            deleteButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
         }
         else if(e.getSource()==newButton){
             newButton.setBackground(Color.black);
@@ -864,6 +889,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
         }
         else if(e.getSource()==rankingButton && rankingButton.isEnabled()){
             rankingButton.setBackground(ColorPerso.azurHoover);
+            rankingButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
         }
     }
 
@@ -871,19 +897,23 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
     public void mouseExited(MouseEvent e) {
         if(e.getSource()==exitButton){
             exitButton.setBackground(ColorPerso.azur);
+            exitButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         }
         else if(e.getSource()==saveButton){
             saveButton.setBackground(ColorPerso.vert);
+            saveButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         }
         else if(e.getSource()==deleteButton){
             deleteButton.setBackground(ColorPerso.rouge);
+            deleteButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         }
         else if(e.getSource()==newButton){
-            newButton.setForeground(Color.black);
-            newButton.setOpaque(false);
+            newButton.setForeground(ColorPerso.white);
+            newButton.setBackground(ColorPerso.grisFonce);
         }
         else if(e.getSource()==rankingButton && rankingButton.isEnabled()){
             rankingButton.setBackground(ColorPerso.azur);
+            rankingButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         }
     }
 

@@ -1,11 +1,13 @@
 package Sockets;
 
+import launcher.Main;
 import model.Game;
 import model.Room;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
+import java.net.Inet4Address;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -15,7 +17,7 @@ public class Client {
   
   private static int port = 1096;
   private static int portS = 1100;
-  private static String host = "127.0.0.1"; //localhost
+  private static String host = Main.ipAdmin; //localhost
   
   public static boolean connectToServer(int idUser, Room salle){
     boolean accept = false;
@@ -23,7 +25,7 @@ public class Client {
       Socket socket = new Socket(host,port);
       ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
       
-      DemandeConnexion signal = new DemandeConnexion(idUser,false, salle);
+      DemandeConnexion signal = new DemandeConnexion(idUser,false, salle,null);
       
       out.writeObject(signal);
       ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
@@ -55,9 +57,12 @@ public class Client {
     try{
       
       Socket socket = new Socket(host,port);
+      System.out.println("Adresse ip de l'admin " + host);
       ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-      
-      DemandeConnexion signal = new DemandeConnexion(idUser,true, null);
+
+      String ip = null;
+      ip = Inet4Address.getLocalHost().getHostAddress();
+      DemandeConnexion signal = new DemandeConnexion(idUser,true, null, ip);
       
       out.writeObject(signal);
       
@@ -79,10 +84,13 @@ public class Client {
     return idUserAdmin;
   }
   
-  public static Object recepGameInfo(){
+  public static Object recepGameInfo(int portC){
+
+    System.out.println(portC);
+
     Object obj= null;
     try{
-      ServerSocket s = new ServerSocket(portS);
+      ServerSocket s = new ServerSocket(portC);
       Socket socket = s.accept();
       
       ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
@@ -105,4 +113,6 @@ public class Client {
     }
     return obj;
   }
+
+
 }

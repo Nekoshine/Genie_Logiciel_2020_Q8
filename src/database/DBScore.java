@@ -77,7 +77,7 @@ public class DBScore extends DBConnexion {
     public static ScoreList getScoreFromGame(int idGame){
         ScoreList scoreList = new ScoreList();
         try{
-            PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("Select * from Score WHERE idGame=? ORDER BY score ASC");
+            PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("Select * from Score WHERE idGame=? ORDER BY score DESC");
             requete.setString(1, String.valueOf(idGame));
             ResultSet resultat = requete.executeQuery();
             while (resultat.next()) { // On itère chaque résultat
@@ -99,7 +99,7 @@ public class DBScore extends DBConnexion {
     public static ScoreList getScoreFromUser(int idUser){
         ScoreList scoreList = new ScoreList();
         try{
-            PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("Select * from Score WHERE idUser=? ORDER BY score ASC");
+            PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("Select * from Score WHERE idUser=? ORDER BY score DESC");
             requete.setString(1, String.valueOf(idUser));
             ResultSet resultat = requete.executeQuery();
             while (resultat.next()) { // On itère chaque résultat
@@ -112,5 +112,31 @@ public class DBScore extends DBConnexion {
             System.err.println("Erreur requete getScore: " + e.getMessage());
         }
         return scoreList;
+    }
+
+    public static boolean insertScore(Score score) {
+        boolean inserted = false;
+        int valueReady=0;
+        try{
+            PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("Insert into Score VALUES (default,?,?,?)");
+            requete.setInt(1,score.getIdUser());
+            requete.setInt(2,score.getIdGame());
+            requete.setInt(3,score.getScore());
+            requete.executeUpdate();
+            requete.close();
+            PreparedStatement requeteVerif = DBConnexion.getConnexion().prepareStatement("Select * from Score where score=? and idUser=? and idGame=?");  // On regarde si le score à bien été inséré
+            requeteVerif.setInt(1,score.getScore());
+            requeteVerif.setInt(2,score.getIdUser());
+            requeteVerif.setInt(3,score.getIdGame());
+            ResultSet resultatVerif = requeteVerif.executeQuery();
+            if(resultatVerif.next()){ // Si il a été inséré
+                inserted=true; // Alors on valide l insertion
+            }
+            resultatVerif.close();
+            requeteVerif.close();
+        } catch(SQLException e ){
+            System.err.println("Erreur requete insertScore: " + e.getMessage());
+        }
+        return inserted;
     }
 }

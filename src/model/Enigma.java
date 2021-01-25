@@ -112,8 +112,14 @@ public class Enigma {
     this.clue3 = clue3;
   }
 
-  public String[] getAnswers(){
-    String[] answers = this.getAnswer().split(" / ");
-    return answers;
+  public String[] getAnswers1(){
+    String[] answers1 = this.getAnswer().split(" / ");
+    return answers1;
   }
+
+  public String[] getAnswers2(){
+    String[] answers2 = this.getAnswer().split("/");
+    return answers2;
+  }
+
 }

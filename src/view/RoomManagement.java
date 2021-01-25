@@ -271,10 +271,10 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
 
 
         if (salle.getGame() == null  || salle.getUserInside() == -1 ) {
+            boutonLancer.setText("Salle vide");
             boutonLancer.setEnabled(false);
             boutonLancer.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
             boutonLancer.setBackground(Color.DARK_GRAY);
-            //boutonLancer.setText("Ouvrir la salle");
 
         }
 
@@ -282,7 +282,7 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Bouton lancer " + salle.getId());
-                frame.playerManagementDisplay(frame,salle.getGame().getId(), 1,false,false,false);
+                frame.playerManagementDisplay(frame,salle,salle.getGame().getId(), 1,false,false,false);
 
 
                 /*if (boutonLancer.getText()=="Ouvrir la salle"){
@@ -294,6 +294,7 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
         });
 
         if (boutonLancer.isEnabled()) {
+            boutonLancer.setText("Suivre Partie");
             boutonLancer.addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
