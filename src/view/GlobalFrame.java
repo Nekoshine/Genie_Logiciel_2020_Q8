@@ -241,8 +241,9 @@ public class GlobalFrame extends JFrame {
         setVisible(true);
     }
 
-    public void victoryNoCompetitionScreenDisplay(GlobalFrame frame,int score) {
-        victory = new Victoryscreennocompetitive(frame,score);
+    public void victoryNoCompetitionScreenDisplay(GlobalFrame frame,int score,int time) {
+
+        victory = new Victoryscreennocompetitive(frame,score,time);
 
         //setFullScreen(currentGame);
         setContentPane(victory);
@@ -295,6 +296,10 @@ public class GlobalFrame extends JFrame {
             message = "Le joueur "+login + " a fini "+ nomJeu;
         }
         JOptionPane.showMessageDialog(frame,message,"Information", JOptionPane.WARNING_MESSAGE);
+        if (getContentPane() instanceof RoomManagement) {
+            roommanagement = RoomManagement.getInstance(frame);
+            setContentPane(roommanagement);
+        }
     }
 
     public void setFullScreen(JPanel pane){

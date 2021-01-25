@@ -15,10 +15,7 @@ import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 
 public class RoomAccess extends JPanel implements ActionListener,MouseListener {
 
@@ -41,7 +38,6 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
 
         this.frame = frame;
         this.user = user;
-
 
         /* Récuperation des salles */
         ListRoom = roomList;
@@ -129,6 +125,13 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
         returnButton.addMouseListener(this);
 
         /* Setup Fenêtre gestion des salles */
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                GlobalFrame.windowSize =frame.getSize();
+
+            }
+        });
 
         this.setLayout(mainLayout);
         this.setBackground(ColorPerso.grisClair);
@@ -251,12 +254,15 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
 
                 @Override
                 public void mouseEntered(MouseEvent e) {
-                    //boutonJoin.setBackground(ColorPerso.azurHoover);
+                    boutonJoin.setBackground(ColorPerso.azurHoover);
+                    boutonJoin.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
                 }
 
                 @Override
                 public void mouseExited(MouseEvent e) {
-                    //boutonJoin.setBackground(ColorPerso.azur);
+                    boutonJoin.setBackground(ColorPerso.azur);
+                    boutonJoin.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+
                 }
             });
         }
@@ -294,7 +300,7 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
         for (int i = 0; i < ListRoom.getSize(); i++) {
 
             JPanel panelSalle = this.ajoutSalle(ListRoom.getRoom(i), gbc,i+1);
-            panelSalle.setPreferredSize(new Dimension((int) (GlobalFrame.windowSize.getWidth() - 45), 75));
+            panelSalle.setPreferredSize(new Dimension((int) (listPanel.getWidth() - 45), 75));
             roomPanel.add(panelSalle, gbc);
             listPanel.revalidate();
             listPanel.repaint();
