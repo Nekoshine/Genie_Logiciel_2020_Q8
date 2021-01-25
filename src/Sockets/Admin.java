@@ -10,6 +10,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
 
 
 import static java.lang.Thread.sleep;
@@ -17,8 +19,14 @@ import static java.lang.Thread.sleep;
 public class Admin {
   private static int port = 1096;
   private static int portS=1100;
-  private static String host;
-  
+  private static Map<Integer,String> host = new HashMap<Integer, String>();
+
+/*  Map<String, String> map = new HashMap<String, String>();
+map.put("dog", "type of animal");
+System.out.println(map.get("dog"));
+  */
+
+
   public static void setServerAdmin(int idUserAdmin){
     try{
       ServerSocket s = new ServerSocket(port);
@@ -28,9 +36,9 @@ public class Admin {
       Object oserver =  in.readObject();
       if(oserver instanceof DemandeConnexion){
         DemandeConnexion user = (DemandeConnexion) oserver;
-        host=user.getIp();
+        host.put(user.getIdUser(),user.getIp());
         System.out.println("SSA idUser : "+user.getIdUser());
-        System.out.println("adresse ip du client :" + host);
+        System.out.println("adresse ip du client :" + host.get(user.getIdUser()));
 
         if(user.getFirstConn()){
           System.out.println("Je renvoie l'id de l'admin " + idUserAdmin);
@@ -73,19 +81,19 @@ public class Admin {
 
 
 
-public static void envoiInfoClient(String message,int idIndice,int portC){
-    System.out.println(portC);
+public static void envoiInfoClient(String message,int idIndice,int idUser){
+    System.out.println(idUser);
   try{
     if(message != null ){      
-      Socket socket = new Socket(host,portC);
-      System.out.println("ip du client" + host);
+      Socket socket = new Socket(host.get(idUser),idUser+5201);
+      System.out.println("ip du client" + host.get(idUser));
 
       ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
       Message msgSend = new Message(message);
       out.writeObject(msgSend);
       socket.close();
     }else{
-      Socket socket = new Socket(host,portC);
+      Socket socket = new Socket(host.get(idUser),idUser+5201);
       ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
       Indice indiceS = new Indice(idIndice);
       out.writeObject(indiceS);
