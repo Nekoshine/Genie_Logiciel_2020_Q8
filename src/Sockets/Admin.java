@@ -3,6 +3,7 @@ package Sockets;
 import database.DBUser;
 import launcher.Main;
 import model.Game;
+import model.Room;
 import model.User;
 
 import java.io.IOException;
@@ -32,7 +33,7 @@ System.out.println(map.get("dog"));
     try{
       ServerSocket s = new ServerSocket(1096);
       Socket socket = s.accept();
-      
+
       ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
       Object oserver =  in.readObject();
       if(oserver instanceof DemandeConnexion){
@@ -48,7 +49,7 @@ System.out.println(map.get("dog"));
         }else{
           boolean reponse = false;
 
-          
+
           System.out.println("Veux tu autoriser la connexion  de ? " + user.getIdUser());
           User logged = DBUser.getUser(user.getIdUser()); // On récupere le login de l'user qui demande à se connecter
           reponse = Main.frame.AcceptUser(logged.getLogin(),user.getSalle()); //pop up demande de connexion
@@ -60,7 +61,7 @@ System.out.println(map.get("dog"));
     }
     Thread.sleep(4);
     socket.close();
-    
+
   }catch(IOException e){
     //System.out.println("IOException : "+ e.getMessage());
   }catch(ClassNotFoundException e){
@@ -69,7 +70,6 @@ System.out.println(map.get("dog"));
     System.out.println("InterruptedException  : "+ e.getMessage());
   }
 }
-
 
   /**
    * envoyer de l'aide au joueur
@@ -119,5 +119,22 @@ System.out.println(map.get("dog"));
     } catch(IOException e){
       System.out.println("IOException :" + e.getMessage());
     }
+  }
+
+  public static Game newRiddle(int idUser) {
+      try{
+        ServerSocket s = new ServerSocket(3020+idUser);
+        Socket socket = s.accept();
+
+        ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+        Object oserver =  in.readObject();
+
+        if(oserver instanceof Game){
+          return (Game) oserver;
+        }
+      } catch(IOException | ClassNotFoundException e){
+        System.out.println("IOException :" + e.getMessage());
+      }
+    return null;
   }
 }
