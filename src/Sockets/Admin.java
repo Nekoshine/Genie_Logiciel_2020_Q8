@@ -118,4 +118,23 @@ System.out.println(map.get("dog"));
     }
   }
 
-}
+  public static int getRiddleNb(int idUser) {
+    try {
+      ServerSocket s = new ServerSocket(5201+idUser);
+      Socket socket = s.accept();
+
+      ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+      Object oserver =  in.readObject();
+      s.close();
+      if(oserver instanceof Integer){
+        return (int) oserver;
+        }
+
+        } catch (IOException e) {
+        e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+        e.printStackTrace();
+        }
+        return 1;
+        }
+        }

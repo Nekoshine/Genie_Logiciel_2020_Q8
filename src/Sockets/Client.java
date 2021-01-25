@@ -9,10 +9,8 @@ import model.RoomList;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
-import java.net.Inet4Address;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.net.UnknownHostException;
+import java.net.*;
+
 import static java.lang.Thread.sleep;
 
 public class Client {
@@ -152,4 +150,22 @@ public class Client {
     return null;
   }
 
+  public static void SendRiddleNb(int idUser, int riddleNb){
+    Socket socket = null;
+    try {
+      socket = new Socket(host,5201+idUser);
+      ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+      out.writeObject(riddleNb);
+      socket.close();
+
+    }
+    catch (ConnectException e){
+      e.printStackTrace();
+    } catch (UnknownHostException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+  }
 }
