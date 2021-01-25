@@ -103,12 +103,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
             allEnigmas.addEnigma(new Enigma(1,1,"","","",1,"",1,"",3));
         }
 
-        if(idRoom!=-1){
-            room = Main.ListRoom.findByID(idRoom);
-        }
-        else {
-            room = new Room(1,game,false,0);
-        }
+        room = Main.ListRoom.findByID(idRoom);
 
 
         //recuperaion du timer de l'indice 1 et des autres si indices présents
