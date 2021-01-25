@@ -430,8 +430,10 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
             @Override
             public void run() {
                 while (true) {
-                    System.out.println(room.getId() + "   "+idUser);
-                    Object help = Client.recepGameInfo(5201+idUser);
+                    System.out.println("ide de la room : "+room.getId());
+                    System.out.println("id du jkouer "+idUser);
+                    //problem des fois
+                    Object help = Client.recepHelpGame(idUser);
                     try {
                         if (help instanceof Message) {
                             Message mj = (Message) help;

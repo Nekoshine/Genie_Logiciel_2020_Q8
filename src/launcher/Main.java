@@ -21,15 +21,15 @@ public class Main {
 
     public static int idAdmin;
 
-    public static String ipAdmin;
+    public static String ipAdmin="127.0.0.1";
 
-    static {
+    /*static {
         try {
             ipAdmin = Inet4Address.getLocalHost().getHostAddress();
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     ;
     public static void main(String[] args) {

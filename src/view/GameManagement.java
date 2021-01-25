@@ -1,5 +1,6 @@
 package view;
 
+import Sockets.Admin;
 import database.DBEnigma;
 import database.DBGame;
 import database.DBRoom;
@@ -362,6 +363,7 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
                     else{
                         DBRoom.insertRoom(Main.ListRoom.findByID(frame.roomNumber).getId(), jeu.getId(),competitionCheck.isSelected(),-1);
                     }
+                    Admin.refreshRoomAccess(Main.idAdmin);
                     frame.roomManagementDisplay(frame);
 
                 }

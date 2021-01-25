@@ -1,5 +1,6 @@
 package Sockets;
 
+import database.DBRoom;
 import launcher.Main;
 import model.Game;
 import model.Room;
@@ -14,15 +15,19 @@ import java.net.UnknownHostException;
 import static java.lang.Thread.sleep;
 
 public class Client {
-  
-  private static int port = 1096;
-  private static int portS = 1100;
+
   private static String host = Main.ipAdmin; //localhost
-  
-  public static boolean connectToServer(int idUser, Room salle){
+
+  /**
+   * demande d'acces a une salle
+   * @param idUser celui qui veut renter
+   * @param salle la salle
+   * @return oui ou non
+   */
+  public static boolean connexionRoom(int idUser, Room salle){
     boolean accept = false;
     try{
-      Socket socket = new Socket(host,port);
+      Socket socket = new Socket(host,1096);
       ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
       
       DemandeConnexion signal = new DemandeConnexion(idUser,false, salle,null);
@@ -49,14 +54,18 @@ public class Client {
     }
     return accept;
   }
-  
-  
-  
-  public static int recepAdminInfo(int idUser){
-    int idUserAdmin=0 ;
+
+
+  /**
+   * envoie de l'ip du joueur + recuperation de l'id de l'admin
+   * @param idUser le joueur qui fait la demamnde
+   * @return id de l'admin
+   */
+  public static int recepIpIdAdmin(int idUser){
+    int idAdmin=0 ;
     try{
       
-      Socket socket = new Socket(host,port);
+      Socket socket = new Socket(host,1096);
       System.out.println("Adresse ip de l'admin " + host);
       ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
@@ -72,7 +81,7 @@ public class Client {
       if(oserver instanceof AdminInfo){
         user = (AdminInfo) oserver;
         System.out.println("RAI idUser : "+user.getIdUserAdmin());
-        idUserAdmin=user.getIdUserAdmin();
+        idAdmin=user.getIdUserAdmin();
       }
       socket.close();
     }catch(IOException e){
@@ -80,17 +89,20 @@ public class Client {
     }catch(ClassNotFoundException e){
       System.out.println("ClassNotFoundException : "+ e.getMessage());
     }
-    System.out.println(idUserAdmin);
-    return idUserAdmin;
+    System.out.println(idAdmin);
+    return idAdmin;
   }
-  
-  public static Object recepGameInfo(int portC){
 
-    System.out.println(portC);
+  /**
+   * reception de l'aide
+   * @param idUser user qui recoit l'aide
+   * @return l'aide
+   */
+  public static Object recepHelpGame(int idUser){
 
     Object obj= null;
     try{
-      ServerSocket s = new ServerSocket(portC);
+      ServerSocket s = new ServerSocket(idUser+5201);
       Socket socket = s.accept();
       
       ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
@@ -114,5 +126,32 @@ public class Client {
     return obj;
   }
 
+  /**
+   * ordre de rafraichir la salle
+   * @param idUser qui recoit l'ordre
+   * @return idadmin
+   */
+  public static int refreshRoomAccess(int idUser){
+    System.out.println("idUser : " +idUser);
+    if(idUser!=9){idUser=9;}
+    Main.ListRoom= DBRoom.getRooms(Main.idAdmin);
+    Object obj= null;
+    try{
+      ServerSocket s = new ServerSocket(1629+idUser);
+      Socket socket = s.accept();
+      ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+      Object oserver =  in.readObject();
+      obj =  oserver;
+      s.close();
+    }catch(IOException e){
+      System.out.println("IOException : "+ e.getMessage());
+    }catch(ClassNotFoundException e){
+      System.out.println("ClassNotFoundException : "+ e.getMessage());
+    }
+    if(obj instanceof Integer){
+      return (int) obj;
+    }
+    return 0;
+  }
 
 }

@@ -318,22 +318,22 @@ public class PlayerManagement extends JPanel implements ActionListener{
             //Baptiste fonction envoyer le message aux joueurs
             String messageFromMJ = helpMessageGM.getText();
             System.out.println(messageFromMJ);
-            Admin.envoiInfoClient(messageFromMJ,0,room.getUserInside());
+            Admin.envoiAideJoueur(messageFromMJ,0,room.getUserInside());
             System.out.println("send");
         }else if(e.getSource() == buttonReturn){
             frame.roomManagementDisplay(frame);
         }else if(e.getSource()==buttonHint1){
             boolHint1=true;
             buttonHint1.setText("Indice 1 déjà affiché");
-            Admin.envoiInfoClient(null,1,room.getUserInside());
+            Admin.envoiAideJoueur(null,1,room.getUserInside());
         }else if(e.getSource()==buttonHint2){
             boolHint2=true;
             buttonHint2.setText("Indice 2 déjà affiché");
-            Admin.envoiInfoClient(null,2,room.getUserInside());
+            Admin.envoiAideJoueur(null,2,room.getUserInside());
         }else if(e.getSource()==buttonHint3){
             boolHint3=true;
             buttonHint3.setText("Indice 3 déjà affiché");
-            Admin.envoiInfoClient(null,3,room.getUserInside());
+            Admin.envoiAideJoueur(null,3,room.getUserInside());
         }
     }
 }

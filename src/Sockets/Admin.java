@@ -17,8 +17,6 @@ import java.util.Map;
 import static java.lang.Thread.sleep;
 
 public class Admin {
-  private static int port = 1096;
-  private static int portS=1100;
   private static Map<Integer,String> host = new HashMap<Integer, String>();
 
 /*  Map<String, String> map = new HashMap<String, String>();
@@ -26,10 +24,13 @@ map.put("dog", "type of animal");
 System.out.println(map.get("dog"));
   */
 
-
+  /**
+   * autoriser un joueur à jouer
+   * @param idUserAdmin l'id de l'admin sur le reseau
+   */
   public static void setServerAdmin(int idUserAdmin){
     try{
-      ServerSocket s = new ServerSocket(port);
+      ServerSocket s = new ServerSocket(1096);
       Socket socket = s.accept();
       
       ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
@@ -80,8 +81,13 @@ System.out.println(map.get("dog"));
 }
 
 
-
-public static void envoiInfoClient(String message,int idIndice,int idUser){
+  /**
+   * envoyer de l'aide au joueur
+   * @param message helper
+   * @param idIndice l'inde a deveroullé
+   * @param idUser le joueur
+   */
+  public static void envoiAideJoueur(String message, int idIndice, int idUser){
     System.out.println(idUser);
   try{
     if(message != null ){      
@@ -103,4 +109,25 @@ public static void envoiInfoClient(String message,int idIndice,int idUser){
     System.out.println("IOException :" + e.getMessage());
   }
 }
+
+  /**
+   * ordre d'actualisé l'affichage de roomAccess
+   * @param iAdmin sur le reseau
+   */
+  public static void refreshRoomAccess(int iAdmin){
+    try{
+      for (Map.Entry mapentry : host.entrySet()) {
+        System.out.println("clé: " + mapentry.getKey()
+                + " | valeur: " + mapentry.getValue());
+
+        int idUser = (int)mapentry.getKey();
+        Socket socket = new Socket((String) mapentry.getValue(), 1629+idUser);
+        ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+        out.writeObject(iAdmin);
+        socket.close();
+      }
+    } catch(IOException e){
+      System.out.println("IOException :" + e.getMessage());
+    }
+  }
 }
