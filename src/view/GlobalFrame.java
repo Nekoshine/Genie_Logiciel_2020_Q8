@@ -199,8 +199,12 @@ public class GlobalFrame extends JFrame {
     public void currentGameDisplay(GlobalFrame frame,Game partie,int idRoom,int idUser) {
         currentGame = new CurrentGame(frame,partie,idRoom,idUser);
 
-        setFullScreen(currentGame);
-
+        if(!fullScrren) {
+            setFullScreen(currentGame);
+        }
+        else {
+            setContentPane(currentGame);
+        }
         frame.revalidate();
         frame.repaint();
         setVisible(true);
@@ -209,7 +213,12 @@ public class GlobalFrame extends JFrame {
     public void roomAccessDisplay(GlobalFrame frame, RoomList roomList, User user){
 
         roomAccess = new RoomAccess(frame,roomList,user);
-        setContentPane(roomAccess);
+        if(!fullScrren) {
+            setFullScreen(roomAccess);
+        }
+        else {
+            setContentPane(roomAccess);
+        }
         frame.setSize(1280,720);
         frame.setLocationRelativeTo(null);
         frame.setResizable(true);
@@ -232,7 +241,6 @@ public class GlobalFrame extends JFrame {
     public void defeatscreenDisplay(GlobalFrame frame) {
         defeatscreen = new Defeatscreennocompetitive(frame);
 
-        //setFullScreen(currentGame);
         setContentPane(defeatscreen);
         frame.setSize(800,830);
         frame.setLocationRelativeTo(null);
@@ -245,7 +253,6 @@ public class GlobalFrame extends JFrame {
 
         victory = new Victoryscreennocompetitive(frame,score,time);
 
-        //setFullScreen(currentGame);
         setContentPane(victory);
         frame.setSize(900,630);
         frame.setLocationRelativeTo(null);
@@ -304,13 +311,13 @@ public class GlobalFrame extends JFrame {
 
     public void setFullScreen(JPanel pane){
         fullScrren=true;
-        //GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        //GraphicsDevice device = env.getDefaultScreenDevice();
-        //setVisible(false);
-        //dispose();
+        GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice device = env.getDefaultScreenDevice();
+        setVisible(false);
+        dispose();
         setContentPane(pane);
-        //setUndecorated(true);
-        //device.setFullScreenWindow(this);
+        setUndecorated(true);
+        device.setFullScreenWindow(this);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setResizable(false);
     }

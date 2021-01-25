@@ -462,6 +462,16 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
         Thread t = new Thread(runnable);
         t.start();
 
+        Runnable runnabla = new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    Client.SendRiddleNb(idUser,enigmalistflag+1);
+                }
+            }
+        };
+        Thread ta = new Thread(runnabla);
+        ta.start();
 
     }
 
