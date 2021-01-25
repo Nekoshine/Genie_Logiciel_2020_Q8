@@ -1,12 +1,10 @@
 package view;
 
 import Sockets.Client;
+import Sockets.DemandeConnexion;
 import Sockets.Indice;
 import Sockets.Message;
-import database.DBEnigma;
-import database.DBGame;
-import database.DBRoom;
-import database.DBScore;
+import database.*;
 import launcher.Main;
 import model.*;
 import view.style.ColorPerso;
@@ -17,6 +15,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Inet4Address;
+import java.net.Socket;
 import java.text.Normalizer;
 
 
@@ -650,17 +652,20 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
                     String messageFin = "Score : "+score.getScore() + "\nTemps : "+time + "\nErreur : "+nbErreur;
                     JOptionPane.showMessageDialog(frame, messageFin,"Score", JOptionPane.INFORMATION_MESSAGE);
                     System.out.println(score.getScore());
-                    frame.connectionMenuDisplay(frame);
-                }
 
-            }
+                    if(Client.envoieFinPartie(DBUser.getUser(room.getUserInside()).getLogin(),room)){
+                        frame.connectionMenuDisplay(frame);
+                    }
+
+                }
             //si mauvaise reponse
+
+          }
             else{
                 nbErreur++;
                 JOptionPane.showMessageDialog(frame, "Ce n'est pas la bonne reponse", "Raté !", JOptionPane.WARNING_MESSAGE,imageIconRefus);
             }
         }
-
     }
 
     @Override
@@ -742,4 +747,6 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
                 Normalizer.normalize(text, Normalizer.Form.NFD)
                         .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
     }
+
+
 }

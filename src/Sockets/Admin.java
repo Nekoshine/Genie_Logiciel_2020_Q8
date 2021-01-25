@@ -118,4 +118,31 @@ System.out.println(map.get("dog"));
     }
   }
 
+  public static void acceptFin() {
+    try {
+      ServerSocket s = new ServerSocket(2530);
+      Socket socket = s.accept();
+
+      ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+      Object oserver = in.readObject();
+
+      if (oserver instanceof FinPartie) {
+        FinPartie fin = (FinPartie) oserver;
+
+        Main.frame.endGame(fin.getLogin(), fin.getIdSalle()); //pop up demande de connexion
+        ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+        out.writeObject(true);
+
+      }
+      Thread.sleep(4);
+      socket.close();
+
+    } catch (IOException e) {
+      //System.out.println("IOException : "+ e.getMessage());
+    } catch (ClassNotFoundException e) {
+      System.out.println("ClassNotFoundException : " + e.getMessage());
+    } catch (InterruptedException e) {
+      System.out.println("InterruptedException  : " + e.getMessage());
+    }
+  }
 }

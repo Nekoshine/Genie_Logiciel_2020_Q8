@@ -152,4 +152,36 @@ public class Client {
     return null;
   }
 
+  public static boolean envoieFinPartie(String login,Room salle) {
+
+    boolean accept=false;
+
+    if (login != null && salle != null) {
+      try {
+
+        Socket socket = new Socket(host, 2530);
+        System.out.println("Adresse ip de l'admin " + host);
+        ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+
+        String ip = null;
+        ip = Inet4Address.getLocalHost().getHostAddress();
+        FinPartie signal = new FinPartie(login, salle);
+
+        out.writeObject(signal);
+
+        ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+        Object oserver =  in.readObject();
+
+        if (oserver instanceof Boolean){
+          accept = true;
+        }
+
+        socket.close();
+      } catch (IOException | ClassNotFoundException e) {
+        System.out.println("IOException : " + e.getMessage());
+      }
+
+    }
+    return accept;
+  }
 }

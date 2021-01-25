@@ -211,7 +211,7 @@ public class GlobalFrame extends JFrame {
         roomAccess = new RoomAccess(frame,roomList,user);
         setContentPane(roomAccess);
         frame.setSize(1280,720);
-        frame.setExtendedState(MAXIMIZED_BOTH);
+        frame.setLocationRelativeTo(null);
         frame.setResizable(true);
         frame.revalidate();
         frame.repaint();
@@ -284,16 +284,17 @@ public class GlobalFrame extends JFrame {
         }
     }
 
+
     public void endGame(String login, Room salle) {
         String nomJeu = salle.getGame().getTitre();
         String message;
         if(salle.getCompetitive()){
-            message = login + " a fini Competitif : "+ nomJeu;
+            message = "Le joueur "+login + " a fini Competitif : "+ nomJeu;
         }
         else {
-            message = login + " a fini "+ nomJeu;
+            message = "Le joueur "+login + " a fini "+ nomJeu;
         }
-        JOptionPane.showMessageDialog(frame,message,"Information", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(frame,message,"Information", JOptionPane.WARNING_MESSAGE);
     }
 
     public void setFullScreen(JPanel pane){
