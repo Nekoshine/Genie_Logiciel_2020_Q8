@@ -205,6 +205,7 @@ public class GlobalFrame extends JFrame {
         else {
             setContentPane(currentGame);
         }
+        frame.setExtendedState(MAXIMIZED_BOTH);
         frame.revalidate();
         frame.repaint();
     }
@@ -218,8 +219,8 @@ public class GlobalFrame extends JFrame {
         else {
             setContentPane(roomAccess);
         }
-        //frame.setSize(1280,720);
-        //frame.setLocationRelativeTo(null);
+        frame.setSize(1280,720);
+        frame.setLocationRelativeTo(null);
         frame.revalidate();
         frame.repaint();
 
@@ -318,17 +319,17 @@ public class GlobalFrame extends JFrame {
     }
 
     public void setFullScreen(JPanel pane){
-        fullScrren=true;
+        /*fullScrren=true;
         GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice device = env.getDefaultScreenDevice();
         setVisible(false);
-        dispose();
+        dispose();*/
         setContentPane(pane);
-        setUndecorated(true);
+        /*setUndecorated(true);
         device.setFullScreenWindow(this);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setResizable(false);
-        setVisible(true);
+        setVisible(true);*/
     }
 
     public void removeFullScreen(JPanel pane){
