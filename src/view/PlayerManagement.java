@@ -117,7 +117,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
         currentStory.setLineWrap(true);
         currentStory.setWrapStyleWord(true);
         currentStory.setBackground(Color.LIGHT_GRAY);
-        currentStory.setFont(FontPerso.Oxanimum);
+        currentStory.setFont(FontPerso.courierNew);
         currentStory.setEditable(false);
         currentStory.setPreferredSize(new Dimension(width-20,(height-90)*50/100-10));
         currentStory.setText((currentRiddles.getEnigma(riddleNb - 1)).getText());
@@ -140,6 +140,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
         answers.setText((currentRiddles.getEnigma(riddleNb -1)).getAnswer());
 
         proposition = new JTextArea();
+        proposition.setEditable(false);
         JScrollPane scrollAnswersPanIn = new JScrollPane(answersPanIn,
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         //scrollAnswersPanIn.setPreferredSize(new Dimension((int) (width-20),(int) ((height-90)*0.10)));
@@ -328,7 +329,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
             if(INSTANCE.boolHint1){
                 INSTANCE.buttonHint1.setText("Indice 1 déjà affiché");
                 INSTANCE.buttonHint1.setBackground(Color.lightGray);
-            }
+            }DBEnigma.getEnigmas(room.getGame().getId()).getEnigma(enigmalistflag).getClue1()
             else{
                 INSTANCE.buttonHint1.setText("Afficher l'indice 1");
                 INSTANCE.buttonHint1.setBackground(Color.white);
