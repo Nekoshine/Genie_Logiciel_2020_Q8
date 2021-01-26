@@ -268,7 +268,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
         gbcglobal.weighty = 1;
         gbcglobal.weightx = 1;
         gbcglobal.gridy = 4;
-        gbcglobal.fill = GridBagConstraints.HORIZONTAL;
+        gbcglobal.fill = GridBagConstraints.VERTICAL;
         this.add(bottomPanIn, gbcglobal);
 
     }
