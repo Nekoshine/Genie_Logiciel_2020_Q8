@@ -323,23 +323,15 @@ public class PlayerManagement extends JPanel implements ActionListener{
         gbcglobal.fill = GridBagConstraints.VERTICAL;
         this.add(bottomPanIn, gbcglobal);
 
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    String reponse = Admin.recepAnswerJoueur(room.getUserInside());
-                    Main.answers.get(room.getUserInside()).add(reponse);
-
+        Runnable runnable = () -> {
+            while (true) {
+                String reponse = Admin.recepAnswerJoueur(room.getUserInside());
+                if(frame.getContentPane() instanceof PlayerManagement){
                     if(removeAccents(reponse).equals(removeAccents(answers.getText().toLowerCase()))) {
-
-                        Main.answers.get(room.getUserInside()).clear();
-
-                        if (frame.getContentPane() instanceof PlayerManagement) {
-                            frame.playerManagementDisplay(frame, room, gameNb, riddleNb + 1, false, false, false);
-                        }
+                        frame.playerManagementDisplay(frame, room, gameNb, riddleNb + 1, false, false, false);
                     }
-                    //proposition.append("\n"+reponse);
                 }
+                proposition.append("\n"+reponse);
             }
         };
         Thread ta = new Thread(runnable);

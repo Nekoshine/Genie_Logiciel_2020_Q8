@@ -1,22 +1,20 @@
 package view.SwingWorkers;
 
 import launcher.Main;
-import view.Defeatscreennocompetitive;
-import view.Victoryscreennocompetitive;
+import view.VictoryScreenNoCompetitive;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.ExecutionException;
 
 public class ImageLoaderVictoryNoCo extends SwingWorker<Image,Image> {
 
-    private Victoryscreennocompetitive panel;
+    private VictoryScreenNoCompetitive panel;
 
-    public ImageLoaderVictoryNoCo(Victoryscreennocompetitive panel){
+    public ImageLoaderVictoryNoCo(VictoryScreenNoCompetitive panel){
         this.panel = panel;
     }
 

@@ -12,13 +12,12 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
-import java.util.Map;
 
 
 import static java.lang.Thread.sleep;
 
 public class Admin {
-  private static Map<Integer,String> host = new HashMap<Integer, String>();
+  private static HashMap<Integer,String> host = new HashMap<Integer, String>();
 
 /*  Map<String, String> map = new HashMap<String, String>();
 map.put("dog", "type of animal");
@@ -38,12 +37,15 @@ System.out.println(map.get("dog"));
       Object oserver =  in.readObject();
       if(oserver instanceof DemandeConnexion){
         DemandeConnexion user = (DemandeConnexion) oserver;
-        host.put(user.getIdUser(),user.getIp());
-        System.out.println("SSA idUser : "+user.getIdUser());
-        System.out.println("adresse ip du client :" + host.get(user.getIdUser()));
-
         if(user.getFirstConn()){
+
           System.out.println("Je renvoie l'id de l'admin " + idAdmin);
+          int idUser = user.getIdUser();
+          String ip = user.getIp();
+          host.put(idUser,ip);
+          System.out.println("SSA idUser : "+user.getIdUser());
+          System.out.println("adresse ip du client : " + host.get(user.getIdUser()));
+
           ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
           out.writeObject(idAdmin);
         }else{
@@ -79,21 +81,19 @@ System.out.println(map.get("dog"));
    * @param idUser le joueur
    */
   public static void envoiAideJoueur(String message, int idIndice, int idUser){
-    System.out.println(idUser);
+
     Socket socket = null;
   try{
     if(message != null ){
+
       socket = new Socket(host.get(idUser),idUser+5201);
-      System.out.println("ip du client" + host.get(idUser));
 
       ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-      Message msgSend = new Message(message);
-      out.writeObject(msgSend);
+      out.writeObject(message);
     }else{
       socket = new Socket(host.get(idUser),idUser+5201);
       ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-      Indice indiceS = new Indice(idIndice);
-      out.writeObject(indiceS);
+      out.writeObject(idIndice);
     }
     socket.close();
   } catch(IOException e){
@@ -135,7 +135,7 @@ public static String recepAnswerJoueur(int idUser) {
    */
   public static void refreshRoomAccess(int iAdmin){
     try{
-      for (Map.Entry mapentry : host.entrySet()) {
+      for (HashMap.Entry mapentry : host.entrySet()) {
         int idUser = (int)mapentry.getKey();
         Socket socket = new Socket((String) mapentry.getValue(), 1629+idUser);
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
@@ -151,13 +151,14 @@ public static String recepAnswerJoueur(int idUser) {
   //mettre socket plutot que serveur
   public static int getRiddleNb(int idUser) {
     try {
+      System.out.println("je recupère l'avancement du joueur : "+idUser);
       Socket socket =new Socket(host.get(idUser),49553+idUser);
-
       ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
       Object oserver =  in.readObject();
       socket.close();
 
       if(oserver instanceof Integer){
+        System.out.println("il est "+(int)oserver);
         return (int) oserver;
       }
 
@@ -166,6 +167,7 @@ public static String recepAnswerJoueur(int idUser) {
     } catch (ClassNotFoundException e) {
       e.printStackTrace();
     }
+    System.out.println("je retourne enore et toujours 1 car je suis nul");
     return 1;
   }
 

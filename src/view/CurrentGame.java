@@ -2,8 +2,6 @@ package view;
 
 import Sockets.Client;
 import Sockets.DemandeConnexion;
-import Sockets.Indice;
-import Sockets.Message;
 import database.*;
 import launcher.Main;
 import model.*;
@@ -430,44 +428,37 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
         timeonenigma.start();
 
 
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    Object help = Client.recepHelpGame(idUser);
-                    try {
-                        if (help instanceof Message) {
-                            Message mj = (Message) help;
-                            hintMJTextArea.setText(mj.getMessage());
-                            hintMJTextArea.setForeground(Color.black);
-                            hintMJContainer.setFont(hintMJTextArea.getFont().deriveFont(Font.PLAIN));
-                        }
-                        else{
-                            Indice mj = (Indice) help;
-                            int indice = mj.getIdIndice();
-                            if (indice == 1) {
-                                hint1Button.setEnabled(true);
-                            } else if (indice == 2) {
-                                hint2Button.setEnabled(true);
-                            } else if (indice == 3) {
-                                hint3Button.setEnabled(true);
-                            }
-                        }
-                    } catch (ClassCastException e) {
-                        e.printStackTrace();
+        Runnable runnable = () -> {
+            while (true) {
+                System.out.println("je suis "+idUser+" et j'appel a laide");
+                Object help = Client.recepHelpGame(idUser);
+                try {
+                    if (help instanceof String) {
+                        hintMJTextArea.setText((String) help);
+                        hintMJTextArea.setForeground(Color.black);
+                        hintMJContainer.setFont(hintMJTextArea.getFont().deriveFont(Font.PLAIN));
                     }
+                    else{
+                        int indice = (int) help;
+                        if (indice == 1) {
+                            hint1Button.setEnabled(true);
+                        } else if (indice == 2) {
+                            hint2Button.setEnabled(true);
+                        } else if (indice == 3) {
+                            hint3Button.setEnabled(true);
+                        }
+                    }
+                } catch (ClassCastException e) {
+                    e.printStackTrace();
                 }
             }
         };
         Thread t = new Thread(runnable);
         t.start();
 
-        Runnable runnabla = new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    Client.SendRiddleNb(idUser,enigmalistflag+1);
-                }
+        Runnable runnabla = () -> {
+            while (true) {
+                Client.SendRiddleNb(idUser,enigmalistflag+1);
             }
         };
         Thread ta = new Thread(runnabla);
@@ -659,7 +650,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
                         DBScore.insertScore(score);
                     }
 
-                    if(Client.envoieFinPartie(DBUser.getUser(room.getUserInside()).getLogin(),room)){
+                    if(Client.envoieFinPartie(DBUser.getUser(idUser).getLogin(),room)){
                         frame.connectionMenuDisplay(frame);
                     }
 
