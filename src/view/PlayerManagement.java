@@ -47,7 +47,6 @@ public class PlayerManagement extends JPanel implements ActionListener{
     private JLabel answers;
 
     private Room room;
-    private int enigmalistflag = 0;
 
     public PlayerManagement(GlobalFrame frame, Room room, int gameNb, int riddleNb, boolean boolHint1Revealed, boolean boolHint2Revealed, boolean boolHint3Revealed){
         this.frame = frame;
@@ -60,13 +59,9 @@ public class PlayerManagement extends JPanel implements ActionListener{
         int width = (int) frame.windowSize.getWidth();
         int height = (int) frame.windowSize.getHeight();
 
-        if(gameNb!=-1) {
-            currentRiddles = DBEnigma.getEnigmas(gameNb); // la liste des énigmes du jeu
-        }
-        else{
-            currentRiddles = new EnigmaList();
-            currentRiddles.addEnigma(new Enigma(1,1,"","","",1,"",1,"",3));
-        }
+
+        currentRiddles = DBEnigma.getEnigmas(gameNb); // la liste des énigmes du jeu
+
         helpButtonGM = new JButton("Envoyer");
         helpButtonGM.addActionListener(this);
         helpButtonGM.setBackground(Color.white);
@@ -117,7 +112,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
         currentStory.setLineWrap(true);
         currentStory.setWrapStyleWord(true);
         currentStory.setBackground(Color.LIGHT_GRAY);
-        currentStory.setFont(FontPerso.Oxanimum);
+        currentStory.setFont(FontPerso.courierNew);
         currentStory.setEditable(false);
         currentStory.setPreferredSize(new Dimension(width-20,(height-90)*50/100-10));
         currentStory.setText((currentRiddles.getEnigma(riddleNb - 1)).getText());
@@ -140,6 +135,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
         answers.setText((currentRiddles.getEnigma(riddleNb -1)).getAnswer());
 
         proposition = new JTextArea();
+        proposition.setEditable(false);
         JScrollPane scrollAnswersPanIn = new JScrollPane(answersPanIn,
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         //scrollAnswersPanIn.setPreferredSize(new Dimension((int) (width-20),(int) ((height-90)*0.10)));
@@ -192,17 +188,37 @@ public class PlayerManagement extends JPanel implements ActionListener{
         buttonReturnPan.setBorder(BorderFactory.createEmptyBorder(20,0,0,20));
         JPanel buttonHint1PanIn = new JPanel();
         buttonHint1PanIn.setBackground(Color.LIGHT_GRAY);
-        JLabel hint1Text = new JLabel("Indice 1 : ");
+        JTextArea hint1Text = new JTextArea();
+        hint1Text.setLineWrap(true);
+        hint1Text.setWrapStyleWord(true);
+        hint1Text.setBackground(Color.LIGHT_GRAY);
+        hint1Text.setFont(FontPerso.Oxanimum);
+        hint1Text.setEditable(false);
+        hint1Text.setText(currentRiddles.getEnigma(riddleNb-1).getClue1());
+        JPanel hint1TextPan = new JPanel();
+        hint1TextPan.setLayout(new FlowLayout(1));
+        hint1TextPan.setBackground(Color.lightGray);
+        hint1TextPan.add(hint1Text);
+        JPanel hint1ButtonPan = new JPanel();
+        hint1ButtonPan.setLayout(new FlowLayout(1));
+        hint1ButtonPan.add(buttonHint1);
+        hint1ButtonPan.setBackground(Color.lightGray);
         buttonHint1PanIn.setLayout(new BoxLayout(buttonHint1PanIn, BoxLayout.PAGE_AXIS));
-        buttonHint1PanIn.add(hint1Text);
-        buttonHint1PanIn.add(buttonHint1);
+        buttonHint1PanIn.add(hint1TextPan);
+        buttonHint1PanIn.add(hint1ButtonPan);
         JPanel buttonHint1Pan = new JPanel();
         buttonHint1Pan.setBackground(Color.LIGHT_GRAY);
         buttonHint1Pan.add(buttonHint1PanIn);
         buttonHint1Pan.setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
         JPanel buttonHint2PanIn = new JPanel();
         buttonHint2PanIn.setBackground(Color.LIGHT_GRAY);
-        JLabel hint2Text = new JLabel("Indice 2 : ");
+        JTextArea hint2Text = new JTextArea();
+        hint2Text.setLineWrap(true);
+        hint2Text.setWrapStyleWord(true);
+        hint2Text.setBackground(Color.LIGHT_GRAY);
+        hint2Text.setFont(FontPerso.Oxanimum);
+        hint2Text.setEditable(false);
+        hint2Text.setText(currentRiddles.getEnigma(riddleNb-1).getClue2());
         buttonHint2PanIn.setLayout(new BoxLayout(buttonHint2PanIn, BoxLayout.PAGE_AXIS));
         buttonHint2PanIn.add(hint2Text);
         buttonHint2PanIn.add(buttonHint2);
@@ -212,7 +228,13 @@ public class PlayerManagement extends JPanel implements ActionListener{
         buttonHint2Pan.setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
         JPanel buttonHint3PanIn = new JPanel();
         buttonHint3PanIn.setBackground(Color.LIGHT_GRAY);
-        JLabel hint3Text = new JLabel("Indice 3 : ");
+        JTextArea hint3Text = new JTextArea();
+        hint3Text.setLineWrap(true);
+        hint3Text.setWrapStyleWord(true);
+        hint3Text.setBackground(Color.LIGHT_GRAY);
+        hint3Text.setFont(FontPerso.Oxanimum);
+        hint3Text.setEditable(false);
+        hint3Text.setText(currentRiddles.getEnigma(riddleNb-1).getClue3());
         buttonHint3PanIn.setLayout(new BoxLayout(buttonHint3PanIn, BoxLayout.PAGE_AXIS));
         buttonHint3PanIn.add(hint3Text);
         buttonHint3PanIn.add(buttonHint3);
@@ -272,7 +294,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
         gbcglobal.weighty = 1;
         gbcglobal.weightx = 1;
         gbcglobal.gridy = 4;
-        gbcglobal.fill = GridBagConstraints.HORIZONTAL;
+        gbcglobal.fill = GridBagConstraints.VERTICAL;
         this.add(bottomPanIn, gbcglobal);
 
         Runnable runnable = new Runnable() {
@@ -328,7 +350,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
             if(INSTANCE.boolHint1){
                 INSTANCE.buttonHint1.setText("Indice 1 déjà affiché");
                 INSTANCE.buttonHint1.setBackground(Color.lightGray);
-            }
+            }DBEnigma.getEnigmas(room.getGame().getId()).getEnigma(enigmalistflag).getClue1()
             else{
                 INSTANCE.buttonHint1.setText("Afficher l'indice 1");
                 INSTANCE.buttonHint1.setBackground(Color.white);
@@ -374,11 +396,11 @@ public class PlayerManagement extends JPanel implements ActionListener{
                 button = new JButton("Envoyer l'indice " + i);
             }else{
                 if(i==1) {
-                    button = new JButton(DBEnigma.getEnigmas(room.getGame().getId()).getEnigma(enigmalistflag).getClue1());
+                    button = new JButton("Afficher indice 1 ");
                 }else if(i==2){
-                    button = new JButton(DBEnigma.getEnigmas(room.getGame().getId()).getEnigma(enigmalistflag).getClue2());
+                    button = new JButton("Afficher indice 2 ");
                 }else if(i==3){
-                    button = new JButton(DBEnigma.getEnigmas(room.getGame().getId()).getEnigma(enigmalistflag).getClue3());
+                    button = new JButton("Afficher indice 3 ");
                 }
             }
             button.addActionListener(this);
@@ -402,17 +424,17 @@ public class PlayerManagement extends JPanel implements ActionListener{
             frame.roomManagementDisplay(frame);
         }else if(e.getSource()==buttonHint1){
             boolHint1=true;
-            buttonHint1.setText(DBEnigma.getEnigmas(room.getGame().getId()).getEnigma(enigmalistflag).getClue1());
+            buttonHint1.setText("Afficher indice 1");
             Admin.envoiAideJoueur(null,1,room.getUserInside());
             buttonHint1.setBackground(Color.lightGray);
         }else if(e.getSource()==buttonHint2){
             boolHint2=true;
-            buttonHint2.setText(DBEnigma.getEnigmas(room.getGame().getId()).getEnigma(enigmalistflag).getClue2());
+            buttonHint2.setText("Afficher indice 2 ");
             Admin.envoiAideJoueur(null,2,room.getUserInside());
             buttonHint2.setBackground(Color.lightGray);
         }else if(e.getSource()==buttonHint3){
             boolHint3=true;
-            buttonHint3.setText(DBEnigma.getEnigmas(room.getGame().getId()).getEnigma(enigmalistflag).getClue3());
+            buttonHint3.setText("Afficher indice 3 ");
             Admin.envoiAideJoueur(null,3,room.getUserInside());
             buttonHint3.setBackground(Color.lightGray);
         }
