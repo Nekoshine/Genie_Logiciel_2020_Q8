@@ -319,20 +319,20 @@ public class GlobalFrame extends JFrame {
 
     public void setFullScreen(JPanel pane){
         fullScrren=true;
-        setVisible(false);
-        dispose();
+       // setVisible(false);
+        //dispose();
         setContentPane(pane);
-        setUndecorated(true);
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
-        setResizable(false);
-        setVisible(true);
+        //setUndecorated(true);
+        //setExtendedState(JFrame.MAXIMIZED_BOTH);
+        //setResizable(false);
+        //setVisible(true);
     }
 
     public void removeFullScreen(JPanel pane){
         fullScrren=false;
-        setVisible(false);
-        dispose();
+     //   setVisible(false);
+     //   dispose();
         setContentPane(pane);
-        setUndecorated(false);
+       // setUndecorated(false);
     }
 }
