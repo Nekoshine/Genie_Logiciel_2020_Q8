@@ -20,6 +20,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.text.Normalizer;
 
 public class PlayerManagement extends JPanel implements ActionListener{
 
@@ -39,6 +40,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
     private final int riddleNb;
 
     private JTextArea currentStory;
+    private JTextArea proposition;
     private JTextArea helpMessageGM;
     private EnigmaList currentRiddles;
     private JLabel title;
@@ -137,12 +139,14 @@ public class PlayerManagement extends JPanel implements ActionListener{
         answers = new JLabel();
         answers.setText((currentRiddles.getEnigma(riddleNb -1)).getAnswer());
 
+        proposition = new JTextArea();
         JScrollPane scrollAnswersPanIn = new JScrollPane(answersPanIn,
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         //scrollAnswersPanIn.setPreferredSize(new Dimension((int) (width-20),(int) ((height-90)*0.10)));
         scrollAnswersPanIn.setBackground(Color.LIGHT_GRAY);
         answersPanIn.setBackground(Color.LIGHT_GRAY);
         answersPanIn.add(answers);
+        answersPanIn.add(proposition);
         scrollAnswersPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         JPanel answersPan = new JPanel();
         answersPan.setBackground(ColorPerso.darkGray);
@@ -271,6 +275,21 @@ public class PlayerManagement extends JPanel implements ActionListener{
         gbcglobal.fill = GridBagConstraints.HORIZONTAL;
         this.add(bottomPanIn, gbcglobal);
 
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    String reponse = Admin.recepAnswerJoueur(room.getUserInside());
+                    proposition.append("\n");
+                    proposition.append(reponse);
+                    if(removeAccents(reponse).equals(removeAccents(answers.getText().toLowerCase()))){
+                        frame.playerManagementDisplay(frame,room,gameNb,riddleNb+1,false,false,false);
+                    }
+                }
+            }
+        };
+        Thread ta = new Thread(runnable);
+        ta.start();
     }
 
   /*  public static PlayerManagement getInstance(GlobalFrame frame,Room room,int gameNb, int riddleNb, boolean boolHint1Revealed, boolean boolHint2Revealed,
@@ -396,5 +415,11 @@ public class PlayerManagement extends JPanel implements ActionListener{
             Admin.envoiAideJoueur(null,3,room.getUserInside());
             buttonHint3.setBackground(Color.lightGray);
         }
+    }
+
+    public static String removeAccents(String text) {
+        return text == null ? null :
+                Normalizer.normalize(text, Normalizer.Form.NFD)
+                        .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
     }
 }
