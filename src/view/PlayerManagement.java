@@ -280,11 +280,12 @@ public class PlayerManagement extends JPanel implements ActionListener{
             public void run() {
                 while (true) {
                     String reponse = Admin.recepAnswerJoueur(room.getUserInside());
-                    proposition.append("\n");
-                    proposition.append(reponse);
-                    if(removeAccents(reponse).equals(removeAccents(answers.getText().toLowerCase()))){
-                        frame.playerManagementDisplay(frame,room,gameNb,riddleNb+1,false,false,false);
+                    if(frame.getContentPane() instanceof PlayerManagement){
+                        if(removeAccents(reponse).equals(removeAccents(answers.getText().toLowerCase()))) {
+                            frame.playerManagementDisplay(frame, room, gameNb, riddleNb + 1, false, false, false);
+                        }
                     }
+                    proposition.append("\n"+reponse);
                 }
             }
         };
