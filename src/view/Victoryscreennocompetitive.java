@@ -108,7 +108,7 @@ public class Victoryscreennocompetitive extends JPanel implements ActionListener
 
     @Override
     public void windowClosing(WindowEvent e) {
-        frame.connectionMenuDisplay(frame);
+
     }
 
     @Override

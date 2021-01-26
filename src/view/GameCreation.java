@@ -47,6 +47,12 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
 
     private static volatile GameCreation INSTANCE = new GameCreation(Main.frame,null);
 
+    /**
+     * Initialise le panel de création de jeux, pour un jeu donné, dans la frame associée
+     * @param frame
+     * @param game
+     */
+
     private GameCreation(GlobalFrame frame, Game game){
 
         this.frame = frame;
@@ -294,6 +300,13 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
 
 
     }
+
+    /**
+     * Permet de recupérer l'instance de GameCreation
+     * @param frame
+     * @param game
+     * @return
+     */
     public static GameCreation getInstance(GlobalFrame frame, Game game) {
         //Le "Double-Checked Singleton"/"Singleton doublement vérifié" permet
         //d'éviter un appel coûteux à synchronized,
@@ -351,6 +364,12 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
         return INSTANCE;
     }
 
+    /**
+     * Méthode ajoutant une énigme à l'interface de création du jeu
+     * @param enigme
+     * @param gbcEnigma
+     * @return
+     */
 
     JPanel ajoutEnigme(Enigma enigme,GridBagConstraints gbcEnigma){
 
@@ -721,11 +740,18 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
     }
 
 
+    /**
+     * Recharge la liste d'énigme
+     */
     private void majEnigma() {
         listEnigma.addEnigma(-1,"Énigme précédée de son histoire","Réponse(s) à l'énigme séparée par \" \\ \"","1er indice",-1,"2eme indice",-1,"3eme indice",-1);
         this.createList();
         frame.gameCreationDisplay(frame,game);
     }
+
+    /**
+     * Affiche les énigmes sur l'interface de gestion des jeux
+     */
 
     public void createList(){
         GridBagConstraints gbc = new GridBagConstraints();
@@ -745,6 +771,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
         centerPanel.revalidate();
         centerPanel.repaint();
     }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
