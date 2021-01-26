@@ -319,13 +319,10 @@ public class GlobalFrame extends JFrame {
 
     public void setFullScreen(JPanel pane){
         fullScrren=true;
-        GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        GraphicsDevice device = env.getDefaultScreenDevice();
         setVisible(false);
         dispose();
         setContentPane(pane);
         setUndecorated(true);
-        device.setFullScreenWindow(this);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setResizable(false);
         setVisible(true);
@@ -333,12 +330,9 @@ public class GlobalFrame extends JFrame {
 
     public void removeFullScreen(JPanel pane){
         fullScrren=false;
-        GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        GraphicsDevice device = env.getDefaultScreenDevice();
         setVisible(false);
         dispose();
         setContentPane(pane);
         setUndecorated(false);
-        device.setFullScreenWindow(null);
     }
 }
