@@ -297,18 +297,15 @@ public class PlayerManagement extends JPanel implements ActionListener{
         gbcglobal.fill = GridBagConstraints.VERTICAL;
         this.add(bottomPanIn, gbcglobal);
 
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    String reponse = Admin.recepAnswerJoueur(room.getUserInside());
-                    if(frame.getContentPane() instanceof PlayerManagement){
-                        if(removeAccents(reponse).equals(removeAccents(answers.getText().toLowerCase()))) {
-                            frame.playerManagementDisplay(frame, room, gameNb, riddleNb + 1, false, false, false);
-                        }
+        Runnable runnable = () -> {
+            while (true) {
+                String reponse = Admin.recepAnswerJoueur(room.getUserInside());
+                if(frame.getContentPane() instanceof PlayerManagement){
+                    if(removeAccents(reponse).equals(removeAccents(answers.getText().toLowerCase()))) {
+                        frame.playerManagementDisplay(frame, room, gameNb, riddleNb + 1, false, false, false);
                     }
-                    proposition.append("\n"+reponse);
                 }
+                proposition.append("\n"+reponse);
             }
         };
         Thread ta = new Thread(runnable);
@@ -417,9 +414,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
         if(e.getSource()==helpButtonGM){
             //Baptiste fonction envoyer le message aux joueurs
             String messageFromMJ = helpMessageGM.getText();
-            System.out.println(messageFromMJ);
             Admin.envoiAideJoueur(messageFromMJ,0,room.getUserInside());
-            System.out.println("send");
         }else if(e.getSource() == buttonReturn){
             frame.roomManagementDisplay(frame);
         }else if(e.getSource()==buttonHint1){

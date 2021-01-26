@@ -87,13 +87,11 @@ System.out.println(map.get("dog"));
       System.out.println("ip du client" + host.get(idUser));
 
       ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-      Message msgSend = new Message(message);
-      out.writeObject(msgSend);
+      out.writeObject(message);
     }else{
       socket = new Socket(host.get(idUser),idUser+5201);
       ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-      Indice indiceS = new Indice(idIndice);
-      out.writeObject(indiceS);
+      out.writeObject(idIndice);
     }
     socket.close();
   } catch(IOException e){
@@ -149,15 +147,16 @@ public static String recepAnswerJoueur(int idUser) {
 
 
   //mettre socket plutot que serveur
-  public static int getRiddleNb(int idUser) {
+/*  public static int getRiddleNb(int idUser) {
     try {
+      System.out.println("je recupère l'avancement du joueur : "+idUser);
       Socket socket =new Socket(host.get(idUser),49553+idUser);
-
       ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
       Object oserver =  in.readObject();
       socket.close();
 
       if(oserver instanceof Integer){
+        System.out.println("il est "+(int)oserver);
         return (int) oserver;
       }
 
@@ -166,8 +165,9 @@ public static String recepAnswerJoueur(int idUser) {
     } catch (ClassNotFoundException e) {
       e.printStackTrace();
     }
+    System.out.println("je retourne enore et toujours 1 car je suis nul");
     return 1;
-  }
+  }*/
 
   public static void acceptFin() {
     try {
