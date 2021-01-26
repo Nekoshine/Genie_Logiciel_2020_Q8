@@ -22,7 +22,7 @@ public class Main {
     public static RoomList ListRoom = new RoomList();
     public static GlobalFrame frame = null;
 
-    public static Map<Integer, ArrayList<String>> answers = new HashMap<Integer, ArrayList<String>>();
+    public static HashMap<Integer, ArrayList<String>> answers = new HashMap<Integer, ArrayList<String>>();
 
 
     public static int idAdmin;

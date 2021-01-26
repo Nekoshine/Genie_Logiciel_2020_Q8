@@ -142,7 +142,6 @@ public class PlayerManagement extends JPanel implements ActionListener{
 
         afficheReponse();
 
-
         JScrollPane scrollAnswersPanIn = new JScrollPane(answersPanIn,
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         //scrollAnswersPanIn.setPreferredSize(new Dimension((int) (width-20),(int) ((height-90)*0.10)));
@@ -326,12 +325,20 @@ public class PlayerManagement extends JPanel implements ActionListener{
         Runnable runnable = () -> {
             while (true) {
                 String reponse = Admin.recepAnswerJoueur(room.getUserInside());
-                if(frame.getContentPane() instanceof PlayerManagement){
-                    if(removeAccents(reponse).equals(removeAccents(answers.getText().toLowerCase()))) {
+                ArrayList<String> tab = Main.answers.get(room.getUserInside());
+                tab.add(reponse);
+                System.out.println("Coucou c'est la réponse : "+reponse);
+                Main.answers.put(room.getUserInside(), tab);
+
+                if (removeAccents(reponse).equals(removeAccents(answers.getText().toLowerCase()))) {
+                    Main.answers.remove(room.getUserInside());
+
+                    if (frame.getContentPane() instanceof PlayerManagement) {
                         frame.playerManagementDisplay(frame, room, gameNb, riddleNb + 1, false, false, false);
                     }
                 }
-                proposition.append("\n"+reponse);
+
+                proposition.append("\n" + reponse);
             }
         };
         Thread ta = new Thread(runnable);
@@ -470,8 +477,12 @@ public class PlayerManagement extends JPanel implements ActionListener{
     }
 
     public void afficheReponse(){
-        for (int i=0;i<Main.answers.get(room.getUserInside()).size();i++){
-            proposition.append("\n"+Main.answers.get(room.getUserInside()).get(i));
+
+        ArrayList<String> tab = Main.answers.get(room.getUserInside());
+        if (tab != null) {
+            for (int i = 0; i < tab.size(); i++) {
+                proposition.append("\n" + tab.get(i));
+            }
         }
     }
 }
