@@ -20,6 +20,8 @@ import java.io.ObjectOutputStream;
 import java.net.Inet4Address;
 import java.net.Socket;
 import java.text.Normalizer;
+import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 
 public class CurrentGame extends JPanel implements ActionListener, WindowListener, FocusListener, KeyListener{
@@ -67,6 +69,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
 
     private final Timer countdowngame;
     private final Timer timeonenigma;
+    private Timer timer;
 
     private int countdownvalue = 3600;
     private int enigmatimevalue = 0;
@@ -378,6 +381,9 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
 
                 if (countdownvalue == 0) {
                     countdowngame.stop();
+                    if(Client.envoieFinPartie(DBUser.getUser(room.getUserInside()).getLogin(),room)){
+                        frame.connectionMenuDisplay(frame);
+                    }
                     frame.defeatscreenDisplay(frame);
                 }
             }
@@ -523,11 +529,12 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
         }
 
         else if (event.getSource() == confirmButton){
+            Client.sendMyAnswer(answerTextField.getText(),idUser);
             String answer = removeAccents(answerTextField.getText().toLowerCase());
             String[] possibility = allEnigmas.getEnigma(enigmalistflag).getAnswers1(); //reponse séparé par '/'
             boolean find = false;
             for(int i=0;i<possibility.length;i++){
-                if (answer.equals(possibility[i].toLowerCase())) {
+                if (answer.equals(removeAccents(possibility[i]).toLowerCase())) {
                     find = true;
                     break;
                 }
@@ -535,7 +542,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
             if(!find){
                 possibility = allEnigmas.getEnigma(enigmalistflag).getAnswers2(); //reponse séparé par ' / '
                 for(int i=0;i<possibility.length;i++){
-                    if (answer.equals(possibility[i].toLowerCase())) {
+                    if (answer.equals(removeAccents(possibility[i]).toLowerCase())) {
                         find = true;
                         break;
                     }
@@ -627,19 +634,22 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
                 }
                 //si derniere enigme
                 else{
+                    countdowngame.stop();
                     Score score = new Score(-1,game.getId(),idUser,0);
                     System.out.println("titre du jeu : "+game.getTitre());
                     score.calculScore(room.getGame().getScore(), countdownvalue,nbErreur);
 
                     String message = game.getEndMessage();
                     JTextArea engMessage = new JTextArea(message);
-                    engMessage.setPreferredSize(new Dimension(400,150));
                     engMessage.setLineWrap(true);
                     engMessage.setWrapStyleWord(true);
                     engMessage.setEditable(false);
+
                     engMessage.setForeground(Color.black);
-                    JScrollPane engMessageScroll = new JScrollPane(engMessage, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+                    JScrollPane engMessageScroll = new JScrollPane(engMessage, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
                     engMessageScroll.getVerticalScrollBar().setUnitIncrement(20);
+                    engMessageScroll.setPreferredSize(new Dimension(400,150));
+                    JOptionPane.showMessageDialog(frame, engMessageScroll,"Félicitation", JOptionPane.WARNING_MESSAGE,imageIconValide);
 
                     frame.insideRoom = false;
                     DBRoom.majUserRoom(room.getId(),-1);
@@ -649,23 +659,11 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
                         DBScore.insertScore(score);
                     }
 
-                    frame.victoryNoCompetitionScreenDisplay(frame,score.getScore());
-
-                    int seconde = (3600-countdownvalue) % 60;
-                    int minute = ((3600-countdownvalue) - seconde) / 60;
-                    String time;
-                    if (seconde < 10) {
-                        time = minute + ":0" + seconde;
-                    } else {
-                        time = minute + ":" + seconde;
-                    }
-                    String messageFin = "Score : "+score.getScore() + "\nTemps : "+time + "\nErreur : "+nbErreur;
-                    JOptionPane.showMessageDialog(frame, messageFin,"Score", JOptionPane.INFORMATION_MESSAGE);
-                    System.out.println(score.getScore());
-
                     if(Client.envoieFinPartie(DBUser.getUser(room.getUserInside()).getLogin(),room)){
                         frame.connectionMenuDisplay(frame);
                     }
+
+                    frame.victoryNoCompetitionScreenDisplay(frame,score.getScore(),countdownvalue);
 
                 }
             //si mauvaise reponse

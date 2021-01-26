@@ -59,8 +59,9 @@ System.out.println(map.get("dog"));
 
       }
     }
-    Thread.sleep(4);
-    socket.close();
+      Thread.sleep(4);
+      socket.close();
+      s.close();
 
   }catch(IOException e){
     //System.out.println("IOException : "+ e.getMessage());
@@ -79,25 +80,53 @@ System.out.println(map.get("dog"));
    */
   public static void envoiAideJoueur(String message, int idIndice, int idUser){
     System.out.println(idUser);
+    Socket socket = null;
   try{
-    if(message != null ){      
-      Socket socket = new Socket(host.get(idUser),idUser+5201);
+    if(message != null ){
+      socket = new Socket(host.get(idUser),idUser+5201);
       System.out.println("ip du client" + host.get(idUser));
 
       ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
       Message msgSend = new Message(message);
       out.writeObject(msgSend);
-      socket.close();
     }else{
-      Socket socket = new Socket(host.get(idUser),idUser+5201);
+      socket = new Socket(host.get(idUser),idUser+5201);
       ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
       Indice indiceS = new Indice(idIndice);
       out.writeObject(indiceS);
-      socket.close();
     }
+    socket.close();
   } catch(IOException e){
     System.out.println("IOException :" + e.getMessage());
   }
+}
+
+
+public static String recepAnswerJoueur(int idUser) {
+    ServerSocket s = null;
+    String msg = null;
+    try {
+        s = new ServerSocket(49153+idUser);
+        Socket socket = s.accept();
+
+        ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+        Object oserver = in.readObject();
+
+        if (oserver instanceof String) {
+            msg = (String) oserver;
+            System.out.println("Message : " + msg);
+        }
+        socket.close();
+        s.close();
+    }
+    catch (IOException e) {
+    e.printStackTrace();
+    }
+    catch (ClassNotFoundException e) {
+    e.printStackTrace();
+    }
+
+    return msg;
 }
 
   /**
@@ -118,25 +147,27 @@ System.out.println(map.get("dog"));
     }
   }
 
+
+  //mettre socket plutot que serveur
   public static int getRiddleNb(int idUser) {
     try {
-      ServerSocket s = new ServerSocket(5201+idUser);
-      Socket socket = s.accept();
+      Socket socket =new Socket(host.get(idUser),49553+idUser);
 
       ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
       Object oserver =  in.readObject();
-      s.close();
+      socket.close();
+
       if(oserver instanceof Integer){
         return (int) oserver;
-        }
+      }
 
-        } catch (IOException e) {
-        e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-        e.printStackTrace();
-        }
-        return 1;
-        }
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
+    }
+    return 1;
+  }
 
   public static void acceptFin() {
     try {
@@ -156,6 +187,7 @@ System.out.println(map.get("dog"));
       }
       Thread.sleep(4);
       socket.close();
+      s.close();
 
     } catch (IOException e) {
       //System.out.println("IOException : "+ e.getMessage());
