@@ -101,6 +101,7 @@ public class Client {
 
     Object oserver= null;
     try{
+      System.out.println(idUser);
       ServerSocket s = new ServerSocket(idUser+5201);
       Socket socket = s.accept();
       
@@ -176,7 +177,7 @@ public class Client {
 
 
   //le mettre en serveur socket
-/*  public static void SendRiddleNb(int idUser, int riddleNb){
+  public static void SendRiddleNb(int idUser, int riddleNb){
     ServerSocket s = null;
     try {
       System.out.println("Je suis a l'enigme : "+riddleNb);
@@ -196,7 +197,7 @@ public class Client {
       e.printStackTrace();
     }
 
-  }*/
+  }
 
   public static void sendMyAnswer(String answer, int idUser) {
     Socket socket = null;

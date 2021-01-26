@@ -431,9 +431,11 @@ public class PlayerManagement extends JPanel implements ActionListener{
 
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==helpButtonGM){
-            //Baptiste fonction envoyer le message aux joueurs
             String messageFromMJ = helpMessageGM.getText();
+            System.out.println("je suis le Mj et j'envoi :" + messageFromMJ);
+            System.out.println("de l'aide a "+room.getUserInside());
             Admin.envoiAideJoueur(messageFromMJ,0,room.getUserInside());
+
         }else if(e.getSource() == buttonReturn){
             frame.roomManagementDisplay(frame);
         }else if(e.getSource()==buttonHint1){

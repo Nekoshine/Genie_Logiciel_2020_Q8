@@ -430,6 +430,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
 
         Runnable runnable = () -> {
             while (true) {
+                System.out.println("je suis "+idUser+" et j'appel a laide");
                 Object help = Client.recepHelpGame(idUser);
                 try {
                     if (help instanceof String) {
@@ -455,13 +456,13 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
         Thread t = new Thread(runnable);
         t.start();
 
-        /*Runnable runnabla = () -> {
+        Runnable runnabla = () -> {
             while (true) {
                 Client.SendRiddleNb(idUser,enigmalistflag+1);
             }
         };
         Thread ta = new Thread(runnabla);
-        ta.start();*/
+        ta.start();
 
     }
 
