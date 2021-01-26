@@ -218,8 +218,8 @@ public class GlobalFrame extends JFrame {
         else {
             setContentPane(roomAccess);
         }
-        //frame.setSize(1280,720);
-        //frame.setLocationRelativeTo(null);
+        frame.setSize(1280,720);
+        frame.setLocationRelativeTo(null);
         frame.revalidate();
         frame.repaint();
 
