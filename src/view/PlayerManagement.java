@@ -47,7 +47,6 @@ public class PlayerManagement extends JPanel implements ActionListener{
     private JLabel answers;
 
     private Room room;
-    private int enigmalistflag = 0;
 
     public PlayerManagement(GlobalFrame frame, Room room, int gameNb, int riddleNb, boolean boolHint1Revealed, boolean boolHint2Revealed, boolean boolHint3Revealed){
         this.frame = frame;
@@ -60,13 +59,9 @@ public class PlayerManagement extends JPanel implements ActionListener{
         int width = (int) frame.windowSize.getWidth();
         int height = (int) frame.windowSize.getHeight();
 
-        if(gameNb!=-1) {
-            currentRiddles = DBEnigma.getEnigmas(gameNb); // la liste des énigmes du jeu
-        }
-        else{
-            currentRiddles = new EnigmaList();
-            currentRiddles.addEnigma(new Enigma(1,1,"","","",1,"",1,"",3));
-        }
+
+        currentRiddles = DBEnigma.getEnigmas(gameNb); // la liste des énigmes du jeu
+
         helpButtonGM = new JButton("Envoyer");
         helpButtonGM.addActionListener(this);
         helpButtonGM.setBackground(Color.white);
@@ -199,7 +194,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
         hint1Text.setBackground(Color.LIGHT_GRAY);
         hint1Text.setFont(FontPerso.Oxanimum);
         hint1Text.setEditable(false);
-        hint1Text.setText(DBEnigma.getEnigmas(room.getGame().getId()).getEnigma(enigmalistflag).getClue1());
+        hint1Text.setText(currentRiddles.getEnigma(riddleNb-1).getClue1());
         JPanel hint1TextPan = new JPanel();
         hint1TextPan.setLayout(new FlowLayout(1));
         hint1TextPan.setBackground(Color.lightGray);
@@ -223,7 +218,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
         hint2Text.setBackground(Color.LIGHT_GRAY);
         hint2Text.setFont(FontPerso.Oxanimum);
         hint2Text.setEditable(false);
-        hint2Text.setText(DBEnigma.getEnigmas(room.getGame().getId()).getEnigma(enigmalistflag).getClue2());
+        hint2Text.setText(currentRiddles.getEnigma(riddleNb-1).getClue2());
         buttonHint2PanIn.setLayout(new BoxLayout(buttonHint2PanIn, BoxLayout.PAGE_AXIS));
         buttonHint2PanIn.add(hint2Text);
         buttonHint2PanIn.add(buttonHint2);
@@ -239,7 +234,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
         hint3Text.setBackground(Color.LIGHT_GRAY);
         hint3Text.setFont(FontPerso.Oxanimum);
         hint3Text.setEditable(false);
-        hint3Text.setText(DBEnigma.getEnigmas(room.getGame().getId()).getEnigma(enigmalistflag).getClue3());
+        hint3Text.setText(currentRiddles.getEnigma(riddleNb-1).getClue3());
         buttonHint3PanIn.setLayout(new BoxLayout(buttonHint3PanIn, BoxLayout.PAGE_AXIS));
         buttonHint3PanIn.add(hint3Text);
         buttonHint3PanIn.add(buttonHint3);
