@@ -1,12 +1,10 @@
 package view;
 
 import Sockets.Client;
+import Sockets.DemandeConnexion;
 import Sockets.Indice;
 import Sockets.Message;
-import database.DBEnigma;
-import database.DBGame;
-import database.DBRoom;
-import database.DBScore;
+import database.*;
 import launcher.Main;
 import model.*;
 import view.style.ColorPerso;
@@ -17,6 +15,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Inet4Address;
+import java.net.Socket;
 import java.text.Normalizer;
 
 
@@ -103,12 +105,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
             allEnigmas.addEnigma(new Enigma(1,1,"","","",1,"",1,"",3));
         }
 
-        if(idRoom!=-1){
-            room = Main.ListRoom.findByID(idRoom);
-        }
-        else {
-            room = new Room(1,game,false,0);
-        }
+        room = Main.ListRoom.findByID(idRoom);
 
 
         //recuperaion du timer de l'indice 1 et des autres si indices présents
@@ -459,6 +456,16 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
         Thread t = new Thread(runnable);
         t.start();
 
+        Runnable runnabla = new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    Client.SendRiddleNb(idUser,enigmalistflag+1);
+                }
+            }
+        };
+        Thread ta = new Thread(runnabla);
+        ta.start();
 
     }
 
@@ -621,6 +628,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
                 //si derniere enigme
                 else{
                     Score score = new Score(-1,game.getId(),idUser,0);
+                    System.out.println("titre du jeu : "+game.getTitre());
                     score.calculScore(room.getGame().getScore(), countdownvalue,nbErreur);
 
                     String message = game.getEndMessage();
@@ -634,8 +642,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
                     engMessageScroll.getVerticalScrollBar().setUnitIncrement(20);
 
                     frame.insideRoom = false;
-                    room.setUserInside(-1);
-                    DBRoom.majRoom(room.getId(),room.getGame().getId(),room.getCompetitive(),room.getUserInside());
+                    DBRoom.majUserRoom(room.getId(),-1);
 
 
                     if(room.getCompetitive()){
@@ -655,17 +662,20 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
                     String messageFin = "Score : "+score.getScore() + "\nTemps : "+time + "\nErreur : "+nbErreur;
                     JOptionPane.showMessageDialog(frame, messageFin,"Score", JOptionPane.INFORMATION_MESSAGE);
                     System.out.println(score.getScore());
-                    frame.connectionMenuDisplay(frame);
-                }
 
-            }
+                    if(Client.envoieFinPartie(DBUser.getUser(room.getUserInside()).getLogin(),room)){
+                        frame.connectionMenuDisplay(frame);
+                    }
+
+                }
             //si mauvaise reponse
+
+          }
             else{
                 nbErreur++;
                 JOptionPane.showMessageDialog(frame, "Ce n'est pas la bonne reponse", "Raté !", JOptionPane.WARNING_MESSAGE,imageIconRefus);
             }
         }
-
     }
 
     @Override
@@ -675,7 +685,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
     @Override
     public void windowClosing(WindowEvent e) {
         room.setUserInside(-1);
-        DBRoom.majRoom(room.getId(),room.getGame().getId(),room.getCompetitive(),room.getUserInside());
+        DBRoom.majUserRoom(room.getId(),-1);
 
     }
 
@@ -747,4 +757,6 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
                 Normalizer.normalize(text, Normalizer.Form.NFD)
                         .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
     }
+
+
 }

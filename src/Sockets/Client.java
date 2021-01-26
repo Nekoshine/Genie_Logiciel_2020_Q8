@@ -4,14 +4,13 @@ import database.DBRoom;
 import launcher.Main;
 import model.Game;
 import model.Room;
+import model.RoomList;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
-import java.net.Inet4Address;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.net.UnknownHostException;
+import java.net.*;
+
 import static java.lang.Thread.sleep;
 
 public class Client {
@@ -131,10 +130,7 @@ public class Client {
    * @param idUser qui recoit l'ordre
    * @return idadmin
    */
-  public static int refreshRoomAccess(int idUser){
-    System.out.println("idUser : " +idUser);
-    if(idUser!=9){idUser=9;}
-    Main.ListRoom= DBRoom.getRooms(Main.idAdmin);
+  public static RoomList refreshRoomAccess(int idUser){
     Object obj= null;
     try{
       ServerSocket s = new ServerSocket(1629+idUser);
@@ -149,20 +145,59 @@ public class Client {
       System.out.println("ClassNotFoundException : "+ e.getMessage());
     }
     if(obj instanceof Integer){
-      return (int) obj;
+      return DBRoom.getRooms((int) obj);
     }
-    return 0;
+    return null;
   }
 
-  public static void endRiddle(int idUser, Game game){
-    try{
-      Socket socket = new Socket(host,idUser+3020);
+  public static boolean envoieFinPartie(String login,Room salle) {
+
+    boolean accept=false;
+
+    if (login != null && salle != null) {
+      try {
+
+        Socket socket = new Socket(host, 2530);
+        System.out.println("Adresse ip de l'admin " + host);
+        ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+
+        String ip = null;
+        ip = Inet4Address.getLocalHost().getHostAddress();
+        FinPartie signal = new FinPartie(login, salle);
+
+        out.writeObject(signal);
+
+        ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+        Object oserver =  in.readObject();
+
+        if (oserver instanceof Boolean){
+          accept = true;
+        }
+
+        socket.close();
+      } catch (IOException | ClassNotFoundException e) {
+        System.out.println("IOException : " + e.getMessage());
+      }
+
+    }
+    return accept;
+  }
+  public static void SendRiddleNb(int idUser, int riddleNb){
+    Socket socket = null;
+    try {
+      socket = new Socket(host,5201+idUser);
       ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-      out.writeObject(game);
+      out.writeObject(riddleNb);
       socket.close();
-    } catch(IOException e){
-      System.out.println("IOException :" + e.getMessage());
-    }
-  }
 
+    }
+    catch (ConnectException e){
+      e.printStackTrace();
+    } catch (UnknownHostException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+  }
 }

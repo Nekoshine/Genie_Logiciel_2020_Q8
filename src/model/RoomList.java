@@ -51,6 +51,8 @@ public class RoomList {
 
   public Room findByID(int i) {
     for (int j = 0; j < this.getSize(); j++) {
+      System.out.println("room : " + this.getRoom(j).getId());
+      System.out.println("i vaut : "+i);
       if (this.getRoom(j).getId() == i) {
         return this.getRoom(j);
       }

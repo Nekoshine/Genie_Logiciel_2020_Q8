@@ -107,9 +107,6 @@ System.out.println(map.get("dog"));
   public static void refreshRoomAccess(int iAdmin){
     try{
       for (Map.Entry mapentry : host.entrySet()) {
-        System.out.println("clé: " + mapentry.getKey()
-                + " | valeur: " + mapentry.getValue());
-
         int idUser = (int)mapentry.getKey();
         Socket socket = new Socket((String) mapentry.getValue(), 1629+idUser);
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
@@ -121,20 +118,51 @@ System.out.println(map.get("dog"));
     }
   }
 
-  public static Game newRiddle(int idUser) {
-      try{
-        ServerSocket s = new ServerSocket(3020+idUser);
-        Socket socket = s.accept();
+  public static int getRiddleNb(int idUser) {
+    try {
+      ServerSocket s = new ServerSocket(5201+idUser);
+      Socket socket = s.accept();
 
-        ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-        Object oserver =  in.readObject();
-
-        if(oserver instanceof Game){
-          return (Game) oserver;
+      ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+      Object oserver =  in.readObject();
+      s.close();
+      if(oserver instanceof Integer){
+        return (int) oserver;
         }
-      } catch(IOException | ClassNotFoundException e){
-        System.out.println("IOException :" + e.getMessage());
+
+        } catch (IOException e) {
+        e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+        e.printStackTrace();
+        }
+        return 1;
+        }
+
+  public static void acceptFin() {
+    try {
+      ServerSocket s = new ServerSocket(2530);
+      Socket socket = s.accept();
+
+      ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+      Object oserver = in.readObject();
+
+      if (oserver instanceof FinPartie) {
+        FinPartie fin = (FinPartie) oserver;
+
+        Main.frame.endGame(fin.getLogin(), fin.getIdSalle()); //pop up demande de connexion
+        ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+        out.writeObject(true);
+
       }
-    return null;
+      Thread.sleep(4);
+      socket.close();
+
+    } catch (IOException e) {
+      //System.out.println("IOException : "+ e.getMessage());
+    } catch (ClassNotFoundException e) {
+      System.out.println("ClassNotFoundException : " + e.getMessage());
+    } catch (InterruptedException e) {
+      System.out.println("InterruptedException  : " + e.getMessage());
+    }
   }
 }
