@@ -111,7 +111,7 @@ public class Client {
         System.out.println("Message : "+msg.getMessage());
         obj=msg;
       }
-      if(oserver instanceof Indice){
+      else if(oserver instanceof Indice){
         Indice  indice = (Indice) oserver;
         System.out.println("idIndice : "+ indice.getIdIndice() );
         obj=indice;
@@ -182,13 +182,18 @@ public class Client {
     }
     return accept;
   }
+
+
+  //le mettre en serveur socket
   public static void SendRiddleNb(int idUser, int riddleNb){
-    Socket socket = null;
+    ServerSocket s = null;
     try {
-      socket = new Socket(host,5201+idUser);
+      s = new ServerSocket(49553+idUser);
+      Socket socket = s.accept();
       ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
       out.writeObject(riddleNb);
-      socket.close();
+
+      s.close();
 
     }
     catch (ConnectException e){
@@ -200,4 +205,21 @@ public class Client {
     }
 
   }
+
+  public static void sendMyAnswer(String answer, int idUser) {
+    Socket socket = null;
+    String msg = null;
+    try {
+      socket = new Socket(host,idUser+49153);
+
+      ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+      out.writeObject(answer);
+
+      socket.close();
+    }
+    catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
 }

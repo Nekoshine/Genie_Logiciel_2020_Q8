@@ -207,7 +207,6 @@ public class GlobalFrame extends JFrame {
         }
         frame.revalidate();
         frame.repaint();
-        setVisible(true);
     }
 
     public void roomAccessDisplay(GlobalFrame frame, RoomList roomList, User user){
@@ -219,9 +218,8 @@ public class GlobalFrame extends JFrame {
         else {
             setContentPane(roomAccess);
         }
-        frame.setSize(1280,720);
-        frame.setLocationRelativeTo(null);
-        frame.setResizable(true);
+        //frame.setSize(1280,720);
+        //frame.setLocationRelativeTo(null);
         frame.revalidate();
         frame.repaint();
 
@@ -241,7 +239,12 @@ public class GlobalFrame extends JFrame {
     public void defeatscreenDisplay(GlobalFrame frame) {
         defeatscreen = new Defeatscreennocompetitive(frame);
 
-        setContentPane(defeatscreen);
+        if(fullScrren){
+            removeFullScreen(defeatscreen);
+        }
+        else {
+            setContentPane(defeatscreen);
+        }
         frame.setSize(800,830);
         frame.setLocationRelativeTo(null);
         frame.revalidate();
@@ -253,7 +256,12 @@ public class GlobalFrame extends JFrame {
 
         victory = new Victoryscreennocompetitive(frame,score,time);
 
-        setContentPane(victory);
+        if(fullScrren){
+            removeFullScreen(victory);
+        }
+        else {
+            setContentPane(victory);
+        }
         frame.setSize(900,630);
         frame.setLocationRelativeTo(null);
         frame.revalidate();
@@ -320,6 +328,7 @@ public class GlobalFrame extends JFrame {
         device.setFullScreenWindow(this);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setResizable(false);
+        setVisible(true);
     }
 
     public void removeFullScreen(JPanel pane){

@@ -529,11 +529,12 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
         }
 
         else if (event.getSource() == confirmButton){
+            Client.sendMyAnswer(answerTextField.getText(),idUser);
             String answer = removeAccents(answerTextField.getText().toLowerCase());
             String[] possibility = allEnigmas.getEnigma(enigmalistflag).getAnswers1(); //reponse séparé par '/'
             boolean find = false;
             for(int i=0;i<possibility.length;i++){
-                if (answer.equals(possibility[i].toLowerCase())) {
+                if (answer.equals(removeAccents(possibility[i]).toLowerCase())) {
                     find = true;
                     break;
                 }
@@ -541,7 +542,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
             if(!find){
                 possibility = allEnigmas.getEnigma(enigmalistflag).getAnswers2(); //reponse séparé par ' / '
                 for(int i=0;i<possibility.length;i++){
-                    if (answer.equals(possibility[i].toLowerCase())) {
+                    if (answer.equals(removeAccents(possibility[i]).toLowerCase())) {
                         find = true;
                         break;
                     }
