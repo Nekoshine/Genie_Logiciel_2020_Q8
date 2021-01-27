@@ -110,7 +110,11 @@ public class DBUser extends DBConnexion {
     }
     return inserted;
   }
-  
+  /**
+  * Fonction qui récupère un utilisateur dans la base de donnée par son login
+  * @param  loginUser login de l'utilisateur à rechercher
+  * @return           id de l'utilisateur correspondant
+  */
   public static int getidUser(String loginUser){
     int userId = 0;
     try{
@@ -126,7 +130,11 @@ public class DBUser extends DBConnexion {
     }
     return userId;
   }
-  
+  /**
+  * Fonction qui récupère un utilisateur dans la base de donnée par son id
+  * @param  idUser id de l'utilisateur à rechercher
+  * @return        l'utilisateur correspondant
+  */
   public static User getUser(int idUser){
     User user = null;
     try{
@@ -141,7 +149,7 @@ public class DBUser extends DBConnexion {
       else {
         user = new User(resultat.getInt("id"), resultat.getString("login"), resultat.getString("pwd"), true);
       }
-
+      
       requete.close();
       resultat.close();
     }catch(SQLException e ){
