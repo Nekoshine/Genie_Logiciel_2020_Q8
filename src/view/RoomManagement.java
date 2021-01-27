@@ -2,7 +2,7 @@
 
 package view;
 
-import Sockets.Admin;
+import sockets.Admin;
 import database.DBRoom;
 import launcher.Main;
 import model.Room;

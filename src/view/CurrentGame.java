@@ -1,7 +1,6 @@
 package view;
 
-import Sockets.Client;
-import Sockets.DemandeConnexion;
+import sockets.Client;
 import database.*;
 import launcher.Main;
 import model.*;
@@ -13,13 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Inet4Address;
-import java.net.Socket;
 import java.text.Normalizer;
-import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
 
 public class CurrentGame extends JPanel implements ActionListener, WindowListener, FocusListener, KeyListener{

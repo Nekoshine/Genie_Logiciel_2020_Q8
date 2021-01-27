@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * Centralisation de la connection à la BDD
+ */
 public class DBConnexion {
 
     private static volatile Connection connexion = null;
@@ -11,10 +14,11 @@ public class DBConnexion {
     DBConnexion(){
         getConnexion();
     }
+
     /**
-     * Fonction qui va initialiser la connexion avec la BDD
-     * @return La connexion établie avec la bdd
-     */
+    * Fonction qui va initialiser la connexion avec la BDD
+    * @return La connexion établie avec la bdd
+    */
     public static Connection getConnexion(){
         if (connexion==null){
             try{

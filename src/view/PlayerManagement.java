@@ -1,12 +1,10 @@
 package view;
 
-import Sockets.Admin;
-import Sockets.Client;
+import sockets.Admin;
 import database.DBEnigma;
 import database.DBGame;
 import database.DBRoom;
 import launcher.Main;
-import model.Enigma;
 import model.EnigmaList;
 import model.Room;
 import view.style.ColorPerso;

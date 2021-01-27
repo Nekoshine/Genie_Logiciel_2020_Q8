@@ -8,15 +8,23 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 
+/**
+ * Tout les fonctions liée à la table Enigma dans la BDD
+ */
 public class DBEnigma extends DBConnexion{
 
       /**
-       * Connexion à la BDD ou récupération si elle existe déjà
-       */
+      * Connexion à la BDD ou récupération si elle existe déjà
+      */
       private DBEnigma(){
-          super.getConnexion();
+            super.getConnexion();
       }
 
+      /**
+       * Recuperer les enigmes d'un jeu dans la BDD
+       * @param idGame l'identifiant du jeu
+       * @return la liste des enigmes du jeu
+       */
       public static EnigmaList getEnigmas(int idGame){
             EnigmaList enigmaList = new EnigmaList();
 
@@ -30,6 +38,8 @@ public class DBEnigma extends DBConnexion{
                   requete.setString(1, String.valueOf(idGame));
                   ResultSet resultat = requete.executeQuery();
                   while (resultat.next()) { // On itère chaque résultat
+
+                        // si les indices sont null ont met "" dans les indices et -1 dans les timers
                         clue2= resultat.getString("clue2");
                         if(resultat.wasNull()){
                               clue2="";
@@ -46,11 +56,12 @@ public class DBEnigma extends DBConnexion{
                         if(resultat.wasNull()){
                               timer3=-1;
                         }
+
+                        //on ajoute l'enigme a la liste
                         enigmaList.addEnigma(
-                          new Enigma(resultat.getInt("id"),resultat.getString("text"),resultat.getString("answer"),
-                          resultat.getString("clue1"),resultat.getInt("timer1"),clue2,timer2,
-                          clue3,timer3));
-                        // On crée l'objet model.Game et on l'ajoute dans la liste
+                        new Enigma(resultat.getInt("id"),resultat.getString("text"),resultat.getString("answer"),
+                        resultat.getString("clue1"),resultat.getInt("timer1"),clue2,timer2,
+                        clue3,timer3));
                   }
                   requete.close();
                   resultat.close();
@@ -61,41 +72,43 @@ public class DBEnigma extends DBConnexion{
       }
 
       /**
-       * Détermine si une énigme est dans la BDD
-       * @param id l'identifiant de l'énigme recherché
-       * @return true si l'énigme est dans la BDD
-       */
+      * Détermine si une énigme est dans la BDD
+      * @param id l'identifiant de l'énigme recherché
+      * @return true si l'énigme est dans la BDD
+      */
       public static boolean isInDB(int id){
             boolean isHere = false;
             try {
                   PreparedStatement requetePresence = DBConnexion.getConnexion().prepareStatement("SELECT * FROM Enigma WHERE id=?");
                   requetePresence.setString(1, String.valueOf(id));
                   ResultSet resultatPresence = requetePresence.executeQuery();
-                  if(resultatPresence.next()){ // Si il est deja dans la bdd
-                        isHere=true; //Alors on annule l'insertion
-                        requetePresence.close();
-                        resultatPresence.close();
+
+                  //si on a un resultat, l'enigme est dans la BDD
+                  if(resultatPresence.next()){
+                        isHere=true;
                   }
+                  requetePresence.close();
+                  resultatPresence.close();
             }
             catch(SQLException e ){
-                  System.err.println("Erreur requete isInDB: " + e.getMessage());
+            System.err.println("Erreur requete isInDB: " + e.getMessage());
             }
             return isHere;
       }
 
       /**
-       * Fonction qui ajoute une énigme à la BDD
-       * @param idGame l'identifiant du jeu auquel appartient l'énigme
-       * @param text la question de l'énigme
-       * @param answer la réponse à la question
-       * @param clue1 le 1er indice (ne peut pas être null)
-       * @param timer1 la durée en seconde au bout de laquel la 1er indice est débloqué (ne peut pas être null)
-       * @param clue2 le 1er indice
-       * @param timer2 la durée en seconde au bout de laquel la 1er indice est débloqué
-       * @param clue3 le 1er indice
-       * @param timer3 la durée en seconde au bout de laquel la 1er indice est débloqué
-       * @return true si l'ajout a fonctionné
-       */
+      * Fonction qui ajoute une énigme à la BDD
+      * @param idGame l'identifiant du jeu auquel appartient l'énigme
+      * @param text la question de l'énigme
+      * @param answer la réponse à la question
+      * @param clue1 le 1er indice (ne peut pas être null)
+      * @param timer1 la durée en seconde au bout de laquel la 1er indice est débloqué (ne peut pas être null)
+      * @param clue2 le 1er indice
+      * @param timer2 la durée en seconde au bout de laquel la 1er indice est débloqué
+      * @param clue3 le 1er indice
+      * @param timer3 la durée en seconde au bout de laquel la 1er indice est débloqué
+      * @return true si l'ajout a fonctionné
+      */
       public static boolean insertEnigma(int idGame,String text,String answer, String clue1, int timer1,String clue2, int timer2,String clue3, int timer3){
             boolean inserted = false;
             try{
@@ -106,6 +119,8 @@ public class DBEnigma extends DBConnexion{
                   requete.setString(4,clue1);
                   requete.setInt(5,timer1);
 
+                  // si les indices sont null ou vide on mets null dans la BDD
+                  //si les timers valent -1 on mets null dans la BDD
                   if(clue2==null || clue2.isEmpty()){
                         requete.setNull(6, Types.NULL);
                   }
@@ -133,9 +148,12 @@ public class DBEnigma extends DBConnexion{
                   else {
                         requete.setInt(9,timer3);
                   }
+
                   requete.executeUpdate();
                   requete.close();
-                  PreparedStatement requeteVerif = DBConnexion.getConnexion().prepareStatement("Select * from Enigma where text=? and idGame=?");  // On regarde si l'user a bien été inséré
+
+                  //verification de l'insertion
+                  PreparedStatement requeteVerif = DBConnexion.getConnexion().prepareStatement("Select * from Enigma where text=? and idGame=?");  //c'est pas bien fait
                   requeteVerif.setString(1,text);
                   requeteVerif.setInt(2,idGame);
                   ResultSet resultatVerif = requeteVerif.executeQuery();
@@ -144,6 +162,7 @@ public class DBEnigma extends DBConnexion{
                   }
                   resultatVerif.close();
                   requeteVerif.close();
+
             } catch(SQLException e ){
                   System.err.println("Erreur requete insertEnigma: " + e.getMessage());
             }
@@ -205,7 +224,7 @@ public class DBEnigma extends DBConnexion{
                   requete.executeUpdate();
                   requete.close();
 
-                  inserted = true;
+                  inserted = true; //normal il faut faire une verification pour mettre a true
 
             } catch(SQLException e ){
                   System.err.println("Erreur requete majEnigma: " + e.getMessage());
@@ -214,18 +233,21 @@ public class DBEnigma extends DBConnexion{
       }
 
       /**
-       * Fonction qui va supprimer une enigme dans la BDD
-       * @param id l'identifiant de l'enigme a supprimer
-       * @return true si la suppression à reussi
-       */
+      * Fonction qui va supprimer une enigme dans la BDD
+      * @param id l'identifiant de l'enigme a supprimer
+      * @return true si la suppression à reussi
+      */
       public static boolean deleteEnigma(int id){
             boolean boolDelete=false;
             try{
+                  //suppresion avec l'id
                   PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("Delete from Enigma WHERE id=? ");
                   requete.setInt(1, id);
                   requete.executeUpdate();
                   requete.close();
-                  PreparedStatement requeteVerif = DBConnexion.getConnexion().prepareStatement("Select * from Game where id=?");  // On regarde si l'user a bien été supprimé
+
+                  //verification
+                  PreparedStatement requeteVerif = DBConnexion.getConnexion().prepareStatement("Select * from Game where id=?");
                   requeteVerif.setInt(1, id);
                   ResultSet resultatVerif = requeteVerif.executeQuery();
                   if(!resultatVerif.next()){ // Si il a été supprimé
