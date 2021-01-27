@@ -10,6 +10,11 @@ public class Defeatscreennocompetitive extends JPanel {
     private GlobalFrame frame;
     Dimension windowSize;
 
+    /**
+     * Interface de Défaite
+     * @param frame Fenêtre d'affichage
+     */
+
     public Defeatscreennocompetitive(GlobalFrame frame) {
 
         this.frame = frame;
@@ -28,6 +33,11 @@ public class Defeatscreennocompetitive extends JPanel {
         if (defeatBackground != null)
             g.drawImage(defeatBackground,0,0,null);
     }
+
+    /**
+     * Chargement de l'image de fond
+     * @param backgroundDefaite
+     */
 
     public void imageLoaded(Image backgroundDefaite) {
         this.defeatBackground = backgroundDefaite;
