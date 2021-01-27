@@ -81,6 +81,14 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
     private int nbErreur =0;
     private int idUser;
 
+    /**
+     * Interface de partie côté joueur
+     * @param frame fenêtre d'affichage
+     * @param partiechoisie Jeu associé à la partie
+     * @param idRoom N° de la salle associée à la partie
+     * @param idUser N° du joueur en pleine partie
+     */
+
     public CurrentGame (GlobalFrame frame, Game partiechoisie,int idRoom,int idUser) {
 
         /* Icon perso pour les pop up*/
@@ -742,6 +750,11 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
 
     }
 
+    /**
+     * Permet de normaliser les réponses
+     * @param text Texte à normaliser
+     * @return Retourne une chaîne de caractères sans accents
+     */
     public static String removeAccents(String text) {
         return text == null ? null :
                 Normalizer.normalize(text, Normalizer.Form.NFD)

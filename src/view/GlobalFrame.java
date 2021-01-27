@@ -357,7 +357,7 @@ public class GlobalFrame extends JFrame {
      * Fenêtre pop-up permettant à l'administrateur d'accepter la connexion d'un joueur à une salle
      * @param login
      * @param salle
-     * @return
+     * @return Retourne un booléen pour savoir si le joueur a été accepté
      */
 
     public boolean AcceptUser(String login, Room salle) {
@@ -392,8 +392,8 @@ public class GlobalFrame extends JFrame {
 
     /**
      * Fenêtre pop-up permettant à l'administrateur de valider la fin de partie d'un joueur
-     * @param login
-     * @param salle
+     * @param login Identifiant du joueur
+     * @param salle Salle dans laquelle il vient de jouer
      */
 
     public void endGame(String login, Room salle) {
@@ -414,7 +414,7 @@ public class GlobalFrame extends JFrame {
 
     /**
      * Affchage de la fenêtre joueur en plein écran
-     * @param pane
+     * @param pane Panel affecté
      */
 
     public void setFullScreen(JPanel pane){
@@ -430,7 +430,7 @@ public class GlobalFrame extends JFrame {
 
     /**
      * Enlève le plein écran pour le joueur
-     * @param pane
+     * @param pane Panel affecté
      */
 
     public void removeFullScreen(JPanel pane){

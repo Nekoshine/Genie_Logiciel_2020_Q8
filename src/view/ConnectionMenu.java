@@ -31,6 +31,11 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
   private GlobalFrame frame;
 
   private static volatile ConnectionMenu INSTANCE = new ConnectionMenu(Main.frame);
+
+  /**
+   * Interface de connexion au lançement du logiciel
+   * @param frame Fenêtre d'affichage
+   */
   private ConnectionMenu(GlobalFrame frame) {
 
     this.frame = frame;
@@ -112,6 +117,12 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
 
 
   }
+
+  /**
+   * Permet de recupérer l'instance de GameCreation
+   * @param frame Fenêtre d'affichage
+   * @return Retourne une instance de ConnectionMenu
+   */
 
   public static ConnectionMenu getInstance(GlobalFrame frame) {
     //Le "Double-Checked Singleton"/"Singleton doublement vérifié" permet

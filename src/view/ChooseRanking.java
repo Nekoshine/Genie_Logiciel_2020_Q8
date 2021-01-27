@@ -29,6 +29,11 @@ public class ChooseRanking extends JFrame {
 
     private User user;
 
+    /**
+     * Interface de choix de jeu pour regarder son classement joueur
+     * @param roomList Liste des salles possédées par l'administrateur
+     * @param user
+     */
 
     public ChooseRanking(RoomList roomList, User user){
 
@@ -102,6 +107,12 @@ public class ChooseRanking extends JFrame {
 
     }
 
+    /**
+     * Ajoute un jeu à l'intreface
+     * @param game Jeu associé
+     * @param gbc Contraintes d'affichage
+     * @return Retourne le panel correspondant au jeu
+     */
     public JPanel ajoutJeu(Game game,GridBagConstraints gbc){
 
         gbc.fill = GridBagConstraints.HORIZONTAL;

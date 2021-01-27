@@ -49,6 +49,17 @@ public class PlayerManagement extends JPanel implements ActionListener,MouseList
 
     private Room room;
 
+    /**
+     * Interface de suivi de partie
+     * @param frame fenêtre d'affichage
+     * @param room Salle associée à la partie
+     * @param gameNb n° du jeu
+     * @param riddleNb Nombre d'enigme
+     * @param boolHint1Revealed Indice 1 révélé
+     * @param boolHint2Revealed Indice 2 révélé
+     * @param boolHint3Revealed Indice 3 révélé
+     */
+
     public PlayerManagement(GlobalFrame frame, Room room, int gameNb, int riddleNb, boolean boolHint1Revealed, boolean boolHint2Revealed, boolean boolHint3Revealed){
         this.frame = frame;
         this.boolHint1 = boolHint1Revealed;
@@ -580,6 +591,12 @@ public class PlayerManagement extends JPanel implements ActionListener,MouseList
         return INSTANCE;
     }*/
 
+    /**
+     * Création ou mise à jour des boutons
+     * @param i : indice du bouton
+     * @return Retourne le bouton après modification
+     */
+
     private JButton hintButton(int i){
         JButton button = null;
         boolean revealed = false;
@@ -641,12 +658,21 @@ public class PlayerManagement extends JPanel implements ActionListener,MouseList
         }
     }
 
+    /**
+     * Permet de normaliser les réponses
+     * @param text Texte à normaliser
+     * @return Retourne une chaîne de caractères sans accents
+     */
+
     public static String removeAccents(String text) {
         return text == null ? null :
                 Normalizer.normalize(text, Normalizer.Form.NFD)
                         .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
     }
 
+    /**
+     * Affiche les réponses ayant été rentrées par le joueur
+     */
     public void afficheReponse(){
 
         ArrayList<String> tab = Main.answers.get(room.getUserInside());
