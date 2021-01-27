@@ -1,25 +1,13 @@
 package view;
 
-
-import launcher.Main;
-import model.Game;
 import view.SwingWorkers.ImageLoaderDefeat;
-import view.SwingWorkers.ImageLoaderMainMenu;
-import view.style.ColorPerso;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.nio.Buffer;
 
-public class Defeatscreennocompetitive extends JPanel implements ActionListener {
+public class Defeatscreennocompetitive extends JPanel {
 
     private Image defeatBackground;
-    private JButton quit;
     private GlobalFrame frame;
-    private JPanel quitcontainer;
     Dimension windowSize;
 
     public Defeatscreennocompetitive(GlobalFrame frame) {
@@ -32,12 +20,6 @@ public class Defeatscreennocompetitive extends JPanel implements ActionListener 
 
         this.setLayout(new GridLayout(1, 1));
         this.setVisible(true);
-    }
-
-    public void actionPerformed(ActionEvent event) {
-        if (event.getSource() == quit) {
-            frame.connectionMenuDisplay(frame);
-        }
     }
 
     @Override

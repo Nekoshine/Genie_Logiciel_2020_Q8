@@ -99,30 +99,22 @@ public class Client {
    */
   public static Object recepHelpGame(int idUser){
 
-    Object obj= null;
+    Object oserver= null;
     try{
+      System.out.println(idUser);
       ServerSocket s = new ServerSocket(idUser+5201);
       Socket socket = s.accept();
       
       ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-      Object oserver =  in.readObject();
-      if(oserver instanceof Message){
-        Message  msg = (Message) oserver;
-        System.out.println("Message : "+msg.getMessage());
-        obj=msg;
-      }
-      else if(oserver instanceof Indice){
-        Indice  indice = (Indice) oserver;
-        System.out.println("idIndice : "+ indice.getIdIndice() );
-        obj=indice;
-      }
+      oserver =  in.readObject();
       s.close();
+
     }catch(IOException e){
-      System.out.println("IOException : "+ e.getMessage());
+      System.out.println("azerty IOException : "+ e.getMessage());
     }catch(ClassNotFoundException e){
-      System.out.println("ClassNotFoundException : "+ e.getMessage());
+      System.out.println("qwerty ClassNotFoundException : "+ e.getMessage());
     }
-    return obj;
+    return oserver;
   }
 
   /**
@@ -188,6 +180,7 @@ public class Client {
   public static void SendRiddleNb(int idUser, int riddleNb){
     ServerSocket s = null;
     try {
+      System.out.println("Je suis a l'enigme : "+riddleNb);
       s = new ServerSocket(49553+idUser);
       Socket socket = s.accept();
       ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());

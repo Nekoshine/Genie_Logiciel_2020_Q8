@@ -218,7 +218,9 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
             public void actionPerformed(ActionEvent e) {
 
                 if(salle.getUserInside()==-1){
-                    JOptionPane.showMessageDialog(null, "Le MJ va valider votre connection", "Connexion en cours", JOptionPane.INFORMATION_MESSAGE,null);
+                    boutonJoin.setText("En attente du MJ");
+                    joinPanel.revalidate();
+                    joinPanel.repaint();
                     if(Client.connexionRoom(user.getId(),salle)){
                         frame.currentGameDisplay(frame,salle.getGame(),salle.getId(),user.getId());
                         salle.setUserInside(user.getId());

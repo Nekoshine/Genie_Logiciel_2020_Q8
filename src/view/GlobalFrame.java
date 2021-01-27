@@ -18,6 +18,7 @@ import java.awt.event.ComponentEvent;
 import java.io.IOException;
 import java.io.InputStream;
 
+
 public class GlobalFrame extends JFrame {
 
     public static Dimension windowSize;
@@ -34,7 +35,7 @@ public class GlobalFrame extends JFrame {
     RoomAccess roomAccess;
     PlayerManagement playerManagement;
     Defeatscreennocompetitive defeatscreen;
-    Victoryscreennocompetitive victory;
+    VictoryScreenNoCompetitive victory;
 
 
     private boolean fullScrren = false;
@@ -44,6 +45,10 @@ public class GlobalFrame extends JFrame {
     public int roomNumber;
     public boolean insideRoom;
 
+
+    /**
+     * Constructeur de la fenêtre pricncipale
+     */
 
     private GlobalFrame() {
         /*Font*/
@@ -81,6 +86,9 @@ public class GlobalFrame extends JFrame {
 
         this.addComponentListener(new ComponentAdapter() {
             @Override
+            /**
+             * Listener appelé lors d'un redimensionnement de la fenêtre
+             */
             public void componentResized(ComponentEvent e) {
                 super.componentResized(e);
                 windowSize = getSize();
@@ -105,6 +113,10 @@ public class GlobalFrame extends JFrame {
 
     }
 
+    /**
+     * Permet de recupérer l'instance de GlobalFrame
+     * @return
+     */
     public static GlobalFrame getInstance() {
         //Le "Double-Checked Singleton"/"Singleton doublement vérifié" permet
         //d'éviter un appel coûteux à synchronized,
@@ -125,6 +137,11 @@ public class GlobalFrame extends JFrame {
         return INSTANCE;
     }
 
+    /**
+     * Affiche le panel RoomManagement dans la GlobalFrame
+     * @param frame
+     */
+
     public void roomManagementDisplay(GlobalFrame frame){
         roommanagement = RoomManagement.getInstance(frame);
         setContentPane(roommanagement);
@@ -132,6 +149,11 @@ public class GlobalFrame extends JFrame {
         frame.revalidate();
         frame.repaint();
     }
+
+    /**
+     * Affiche le panel mainMenu dans la GlobalFrame
+     * @param frame fenêtre
+     */
 
     public void mainMenuDisplay(GlobalFrame frame){
         mainmenu = MainMenu.getInstance(frame);
@@ -146,6 +168,11 @@ public class GlobalFrame extends JFrame {
         frame.revalidate();
         frame.repaint();
     }
+
+    /**
+     * Affiche le panel ConnectionMenu dans la GlobaleFrame
+     * @param frame fenêtre
+     */
 
     public void connectionMenuDisplay(GlobalFrame frame){
 
@@ -167,6 +194,11 @@ public class GlobalFrame extends JFrame {
 
     }
 
+    /**
+     * Affiche le panel SignupMenu dans la GlobaleFrame
+     * @param frame fenêtre
+     */
+
     public void signupMenuDisplay(GlobalFrame frame){
 
         signupmenu = SignupMenu.getInstance(frame);
@@ -178,6 +210,12 @@ public class GlobalFrame extends JFrame {
         frame.repaint();
     }
 
+    /**
+     * Affiche le panel GameManagement dans la GlobalFrame
+     * @param frame fenêtre
+     * @param roomNumber numéro de salle
+     */
+
     public void gameManagementDisplay(GlobalFrame frame, int roomNumber){
 
         gamemanagement = GameManagement.getInstance(frame, roomNumber);
@@ -186,6 +224,12 @@ public class GlobalFrame extends JFrame {
         frame.revalidate();
         frame.repaint();
     }
+
+    /**
+     * Affiche le panel GameCreation dans la GlobalFrame
+     * @param frame
+     * @param game
+     */
 
     public void gameCreationDisplay(GlobalFrame frame, Game game){
 
@@ -196,6 +240,14 @@ public class GlobalFrame extends JFrame {
         frame.repaint();
     }
 
+    /**
+     * Affiche le panel CurrentGameDisplay dans la GlobalFrame
+     * @param frame
+     * @param partie
+     * @param idRoom
+     * @param idUser
+     */
+
     public void currentGameDisplay(GlobalFrame frame,Game partie,int idRoom,int idUser) {
         currentGame = new CurrentGame(frame,partie,idRoom,idUser);
 
@@ -205,9 +257,17 @@ public class GlobalFrame extends JFrame {
         else {
             setContentPane(currentGame);
         }
+        frame.setExtendedState(MAXIMIZED_BOTH);
         frame.revalidate();
         frame.repaint();
     }
+
+    /**
+     * Affiche le panel roomAccessDisplay dans la GlobalFrame
+     * @param frame
+     * @param roomList
+     * @param user
+     */
 
     public void roomAccessDisplay(GlobalFrame frame, RoomList roomList, User user){
 
@@ -218,12 +278,23 @@ public class GlobalFrame extends JFrame {
         else {
             setContentPane(roomAccess);
         }
-        //frame.setSize(1280,720);
-        //frame.setLocationRelativeTo(null);
+        frame.setSize(1280,720);
+        frame.setLocationRelativeTo(null);
         frame.revalidate();
         frame.repaint();
 
     }
+
+    /**
+     * Affiche la fenêtre PlayerManagement dans la Global Frame
+     * @param frame
+     * @param room
+     * @param gameNb
+     * @param riddleNb
+     * @param boolHint1Revealed
+     * @param boolHint2Revealed
+     * @param boolHint3Revealed
+     */
 
     public void playerManagementDisplay(GlobalFrame frame,Room room,int gameNb, int riddleNb, boolean boolHint1Revealed, boolean boolHint2Revealed,
                                  boolean boolHint3Revealed){
@@ -235,6 +306,11 @@ public class GlobalFrame extends JFrame {
         frame.repaint();
 
     }
+
+    /**
+     * Affiche le panel DefeatScreen dans la GlobalFrame
+     * @param frame
+     */
 
     public void defeatscreenDisplay(GlobalFrame frame) {
         defeatscreen = new Defeatscreennocompetitive(frame);
@@ -252,9 +328,16 @@ public class GlobalFrame extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Affiche le panel VictoryNoCompetitionScreen dans la GlobalFrame
+     * @param frame
+     * @param score
+     * @param time
+     */
+
     public void victoryNoCompetitionScreenDisplay(GlobalFrame frame,int score,int time) {
 
-        victory = new Victoryscreennocompetitive(frame,score,time);
+        victory = new VictoryScreenNoCompetitive(frame,score,time);
 
         if(fullScrren){
             removeFullScreen(victory);
@@ -269,6 +352,12 @@ public class GlobalFrame extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Fenêtre pop-up permettant à l'administrateur d'accepter la connexion d'un joueur à une salle
+     * @param login
+     * @param salle
+     * @return
+     */
 
     public boolean AcceptUser(String login, Room salle) {
         String nomJeu = salle.getGame().getTitre();
@@ -300,6 +389,11 @@ public class GlobalFrame extends JFrame {
         }
     }
 
+    /**
+     * Fenêtre pop-up permettant à l'administrateur de valider la fin de partie d'un joueur
+     * @param login
+     * @param salle
+     */
 
     public void endGame(String login, Room salle) {
         String nomJeu = salle.getGame().getTitre();
@@ -317,6 +411,11 @@ public class GlobalFrame extends JFrame {
         }
     }
 
+    /**
+     * Affchage de la fenêtre joueur en plein écran
+     * @param pane
+     */
+
     public void setFullScreen(JPanel pane){
         fullScrren=true;
        // setVisible(false);
@@ -327,6 +426,11 @@ public class GlobalFrame extends JFrame {
         //setResizable(false);
         //setVisible(true);
     }
+
+    /**
+     * Enlève le plein écran pour le joueur
+     * @param pane
+     */
 
     public void removeFullScreen(JPanel pane){
         fullScrren=false;

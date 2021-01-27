@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class DBScore extends DBConnexion {
 
-    public DBScore(){
+    private DBScore(){
         super.getConnexion();
     }
 
@@ -38,37 +38,6 @@ public class DBScore extends DBConnexion {
         return boolDelete;
     }
 
-
-    /**
-     * On insert le score d'un utilisateur
-     * @param  scoreN a insérer
-     * @return      insert correct ou non
-     */
-    public static boolean insertScore(int scoreN ,int idUserN,int idGameN){
-        boolean inserted = false;
-        int valueReady=0;
-        try{
-            PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("Insert into Score VALUES (default,?,?,?)");
-            requete.setInt(1,idUserN);
-            requete.setInt(2,idGameN);
-            requete.setInt(3,scoreN);
-            requete.executeUpdate();
-            requete.close();
-            PreparedStatement requeteVerif = DBConnexion.getConnexion().prepareStatement("Select * from Score where score=? and idUser=? and idGame=?");  // On regarde si le score à bien été inséré
-            requeteVerif.setInt(1,scoreN);
-            requeteVerif.setInt(2,idUserN);
-            requeteVerif.setInt(3,idGameN);
-            ResultSet resultatVerif = requeteVerif.executeQuery();
-            if(resultatVerif.next()){ // Si il a été inséré
-                inserted=true; // Alors on valide l insertion
-            }
-            resultatVerif.close();
-            requeteVerif.close();
-        } catch(SQLException e ){
-            System.err.println("Erreur requete insertScore: " + e.getMessage());
-        }
-        return inserted;
-    }
 
     /**
      * Fonction qui va récupérer les scores d'un jeu dans la base de données et le stocker dans un ArrayList
@@ -116,7 +85,6 @@ public class DBScore extends DBConnexion {
 
     public static boolean insertScore(Score score) {
         boolean inserted = false;
-        int valueReady=0;
         try{
             PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("Insert into Score VALUES (default,?,?,?)");
             requete.setInt(1,score.getIdUser());
