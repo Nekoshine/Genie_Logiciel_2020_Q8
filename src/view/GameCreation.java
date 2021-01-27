@@ -754,7 +754,8 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
     private void majEnigma() {
         listEnigma.addEnigma(-1,"Énigme précédée de son histoire","Réponse(s) à l'énigme séparée par \" \\ \"","1er indice",-1,"2eme indice",-1,"3eme indice",-1);
         this.createList();
-        frame.gameCreationDisplay(frame,game);
+        INSTANCE.revalidate();
+        INSTANCE.repaint();
     }
 
     /**
