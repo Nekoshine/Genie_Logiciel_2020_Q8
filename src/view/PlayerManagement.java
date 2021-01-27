@@ -27,6 +27,8 @@ public class PlayerManagement extends JPanel implements ActionListener{
 
     private JPanel currentStoryPanIn = new JPanel();
     private JPanel answersPanIn = new JPanel();
+    private JPanelImage mainPanel;
+    private JPanel panelTitre;
 
     private JButton helpButtonGM;
     private JButton buttonReturn;
@@ -46,6 +48,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
     private EnigmaList currentRiddles;
     private JLabel title;
     private JLabel answers;
+    private JLabel labelTitre;
 
     private Room room;
 
@@ -60,7 +63,17 @@ public class PlayerManagement extends JPanel implements ActionListener{
         int width = (int) frame.windowSize.getWidth();
         int height = (int) frame.windowSize.getHeight();
 
+        mainPanel = new JPanelImage(Main.class.getResourceAsStream("/image/FondPrincipal.png"), GlobalFrame.windowSize);
 
+        panelTitre = new JPanel();
+        labelTitre = new JLabel("MJ - Suivi des joueurs");
+        panelTitre.setLayout(new FlowLayout(1));
+        panelTitre.add(labelTitre);
+        panelTitre.setBorder(BorderFactory.createLineBorder(Color.black,2));
+
+
+        mainPanel.setLayout(new GridBagLayout());
+        mainPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         currentRiddles = DBEnigma.getEnigmas(gameNb); // la liste des énigmes du jeu
 
         helpButtonGM = new JButton("Envoyer");
@@ -82,33 +95,37 @@ public class PlayerManagement extends JPanel implements ActionListener{
         buttonHint3 = this.hintButton(3);
 
         title = new JLabel();
-        title.setText(DBGame.getTitleGame(gameNb));
+        title.setText("<html><body><u>" + DBGame.getTitleGame(gameNb) + "</u></body></html>");
+        title.setOpaque(false);
+        title.setAlignmentX(JLabel.LEFT);
 
         JPanel titlePanIn = new JPanel();
         titlePanIn.setPreferredSize(new Dimension((int) ((width-40)*0.7),(int) ((height-90)*0.06)));
-        titlePanIn.setBackground(Color.LIGHT_GRAY);
-        titlePanIn.add(title, CENTER_ALIGNMENT);
-        titlePanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+        titlePanIn.setOpaque(false);
+        titlePanIn.setLayout(new FlowLayout(0));
+        titlePanIn.add(title);
+        //titlePanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
 
         JPanel titlePan = new JPanel();
-        titlePan.setBackground(ColorPerso.darkGray);
-        titlePan.setBorder(BorderFactory.createEmptyBorder(0,0,0,10));
+        titlePan.setOpaque(false);
+        titlePan.setBorder(BorderFactory.createEmptyBorder(0,50,0,10));
         titlePan.add(titlePanIn);
 
         JLabel timer = new JLabel();
         JPanel timerPanIn = new JPanel();
+        timerPanIn.setOpaque(false);
         timerPanIn.setPreferredSize(new Dimension((int)((width-40)*0.3),(int) ((height-90)*0.06)));
         timerPanIn.setBackground(Color.LIGHT_GRAY);
-        timerPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+        //timerPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         timerPanIn.add(timer);
 
         JPanel timerPan = new JPanel();
-        timerPan.setBackground(ColorPerso.darkGray);
+        timerPan.setOpaque(false);
         timerPan.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
         timerPan.add(timerPanIn);
 
         JPanel topPan = new JPanel();
-        topPan.setBackground(ColorPerso.darkGray);
+        topPan.setOpaque(false);
         topPan.setLayout(new BoxLayout(topPan, BoxLayout.LINE_AXIS));
         topPan.add(titlePan);
         topPan.add(timerPan);
@@ -116,7 +133,6 @@ public class PlayerManagement extends JPanel implements ActionListener{
         currentStory = new JTextArea();
         currentStory.setLineWrap(true);
         currentStory.setWrapStyleWord(true);
-        currentStory.setBackground(Color.LIGHT_GRAY);
         currentStory.setFont(FontPerso.courierNew);
         currentStory.setEditable(false);
         currentStory.setPreferredSize(new Dimension(width-20,(height-90)*50/100-10));
@@ -126,38 +142,51 @@ public class PlayerManagement extends JPanel implements ActionListener{
         JScrollPane scrollCurrentStoryPanIn = new JScrollPane(currentStoryPanIn,
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         //scrollCurrentStoryPanIn.setPreferredSize(new Dimension(width-20,(height-90)*50/100));
-        scrollCurrentStoryPanIn.setBackground(Color.LIGHT_GRAY);
-        currentStoryPanIn.setBackground(Color.LIGHT_GRAY);
+        scrollCurrentStoryPanIn.getVerticalScrollBar().setUnitIncrement(10);
         currentStoryPanIn.add(currentStory);
         scrollCurrentStoryPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+        currentStoryPanIn.setBackground(Color.white);
         JPanel currentStoryPan = new JPanel();
         currentStoryPan.setBackground(ColorPerso.darkGray);
         currentStoryPan.setLayout(new FlowLayout(1));
         currentStoryPan.add(scrollCurrentStoryPanIn);
         //currentStoryPan.setBorder(BorderFactory.createEmptyBorder(0,0,20,0));
 
+        JPanel panelAnswer = new JPanel();
+        panelAnswer.setLayout(new BorderLayout());
+        panelAnswer.setOpaque(false);
         answers = new JLabel();
-        answers.setText((currentRiddles.getEnigma(riddleNb -1)).getAnswer());
+        answers.setText("Réponse à l'énigme : " + (currentRiddles.getEnigma(riddleNb -1)).getAnswer());
+        answers.setAlignmentY(SwingConstants.CENTER);
+        answers.setAlignmentX(SwingConstants.CENTER);
+        answers.setOpaque(false);
+        panelAnswer.add(answers,BorderLayout.CENTER);
+
 
         proposition = new JTextArea("Réponses tentées jusqu'ici : \n");
-        proposition.setBackground(Color.lightGray);
+        proposition.setAlignmentX(SwingConstants.CENTER);
         proposition.setFont(FontPerso.Oxanimum);
         proposition.setEditable(false);
+        proposition.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
 
         afficheReponse();
 
-        JScrollPane scrollAnswersPanIn = new JScrollPane(answersPanIn,
+        JScrollPane scrollAnswersPanIn = new JScrollPane(proposition,
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         //scrollAnswersPanIn.setPreferredSize(new Dimension((int) (width-20),(int) ((height-90)*0.10)));
-        scrollAnswersPanIn.setBackground(Color.LIGHT_GRAY);
-        answersPanIn.setBackground(Color.LIGHT_GRAY);
-        answersPanIn.setLayout(new BoxLayout(answersPanIn, BoxLayout.PAGE_AXIS));
-        answersPanIn.add(answers);
-        answersPanIn.add(proposition);
-        scrollAnswersPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+        scrollAnswersPanIn.getVerticalScrollBar().setUnitIncrement(10);
+        scrollAnswersPanIn.setBorder(BorderFactory.createLineBorder(Color.black,2));
+
+        answersPanIn.setLayout(new GridLayout(1,2,200,0));
+        answersPanIn.add(scrollAnswersPanIn);
+        answersPanIn.add(panelAnswer);
+        answersPanIn.setOpaque(false);
+        scrollAnswersPanIn.setBorder(BorderFactory.createEmptyBorder());
+
         JPanel answersPan = new JPanel();
-        answersPan.setBackground(ColorPerso.darkGray);
-        answersPan.add(scrollAnswersPanIn);
+        answersPan.setLayout(new BorderLayout());
+        answersPan.add(answersPanIn,BorderLayout.CENTER);
+        answersPan.setOpaque(false);
         //answersPan.setBorder(BorderFactory.createEmptyBorder(0,0,20,0));
 
 
@@ -186,7 +215,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
         JPanel helpGMPanIn = new JPanel();
         helpGMPanIn.setBackground(Color.LIGHT_GRAY);
         //helpGMPanIn.setPreferredSize(new Dimension((int) (width-20), (int) ((height-90)*0.40)));
-        helpGMPanIn.setLayout(new BoxLayout(helpGMPanIn, BoxLayout.LINE_AXIS));
+        helpGMPanIn.setLayout(new BoxLayout(helpGMPanIn, BoxLayout.PAGE_AXIS));
         helpGMPanIn.add(helpMessageGMPan);
         helpGMPanIn.add(helpButtonGMPan);
         helpGMPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
@@ -318,8 +347,6 @@ public class PlayerManagement extends JPanel implements ActionListener{
         bottomPan.add(bottomPanIn);
 
 
-        Border mainEdge = BorderFactory.createEmptyBorder(10,10,10,10);
-
         this.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
@@ -328,36 +355,44 @@ public class PlayerManagement extends JPanel implements ActionListener{
             }
         });
 
-        this.setBorder(mainEdge);
+        this.setLayout(new BorderLayout(10,20));
+        this.add(panelTitre,BorderLayout.PAGE_START);
+        this.add(mainPanel,BorderLayout.CENTER);
+        this.setBorder(BorderFactory.createEmptyBorder(20,20,40,20));
         this.setBackground(ColorPerso.darkGray);
-        this.setLayout(new GridBagLayout());
 
         GridBagConstraints gbcglobal = new GridBagConstraints();
 
         gbcglobal.weighty = 1;
-        gbcglobal.weightx = 2;
+        gbcglobal.weightx = 3;
         gbcglobal.gridy = 0;
         gbcglobal.fill = GridBagConstraints.BOTH;
-        this.add(topPan, gbcglobal);
+        gbcglobal.insets = new Insets(20,20,0,0);
+        mainPanel.add(topPan, gbcglobal);
 
-        gbcglobal.weighty = 3;
+        gbcglobal.weighty = 6;
         gbcglobal.gridy = 1;
-        this.add(scrollCurrentStoryPanIn, gbcglobal);
+        gbcglobal.insets = new Insets(0,20,0,20);
+        mainPanel.add(scrollCurrentStoryPanIn, gbcglobal);
 
         gbcglobal.weighty = 3;
-        gbcglobal.gridy = 2;
-        gbcglobal.insets = new Insets(20, 0,0,0);
-        this.add(scrollAnswersPanIn, gbcglobal);
-
-        gbcglobal.weighty = 3;
-        gbcglobal.gridy = 3;
-        this.add(helpGMPanIn, gbcglobal);
-
-        gbcglobal.weighty = 1;
         gbcglobal.weightx = 1;
+        gbcglobal.gridy = 2;
+        gbcglobal.insets = new Insets(30, 400,0,400);
+        mainPanel.add(answersPan, gbcglobal);
+
+        gbcglobal.weighty = 2;
+        gbcglobal.gridy = 3;
+
+        gbcglobal.insets = new Insets(30,20,0,20);
+        mainPanel.add(helpGMPanIn, gbcglobal);
+
+        gbcglobal.weighty = 2;
+        gbcglobal.weightx = 2;
         gbcglobal.gridy = 4;
-        gbcglobal.fill = GridBagConstraints.VERTICAL;
-        this.add(bottomPanIn, gbcglobal);
+        gbcglobal.fill = GridBagConstraints.NONE;
+        gbcglobal.insets = new Insets(10,20,20,20);
+        mainPanel.add(bottomPanIn, gbcglobal);
 
         Runnable runnable = () -> {
             while (true) {
