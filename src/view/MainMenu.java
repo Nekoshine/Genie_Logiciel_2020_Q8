@@ -108,9 +108,9 @@ public class MainMenu extends JPanel implements ActionListener, MouseListener {
     }
 
     /**
-     *
-     * @param frame
-     * @return
+     * Permet de recupérer l'instance de GameCreation
+     * @param frame Fenêtre d'affichage
+     * @return Retourne une instance de MainMenu
      */
 
     public final static MainMenu getInstance(GlobalFrame frame) {

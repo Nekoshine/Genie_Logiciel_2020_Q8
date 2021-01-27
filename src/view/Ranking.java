@@ -48,6 +48,12 @@ public class Ranking extends JFrame implements ActionListener{
 
     private User user;
 
+    /**
+     * Interface de classement pour un jeu donné
+     * @param game Jeu associé au classement
+     * @param user Utilisateur si accès au classement côté joueur
+     */
+
     public Ranking(Game game,User user){
 
         this.setSize(500,700);
@@ -155,6 +161,14 @@ public class Ranking extends JFrame implements ActionListener{
 
 
     }
+
+    /**
+     * Méthode ajoutant les scores des joueurs dans le classement
+     * @param score Score du joueur
+     * @param gbc Contraintes d'affichage
+     * @param i N° dans la liste des scores
+     * @return Retourne un panel contenant les infos sur le score
+     */
 
     public JPanel ajoutResultat(Score score,GridBagConstraints gbc,int i){
 
