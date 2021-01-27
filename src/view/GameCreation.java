@@ -440,7 +440,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
         answer.setBorder(BorderFactory.createLineBorder(Color.black,2));
         if(answer.getText().equals("Réponse(s) à l'énigme séparée par \" \\ \"")){
             answer.setForeground(Color.gray);
-            answer.setFont(story.getFont().deriveFont(Font.ITALIC));
+            answer.setFont(answer.getFont().deriveFont(Font.ITALIC));
         }
         answer.addFocusListener(new FocusListener() {
             @Override
@@ -471,7 +471,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
         if (enigme.getTimer1()==-1){
             time1 = new JTextField("Temps (en s) au bout duquel l'indice n°1 est débloqué");
             time1.setForeground(Color.gray);
-            time1.setFont(answer.getFont().deriveFont(Font.ITALIC));
+            time1.setFont(time1.getFont().deriveFont(Font.ITALIC));
         }
         else{
             time1 = new JTextField(String.valueOf(enigme.getTimer1()));
@@ -482,7 +482,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
         if (enigme.getTimer2()==-1){
             time2 = new JTextField("Temps (en s) au bout duquel l'indice n°2 est débloqué");
             time2.setForeground(Color.gray);
-            time2.setFont(answer.getFont().deriveFont(Font.ITALIC));
+            time2.setFont(time2.getFont().deriveFont(Font.ITALIC));
         }
         else{
             time2 = new JTextField(String.valueOf(enigme.getTimer2()));
@@ -493,7 +493,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
         if (enigme.getTimer3()==-1){
             time3 = new JTextField("Temps (en s) au bout duquel l'indice n°3 est débloqué");
             time3.setForeground(Color.gray);
-            time3.setFont(answer.getFont().deriveFont(Font.ITALIC));
+            time3.setFont(time3.getFont().deriveFont(Font.ITALIC));
 
         }
         else{

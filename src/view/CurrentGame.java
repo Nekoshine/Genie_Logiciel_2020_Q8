@@ -62,7 +62,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
     private final Timer timeonenigma;
     private Timer timer;
 
-    private int countdownvalue = 3600;
+    private int countdownvalue = 1200;
     private int enigmatimevalue = 0;
 
     private Room room;
