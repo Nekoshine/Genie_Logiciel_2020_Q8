@@ -3,7 +3,7 @@
 package view;
 
 import launcher.Main;
-import view.SwingWorkers.ImageLoaderMainMenu;
+import view.swingworkers.ImageLoaderMainMenu;
 import view.style.ColorPerso;
 import view.style.FontPerso;
 

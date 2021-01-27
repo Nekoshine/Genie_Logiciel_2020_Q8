@@ -7,7 +7,7 @@ import Sockets.Client;
 import database.DBRoom;
 import database.DBUser;
 import launcher.Main;
-import view.SwingWorkers.ImageLoaderConnection;
+import view.swingworkers.ImageLoaderConnection;
 import view.style.ColorPerso;
 
 import java.awt.*;

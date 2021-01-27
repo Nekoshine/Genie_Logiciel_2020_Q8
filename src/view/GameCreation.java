@@ -325,7 +325,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
             INSTANCE.frame = frame;
             INSTANCE.rankingButton.setBackground(ColorPerso.azur);
             INSTANCE.exitButton.setBackground(ColorPerso.azur);
-            if (game != null){
+            if (game != null) {
                 INSTANCE.title.setText(game.getTitre());
                 INSTANCE.initialScore.setText(String.valueOf(game.getScore()));
                 INSTANCE.winMessage.setText(game.getEndMessage());
@@ -336,8 +336,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
                 INSTANCE.initialScore.setFont(INSTANCE.initialScore.getFont().deriveFont(Font.PLAIN));
                 INSTANCE.winMessage.setForeground(Color.black);
                 INSTANCE.winMessage.setFont(INSTANCE.winMessage.getFont().deriveFont(Font.PLAIN));
-            }
-            else{
+            } else {
                 INSTANCE.title.setText("Titre du jeu");
                 INSTANCE.initialScore.setText("Score Initial");
                 INSTANCE.winMessage.setText("Fin de l'histoire");
@@ -349,17 +348,26 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
                 INSTANCE.winMessage.setForeground(Color.gray);
                 INSTANCE.winMessage.setFont(INSTANCE.winMessage.getFont().deriveFont(Font.ITALIC));
             }
-            INSTANCE.listEnigma=Main.ListEnigma;
+            INSTANCE.listEnigma = Main.ListEnigma;
             INSTANCE.createList();
-            if (INSTANCE.listEnigma.getSize()==0){
+            if (INSTANCE.listEnigma.getSize() == 0) {
                 INSTANCE.rankingButton.setEnabled(false);
                 INSTANCE.rankingButton.setBackground(Color.darkGray);
-            }
-            else {
+            } else {
                 INSTANCE.rankingButton.setEnabled(true);
                 INSTANCE.rankingButton.setBackground(ColorPerso.azur);
             }
-            INSTANCE.game=game;
+
+            INSTANCE.game = game;
+            INSTANCE.exitButton.setBackground(ColorPerso.azur);
+            INSTANCE.exitButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+
+            INSTANCE.saveButton.setBackground(ColorPerso.vert);
+            INSTANCE.saveButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+
+            INSTANCE.deleteButton.setBackground(ColorPerso.rouge);
+            INSTANCE.deleteButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+
         }
         return INSTANCE;
     }

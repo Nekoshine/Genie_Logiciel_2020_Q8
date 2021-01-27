@@ -1,19 +1,20 @@
-package view.SwingWorkers;
+package view.swingworkers;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
+import java.util.concurrent.ExecutionException;
 
 import launcher.Main;
 import view.ConnectionMenu;
 
-public class ImageLoaderConnection extends SwingWorker<BufferedImage,BufferedImage> {
+/**
+* Chargement de l'image de fond pour l'interface de connection
+*/
+public final class ImageLoaderConnection extends SwingWorker<BufferedImage,BufferedImage> {
 
     private ConnectionMenu panel;
 
@@ -22,7 +23,7 @@ public class ImageLoaderConnection extends SwingWorker<BufferedImage,BufferedIma
     }
 
     @Override
-    protected BufferedImage doInBackground() throws URISyntaxException {
+    protected BufferedImage doInBackground() {
         InputStream is  = Main.class.getResourceAsStream("/image/FondConnection2.png");
         BufferedImage backgroundConnexion = null;
         try {
@@ -39,12 +40,13 @@ public class ImageLoaderConnection extends SwingWorker<BufferedImage,BufferedIma
     @Override
     protected void done() {
         try{
-            BufferedImage image = get();
-            panel.imageLoaded(image);
+            BufferedImage image = this.get();
+            this.panel.imageLoaded(image);
+        } catch (ExecutionException e) {
+            System.out.println("ImageLoaderConnection ExecutionException"+ e.getMessage());
+        } catch (InterruptedException e) {
+            System.out.println("ImageLoaderConnection InterruptedException"+ e.getMessage());
         }
-        catch (Exception e){
-
-        };
     }
 
 }
