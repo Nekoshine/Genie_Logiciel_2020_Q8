@@ -89,20 +89,24 @@ public class PlayerManagement extends JPanel implements ActionListener{
         titlePanIn.setBackground(Color.LIGHT_GRAY);
         titlePanIn.add(title, CENTER_ALIGNMENT);
         titlePanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+
         JPanel titlePan = new JPanel();
         titlePan.setBackground(ColorPerso.darkGray);
         titlePan.setBorder(BorderFactory.createEmptyBorder(0,0,0,10));
         titlePan.add(titlePanIn);
+
         JLabel timer = new JLabel();
         JPanel timerPanIn = new JPanel();
         timerPanIn.setPreferredSize(new Dimension((int)((width-40)*0.3),(int) ((height-90)*0.06)));
         timerPanIn.setBackground(Color.LIGHT_GRAY);
         timerPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         timerPanIn.add(timer);
+
         JPanel timerPan = new JPanel();
         timerPan.setBackground(ColorPerso.darkGray);
         timerPan.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
         timerPan.add(timerPanIn);
+
         JPanel topPan = new JPanel();
         topPan.setBackground(ColorPerso.darkGray);
         topPan.setLayout(new BoxLayout(topPan, BoxLayout.LINE_AXIS));
@@ -156,15 +160,20 @@ public class PlayerManagement extends JPanel implements ActionListener{
         answersPan.add(scrollAnswersPanIn);
         //answersPan.setBorder(BorderFactory.createEmptyBorder(0,0,20,0));
 
+
         helpMessageGM = new JTextArea();
         helpMessageGM.setLineWrap(true);
         helpMessageGM.setWrapStyleWord(true);
         helpMessageGM.setFont(FontPerso.Oxanimum);
         helpMessageGM.setPreferredSize(new Dimension((int) (width-200-helpButtonGM.getWidth()), (int) ((height-150)*0.40)));
+
+
         JPanel helpMessageGMPan = new JPanel();
         helpMessageGMPan.setBackground(Color.LIGHT_GRAY);
         helpMessageGMPan.setLayout(new FlowLayout(1));
         helpMessageGMPan.add(helpMessageGM);
+
+
         JPanel helpButtonGMPanIn = new JPanel();
         helpButtonGMPanIn.setBackground(Color.LIGHT_GRAY);
         helpButtonGMPanIn.add(helpButtonGM);
@@ -172,6 +181,8 @@ public class PlayerManagement extends JPanel implements ActionListener{
         helpButtonGMPan.setBackground(Color.LIGHT_GRAY);
         helpButtonGMPan.add(helpButtonGMPanIn);
         helpButtonGMPan.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+
+
         JPanel helpGMPanIn = new JPanel();
         helpGMPanIn.setBackground(Color.LIGHT_GRAY);
         //helpGMPanIn.setPreferredSize(new Dimension((int) (width-20), (int) ((height-90)*0.40)));
@@ -179,6 +190,8 @@ public class PlayerManagement extends JPanel implements ActionListener{
         helpGMPanIn.add(helpMessageGMPan);
         helpGMPanIn.add(helpButtonGMPan);
         helpGMPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+
+
         JPanel helpGMPan = new JPanel();
         helpGMPan.setBackground(ColorPerso.darkGray);
         helpGMPan.setLayout(new FlowLayout(1));
@@ -189,19 +202,26 @@ public class PlayerManagement extends JPanel implements ActionListener{
         JPanel buttonReturnPanIn = new JPanel();
         buttonReturnPanIn.setBackground(Color.LIGHT_GRAY);
         buttonReturnPanIn.add(buttonReturn);
+
+
         JPanel buttonReturnPan = new JPanel();
         buttonReturnPan.setBackground(Color.LIGHT_GRAY);
         buttonReturnPan.add(buttonReturnPanIn);
         buttonReturnPan.setBorder(BorderFactory.createEmptyBorder(20,0,0,20));
+
+
         JPanel buttonHint1PanIn = new JPanel();
         buttonHint1PanIn.setBackground(Color.LIGHT_GRAY);
         JTextArea hint1Text = new JTextArea();
         hint1Text.setLineWrap(true);
         hint1Text.setWrapStyleWord(true);
         hint1Text.setBackground(Color.LIGHT_GRAY);
+        hint1Text.setColumns(15);
         hint1Text.setFont(FontPerso.Oxanimum);
         hint1Text.setEditable(false);
         hint1Text.setText(currentRiddles.getEnigma(riddleNb-1).getClue1());
+
+
         JPanel hint1TextPan = new JPanel();
         hint1TextPan.setLayout(new FlowLayout(1));
         hint1TextPan.setBackground(Color.lightGray);
@@ -213,6 +233,8 @@ public class PlayerManagement extends JPanel implements ActionListener{
         buttonHint1PanIn.setLayout(new BoxLayout(buttonHint1PanIn, BoxLayout.PAGE_AXIS));
         buttonHint1PanIn.add(hint1TextPan);
         buttonHint1PanIn.add(hint1ButtonPan);
+
+
         JPanel buttonHint1Pan = new JPanel();
         buttonHint1Pan.setBackground(Color.LIGHT_GRAY);
         buttonHint1Pan.add(buttonHint1PanIn);
@@ -220,17 +242,21 @@ public class PlayerManagement extends JPanel implements ActionListener{
 
         JPanel buttonHint2PanIn = new JPanel();
         buttonHint2PanIn.setBackground(Color.LIGHT_GRAY);
+
         JTextArea hint2Text = new JTextArea();
         hint2Text.setLineWrap(true);
         hint2Text.setWrapStyleWord(true);
         hint2Text.setBackground(Color.LIGHT_GRAY);
         hint2Text.setFont(FontPerso.Oxanimum);
         hint2Text.setEditable(false);
+        hint2Text.setColumns(15);
         hint2Text.setText(currentRiddles.getEnigma(riddleNb-1).getClue2());
+
         JPanel hint2TextPan = new JPanel();
         hint2TextPan.setLayout(new FlowLayout(1));
         hint2TextPan.setBackground(Color.lightGray);
         hint2TextPan.add(hint2Text);
+
         JPanel hint2ButtonPan = new JPanel();
         hint2ButtonPan.setLayout(new FlowLayout(1));
         hint2ButtonPan.add(buttonHint2);
@@ -238,6 +264,8 @@ public class PlayerManagement extends JPanel implements ActionListener{
         buttonHint2PanIn.setLayout(new BoxLayout(buttonHint2PanIn, BoxLayout.PAGE_AXIS));
         buttonHint2PanIn.add(hint2TextPan);
         buttonHint2PanIn.add(hint2ButtonPan);
+
+
         JPanel buttonHint2Pan = new JPanel();
         buttonHint2Pan.setBackground(Color.LIGHT_GRAY);
         buttonHint2Pan.add(buttonHint2PanIn);
@@ -249,13 +277,18 @@ public class PlayerManagement extends JPanel implements ActionListener{
         hint3Text.setLineWrap(true);
         hint3Text.setWrapStyleWord(true);
         hint3Text.setBackground(Color.LIGHT_GRAY);
+        hint3Text.setColumns(15);
         hint3Text.setFont(FontPerso.Oxanimum);
         hint3Text.setEditable(false);
         hint3Text.setText(currentRiddles.getEnigma(riddleNb-1).getClue3());
+
+
         JPanel hint3TextPan = new JPanel();
         hint3TextPan.setLayout(new FlowLayout(1));
         hint3TextPan.setBackground(Color.lightGray);
         hint3TextPan.add(hint3Text);
+
+
         JPanel hint3ButtonPan = new JPanel();
         hint3ButtonPan.setLayout(new FlowLayout(1));
         hint3ButtonPan.add(buttonHint3);
@@ -263,10 +296,14 @@ public class PlayerManagement extends JPanel implements ActionListener{
         buttonHint3PanIn.setLayout(new BoxLayout(buttonHint3PanIn, BoxLayout.PAGE_AXIS));
         buttonHint3PanIn.add(hint3TextPan);
         buttonHint3PanIn.add(hint3ButtonPan);
+
+
         JPanel buttonHint3Pan = new JPanel();
         buttonHint3Pan.setBackground(Color.LIGHT_GRAY);
         buttonHint3Pan.add(buttonHint3PanIn);
         buttonHint3Pan.setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
+
+
         JPanel bottomPan = new JPanel();
         bottomPan.setBackground(ColorPerso.darkGray);
         //bottomPan.setPreferredSize(new Dimension((int) (width-20),(int) ((height)*0.40)));

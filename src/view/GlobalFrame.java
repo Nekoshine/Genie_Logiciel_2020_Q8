@@ -152,7 +152,7 @@ public class GlobalFrame extends JFrame {
 
     /**
      * Affiche le panel mainMenu dans la GlobalFrame
-     * @param frame
+     * @param frame fenêtre
      */
 
     public void mainMenuDisplay(GlobalFrame frame){
@@ -171,7 +171,7 @@ public class GlobalFrame extends JFrame {
 
     /**
      * Affiche le panel ConnectionMenu dans la GlobaleFrame
-     * @param frame
+     * @param frame fenêtre
      */
 
     public void connectionMenuDisplay(GlobalFrame frame){
@@ -196,7 +196,7 @@ public class GlobalFrame extends JFrame {
 
     /**
      * Affiche le panel SignupMenu dans la GlobaleFrame
-     * @param frame
+     * @param frame fenêtre
      */
 
     public void signupMenuDisplay(GlobalFrame frame){
@@ -212,8 +212,8 @@ public class GlobalFrame extends JFrame {
 
     /**
      * Affiche le panel GameManagement dans la GlobalFrame
-     * @param frame
-     * @param roomNumber
+     * @param frame fenêtre
+     * @param roomNumber numéro de salle
      */
 
     public void gameManagementDisplay(GlobalFrame frame, int roomNumber){
