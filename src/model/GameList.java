@@ -2,9 +2,10 @@ package model;
 
 import java.util.ArrayList;
 
-// Codé par Yann
-
-public class GameList {
+/**
+ * Liste de jeux
+ */
+public final class GameList {
 
     public ArrayList<Game> List;
 
@@ -12,21 +13,7 @@ public class GameList {
      * Procédure qui va initialiser une liste vide
      */
     public GameList(){
-        List = new ArrayList<>();
-    }
-
-    /**
-     * Procédure qui ajoute un jeu a la liste a l'aide de tout les champs
-     * @param id du jeu
-     * @param titre du jeu
-     * @param score initial
-     * @param idUser du createur du jeu
-     * @param timer initial
-     * @param ready je sais pas il faut demander a Esteban
-     */
-    public void addGame(int id,String titre,int score,int idUser,int timer,Boolean ready,String endMessage){
-        List.add(new Game(id,titre,score,idUser,timer,ready,endMessage));
-        //faire un ajout a la bdd
+        this.List = new ArrayList<>();
     }
 
     /**
@@ -34,7 +21,7 @@ public class GameList {
      * @param game le jeu en question
      */
     public void addGame(Game game) {
-        List.add(game);
+        this.List.add(game);
     }
 
     /**
@@ -42,24 +29,31 @@ public class GameList {
      * @return la taille de la liste
      */
     public int getSize(){
-        return List.size();
+        return this.List.size();
     }
 
     /**
      * Donne le i-eme jeu de la liste
-     * @param i
+     * @param i l'element recherché
      * @return le jeu i
      */
     public Game getGame(int i){
-        return List.get(i);
+        return this.List.get(i);
     }
 
-    public Game findByID(int i){
-        for(int j = 0; j<this.getSize(); j++){
-            if (this.getGame(j).getId()==i){
-                return this.getGame(j);
+    /**
+     * Donne le jeu qui possède un id
+     * @param id l'id recherché
+     * @return le jeu
+     */
+    public Game findByID(int id){
+        Game game = null;
+        int size = this.getSize();
+        for(int j = 0; j<size; j++){
+            if (this.getGame(j).getId()==id){
+                game=this.getGame(j);
             }
         }
-        return null;
+        return game;
     }
 }

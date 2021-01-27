@@ -12,7 +12,6 @@ import view.style.FontPerso;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.*;
 import java.text.Normalizer;
@@ -136,7 +135,7 @@ public class PlayerManagement extends JPanel implements ActionListener,MouseList
         currentStory.setFont(FontPerso.courierNew);
         currentStory.setEditable(false);
         currentStory.setPreferredSize(new Dimension(width-20,(height-90)*50/100-10));
-        currentStory.setText((currentRiddles.getEnigma(riddleNb - 1)).getText());
+        currentStory.setText((currentRiddles.getEnigma(riddleNb - 1)).getQuestion());
         currentStory.setBorder(BorderFactory.createEmptyBorder(0,0,0,20));
 
 

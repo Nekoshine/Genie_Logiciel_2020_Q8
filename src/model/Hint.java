@@ -1,6 +1,9 @@
 package model;
 
-public class Hint {
+/**
+ * Représentation d'un indice
+ */
+public final class Hint {
     private String clue;
     private int timer;
 
@@ -9,19 +12,12 @@ public class Hint {
         this.timer=timer;
     }
 
-    public String getClue() {
+    String getClue() {
         return this.clue;
     }
 
-    public int getTimer() {
+    int getTimer() {
         return this.timer;
     }
 
-    public void setClue(String clue) {
-        this.clue=clue;
-    }
-
-    public void setTimer(int timer) {
-        this.timer=timer;
-    }
 }

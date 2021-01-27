@@ -403,7 +403,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
 
         BorderLayout enigmaInfoLayout = new BorderLayout(10,10);
 
-        JTextArea story = new JTextArea(enigme.getText());
+        JTextArea story = new JTextArea(enigme.getQuestion());
         story.setFont(FontPerso.courierNew);
         if(story.getText().equals("Énigme précédée de son histoire")){
             story.setForeground(Color.gray);
@@ -838,7 +838,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
             for(int i=0;i<listEnigma.getSize();i++){
                 enigme = listEnigma.getEnigma(i);
                 int id = enigme.getId();
-                String text = enigme.getText();
+                String text = enigme.getQuestion();
                 System.out.println();
                 String answer = enigme.getAnswer();
                 String clue1 = enigme.getClue1();
