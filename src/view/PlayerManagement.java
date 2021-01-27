@@ -326,6 +326,9 @@ public class PlayerManagement extends JPanel implements ActionListener{
             while (true) {
                 String reponse = Admin.recepAnswerJoueur(room.getUserInside());
                 ArrayList<String> tab = Main.answers.get(room.getUserInside());
+                if(tab==null){
+                    tab= new ArrayList<>();
+                }
                 tab.add(reponse);
                 System.out.println("Coucou c'est la réponse : "+reponse);
                 Main.answers.put(room.getUserInside(), tab);
@@ -481,7 +484,9 @@ public class PlayerManagement extends JPanel implements ActionListener{
         ArrayList<String> tab = Main.answers.get(room.getUserInside());
         if (tab != null) {
             for (int i = 0; i < tab.size(); i++) {
-                proposition.append("\n" + tab.get(i));
+                if(tab.get(i)!=null) {
+                    proposition.append("\n" + tab.get(i));
+                }
             }
         }
     }
