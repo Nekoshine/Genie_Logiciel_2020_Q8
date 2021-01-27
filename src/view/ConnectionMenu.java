@@ -2,12 +2,12 @@
 
 package view;
 
-import Sockets.Admin;
-import Sockets.Client;
+import sockets.Admin;
+import sockets.Client;
 import database.DBRoom;
 import database.DBUser;
 import launcher.Main;
-import view.SwingWorkers.ImageLoaderConnection;
+import view.swingworkers.ImageLoaderConnection;
 import view.style.ColorPerso;
 
 import java.awt.*;

@@ -1,6 +1,6 @@
 package view;
 
-import Sockets.Admin;
+import sockets.Admin;
 import database.DBEnigma;
 import database.DBGame;
 import database.DBRoom;

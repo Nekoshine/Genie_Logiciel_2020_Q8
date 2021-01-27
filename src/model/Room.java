@@ -2,16 +2,19 @@ package model;
 
 import java.io.Serializable;
 
-public class Room implements Serializable {
+/**
+ * Représentation d'une salle
+ */
+public final class Room implements Serializable {
 
     private int id;
     private Game game;
     private int userInside;
     private boolean competitive;
 
-    public Room(int id, Game Game, boolean competitive, int userInside){
+    public Room(int id, Game game, boolean competitive, int userInside){
         this.id = id;
-        this.game = Game;
+        this.game = game;
         this.competitive = competitive;
         this.userInside=userInside;
     }
@@ -43,12 +46,8 @@ public class Room implements Serializable {
         this.id = id;
     }
 
-    public void setCompetitive(boolean competitive){
-        this.competitive = competitive;
-    }
-
     public int getUserInside() {
-        return userInside;
+        return this.userInside;
     }
 
     public void setUserInside(int userInside) {

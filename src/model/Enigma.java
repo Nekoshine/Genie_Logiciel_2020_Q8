@@ -1,32 +1,15 @@
 package model;
-/**
-* * Codé par Esteban
-*/
 
-public class Enigma {
+/**
+ * Représentation d'une engime
+ */
+public final class Enigma {
   private int id;
   private String question;
   private String answer;
   private Hint clue1;
   private Hint clue2;
   private Hint clue3;
-
-  public Enigma(int id, String question, String answer, Hint clue1, Hint clue2, Hint clue3) {
-    this.id = id;
-    this.question = question;
-    this.answer = answer;
-    this.clue1 = clue1;
-    this.clue2 = clue2;
-    this.clue3 = clue3;
-  }
-  public Enigma(int id,int tampon, String question, String answer, String clue1, int timer1,String clue2, int timer2,String clue3, int timer3) {
-    this.id = id;
-    this.question = question;
-    this.answer = answer;
-    this.clue1 = new Hint(clue1,timer1);
-    this.clue2 = new Hint(clue2,timer2);
-    this.clue3 = new Hint(clue3,timer3);
-  }
 
   public Enigma(int id, String question, String answer, String clue1, int timer1,String clue2, int timer2,String clue3, int timer3) {
     this.id = id;
@@ -37,27 +20,12 @@ public class Enigma {
     this.clue3 = new Hint(clue3,timer3);
   }
 
-  public String getText(){
+  public String getQuestion(){
     return this.question;
   }
 
   public String getClue1(){
     return this.clue1.getClue();
-  }
-
-  public void ChangeClue1(String Text){
-    Hint hint = new Hint(Text,getTimer1());
-    this.clue1=hint;
-  }
-
-  public void ChangeClue2(String Text){
-    Hint hint = new Hint(Text,getTimer1());
-    this.clue2=hint;
-  }
-
-  public void ChangeClue3(String Text){
-    Hint hint = new Hint(Text,getTimer1());
-    this.clue3=hint;
   }
 
   public int getTimer1() {
@@ -113,13 +81,11 @@ public class Enigma {
   }
 
   public String[] getAnswers1(){
-    String[] answers1 = this.getAnswer().split(" / ");
-    return answers1;
+    return this.answer.split(" / ");
   }
 
   public String[] getAnswers2(){
-    String[] answers2 = this.getAnswer().split("/");
-    return answers2;
+    return this.answer.split("/");
   }
 
 }

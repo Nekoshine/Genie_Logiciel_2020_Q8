@@ -1,7 +1,6 @@
 package view;
 
-import Sockets.Client;
-import Sockets.DemandeConnexion;
+import sockets.Client;
 import database.*;
 import launcher.Main;
 import model.*;
@@ -13,13 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Inet4Address;
-import java.net.Socket;
 import java.text.Normalizer;
-import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
 
 public class CurrentGame extends JPanel implements ActionListener, WindowListener, FocusListener, KeyListener{
@@ -111,7 +104,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
         else {
             game=new Game(-1,"",0,0,0,true,"");
             allEnigmas = new EnigmaList();
-            allEnigmas.addEnigma(new Enigma(1,1,"","","",1,"",1,"",3));
+            allEnigmas.addEnigma(new Enigma(1,"","","",1,"",1,"",3));
         }
 
         room = Main.ListRoom.findByID(idRoom);
@@ -179,7 +172,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
 
         //Enigme en cours
 
-        currentEnigmaTextArea = new JTextArea(allEnigmas.getEnigma(enigmalistflag).getText());
+        currentEnigmaTextArea = new JTextArea(allEnigmas.getEnigma(enigmalistflag).getQuestion());
         currentEnigmaTextArea.setLineWrap(true);
         currentEnigmaTextArea.setWrapStyleWord(true);
         currentEnigmaTextArea.setEditable(false);
@@ -558,14 +551,14 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
                     if(!oldEnigmaTextArea.getText().equals("")){
                         oldEnigmaTextArea.append("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n");
                     }
-                    oldEnigmaTextArea.append(allEnigmas.getEnigma(enigmalistflag).getText());
+                    oldEnigmaTextArea.append(allEnigmas.getEnigma(enigmalistflag).getQuestion());
                     oldEnigmaTextArea.append("\n\n");
                     oldEnigmaTextArea.append("Réponse : "+answerTextField.getText());
                     oldEnigmaTextArea.append("\n\n");
                     answerTextField.setText("");
                     enigmalistflag++;
                     currentEnigmaPanel.remove(currentEnigmaScroll);
-                    currentEnigmaTextArea = new JTextArea(allEnigmas.getEnigma(enigmalistflag).getText());
+                    currentEnigmaTextArea = new JTextArea(allEnigmas.getEnigma(enigmalistflag).getQuestion());
                     currentEnigmaTextArea.setFont(FontPerso.courierNew);
                     currentEnigmaTextArea.setLineWrap(true);
                     currentEnigmaTextArea.setWrapStyleWord(true);

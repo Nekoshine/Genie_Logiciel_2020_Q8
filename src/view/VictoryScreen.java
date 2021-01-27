@@ -1,19 +1,19 @@
 package view;
 
 
-import view.SwingWorkers.ImageLoaderVictoryNoCo;
+import view.swingworkers.ImageLoaderVictoryNoCo;
 import view.style.FontPerso;
 import javax.swing.*;
 import java.awt.*;
 
-public class VictoryScreenNoCompetitive extends JPanel  {
+public class VictoryScreen extends JPanel  {
 
     private GlobalFrame frame;
     Dimension windowSize;
 
     private Image backgroundVictoire;
 
-    public VictoryScreenNoCompetitive(GlobalFrame frame, int score, int temps) {
+    public VictoryScreen(GlobalFrame frame, int score, int temps) {
 
         this.frame = frame;
         windowSize = frame.getSize();

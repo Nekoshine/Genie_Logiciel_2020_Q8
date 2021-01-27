@@ -34,8 +34,8 @@ public class GlobalFrame extends JFrame {
     CurrentGame currentGame;
     RoomAccess roomAccess;
     PlayerManagement playerManagement;
-    Defeatscreennocompetitive defeatscreen;
-    VictoryScreenNoCompetitive victory;
+    DefeatScreen defeatscreen;
+    VictoryScreen victory;
 
 
     private boolean fullScrren = false;
@@ -314,7 +314,7 @@ public class GlobalFrame extends JFrame {
      */
 
     public void defeatscreenDisplay(GlobalFrame frame) {
-        defeatscreen = new Defeatscreennocompetitive(frame);
+        defeatscreen = new DefeatScreen(frame);
 
         if(fullScrren){
             removeFullScreen(defeatscreen);
@@ -338,7 +338,7 @@ public class GlobalFrame extends JFrame {
 
     public void victoryNoCompetitionScreenDisplay(GlobalFrame frame,int score,int time) {
 
-        victory = new VictoryScreenNoCompetitive(frame,score,time);
+        victory = new VictoryScreen(frame,score,time);
 
         if(fullScrren){
             removeFullScreen(victory);

@@ -3,12 +3,10 @@
 package view;
 
 
-import database.DBRoom;
 import database.DBUser;
 import launcher.Main;
-import view.SwingWorkers.ImageLoaderSignup;
+import view.swingworkers.ImageLoaderSignup;
 import view.style.ColorPerso;
-import view.style.ImagePerso;
 
 import java.awt.*;
 import java.awt.event.*;

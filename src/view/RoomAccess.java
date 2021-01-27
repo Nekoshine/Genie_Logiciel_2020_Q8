@@ -2,8 +2,7 @@
 
 package view;
 
-import Sockets.Client;
-import database.DBRoom;
+import sockets.Client;
 import launcher.Main;
 import model.Room;
 import model.RoomList;

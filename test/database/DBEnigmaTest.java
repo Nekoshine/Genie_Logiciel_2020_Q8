@@ -5,8 +5,6 @@ import model.EnigmaList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class DBEnigmaTest {
     private static final int idGame = 9;
     private static final String text = "EnigmeTest";
@@ -33,7 +31,7 @@ class DBEnigmaTest {
             EnigmaList listEnigma = DBEnigma.getEnigmas(idGame);
             Enigma enigma = listEnigma.getEnigma(listEnigma.getSize() - 1);
 
-            boolean sameText = enigma.getText().equals(text);
+            boolean sameText = enigma.getQuestion().equals(text);
             boolean sameAnswer = enigma.getAnswer().equals(answer);
             boolean sameClue1 = enigma.getClue1().equals(clue1);
             boolean sameTimer1 = enigma.getTimer1() == timer1;
