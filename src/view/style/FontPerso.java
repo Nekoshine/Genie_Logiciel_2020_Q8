@@ -3,10 +3,12 @@ package view.style;
 import launcher.Main;
 
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 
-public class FontPerso {
+/**
+*Définition de police personnel
+ */
+public final class FontPerso {
     public static Font ArialBold = new Font("Arial",Font.BOLD,15);
     public static Font Oxanimum;
     public static Font SirensDEMO;
@@ -21,8 +23,10 @@ public class FontPerso {
             SirensDEMO = Font.createFont(Font.TRUETYPE_FONT, Main.class.getResourceAsStream("/font/SirensDEMO.otf")).deriveFont(Font.PLAIN,17);
             lato = Font.createFont(Font.TRUETYPE_FONT, Main.class.getResourceAsStream("/font/Lato.ttf")).deriveFont(Font.PLAIN,17);
 
-        } catch (FontFormatException | IOException e) {
-            e.printStackTrace();
+        } catch (FontFormatException e) {
+            System.out.println("FontPerso FontFormatException "+e.getMessage());
+        } catch (IOException e) {
+            System.out.println("FontPerso IOException "+e.getMessage());
         }
     }
 }
