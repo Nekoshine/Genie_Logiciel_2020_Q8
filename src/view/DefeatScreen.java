@@ -1,10 +1,10 @@
 package view;
 
-import view.SwingWorkers.ImageLoaderDefeat;
+import view.swingworkers.ImageLoaderDefeat;
 import javax.swing.*;
 import java.awt.*;
 
-public class Defeatscreennocompetitive extends JPanel {
+public class DefeatScreen extends JPanel {
 
     private Image defeatBackground;
     private GlobalFrame frame;
@@ -15,7 +15,7 @@ public class Defeatscreennocompetitive extends JPanel {
      * @param frame Fenêtre d'affichage
      */
 
-    public Defeatscreennocompetitive(GlobalFrame frame) {
+    public DefeatScreen(GlobalFrame frame) {
 
         this.frame = frame;
         windowSize = frame.getSize();
