@@ -6,7 +6,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.util.concurrent.ExecutionException;
 
 import launcher.Main;
@@ -26,16 +25,16 @@ public final class ImageLoaderSignup extends SwingWorker<BufferedImage,BufferedI
     @Override
     protected BufferedImage doInBackground(){
         InputStream is  = Main.class.getResourceAsStream("/image/FondInscription.png");
-        BufferedImage backgroundConnexion = null;
+        BufferedImage backgroundSignUp = null;
         try {
-            backgroundConnexion = ImageIO.read(is);
-            backgroundConnexion.getScaledInstance(720, 450, Image.SCALE_FAST);
-            backgroundConnexion.setAccelerationPriority(1);
+            backgroundSignUp = ImageIO.read(is);
+            backgroundSignUp.getScaledInstance(720, 450, Image.SCALE_FAST);
+            backgroundSignUp.setAccelerationPriority(1);
         }
         catch (IOException e){
             e.printStackTrace();
         }
-        return backgroundConnexion;
+        return backgroundSignUp;
     }
 
     @Override
