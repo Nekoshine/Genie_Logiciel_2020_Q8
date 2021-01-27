@@ -524,20 +524,21 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
             }
         }
 
-        else if (event.getSource() == confirmButton){
-            Client.sendMyAnswer(answerTextField.getText(),idUser);
+        else if (event.getSource() == confirmButton) {
+            if(!answerTextField.getText().isEmpty()){
+            Client.sendMyAnswer(answerTextField.getText(), idUser);
             String answer = removeAccents(answerTextField.getText().toLowerCase());
             String[] possibility = allEnigmas.getEnigma(enigmalistflag).getAnswers1(); //reponse séparé par '/'
             boolean find = false;
-            for(int i=0;i<possibility.length;i++){
+            for (int i = 0; i < possibility.length; i++) {
                 if (answer.equals(removeAccents(possibility[i]).toLowerCase())) {
                     find = true;
                     break;
                 }
             }
-            if(!find){
+            if (!find) {
                 possibility = allEnigmas.getEnigma(enigmalistflag).getAnswers2(); //reponse séparé par ' / '
-                for(int i=0;i<possibility.length;i++){
+                for (int i = 0; i < possibility.length; i++) {
                     if (answer.equals(removeAccents(possibility[i]).toLowerCase())) {
                         find = true;
                         break;
@@ -551,12 +552,12 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
 
                     //maj des champs relatifs aux enigmes
 
-                    if(!oldEnigmaTextArea.getText().equals("")){
+                    if (!oldEnigmaTextArea.getText().equals("")) {
                         oldEnigmaTextArea.append("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n");
                     }
                     oldEnigmaTextArea.append(allEnigmas.getEnigma(enigmalistflag).getQuestion());
                     oldEnigmaTextArea.append("\n\n");
-                    oldEnigmaTextArea.append("Réponse : "+answerTextField.getText());
+                    oldEnigmaTextArea.append("Réponse : " + answerTextField.getText());
                     oldEnigmaTextArea.append("\n\n");
                     answerTextField.setText("");
                     enigmalistflag++;
@@ -567,14 +568,14 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
                     currentEnigmaTextArea.setWrapStyleWord(true);
                     currentEnigmaTextArea.setEditable(false);
 
-                    currentEnigmaScroll = new JScrollPane(currentEnigmaTextArea,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+                    currentEnigmaScroll = new JScrollPane(currentEnigmaTextArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
                     currentEnigmaScroll.getVerticalScrollBar().setUnitIncrement(20);
                     currentEnigmaScroll.setBorder(BorderFactory.createEmptyBorder());
 
                     currentEnigmaPanel.add(currentEnigmaScroll);
 
                     //maj hint 1
-                    if(isused1){
+                    if (isused1) {
                         hintContainer1.remove(hint1Scroll);
                         hintContainer1.add(hint1Button);
                     }
@@ -590,7 +591,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
                     //maj hint 2
 
                     if (ishint2present) {
-                        if(isused2) {
+                        if (isused2) {
                             hintContainer2.remove(hint2Scroll);
                             hintContainer2.add(hint2Button);
                         }
@@ -629,11 +630,11 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
                     frame.repaint();
                 }
                 //si derniere enigme
-                else{
+                else {
                     countdowngame.stop();
-                    Score score = new Score(-1,game.getId(),idUser,0);
-                    System.out.println("titre du jeu : "+game.getTitre());
-                    score.calculScore(room.getGame().getScore(), countdownvalue,nbErreur);
+                    Score score = new Score(-1, game.getId(), idUser, 0);
+                    System.out.println("titre du jeu : " + game.getTitre());
+                    score.calculScore(room.getGame().getScore(), countdownvalue, nbErreur);
 
                     String message = game.getEndMessage();
                     JTextArea engMessage = new JTextArea(message);
@@ -644,31 +645,31 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
                     engMessage.setForeground(Color.black);
                     JScrollPane engMessageScroll = new JScrollPane(engMessage, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
                     engMessageScroll.getVerticalScrollBar().setUnitIncrement(20);
-                    engMessageScroll.setPreferredSize(new Dimension(400,150));
-                    JOptionPane.showMessageDialog(frame, engMessageScroll,"Félicitation", JOptionPane.WARNING_MESSAGE,imageIconValide);
+                    engMessageScroll.setPreferredSize(new Dimension(400, 150));
+                    JOptionPane.showMessageDialog(frame, engMessageScroll, "Félicitation", JOptionPane.WARNING_MESSAGE, imageIconValide);
 
                     frame.insideRoom = false;
-                    DBRoom.majUserRoom(room.getId(),-1);
+                    DBRoom.majUserRoom(room.getId(), -1);
 
 
-                    if(room.getCompetitive()){
+                    if (room.getCompetitive()) {
                         DBScore.insertScore(score);
                     }
 
-                    if(Client.envoieFinPartie(DBUser.getUser(idUser).getLogin(),room)){
+                    if (Client.envoieFinPartie(DBUser.getUser(idUser).getLogin(), room)) {
                         frame.connectionMenuDisplay(frame);
                     }
 
-                    frame.victoryNoCompetitionScreenDisplay(frame,score.getScore(),countdownvalue);
+                    frame.victoryNoCompetitionScreenDisplay(frame, score.getScore(), countdownvalue);
 
                 }
-            //si mauvaise reponse
+                //si mauvaise reponse
 
-          }
-            else{
+            } else {
                 nbErreur++;
-                JOptionPane.showMessageDialog(frame, "Ce n'est pas la bonne reponse", "Raté !", JOptionPane.WARNING_MESSAGE,imageIconRefus);
+                JOptionPane.showMessageDialog(frame, "Ce n'est pas la bonne reponse", "Raté !", JOptionPane.WARNING_MESSAGE, imageIconRefus);
             }
+        }
         }
     }
 
