@@ -14,17 +14,16 @@ import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+import java.awt.event.*;
 import java.text.Normalizer;
 import java.util.ArrayList;
 
-public class PlayerManagement extends JPanel implements ActionListener{
+public class PlayerManagement extends JPanel implements ActionListener,MouseListener{
 
     private JPanel currentStoryPanIn = new JPanel();
     private JPanel answersPanIn = new JPanel();
+    private JPanelImage mainPanel;
+    private JPanel panelTitre;
 
     private JButton helpButtonGM;
     private JButton buttonReturn;
@@ -44,6 +43,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
     private EnigmaList currentRiddles;
     private JLabel title;
     private JLabel answers;
+    private JLabel labelTitre;
 
     private Room room;
 
@@ -58,12 +58,23 @@ public class PlayerManagement extends JPanel implements ActionListener{
         int width = (int) frame.windowSize.getWidth();
         int height = (int) frame.windowSize.getHeight();
 
+        mainPanel = new JPanelImage(Main.class.getResourceAsStream("/image/FondPrincipal.png"), GlobalFrame.windowSize);
 
+        panelTitre = new JPanel();
+        labelTitre = new JLabel("MJ - Suivi des joueurs");
+        panelTitre.setLayout(new FlowLayout(1));
+        panelTitre.add(labelTitre);
+        panelTitre.setBorder(BorderFactory.createLineBorder(Color.black,2));
+
+
+        mainPanel.setLayout(new GridBagLayout());
+        mainPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         currentRiddles = DBEnigma.getEnigmas(gameNb); // la liste des énigmes du jeu
 
         helpButtonGM = new JButton("Envoyer");
         helpButtonGM.addActionListener(this);
         helpButtonGM.setBackground(Color.white);
+        helpButtonGM.setPreferredSize(new Dimension(110,30));
         helpButtonGM.setForeground(Color.black);
         helpButtonGM.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         helpButtonGM.setOpaque(true);
@@ -72,41 +83,49 @@ public class PlayerManagement extends JPanel implements ActionListener{
         buttonReturn.addActionListener(this);
         buttonReturn.setBackground(ColorPerso.rouge);
         buttonReturn.setForeground(Color.white);
+        buttonReturn.setPreferredSize(new Dimension(100,30));
         buttonReturn.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         buttonReturn.setOpaque(true);
 
         buttonHint1 = this.hintButton(1);
+        buttonHint1.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         buttonHint2 = this.hintButton(2);
+        buttonHint2.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         buttonHint3 = this.hintButton(3);
+        buttonHint3.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 
         title = new JLabel();
-        title.setText(DBGame.getTitleGame(gameNb));
+        title.setText("<html><body><u>" + DBGame.getTitleGame(gameNb) + "</u></body></html>");
+        title.setOpaque(false);
+        title.setAlignmentX(JLabel.LEFT);
 
         JPanel titlePanIn = new JPanel();
         titlePanIn.setPreferredSize(new Dimension((int) ((width-40)*0.7),(int) ((height-90)*0.06)));
-        titlePanIn.setBackground(Color.LIGHT_GRAY);
-        titlePanIn.add(title, CENTER_ALIGNMENT);
-        titlePanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+        titlePanIn.setOpaque(false);
+        titlePanIn.setLayout(new FlowLayout(0));
+        titlePanIn.add(title);
+        //titlePanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
 
         JPanel titlePan = new JPanel();
-        titlePan.setBackground(ColorPerso.darkGray);
-        titlePan.setBorder(BorderFactory.createEmptyBorder(0,0,0,10));
+        titlePan.setOpaque(false);
+        titlePan.setBorder(BorderFactory.createEmptyBorder(0,50,0,10));
         titlePan.add(titlePanIn);
 
         JLabel timer = new JLabel();
         JPanel timerPanIn = new JPanel();
+        timerPanIn.setOpaque(false);
         timerPanIn.setPreferredSize(new Dimension((int)((width-40)*0.3),(int) ((height-90)*0.06)));
         timerPanIn.setBackground(Color.LIGHT_GRAY);
-        timerPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+        //timerPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         timerPanIn.add(timer);
 
         JPanel timerPan = new JPanel();
-        timerPan.setBackground(ColorPerso.darkGray);
+        timerPan.setOpaque(false);
         timerPan.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
         timerPan.add(timerPanIn);
 
         JPanel topPan = new JPanel();
-        topPan.setBackground(ColorPerso.darkGray);
+        topPan.setOpaque(false);
         topPan.setLayout(new BoxLayout(topPan, BoxLayout.LINE_AXIS));
         topPan.add(titlePan);
         topPan.add(timerPan);
@@ -114,80 +133,124 @@ public class PlayerManagement extends JPanel implements ActionListener{
         currentStory = new JTextArea();
         currentStory.setLineWrap(true);
         currentStory.setWrapStyleWord(true);
-        currentStory.setBackground(Color.LIGHT_GRAY);
         currentStory.setFont(FontPerso.courierNew);
         currentStory.setEditable(false);
         currentStory.setPreferredSize(new Dimension(width-20,(height-90)*50/100-10));
         currentStory.setText((currentRiddles.getEnigma(riddleNb - 1)).getText());
+        currentStory.setBorder(BorderFactory.createEmptyBorder(0,0,0,20));
 
 
         JScrollPane scrollCurrentStoryPanIn = new JScrollPane(currentStoryPanIn,
-                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         //scrollCurrentStoryPanIn.setPreferredSize(new Dimension(width-20,(height-90)*50/100));
-        scrollCurrentStoryPanIn.setBackground(Color.LIGHT_GRAY);
-        currentStoryPanIn.setBackground(Color.LIGHT_GRAY);
+        scrollCurrentStoryPanIn.getVerticalScrollBar().setUnitIncrement(10);
         currentStoryPanIn.add(currentStory);
         scrollCurrentStoryPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+        currentStoryPanIn.setBackground(Color.white);
         JPanel currentStoryPan = new JPanel();
         currentStoryPan.setBackground(ColorPerso.darkGray);
         currentStoryPan.setLayout(new FlowLayout(1));
         currentStoryPan.add(scrollCurrentStoryPanIn);
         //currentStoryPan.setBorder(BorderFactory.createEmptyBorder(0,0,20,0));
 
+        JPanel panelAnswer = new JPanel();
+        panelAnswer.setLayout(new BorderLayout());
+        panelAnswer.setOpaque(false);
         answers = new JLabel();
-        answers.setText((currentRiddles.getEnigma(riddleNb -1)).getAnswer());
+        answers.setText("Réponse à l'énigme : " + (currentRiddles.getEnigma(riddleNb -1)).getAnswer());
+        answers.setAlignmentY(SwingConstants.CENTER);
+        answers.setAlignmentX(SwingConstants.CENTER);
+        answers.setOpaque(false);
+        panelAnswer.add(answers,BorderLayout.CENTER);
+
 
         proposition = new JTextArea("Réponses tentées jusqu'ici : \n");
-        proposition.setBackground(Color.lightGray);
+        proposition.setAlignmentX(SwingConstants.CENTER);
         proposition.setFont(FontPerso.Oxanimum);
         proposition.setEditable(false);
+        proposition.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
 
         afficheReponse();
 
-        JScrollPane scrollAnswersPanIn = new JScrollPane(answersPanIn,
+        JScrollPane scrollAnswersPanIn = new JScrollPane(proposition,
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         //scrollAnswersPanIn.setPreferredSize(new Dimension((int) (width-20),(int) ((height-90)*0.10)));
-        scrollAnswersPanIn.setBackground(Color.LIGHT_GRAY);
-        answersPanIn.setBackground(Color.LIGHT_GRAY);
-        answersPanIn.setLayout(new BoxLayout(answersPanIn, BoxLayout.PAGE_AXIS));
-        answersPanIn.add(answers);
-        answersPanIn.add(proposition);
-        scrollAnswersPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+        scrollAnswersPanIn.getVerticalScrollBar().setUnitIncrement(10);
+        scrollAnswersPanIn.setBorder(BorderFactory.createLineBorder(Color.black,2));
+
+        answersPanIn.setLayout(new GridLayout(1,2,200,0));
+        answersPanIn.add(scrollAnswersPanIn);
+        answersPanIn.add(panelAnswer);
+        answersPanIn.setOpaque(false);
+        scrollAnswersPanIn.setBorder(BorderFactory.createEmptyBorder());
+
         JPanel answersPan = new JPanel();
-        answersPan.setBackground(ColorPerso.darkGray);
-        answersPan.add(scrollAnswersPanIn);
+        answersPan.setLayout(new BorderLayout());
+        answersPan.add(answersPanIn,BorderLayout.CENTER);
+        answersPan.setOpaque(false);
         //answersPan.setBorder(BorderFactory.createEmptyBorder(0,0,20,0));
 
-
-        helpMessageGM = new JTextArea();
+        helpMessageGM = new JTextArea("Vous pouvez envoyez de l'aide au joueur ici");
         helpMessageGM.setLineWrap(true);
         helpMessageGM.setWrapStyleWord(true);
+        if(helpMessageGM.getText().equals("Vous pouvez envoyez de l'aide au joueur ici")){
+            helpMessageGM.setForeground(Color.gray);
+            helpMessageGM.setFont(helpMessageGM.getFont().deriveFont(Font.ITALIC));
+        }
         helpMessageGM.setFont(FontPerso.Oxanimum);
         helpMessageGM.setPreferredSize(new Dimension((int) (width-200-helpButtonGM.getWidth()), (int) ((height-150)*0.40)));
+        helpMessageGM.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if(helpMessageGM.getText().equals("Vous pouvez envoyez de l'aide au joueur ici")){
+                    helpMessageGM.setText("");
+                    helpMessageGM.setForeground(Color.black);
+                    helpMessageGM.setFont(helpMessageGM.getFont().deriveFont(Font.PLAIN));
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if(helpMessageGM.getText().equals("")){
+                    helpMessageGM.setText("Vous pouvez envoyez de l'aide au joueur ici");
+                    helpMessageGM.setForeground(Color.gray);
+                    helpMessageGM.setFont(helpMessageGM.getFont().deriveFont(Font.ITALIC));
+                }
+            }
+        });
+
 
 
         JPanel helpMessageGMPan = new JPanel();
         helpMessageGMPan.setBackground(Color.LIGHT_GRAY);
         helpMessageGMPan.setLayout(new FlowLayout(1));
         helpMessageGMPan.add(helpMessageGM);
+        helpMessageGMPan.setBorder(BorderFactory.createLineBorder(Color.black,2));
 
 
         JPanel helpButtonGMPanIn = new JPanel();
-        helpButtonGMPanIn.setBackground(Color.LIGHT_GRAY);
+        helpButtonGMPanIn.setLayout(new FlowLayout(1));
         helpButtonGMPanIn.add(helpButtonGM);
+        helpButtonGMPanIn.setOpaque(false);
         JPanel helpButtonGMPan = new JPanel();
         helpButtonGMPan.setBackground(Color.LIGHT_GRAY);
         helpButtonGMPan.add(helpButtonGMPanIn);
+        helpButtonGMPan.setOpaque(false);
         helpButtonGMPan.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 
+        JScrollPane scrollHelp = new JScrollPane(helpMessageGM,
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollHelp.setBorder(BorderFactory.createLineBorder(Color.black,2));
+
+        scrollHelp.getVerticalScrollBar().setUnitIncrement(10);
 
         JPanel helpGMPanIn = new JPanel();
         helpGMPanIn.setBackground(Color.LIGHT_GRAY);
         //helpGMPanIn.setPreferredSize(new Dimension((int) (width-20), (int) ((height-90)*0.40)));
-        helpGMPanIn.setLayout(new BoxLayout(helpGMPanIn, BoxLayout.LINE_AXIS));
-        helpGMPanIn.add(helpMessageGMPan);
+        helpGMPanIn.setLayout(new BoxLayout(helpGMPanIn, BoxLayout.PAGE_AXIS));
+        helpGMPanIn.add(scrollHelp);
         helpGMPanIn.add(helpButtonGMPan);
-        helpGMPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+        helpGMPanIn.setOpaque(false);
 
 
         JPanel helpGMPan = new JPanel();
@@ -198,7 +261,8 @@ public class PlayerManagement extends JPanel implements ActionListener{
         //helpGMPan.setPreferredSize(new Dimension(width-20,(height-90)*40/100));
 
         JPanel buttonReturnPanIn = new JPanel();
-        buttonReturnPanIn.setBackground(Color.LIGHT_GRAY);
+        buttonReturnPanIn.setLayout(new FlowLayout(0));
+        buttonReturnPanIn.setOpaque(false);
         buttonReturnPanIn.add(buttonReturn);
 
 
@@ -210,9 +274,12 @@ public class PlayerManagement extends JPanel implements ActionListener{
 
         JPanel buttonHint1PanIn = new JPanel();
         buttonHint1PanIn.setBackground(Color.LIGHT_GRAY);
+
         JTextArea hint1Text = new JTextArea();
         hint1Text.setLineWrap(true);
         hint1Text.setWrapStyleWord(true);
+        hint1Text.setAlignmentX(SwingConstants.CENTER);
+        hint1Text.setAlignmentY(SwingConstants.CENTER);
         hint1Text.setBackground(Color.LIGHT_GRAY);
         //hint1Text.setColumns(15);
         hint1Text.setFont(FontPerso.Oxanimum);
@@ -220,14 +287,20 @@ public class PlayerManagement extends JPanel implements ActionListener{
         hint1Text.setText(currentRiddles.getEnigma(riddleNb-1).getClue1());
 
 
-        JPanel hint1TextPan = new JPanel();
-        hint1TextPan.setLayout(new FlowLayout(1));
-        hint1TextPan.setBackground(Color.lightGray);
-        hint1TextPan.add(hint1Text);
-        JScrollPane scrollHint1TextPan = new JScrollPane(hint1TextPan, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+
+
+        JScrollPane scrollHint1TextPan = new JScrollPane(hint1Text, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollHint1TextPan.setBackground(Color.LIGHT_GRAY);
-        scrollHint1TextPan.setBorder(BorderFactory.createLineBorder(Color.lightGray, 2));
+        scrollHint1TextPan.getVerticalScrollBar().setUnitIncrement(10);
+        scrollHint1TextPan.setOpaque(false);
+        scrollHint1TextPan.setBorder(BorderFactory.createLineBorder(Color.black));
+        scrollHint1TextPan.getVerticalScrollBar().setVisible(false);
+
+        JPanel hint1TextPan = new JPanel();
+        hint1TextPan.setLayout(new BorderLayout());
+        hint1TextPan.setBackground(Color.lightGray);
+        hint1TextPan.add(scrollHint1TextPan,BorderLayout.CENTER);
+
         JPanel hint1ButtonPan = new JPanel();
         hint1ButtonPan.setLayout(new FlowLayout(1));
         hint1ButtonPan.add(buttonHint1);
@@ -235,6 +308,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
         buttonHint1PanIn.setLayout(new BoxLayout(buttonHint1PanIn, BoxLayout.PAGE_AXIS));
         buttonHint1PanIn.add(scrollHint1TextPan);
         buttonHint1PanIn.add(hint1ButtonPan);
+        buttonHint1PanIn.setAlignmentY(SwingConstants.CENTER);
 
 
         JPanel buttonHint1Pan = new JPanel();
@@ -248,20 +322,27 @@ public class PlayerManagement extends JPanel implements ActionListener{
         JTextArea hint2Text = new JTextArea();
         hint2Text.setLineWrap(true);
         hint2Text.setWrapStyleWord(true);
+        hint2Text.setAlignmentX(SwingConstants.CENTER);
+        hint2Text.setAlignmentY(SwingConstants.CENTER);
         hint2Text.setBackground(Color.LIGHT_GRAY);
         hint2Text.setFont(FontPerso.Oxanimum);
         hint2Text.setEditable(false);
         //hint2Text.setColumns(15);
         hint2Text.setText(currentRiddles.getEnigma(riddleNb-1).getClue2());
 
-        JPanel hint2TextPan = new JPanel();
-        hint2TextPan.setLayout(new FlowLayout(1));
-        hint2TextPan.setBackground(Color.lightGray);
-        hint2TextPan.add(hint2Text);
-        JScrollPane scrollHint2TextPan = new JScrollPane(hint2TextPan, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+
+
+        JScrollPane scrollHint2TextPan = new JScrollPane(hint2Text, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollHint2TextPan.setBackground(Color.LIGHT_GRAY);
-        scrollHint2TextPan.setBorder(BorderFactory.createLineBorder(Color.lightGray, 2));
+        scrollHint2TextPan.getVerticalScrollBar().setUnitIncrement(10);
+        scrollHint2TextPan.setOpaque(false);
+        scrollHint2TextPan.setBorder(BorderFactory.createLineBorder(Color.black));
+        scrollHint2TextPan.getVerticalScrollBar().setVisible(false);
+
+        JPanel hint2TextPan = new JPanel();
+        hint2TextPan.setLayout(new BorderLayout());
+        hint2TextPan.setBackground(Color.lightGray);
+        hint2TextPan.add(scrollHint2TextPan,BorderLayout.CENTER);
 
         JPanel hint2ButtonPan = new JPanel();
         hint2ButtonPan.setLayout(new FlowLayout(1));
@@ -270,6 +351,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
         buttonHint2PanIn.setLayout(new BoxLayout(buttonHint2PanIn, BoxLayout.PAGE_AXIS));
         buttonHint2PanIn.add(scrollHint2TextPan);
         buttonHint2PanIn.add(hint2ButtonPan);
+        buttonHint2PanIn.setAlignmentY(SwingConstants.CENTER);
 
 
         JPanel buttonHint2Pan = new JPanel();
@@ -281,22 +363,28 @@ public class PlayerManagement extends JPanel implements ActionListener{
         buttonHint3PanIn.setBackground(Color.LIGHT_GRAY);
         JTextArea hint3Text = new JTextArea();
         hint3Text.setLineWrap(true);
+        hint3Text.setAlignmentX(SwingConstants.CENTER);
+        hint3Text.setAlignmentY(SwingConstants.CENTER);
         hint3Text.setWrapStyleWord(true);
         hint3Text.setBackground(Color.LIGHT_GRAY);
+        hint3Text.setAlignmentX(SwingConstants.CENTER);
         //hint3Text.setColumns(15);
         hint3Text.setFont(FontPerso.Oxanimum);
         hint3Text.setEditable(false);
         hint3Text.setText(currentRiddles.getEnigma(riddleNb-1).getClue3());
 
 
-        JPanel hint3TextPan = new JPanel();
-        hint3TextPan.setLayout(new FlowLayout(1));
-        hint3TextPan.setBackground(Color.lightGray);
-        hint3TextPan.add(hint3Text);
-        JScrollPane scrollHint3TextPan = new JScrollPane(hint3TextPan, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+        JScrollPane scrollHint3TextPan = new JScrollPane(hint3Text, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollHint3TextPan.setBackground(Color.LIGHT_GRAY);
-        scrollHint3TextPan.setBorder(BorderFactory.createLineBorder(Color.lightGray, 2));
+        scrollHint3TextPan.getVerticalScrollBar().setUnitIncrement(10);
+        scrollHint3TextPan.setOpaque(false);
+        scrollHint3TextPan.setBorder(BorderFactory.createLineBorder(Color.black));
+        scrollHint3TextPan.getVerticalScrollBar().setVisible(false);
+
+        JPanel hint3TextPan = new JPanel();
+        hint3TextPan.setLayout(new BorderLayout());
+        hint3TextPan.setBackground(Color.lightGray);
+        hint3TextPan.add(scrollHint3TextPan,BorderLayout.CENTER);
 
 
         JPanel hint3ButtonPan = new JPanel();
@@ -306,6 +394,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
         buttonHint3PanIn.setLayout(new BoxLayout(buttonHint3PanIn, BoxLayout.PAGE_AXIS));
         buttonHint3PanIn.add(scrollHint3TextPan);
         buttonHint3PanIn.add(hint3ButtonPan);
+        buttonHint3PanIn.setAlignmentY(SwingConstants.CENTER);
 
 
         JPanel buttonHint3Pan = new JPanel();
@@ -319,16 +408,37 @@ public class PlayerManagement extends JPanel implements ActionListener{
         //bottomPan.setPreferredSize(new Dimension((int) (width-20),(int) ((height)*0.40)));
         JPanel bottomPanIn = new JPanel();
         bottomPanIn.setBackground(Color.LIGHT_GRAY);
-        bottomPanIn.setLayout(new BoxLayout(bottomPanIn, BoxLayout.LINE_AXIS));
-        bottomPanIn.add(buttonReturnPan);
-        bottomPanIn.add(buttonHint1Pan);
-        bottomPanIn.add(buttonHint2Pan);
-        bottomPanIn.add(buttonHint3Pan);
+        bottomPanIn.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.insets = new Insets(5,50,0,50);
+        gbc.gridx =1;
+        gbc.gridy=1;
+        gbc.weighty =2;
+
+        bottomPanIn.add(scrollHint1TextPan,gbc);
+        gbc.gridx =2;
+        bottomPanIn.add(scrollHint2TextPan,gbc);
+        gbc.gridx =3;
+        bottomPanIn.add(scrollHint3TextPan,gbc);
+        gbc.weighty = 1;
+        gbc.insets = new Insets(0,50,0,50);
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.gridy = 2;
+        gbc.gridx =1;
+        bottomPanIn.add(hint1ButtonPan,gbc);
+        gbc.gridx =2;
+        bottomPanIn.add(hint2ButtonPan,gbc);
+        gbc.gridx =3;
+        bottomPanIn.add(hint3ButtonPan,gbc);
+
         bottomPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
-        bottomPan.add(bottomPanIn);
 
-
-        Border mainEdge = BorderFactory.createEmptyBorder(10,10,10,10);
+        buttonHint1.addMouseListener(this);
+        buttonHint2.addMouseListener(this);
+        buttonHint3.addMouseListener(this);
+        helpButtonGM.addMouseListener(this);
+        buttonReturn.addMouseListener(this);
 
         this.addComponentListener(new ComponentAdapter() {
             @Override
@@ -338,36 +448,45 @@ public class PlayerManagement extends JPanel implements ActionListener{
             }
         });
 
-        this.setBorder(mainEdge);
+        this.setLayout(new BorderLayout(10,10));
+        this.add(panelTitre,BorderLayout.PAGE_START);
+        this.add(mainPanel,BorderLayout.CENTER);
+        this.add(buttonReturnPanIn,BorderLayout.SOUTH);
+        this.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
         this.setBackground(ColorPerso.darkGray);
-        this.setLayout(new GridBagLayout());
 
         GridBagConstraints gbcglobal = new GridBagConstraints();
 
         gbcglobal.weighty = 1;
-        gbcglobal.weightx = 2;
+        gbcglobal.weightx = 3;
         gbcglobal.gridy = 0;
         gbcglobal.fill = GridBagConstraints.BOTH;
-        this.add(topPan, gbcglobal);
+        gbcglobal.insets = new Insets(20,20,0,0);
+        mainPanel.add(topPan, gbcglobal);
 
-        gbcglobal.weighty = 3;
+        gbcglobal.weighty = 6;
         gbcglobal.gridy = 1;
-        this.add(scrollCurrentStoryPanIn, gbcglobal);
+        gbcglobal.insets = new Insets(0,20,0,20);
+        mainPanel.add(scrollCurrentStoryPanIn, gbcglobal);
 
         gbcglobal.weighty = 3;
-        gbcglobal.gridy = 2;
-        gbcglobal.insets = new Insets(20, 0,0,0);
-        this.add(scrollAnswersPanIn, gbcglobal);
-
-        gbcglobal.weighty = 3;
-        gbcglobal.gridy = 3;
-        this.add(helpGMPanIn, gbcglobal);
-
-        gbcglobal.weighty = 1;
         gbcglobal.weightx = 1;
+        gbcglobal.gridy = 2;
+        gbcglobal.insets = new Insets(30, 200,0,200);
+        mainPanel.add(answersPan, gbcglobal);
+
+        gbcglobal.weighty = 2;
+        gbcglobal.gridy = 3;
+
+        gbcglobal.insets = new Insets(30,60,0,60);
+        mainPanel.add(helpGMPanIn, gbcglobal);
+
+        gbcglobal.weighty = 2;
+        gbcglobal.weightx = 3;
         gbcglobal.gridy = 4;
         gbcglobal.fill = GridBagConstraints.VERTICAL;
-        this.add(bottomPanIn, gbcglobal);
+        gbcglobal.insets = new Insets(10,20,20,20);
+        mainPanel.add(bottomPanIn, gbcglobal);
 
         Runnable runnable = () -> {
             while (true) {
@@ -535,6 +654,69 @@ public class PlayerManagement extends JPanel implements ActionListener{
                     proposition.append("\n" + tab.get(i));
                 }
             }
+        }
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        if (e.getSource() == buttonHint1){
+            buttonHint1.setBackground(ColorPerso.grisClair);
+            buttonHint1.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+        }
+        else if (e.getSource() == buttonHint2){
+            buttonHint2.setBackground(ColorPerso.grisClair);
+            buttonHint2.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+        }
+        else if (e.getSource() == buttonHint3){
+            buttonHint3.setBackground(ColorPerso.grisClair);
+            buttonHint3.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+        }
+        else if (e.getSource()==buttonReturn){
+            buttonReturn.setBackground(ColorPerso.rougeHoover);
+            buttonReturn.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+        }
+        else if (e.getSource()==helpButtonGM){
+            helpButtonGM.setBackground(ColorPerso.grisClair);
+            helpButtonGM.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+        }
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        if (e.getSource() == buttonHint1){
+            buttonHint1.setBackground(ColorPerso.white);
+            buttonHint1.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        }
+        else if (e.getSource() == buttonHint2){
+            buttonHint2.setBackground(ColorPerso.white);
+            buttonHint2.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        }
+        else if (e.getSource() == buttonHint3){
+            buttonHint3.setBackground(ColorPerso.white);
+            buttonHint3.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        }
+        else if (e.getSource()==buttonReturn){
+            buttonReturn.setBackground(ColorPerso.rouge);
+            buttonReturn.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        }
+        else if (e.getSource()==helpButtonGM){
+            helpButtonGM.setBackground(ColorPerso.white);
+            helpButtonGM.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         }
     }
 }
