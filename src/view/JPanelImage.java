@@ -14,6 +14,12 @@ public class JPanelImage extends JPanel {
     private float ratio;
     private AffineTransform aTransform;
 
+    /**
+     * Component de type JPanel contenant une image de fond
+     * @param path Path de l'image
+     * @param windowSize Taille de la fenêtre
+     */
+
     JPanelImage(InputStream path, Dimension windowSize) {
         super();
         aTransform = new AffineTransform();
@@ -38,6 +44,11 @@ public class JPanelImage extends JPanel {
         g2d.drawRenderedImage(img,null);
 
     }
+
+    /**
+     * Ajoute une image de fond au JPanel
+     * @param path Path de l'image
+     */
 
     public void setBackground(InputStream path){
         aTransform = new AffineTransform();

@@ -40,6 +40,11 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
 
     private static volatile GameManagement INSTANCE = new GameManagement(Main.frame,-1);
 
+    /**
+     * Interface de gestion des Jeux
+     * @param frame fenêtre d'affichage
+     * @param roomNumber n° de la salle dont on veut changer le jeu
+     */
     private GameManagement(GlobalFrame frame, int roomNumber){
 
         this.frame = frame;
@@ -142,6 +147,13 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
 
     }
 
+    /**
+     * Récupération de l'instance de GameManagement
+     * @param frame fenêtre d'affichage
+     * @param roomNumber n° de la salle dont on veut changer le jeu
+     * @return Retourne l'instance de GameManagement
+     */
+
     public static GameManagement getInstance(GlobalFrame frame, int roomNumber) {
         //Le "Double-Checked Singleton"/"Singleton doublement vérifié" permet
         //d'éviter un appel coûteux à synchronized,
@@ -176,6 +188,13 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
         return INSTANCE;
     }
 
+    /**
+     * Ajout d'un jeu à l'affichage
+     * @param jeu Jeu associé
+     * @param gbc Contraintes d'affichage
+     * @param i N° du jeu dans la liste
+     * @return Retourne le Panel associé au nouveau
+     */
     private JPanel ajoutJeu(Game jeu, GridBagConstraints gbc, int i) {
 
         /* Contraintes GridBag */
@@ -407,6 +426,10 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
         return panelJeu;
 
     }
+
+    /**
+     * Charge les jeux dans la fenêtre
+     */
 
     private void createList() {
         GridBagConstraints gbc = new GridBagConstraints();

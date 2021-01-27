@@ -14,6 +14,10 @@ public class JButtonImage extends JButton {
     private float ratio;
     private AffineTransform aTransform;
 
+    /**
+     * Component de type JButton contenant une image de fond
+     * @param path Path de l'image
+     */
     JButtonImage(InputStream path) {
         super();
         aTransform = new AffineTransform();
@@ -40,6 +44,11 @@ public class JButtonImage extends JButton {
         g2d.drawRenderedImage(img,aTransform);
 
     }
+
+    /**
+     * Ajoute une image de fond au JButton
+     * @param path Path de l'image
+     */
 
     public void setBackground(InputStream path){
         aTransform = new AffineTransform();
