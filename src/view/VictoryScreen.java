@@ -22,8 +22,8 @@ public class VictoryScreen extends JPanel implements WindowListener {
         new ImageLoaderVictoryNoCo(this).execute();
 
 
-        int seconde = (3600-temps) % 60;
-        int minute = ((3600-temps) - seconde) / 60;
+        int seconde = (1200-temps) % 60;
+        int minute = ((1200-temps) - seconde) / 60;
         String time;
         if (seconde < 10) {
             time = minute + ":0" + seconde;

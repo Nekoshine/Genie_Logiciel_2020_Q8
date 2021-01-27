@@ -62,7 +62,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
     private final Timer timeonenigma;
     private Timer timer;
 
-    private int countdownvalue = 3600;
+    private int countdownvalue = 1200;
     private int enigmatimevalue = 0;
 
     private Room room;
@@ -201,7 +201,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
         answerTextField.setFont(answerTextField.getFont().deriveFont(Font.ITALIC));
         answerTextField.setColumns(30);
         answerTextField.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
-        answerTextField.setFont(FontPerso.Oxanimum);
+        answerTextField.setFont(FontPerso.lato);
         answerTextField.addFocusListener(this);
         answerTextField.addKeyListener(this);
         //answerTextField.setMaximumSize(new Dimension(60,15));
@@ -249,7 +249,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
         hint1Button.setEnabled(false);
         hint1Button.setBackground(Color.GRAY);
         hint1Button.addActionListener(this);
-        hint1Button.setFont(FontPerso.Oxanimum);
+        hint1Button.setFont(FontPerso.lato);
 
         hintContainer1 = new JPanel();
         hintContainer1.setLayout(new GridLayout(1,1));
@@ -261,7 +261,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
         hint2Button.setEnabled(false);
         hint2Button.setBackground(ColorPerso.GRAY);
         hint2Button.addActionListener(this);
-        hint2Button.setFont(FontPerso.Oxanimum);
+        hint2Button.setFont(FontPerso.lato);
 
         hintContainer2 = new JPanel();
         hintContainer2.setLayout(new GridLayout(1,1));
@@ -273,7 +273,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
         hint3Button.setEnabled(false);
         hint3Button.setBackground(ColorPerso.GRAY);
         hint3Button.addActionListener(this);
-        hint3Button.setFont(FontPerso.Oxanimum);
+        hint3Button.setFont(FontPerso.lato);
 
         hintContainer3 = new JPanel();
         hintContainer3.setLayout(new GridLayout(1,1));

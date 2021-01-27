@@ -176,7 +176,7 @@ public class PlayerManagement extends JPanel implements ActionListener,MouseList
 
         proposition = new JTextArea("Réponses tentées jusqu'ici : \n");
         proposition.setAlignmentX(SwingConstants.CENTER);
-        proposition.setFont(FontPerso.Oxanimum);
+        proposition.setFont(FontPerso.lato);
         proposition.setEditable(false);
         proposition.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
 
@@ -207,7 +207,7 @@ public class PlayerManagement extends JPanel implements ActionListener,MouseList
             helpMessageGM.setForeground(Color.gray);
             helpMessageGM.setFont(helpMessageGM.getFont().deriveFont(Font.ITALIC));
         }
-        helpMessageGM.setFont(FontPerso.Oxanimum);
+        helpMessageGM.setFont(FontPerso.lato);
         helpMessageGM.setPreferredSize(new Dimension((int) (width-200-helpButtonGM.getWidth()), (int) ((height-150)*0.40)));
         helpMessageGM.addFocusListener(new FocusListener() {
             @Override
@@ -292,7 +292,7 @@ public class PlayerManagement extends JPanel implements ActionListener,MouseList
         hint1Text.setAlignmentY(SwingConstants.CENTER);
         hint1Text.setBackground(Color.LIGHT_GRAY);
         //hint1Text.setColumns(15);
-        hint1Text.setFont(FontPerso.Oxanimum);
+        hint1Text.setFont(FontPerso.lato);
         hint1Text.setEditable(false);
         hint1Text.setText(currentRiddles.getEnigma(riddleNb-1).getClue1());
 
@@ -335,7 +335,7 @@ public class PlayerManagement extends JPanel implements ActionListener,MouseList
         hint2Text.setAlignmentX(SwingConstants.CENTER);
         hint2Text.setAlignmentY(SwingConstants.CENTER);
         hint2Text.setBackground(Color.LIGHT_GRAY);
-        hint2Text.setFont(FontPerso.Oxanimum);
+        hint2Text.setFont(FontPerso.lato);
         hint2Text.setEditable(false);
         //hint2Text.setColumns(15);
         hint2Text.setText(currentRiddles.getEnigma(riddleNb-1).getClue2());
@@ -379,7 +379,7 @@ public class PlayerManagement extends JPanel implements ActionListener,MouseList
         hint3Text.setBackground(Color.LIGHT_GRAY);
         hint3Text.setAlignmentX(SwingConstants.CENTER);
         //hint3Text.setColumns(15);
-        hint3Text.setFont(FontPerso.Oxanimum);
+        hint3Text.setFont(FontPerso.lato);
         hint3Text.setEditable(false);
         hint3Text.setText(currentRiddles.getEnigma(riddleNb-1).getClue3());
 
