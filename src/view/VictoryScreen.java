@@ -5,8 +5,10 @@ import view.swingworkers.ImageLoaderVictoryNoCo;
 import view.style.FontPerso;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
-public class VictoryScreen extends JPanel  {
+public class VictoryScreen extends JPanel implements WindowListener {
 
     private GlobalFrame frame;
     Dimension windowSize;
@@ -72,4 +74,38 @@ public class VictoryScreen extends JPanel  {
         repaint();
     }
 
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        frame.connectionMenuDisplay(frame);
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
+    }
 }
