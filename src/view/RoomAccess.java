@@ -33,6 +33,13 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
 
     public User user;
 
+    /**
+     * Interface d'accès aux salles pour les joueurs
+     * @param frame Fenêtre d'affichage
+     * @param roomList Liste des salles possédées par l'administrateur
+     * @param user Joueur accédant au menu d'accès aux salles
+     */
+
     RoomAccess(GlobalFrame frame,RoomList roomList,User user){
 
         this.frame = frame;
@@ -159,8 +166,8 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
      *
      * @param salle salle à ajouter
      * @param gbc GridBagConstraints
-     * @param i
-     * @return un JPanel avec la salle
+     * @param i N° de la salle à ajouter
+     * @return Retourne un JPanel avec la salle
      */
 
     private JPanel ajoutSalle(Room salle, GridBagConstraints gbc, int i){
@@ -293,6 +300,10 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
         }
 
     }
+
+    /**
+     * Affiche la liste des panels des salles générés
+     */
 
     private void createList() {
         GridBagConstraints gbc = new GridBagConstraints();

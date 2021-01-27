@@ -141,6 +141,12 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
 
     }
 
+    /**
+     * Interface de gestion des salles
+     * @param frame Fenêtre d'affichage
+     * @return Retourne une instance de RoomManagement
+     */
+
     public static RoomManagement getInstance(GlobalFrame frame) {
         //Le "Double-Checked Singleton"/"Singleton doublement vérifié" permet
         //d'éviter un appel coûteux à synchronized,
@@ -171,10 +177,10 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
      * La méthode ajoutSalle() permet l'ajout d'une salle à l'interface de gestion des salles.
      * Elle renvoie un JPanel contenant les informations de la salle
      *
-     * @param salle salle à ajouter
-     * @param gbc GridBagConstraints
-     * @param i
-     * @return un JPanel avec la salle
+     * @param salle Salle à ajouter
+     * @param gbc Contraintes d'affichage
+     * @param i Indice de la salle à ajouter
+     * @return Retourne un JPanel avec la salle
      */
 
     private JPanel ajoutSalle(Room salle, GridBagConstraints gbc, int i) {
@@ -333,10 +339,18 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
 
     }
 
+    /**
+     * Met à jour la liste des salles
+     */
+
     private void majRoom() {
         ListRoom.addRoom(DBRoom.getMax()+1,null,false,-1);
         this.createList();
     }
+
+    /**
+     * Méthode affichant les panels des salles à l'interface
+     */
 
     private void createList() {
         GridBagConstraints gbc = new GridBagConstraints();
@@ -362,7 +376,6 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
     public void actionPerformed(ActionEvent e)
     {
         if(e.getSource() == returnButton) {
-
             frame.mainMenuDisplay(frame);
         }
         else if(e.getSource()== newButton){

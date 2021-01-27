@@ -253,7 +253,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
 
         hintContainer1 = new JPanel();
         hintContainer1.setLayout(new GridLayout(1,1));
-        hintContainer1.setPreferredSize(new Dimension((int)((float) windowSize.getWidth()*0.25),(int)((float) windowSize.getHeight()*0.15)));
+        hintContainer1.setPreferredSize(new Dimension((int)((float) windowSize.getWidth()*0.20),(int)((float) windowSize.getHeight()*0.15)));
         hintContainer1.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         hintContainer1.add(hint1Button);
 
@@ -265,7 +265,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
 
         hintContainer2 = new JPanel();
         hintContainer2.setLayout(new GridLayout(1,1));
-        hintContainer2.setPreferredSize(new Dimension((int)((float) windowSize.getWidth()*0.25),(int)((float) windowSize.getHeight()*0.15)));
+        hintContainer2.setPreferredSize(new Dimension((int)((float) windowSize.getWidth()*0.20),(int)((float) windowSize.getHeight()*0.15)));
         hintContainer2.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         hintContainer2.add(hint2Button);
 
@@ -277,7 +277,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
 
         hintContainer3 = new JPanel();
         hintContainer3.setLayout(new GridLayout(1,1));
-        hintContainer3.setPreferredSize(new Dimension((int)((float) windowSize.getWidth()*0.25),(int)((float) windowSize.getHeight()*0.15)));
+        hintContainer3.setPreferredSize(new Dimension((int)((float) windowSize.getWidth()*0.20),(int)((float) windowSize.getHeight()*0.15)));
         hintContainer3.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         hintContainer3.add(hint3Button);
 
@@ -291,14 +291,14 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
 
         JPanel hintMJContainer = new JPanel();
         hintMJContainer.setLayout(new GridLayout(1,1));
-        hintMJContainer.setPreferredSize(new Dimension((int)((float)windowSize.getWidth()*0.35),(int)((float) windowSize.getHeight()*0.15)));
+        hintMJContainer.setPreferredSize(new Dimension((int)((float)windowSize.getWidth()*0.20),(int)((float) windowSize.getHeight()*0.15)));
         hintMJContainer.add(hintMJTextArea);
 
         JPanel hintRawPanel = new JPanel();
-        hintRawPanel.setLayout(new FlowLayout(FlowLayout.CENTER,40,0));
+        hintRawPanel.setLayout(new FlowLayout(FlowLayout.CENTER,30,0));
         hintRawPanel.setOpaque(false);
 
-        hintRawPanel.setPreferredSize(new Dimension((int)((float) windowSize.getWidth()*0.95),(int)((float) windowSize.getHeight()*0.18)));
+        hintRawPanel.setPreferredSize(new Dimension((int)((float) windowSize.getWidth()*0.99),(int)((float) windowSize.getHeight()*0.18)));
         hintRawPanel.add(hintContainer1);
         hintRawPanel.add(hintContainer2);
         hintRawPanel.add(hintContainer3);
@@ -398,17 +398,20 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
 
                 if (enigmatimevalue == timerclue1) {
                     hint1Button.setEnabled(true);
+                    hint1Button.setForeground(ColorPerso.blue);
                 }
 
                 if (ishint2present) {
                     if (enigmatimevalue == timerclue2) {
                         hint2Button.setEnabled(true);
+                        hint2Button.setForeground(ColorPerso.blue);
                     }
                 }
 
                 if (ishint3present) {
                     if (enigmatimevalue == timerclue3) {
                         hint3Button.setEnabled(true);
+                        hint3Button.setForeground(ColorPerso.blue);
                     }
                 }
 

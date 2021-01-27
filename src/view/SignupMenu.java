@@ -31,6 +31,12 @@ public class SignupMenu extends JPanel implements ActionListener, MouseListener,
   private String cleAdmin = "JeSuisLaCleSecurisee";
 
   private static volatile SignupMenu INSTANCE = new SignupMenu(Main.frame);
+
+  /**
+   *
+   * @param frame
+   */
+
   private SignupMenu(GlobalFrame frame) {
     
     this.frame = Main.frame;
