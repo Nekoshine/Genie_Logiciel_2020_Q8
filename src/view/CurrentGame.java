@@ -458,6 +458,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
 
         Runnable runnabla = () -> {
             while (true) {
+                System.out.println("Je suis dans Current game, je suis a l'enigme : "+(enigmalistflag+1));
                 Client.SendRiddleNb(idUser,enigmalistflag+1);
             }
         };
