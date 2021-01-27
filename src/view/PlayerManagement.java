@@ -216,7 +216,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
         hint1Text.setLineWrap(true);
         hint1Text.setWrapStyleWord(true);
         hint1Text.setBackground(Color.LIGHT_GRAY);
-        hint1Text.setColumns(15);
+        //hint1Text.setColumns(15);
         hint1Text.setFont(FontPerso.Oxanimum);
         hint1Text.setEditable(false);
         hint1Text.setText(currentRiddles.getEnigma(riddleNb-1).getClue1());
@@ -253,7 +253,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
         hint2Text.setBackground(Color.LIGHT_GRAY);
         hint2Text.setFont(FontPerso.Oxanimum);
         hint2Text.setEditable(false);
-        hint2Text.setColumns(15);
+        //hint2Text.setColumns(15);
         hint2Text.setText(currentRiddles.getEnigma(riddleNb-1).getClue2());
 
         JPanel hint2TextPan = new JPanel();
@@ -285,7 +285,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
         hint3Text.setLineWrap(true);
         hint3Text.setWrapStyleWord(true);
         hint3Text.setBackground(Color.LIGHT_GRAY);
-        hint3Text.setColumns(15);
+        //hint3Text.setColumns(15);
         hint3Text.setFont(FontPerso.Oxanimum);
         hint3Text.setEditable(false);
         hint3Text.setText(currentRiddles.getEnigma(riddleNb-1).getClue3());
