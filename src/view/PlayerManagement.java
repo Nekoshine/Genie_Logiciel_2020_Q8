@@ -245,7 +245,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
         hint1Text.setLineWrap(true);
         hint1Text.setWrapStyleWord(true);
         hint1Text.setBackground(Color.LIGHT_GRAY);
-        hint1Text.setColumns(15);
+        //hint1Text.setColumns(15);
         hint1Text.setFont(FontPerso.Oxanimum);
         hint1Text.setEditable(false);
         hint1Text.setText(currentRiddles.getEnigma(riddleNb-1).getClue1());
@@ -255,12 +255,16 @@ public class PlayerManagement extends JPanel implements ActionListener{
         hint1TextPan.setLayout(new FlowLayout(1));
         hint1TextPan.setBackground(Color.lightGray);
         hint1TextPan.add(hint1Text);
+        JScrollPane scrollHint1TextPan = new JScrollPane(hint1TextPan, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollHint1TextPan.setBackground(Color.LIGHT_GRAY);
+        scrollHint1TextPan.setBorder(BorderFactory.createLineBorder(Color.lightGray, 2));
         JPanel hint1ButtonPan = new JPanel();
         hint1ButtonPan.setLayout(new FlowLayout(1));
         hint1ButtonPan.add(buttonHint1);
         hint1ButtonPan.setBackground(Color.lightGray);
         buttonHint1PanIn.setLayout(new BoxLayout(buttonHint1PanIn, BoxLayout.PAGE_AXIS));
-        buttonHint1PanIn.add(hint1TextPan);
+        buttonHint1PanIn.add(scrollHint1TextPan);
         buttonHint1PanIn.add(hint1ButtonPan);
 
 
@@ -278,20 +282,24 @@ public class PlayerManagement extends JPanel implements ActionListener{
         hint2Text.setBackground(Color.LIGHT_GRAY);
         hint2Text.setFont(FontPerso.Oxanimum);
         hint2Text.setEditable(false);
-        hint2Text.setColumns(15);
+        //hint2Text.setColumns(15);
         hint2Text.setText(currentRiddles.getEnigma(riddleNb-1).getClue2());
 
         JPanel hint2TextPan = new JPanel();
         hint2TextPan.setLayout(new FlowLayout(1));
         hint2TextPan.setBackground(Color.lightGray);
         hint2TextPan.add(hint2Text);
+        JScrollPane scrollHint2TextPan = new JScrollPane(hint2TextPan, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollHint2TextPan.setBackground(Color.LIGHT_GRAY);
+        scrollHint2TextPan.setBorder(BorderFactory.createLineBorder(Color.lightGray, 2));
 
         JPanel hint2ButtonPan = new JPanel();
         hint2ButtonPan.setLayout(new FlowLayout(1));
         hint2ButtonPan.add(buttonHint2);
         hint2ButtonPan.setBackground(Color.lightGray);
         buttonHint2PanIn.setLayout(new BoxLayout(buttonHint2PanIn, BoxLayout.PAGE_AXIS));
-        buttonHint2PanIn.add(hint2TextPan);
+        buttonHint2PanIn.add(scrollHint2TextPan);
         buttonHint2PanIn.add(hint2ButtonPan);
 
 
@@ -306,7 +314,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
         hint3Text.setLineWrap(true);
         hint3Text.setWrapStyleWord(true);
         hint3Text.setBackground(Color.LIGHT_GRAY);
-        hint3Text.setColumns(15);
+        //hint3Text.setColumns(15);
         hint3Text.setFont(FontPerso.Oxanimum);
         hint3Text.setEditable(false);
         hint3Text.setText(currentRiddles.getEnigma(riddleNb-1).getClue3());
@@ -316,6 +324,10 @@ public class PlayerManagement extends JPanel implements ActionListener{
         hint3TextPan.setLayout(new FlowLayout(1));
         hint3TextPan.setBackground(Color.lightGray);
         hint3TextPan.add(hint3Text);
+        JScrollPane scrollHint3TextPan = new JScrollPane(hint3TextPan, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollHint3TextPan.setBackground(Color.LIGHT_GRAY);
+        scrollHint3TextPan.setBorder(BorderFactory.createLineBorder(Color.lightGray, 2));
 
 
         JPanel hint3ButtonPan = new JPanel();
@@ -323,7 +335,7 @@ public class PlayerManagement extends JPanel implements ActionListener{
         hint3ButtonPan.add(buttonHint3);
         hint3ButtonPan.setBackground(Color.lightGray);
         buttonHint3PanIn.setLayout(new BoxLayout(buttonHint3PanIn, BoxLayout.PAGE_AXIS));
-        buttonHint3PanIn.add(hint3TextPan);
+        buttonHint3PanIn.add(scrollHint3TextPan);
         buttonHint3PanIn.add(hint3ButtonPan);
 
 
