@@ -21,7 +21,7 @@ public class ImageLoaderVictoryNoCo extends SwingWorker<Image,Image> {
     @Override
     protected Image doInBackground() throws Exception {
 
-        InputStream stream = Main.class.getResourceAsStream("/image/victoire.jpg");
+        InputStream stream = Main.class.getResourceAsStream("/image/victoire.png");
         ImageIcon icon= null;
         Image backgroundMenu = null;
 
