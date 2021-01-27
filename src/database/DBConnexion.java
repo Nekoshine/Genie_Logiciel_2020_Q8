@@ -20,12 +20,12 @@ public class DBConnexion {
             try{
                 Class.forName("com.mysql.jdbc.Driver");
                 System.out.println("Initialising connection to Q8 Database");
-                connexion = DriverManager.getConnection("jdbc:mysql://mysql-nekoshine.alwaysdata.net/nekoshine_gl2020q8",
-                        "nekoshine_user", "Q82020GL");
+                connexion = DriverManager.getConnection("jdbc:mysql://mysql-nekoshine.alwaysdata.net/nekoshine_gl2020q8", "nekoshine_user", "Q82020GL");
                 System.out.println("Connection to Q8 Database complete");
-                return connexion;
-            } catch ( SQLException | ClassNotFoundException e){
+            } catch ( SQLException e){
                 System.out.println("Couldn't connect to Q8 DB :" + e.getMessage());
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
             }
         }
         System.out.println("Getting connexion to Q8 DB");

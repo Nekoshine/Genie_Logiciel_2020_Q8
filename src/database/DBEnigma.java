@@ -29,7 +29,7 @@ public class DBEnigma extends DBConnexion{
                   PreparedStatement requete = DBConnexion.getConnexion().prepareStatement("Select * from Enigma,Game WHERE Enigma.idGame = Game.id AND Enigma.idGame = ? ORDER BY Enigma.id ASC");
                   requete.setString(1, String.valueOf(idGame));
                   ResultSet resultat = requete.executeQuery();
-                  while (resultat.next() != false) { // On itère chaque résultat
+                  while (resultat.next()) { // On itère chaque résultat
                         clue2= resultat.getString("clue2");
                         if(resultat.wasNull()){
                               clue2="";
@@ -71,7 +71,7 @@ public class DBEnigma extends DBConnexion{
                   PreparedStatement requetePresence = DBConnexion.getConnexion().prepareStatement("SELECT * FROM Enigma WHERE id=?");
                   requetePresence.setString(1, String.valueOf(id));
                   ResultSet resultatPresence = requetePresence.executeQuery();
-                  if(resultatPresence.next() != false){ // Si il est deja dans la bdd
+                  if(resultatPresence.next()){ // Si il est deja dans la bdd
                         isHere=true; //Alors on annule l'insertion
                         requetePresence.close();
                         resultatPresence.close();
@@ -106,7 +106,7 @@ public class DBEnigma extends DBConnexion{
                   requete.setString(4,clue1);
                   requete.setInt(5,timer1);
 
-                  if(clue2=="" || clue2==null){
+                  if(clue2==null || clue2.isEmpty()){
                         requete.setNull(6, Types.NULL);
                   }
                   else {
@@ -120,7 +120,7 @@ public class DBEnigma extends DBConnexion{
                         requete.setInt(7,timer2);
                   }
 
-                  if(clue3=="" || clue3==null){
+                  if(clue3==null || clue3.isEmpty()){
                         requete.setNull(8, Types.NULL);
                   }
                   else {
@@ -139,7 +139,7 @@ public class DBEnigma extends DBConnexion{
                   requeteVerif.setString(1,text);
                   requeteVerif.setInt(2,idGame);
                   ResultSet resultatVerif = requeteVerif.executeQuery();
-                  if(resultatVerif.next() != false){ // Si il a été inséré
+                  if(resultatVerif.next()){ // Si il a été inséré
                         inserted=true; // Alors on valide l insertion
                   }
                   resultatVerif.close();
@@ -172,7 +172,7 @@ public class DBEnigma extends DBConnexion{
                   requete.setString(3, clue1);
                   requete.setInt(4, timer1);
 
-                  if(clue2=="" || clue2==null){
+                  if(clue2==null || clue2.isEmpty()){
                         requete.setNull(5, Types.NULL);
                   }
                   else {
@@ -186,7 +186,7 @@ public class DBEnigma extends DBConnexion{
                         requete.setInt(6,timer2);
                   }
 
-                  if(clue3=="" || clue3==null){
+                  if(clue3==null || clue3.isEmpty()){
                         requete.setNull(7, Types.NULL);
                   }
                   else {
@@ -205,31 +205,7 @@ public class DBEnigma extends DBConnexion{
                   requete.executeUpdate();
                   requete.close();
 
-                  PreparedStatement requeteVerif = DBConnexion.getConnexion().prepareStatement("Select * from Enigma where id=?");  // On regarde si l'user a bien été inséré
-                  requeteVerif.setInt(1,id);
-                  ResultSet resultatVerif = requeteVerif.executeQuery();
-                  if(resultatVerif.next() != false){ // Si on a bien 1 résultat
-                        String clue2BDD=resultatVerif.getString("clue2");
-                        String clue3BDD=resultatVerif.getString("clue3");
-
-                        boolean sameClue2 = false;
-                        if(clue2BDD==null && clue2==null || clue2BDD.equals(clue2)){
-                              sameClue2=true;
-                        }
-
-                        boolean sameClue3 = false;
-                        if(clue3BDD==null && clue3==null || clue3BDD.equals(clue3)){
-                              sameClue3=true;
-                        }
-
-                        if(resultatVerif.getString("text").equals(text)&&
-                        resultatVerif.getString("answer").equals(answer)&&
-                        resultatVerif.getString("clue1").equals(clue1)&& sameClue2 && sameClue3){
-                              inserted=true; // Alors on valide l insertion
-                        }
-                  }
-                  resultatVerif.close();
-                  requeteVerif.close();
+                  inserted = true;
 
             } catch(SQLException e ){
                   System.err.println("Erreur requete majEnigma: " + e.getMessage());
