@@ -25,6 +25,11 @@ public class MainMenu extends JPanel implements ActionListener, MouseListener {
 
     private GlobalFrame frame;
 
+    /**
+     * Interface du menu principal
+     * @param frame Fenêtre d'affichage
+     */
+
     private MainMenu(GlobalFrame frame) {
 
         this.frame = frame;
@@ -101,6 +106,12 @@ public class MainMenu extends JPanel implements ActionListener, MouseListener {
         this.setVisible(true);
 
     }
+
+    /**
+     *
+     * @param frame
+     * @return
+     */
 
     public final static MainMenu getInstance(GlobalFrame frame) {
         //Le "Double-Checked Singleton"/"Singleton doublement vérifié" permet

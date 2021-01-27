@@ -49,8 +49,8 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
 
     /**
      * Initialise le panel de création de jeux, pour un jeu donné, dans la frame associée
-     * @param frame
-     * @param game
+     * @param frame Fenêtre d'affichage
+     * @param game Jeu en cours de création/modification
      */
 
     private GameCreation(GlobalFrame frame, Game game){
@@ -303,9 +303,9 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
 
     /**
      * Permet de recupérer l'instance de GameCreation
-     * @param frame
-     * @param game
-     * @return
+     * @param frame Fenêtre d'affichage
+     * @param game Jeu à créer
+     * @return Retourne une instance de GameCreation
      */
     public static GameCreation getInstance(GlobalFrame frame, Game game) {
         //Le "Double-Checked Singleton"/"Singleton doublement vérifié" permet
@@ -374,9 +374,9 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
 
     /**
      * Méthode ajoutant une énigme à l'interface de création du jeu
-     * @param enigme
-     * @param gbcEnigma
-     * @return
+     * @param enigme Enigme à ajouter
+     * @param gbcEnigma Contraintes d'affichage
+     * @return Retourne le panel de l'énigme
      */
 
     JPanel ajoutEnigme(Enigma enigme,GridBagConstraints gbcEnigma){
