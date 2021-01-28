@@ -579,8 +579,9 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
             //si bonne reponse
             if (find) {
                 //si ce n'etait pas la derniere
-                if (enigmalistflag < allEnigmas.getSize() - 1) {
 
+                if (enigmalistflag < allEnigmas.getSize() - 1) {
+                    JOptionPane.showMessageDialog(frame,"Bonne réponse, tu passes à l'énigme suivante","Bravo", JOptionPane.INFORMATION_MESSAGE,imageIconValide);
                     //maj des champs relatifs aux enigmes
 
                     if (!oldEnigmaTextArea.getText().equals("")) {
