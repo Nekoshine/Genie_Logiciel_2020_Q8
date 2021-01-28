@@ -42,6 +42,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
     private final JTextField initialScore;
     private final JTextField title;
     private final JTextField winMessage;
+    private final JTextField gameTime;
 
     private GlobalFrame frame;
 
@@ -69,6 +70,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
 
         GridBagConstraints gbcTitle = new GridBagConstraints();
         GridBagConstraints gbcScores = new GridBagConstraints();
+        GridBagConstraints gbcTimePartie = new GridBagConstraints();
 
         GridBagLayout gridEnigma = new GridBagLayout();
         GridBagLayout buttonLayout = new GridBagLayout();
@@ -84,6 +86,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
         JPanel titleNamePanel = new JPanel();
         JPanel defaultScorePanel = new JPanel();
         JPanel pointsPanel = new JPanel();
+        JPanel panelTime = new JPanel();
         newPanel = new JPanel();
         enigmasPanel = new JPanel();
         JPanel winPanel = new JPanel();
@@ -99,15 +102,18 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
         if(game==null) {
             title = new JTextField("Titre du jeu", 50);
             initialScore = new JTextField("Score Initial", 7);
+            gameTime = new JTextField("Durée en min",7);
             winMessage = new JTextField();
         }
         else {
             title = new JTextField(game.getTitre(),45);
             initialScore = new JTextField(String.valueOf(game.getScore()),7);
-            winMessage = new JTextField(game.getEndMessage());
+            gameTime = new JTextField(String.valueOf(game.getTimer()));
+            winMessage = new JTextField(String.valueOf(game.getEndMessage()));
         }
         title.addFocusListener(this);
         initialScore.addFocusListener(this);
+        gameTime.addFocusListener(this);
         winMessage.addFocusListener(this);
 
         JLabel winMessageLabel = new JLabel("Message de fin :", SwingConstants.RIGHT);
@@ -187,6 +193,9 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
         initialScore.setBorder(BorderFactory.createEmptyBorder());
         initialScore.setHorizontalAlignment(JTextField.CENTER);
 
+        gameTime.setBorder(BorderFactory.createEmptyBorder());
+        gameTime.setHorizontalAlignment(JTextField.CENTER);
+
         rankingButton.setHorizontalAlignment(JButton.CENTER);
         rankingButton.setForeground(Color.white);
         rankingButton.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
@@ -211,26 +220,35 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
         gbcScores.insets = new Insets(0,10,0,10);
         gbcScores.fill = GridBagConstraints.HORIZONTAL;
 
+        gbcTimePartie.weightx=1;
+        gbcTimePartie.insets = new Insets(0,10,0,10);
+        gbcTimePartie.fill = GridBagConstraints.HORIZONTAL;
+
 
         titleNamePanel.setLayout(grid);
         defaultScorePanel.setLayout(grid);
+        panelTime.setLayout(grid);
         pointsPanel.setLayout(grid);
 
         titleNamePanel.add(title);
         titleNamePanel.setOpaque(false);
         defaultScorePanel.add(initialScore);
         defaultScorePanel.setOpaque(false);
+        panelTime.add(gameTime);
+        panelTime.setOpaque(false);
         pointsPanel.add(rankingButton);
         pointsPanel.setOpaque(false);
 
         infoPanel.setLayout(gridInfo);
         infoPanel.add(titleNamePanel,gbcTitle);
         infoPanel.add(defaultScorePanel,gbcScores);
+        infoPanel.add(panelTime,gbcTimePartie);
         infoPanel.add(pointsPanel,gbcScores);
         infoPanel.setOpaque(false);
 
         titleNamePanel.setBorder(BorderFactory.createLineBorder(Color.black,2));
         defaultScorePanel.setBorder(BorderFactory.createLineBorder(Color.black,2));
+        panelTime.setBorder(BorderFactory.createLineBorder(Color.black,2));
 
 
         // Boutons
@@ -329,6 +347,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
                 INSTANCE.title.setText(game.getTitre());
                 INSTANCE.initialScore.setText(String.valueOf(game.getScore()));
                 INSTANCE.winMessage.setText(game.getEndMessage());
+                INSTANCE.gameTime.setText(String.valueOf(game.getTimer()));
 
                 INSTANCE.title.setForeground(Color.black);
                 INSTANCE.title.setFont(INSTANCE.title.getFont().deriveFont(Font.PLAIN));
@@ -822,7 +841,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
                 System.out.println("Le score n'est pas un entier");
             }
             int idUser = Main.idAdmin;
-            int timer = 0;
+            int timer = Integer.parseInt(gameTime.getText());
             boolean ready = true;
             String endMessage = winMessage.getText();
             if(game!=null){
@@ -976,6 +995,13 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
                 winMessage.setFont(winMessage.getFont().deriveFont(Font.PLAIN));
             }
         }
+        else if (e.getSource()==gameTime){
+            if(gameTime.getText().equals("Durée en min")) {
+                gameTime.setText("");
+                gameTime.setForeground(Color.black);
+                gameTime.setFont(gameTime.getFont().deriveFont(Font.PLAIN));
+            }
+        }
     }
 
     @Override
@@ -999,6 +1025,13 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
                 winMessage.setText("Fin de l'histoire");
                 winMessage.setForeground(Color.gray);
                 winMessage.setFont(winMessage.getFont().deriveFont(Font.ITALIC));
+            }
+        }
+        else if (e.getSource()==gameTime){
+            if(gameTime.getText().equals("")) {
+                gameTime.setText("Durée en min");
+                gameTime.setForeground(Color.gray);
+                gameTime.setFont(gameTime.getFont().deriveFont(Font.ITALIC));
             }
         }
     }
