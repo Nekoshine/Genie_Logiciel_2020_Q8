@@ -63,6 +63,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
     private Timer timer;
 
     private int countdownvalue = 1200;
+    private int initialCountDownValue = 1200;
     private int enigmatimevalue = 0;
 
     private Room room;
@@ -383,6 +384,9 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
                     if(Client.envoieFinPartie(DBUser.getUser(room.getUserInside()).getLogin(),room)){
                         frame.connectionMenuDisplay(frame);
                     }
+                    if(room.getCompetitive()){
+                        DBScore.insertScore(new Score(1,room.getGame().getId(),room.getUserInside(),0));
+                    }
                     frame.defeatscreenDisplay(frame);
                 }
             }
@@ -536,7 +540,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
         }
 
         else if (event.getSource() == confirmButton) {
-            if(!answerTextField.getText().isEmpty()){
+            if(! (answerTextField.getText().isEmpty() || answerTextField.getText().equals("Réponse à l'énigme"))){
             Client.sendMyAnswer(answerTextField.getText(), idUser);
             String answer = removeAccents(answerTextField.getText().toLowerCase());
             String[] possibility = allEnigmas.getEnigma(enigmalistflag).getAnswers1(); //reponse séparé par '/'
@@ -645,7 +649,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
                     countdowngame.stop();
                     Score score = new Score(-1, game.getId(), idUser, 0);
                     System.out.println("titre du jeu : " + game.getTitre());
-                    score.calculScore(room.getGame().getScore(), countdownvalue, nbErreur);
+                    score.calculScore(room.getGame().getScore(), initialCountDownValue-countdownvalue, nbErreur);
 
                     String message = game.getEndMessage();
                     JTextArea engMessage = new JTextArea(message);

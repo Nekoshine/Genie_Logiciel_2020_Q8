@@ -481,10 +481,6 @@ public class PlayerManagement extends JPanel implements ActionListener,MouseList
 
                 if (countdownvalue == 0) {
                     countdownGame.stop();
-                    if(Client.envoieFinPartie(DBUser.getUser(room.getUserInside()).getLogin(),room)){
-                        frame.connectionMenuDisplay(frame);
-                    }
-                    frame.defeatscreenDisplay(frame);
                 }
             }
         };
@@ -547,52 +543,51 @@ public class PlayerManagement extends JPanel implements ActionListener,MouseList
             while (true) {
                 boolean find = false;
                 String reponse = Admin.recepAnswerJoueur(room.getUserInside());
-                System.out.println("coucouc c'est la reponse "+reponse);
-                String reponseSansAccent = removeAccents(reponse.toLowerCase());
-                System.out.println("coucou c'est la reponseSansAccent "+reponseSansAccent);
-                String answer = answers.getText().substring(21);
-                String[] possibility = answer.split(" / ");
+                if(reponse!=null) {
+                    System.out.println("coucouc c'est la reponse " + reponse);
+                    String reponseSansAccent = removeAccents(reponse.toLowerCase());
+                    System.out.println("coucou c'est la reponseSansAccent " + reponseSansAccent);
+                    String answer = answers.getText().substring(21);
+                    String[] possibility = answer.split(" / ");
 
-                for(int i=0;i<possibility.length;i++){
-                    System.out.println("Réponse1 : "+possibility[i]);
-                    if (reponseSansAccent.equals(removeAccents(possibility[i]).toLowerCase())) {
-                        find = true;
-                        break;
-                    }
-                }
-                if(!find){
-                    possibility = answer.split("/");
-
-                    for(int i=0;i<possibility.length;i++){
-                        System.out.println("Réponse2 : "+possibility[i]);
+                    for (int i = 0; i < possibility.length; i++) {
+                        System.out.println("Réponse1 : " + possibility[i]);
                         if (reponseSansAccent.equals(removeAccents(possibility[i]).toLowerCase())) {
                             find = true;
                             break;
                         }
                     }
-                }
-                System.out.println("j'ai "+find+" la reponse");
-                ArrayList<String> tab = Main.answers.get(room.getUserInside());
+                    if (!find) {
+                        possibility = answer.split("/");
 
-                if(tab==null){
-                    tab= new ArrayList<>();
-                }
-
-                if(find){
-                    Main.answers.remove(room.getUserInside());
-                    if (frame.getContentPane() instanceof PlayerManagement) {
-                        frame.playerManagementDisplay(frame, room, gameNb, riddleNb + 1, false, false, false);
+                        for (int i = 0; i < possibility.length; i++) {
+                            System.out.println("Réponse2 : " + possibility[i]);
+                            if (reponseSansAccent.equals(removeAccents(possibility[i]).toLowerCase())) {
+                                find = true;
+                                break;
+                            }
+                        }
                     }
-                    else {
-                        frame.playerManagement = new PlayerManagement(frame, room, gameNb, riddleNb + 1, false, false, false);
-                    }
-                    proposition.setText("Réponses tentées jusqu'ici : \n");
-                }
-                else {
-                    tab.add(reponse);
-                    proposition.append("\n" + reponse);
-                }
+                    System.out.println("j'ai " + find + " la reponse");
+                    ArrayList<String> tab = Main.answers.get(room.getUserInside());
 
+                    if (tab == null) {
+                        tab = new ArrayList<>();
+                    }
+
+                    if (find) {
+                        Main.answers.remove(room.getUserInside());
+                        if (frame.getContentPane() instanceof PlayerManagement) {
+                            frame.playerManagementDisplay(frame, room, gameNb, riddleNb + 1, false, false, false);
+                        } else {
+                            frame.playerManagement = new PlayerManagement(frame, room, gameNb, riddleNb + 1, false, false, false);
+                        }
+                        proposition.setText("Réponses tentées jusqu'ici : \n");
+                        Main.answers.put(room.getUserInside(),tab);
+                    } else {
+                        proposition.append("\n" + reponse);
+                    }
+                }
 
             }
         };

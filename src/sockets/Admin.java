@@ -21,7 +21,7 @@ public class Admin {
     */
     public static void setServerAdmin(int idAdmin){
         try{
-            ServerSocket serverSocket = new ServerSocket(1096);
+            ServerSocket serverSocket = new ServerSocket(8418);
             Socket socket = serverSocket.accept();
 
             ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
@@ -75,12 +75,12 @@ public class Admin {
         try{
         if(message != null ){
 
-            socket = new Socket(host.get(idUser),idUser+5201);
+            socket = new Socket(host.get(idUser),idUser+8809);
 
             ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
             out.writeObject(message);
         }else{
-            socket = new Socket(host.get(idUser),idUser+5201);
+            socket = new Socket(host.get(idUser),idUser+8809);
             ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
             out.writeObject(idIndice);
         }
@@ -97,7 +97,7 @@ public class Admin {
         ServerSocket s = null;
         String msg = null;
         try {
-            s = new ServerSocket(49153+idUser);
+            s = new ServerSocket(11176+idUser);
             Socket socket = s.accept();
 
             ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
@@ -128,7 +128,7 @@ public class Admin {
         try{
             for (HashMap.Entry mapentry : host.entrySet()) {
                 int idUser = (int)mapentry.getKey();
-                Socket socket = new Socket((String) mapentry.getValue(), 1629+idUser);
+                Socket socket = new Socket((String) mapentry.getValue(), 10163+idUser);
                 ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
                 out.writeObject(iAdmin);
                 socket.close();
@@ -143,7 +143,7 @@ public class Admin {
         int riddleNb=1;
         try {
             System.out.println("je recupère l'avancement du joueur : "+idUser);
-            Socket socket =new Socket(host.get(idUser),49553+idUser);
+            Socket socket =new Socket(host.get(idUser),10288+idUser);
             ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
             Object oserver =  in.readObject();
             socket.close();
@@ -165,7 +165,7 @@ public class Admin {
 
     public static void acceptFin() {
         try {
-            ServerSocket serverSocket = new ServerSocket(2530);
+            ServerSocket serverSocket = new ServerSocket(11210);
             Socket socket = serverSocket.accept();
 
             ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
@@ -196,7 +196,7 @@ public class Admin {
         Socket socket;
         int timer =0;
         try {
-            socket = new Socket(host.get(idUser),idUser+51000);
+            socket = new Socket(host.get(idUser),idUser+10811);
 
             ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
             out.writeObject(true);

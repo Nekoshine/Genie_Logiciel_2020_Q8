@@ -26,7 +26,7 @@ public class Client {
     public static boolean connexionRoom(int idUser, Room salle){
         boolean reponse = false;
         try{
-            Socket socket = new Socket(host,1096);
+            Socket socket = new Socket(host,8418);
             ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
             DemandeConnexion signal = new DemandeConnexion(idUser,false, salle,null);
@@ -60,7 +60,7 @@ public class Client {
         int idAdmin=0 ;
         try{
 
-            Socket socket = new Socket(host,1096);
+            Socket socket = new Socket(host,8418);
             System.out.println("Adresse ip de l'admin " + host);
             ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
@@ -101,7 +101,7 @@ public class Client {
         Object oserver= null;
         try{
             System.out.println(idUser);
-            ServerSocket serverSocket = new ServerSocket(idUser+5201);
+            ServerSocket serverSocket = new ServerSocket(idUser+8809);
             Socket socket = serverSocket.accept();
 
             ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
@@ -124,7 +124,7 @@ public class Client {
     public static RoomList refreshRoomAccess(int idUser){
         Object obj= null;
         try{
-            ServerSocket s = new ServerSocket(1629+idUser);
+            ServerSocket s = new ServerSocket(10163+idUser);
             Socket socket = s.accept();
             ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
             obj =  in.readObject();
@@ -143,11 +143,10 @@ public class Client {
     public static boolean envoieFinPartie(String login,Room salle) {
 
         boolean accept=false;
-
         if (login != null && salle != null) {
             try {
 
-            Socket socket = new Socket(host, 2530);
+            Socket socket = new Socket(host, 11210);
             System.out.println("Adresse ip de l'admin " + host);
             ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
@@ -182,7 +181,7 @@ public class Client {
         ServerSocket serverSocket;
         try {
             System.out.println("Je suis a l'enigme : "+riddleNb);
-            serverSocket = new ServerSocket(49553+idUser);
+            serverSocket = new ServerSocket(10288+idUser);
             Socket socket = serverSocket.accept();
             ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
             out.writeObject(riddleNb);
@@ -203,7 +202,7 @@ public class Client {
     public static void sendMyAnswer(String answer, int idUser) {
         Socket socket;
         try {
-            socket = new Socket(host,idUser+49153);
+            socket = new Socket(host,idUser+11176);
 
             ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
             out.writeObject(answer);
@@ -219,7 +218,7 @@ public class Client {
     public static void sendTimer(int timer,int idUser){
 
         try {
-            ServerSocket serverSocket = new ServerSocket(51000+idUser);
+            ServerSocket serverSocket = new ServerSocket(10811+idUser);
             Socket socket = serverSocket.accept();
 
             ObjectInputStream in = new ObjectInputStream(socket.getInputStream());

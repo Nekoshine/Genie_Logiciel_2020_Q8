@@ -50,8 +50,7 @@ public final class Score{
        * @param nbErreur le nombre d'erreur du joueur
        */
       public void calculScore(int scoreInit, int timer, int nbErreur){
-          int deltaTime = 1200-timer;
-          int newScore = scoreInit - deltaTime - 100*nbErreur;
+          int newScore = scoreInit - timer - 100*nbErreur;
           if(newScore < 0){
             newScore = 0;
           }
