@@ -62,7 +62,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
     private final Timer timeonenigma;
     private Timer timer;
 
-    private int countdownvalue = 1200;
+    private int countdownvalue = 3600;
     private int enigmatimevalue = 0;
 
     private Room room;
@@ -108,6 +108,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
         }
 
         room = Main.ListRoom.findByID(idRoom);
+        countdownvalue = partiechoisie.getTimer()*60;
 
 
         //recuperaion du timer de l'indice 1 et des autres si indices présents
