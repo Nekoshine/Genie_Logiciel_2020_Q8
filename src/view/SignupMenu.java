@@ -186,7 +186,7 @@ public class SignupMenu extends JPanel implements ActionListener, MouseListener,
     else if(!Pattern.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\\p{Punct}).*$", mdpinput)){
       Toolkit.getDefaultToolkit().beep();
       JOptionPane.showMessageDialog(frame, "Pour votre sécurité, votre mot de passe doit contenir au moins 1 majuscule, 1 minuscule, 1 chiffre, 1 caractère spécial\n" +
-              "Les caractère spéciaux sont : ! \" # $ % & ' ( ) * + , - . / ; < = > ? @ [ \\ ] ^ _ ` { | } ~", "Attention", JOptionPane.WARNING_MESSAGE);
+              "Les caractères spéciaux sont : ! \" # $ % & ' ( ) * + , - . / ; < = > ? @ [ \\ ] ^ _ ` { | } ~", "Attention", JOptionPane.WARNING_MESSAGE);
     }
     else if(cleinmput.isEmpty()){
       if (DBUser.insertUser(idinput, mdpinput,false)) {

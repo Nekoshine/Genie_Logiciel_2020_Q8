@@ -555,76 +555,11 @@ public class PlayerManagement extends JPanel implements ActionListener,MouseList
         ta.start();
     }
 
-  /*  public static PlayerManagement getInstance(GlobalFrame frame,Room room,int gameNb, int riddleNb, boolean boolHint1Revealed, boolean boolHint2Revealed,
-                                               boolean boolHint3Revealed){
-        //Le "Double-Checked Singleton"/"Singleton doublement vérifié" permet
-        //d'éviter un appel coûteux à synchronized,
-        //une fois que l'instanciation est faite.
-        if (INSTANCE == null) {
-            // Le mot-clé synchronized sur ce bloc empêche toute instanciation
-            // multiple même par différents "threads".
-            // Il est TRES important.
-            synchronized(INSTANCE) {
-                if (INSTANCE == null) {
-                    INSTANCE = new PlayerManagement(frame,room,gameNb, riddleNb, boolHint1Revealed, boolHint2Revealed,
-                    boolHint3Revealed);
-                }
-            }
-        }
-        else {
-            INSTANCE.frame=frame;
-            INSTANCE.boolHint1 = boolHint1Revealed;
-            INSTANCE.boolHint2 = boolHint2Revealed;
-            INSTANCE.boolHint3 = boolHint3Revealed;
-
-            INSTANCE.title.setText(DBGame.getTitleGame(gameNb));
-            if(room!=null) {
-                System.out.println("id de ladmin "+Main.idAdmin);
-                System.out.println("room id"+room.getId());
-                INSTANCE.room = DBRoom.getRooms(Main.idAdmin).findByID(room.getId());
-            }
-            INSTANCE.currentRiddles = DBEnigma.getEnigmas(gameNb);
-            INSTANCE.currentStory.setText((INSTANCE.currentRiddles.getEnigma(riddleNb - 1)).getText());
-            INSTANCE.answers.setText((INSTANCE.currentRiddles.getEnigma(riddleNb -1)).getAnswer());
-
-            if(INSTANCE.boolHint1){
-                INSTANCE.buttonHint1.setText("Indice 1 déjà affiché");
-                INSTANCE.buttonHint1.setBackground(Color.lightGray);
-            }DBEnigma.getEnigmas(room.getGame().getId()).getEnigma(enigmalistflag).getClue1()
-            else{
-                INSTANCE.buttonHint1.setText("Afficher l'indice 1");
-                INSTANCE.buttonHint1.setBackground(Color.white);
-            }
-            if(INSTANCE.boolHint2){
-                INSTANCE.buttonHint2.setText("Indice 2 déjà affiché");
-                INSTANCE.buttonHint2.setBackground(Color.lightGray);
-            }
-            else{
-                INSTANCE.buttonHint2.setText("Afficher l'indice 2");
-                INSTANCE.buttonHint2.setBackground(Color.white);
-            }
-            if(INSTANCE.boolHint3){
-                INSTANCE.buttonHint3.setText("Indice 3 déjà affiché");
-                INSTANCE.buttonHint3.setBackground(Color.lightGray);
-            }
-            else{
-                INSTANCE.buttonHint3.setText("Afficher l'indice 3");
-                INSTANCE.buttonHint3.setBackground(Color.white);
-            }
-            INSTANCE.helpMessageGM.setText("");
-        }
-
-
-
-        return INSTANCE;
-    }*/
-
     /**
      * Création ou mise à jour des boutons
      * @param i : indice du bouton
      * @return Retourne le bouton après modification
      */
-
     private JButton hintButton(int i){
         JButton button = null;
         boolean revealed = false;
