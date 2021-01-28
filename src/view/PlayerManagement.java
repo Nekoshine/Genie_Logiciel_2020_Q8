@@ -23,6 +23,9 @@ public class PlayerManagement extends JPanel implements ActionListener,MouseList
     private JPanel answersPanIn = new JPanel();
     private JPanelImage mainPanel;
     private JPanel panelTitre;
+    private JPanel currentStoryPan;
+
+    private JScrollPane scrollCurrentStoryPanIn;
 
     private JButton helpButtonGM;
     private JButton buttonReturn;
@@ -143,23 +146,20 @@ public class PlayerManagement extends JPanel implements ActionListener,MouseList
         currentStory = new JTextArea();
         currentStory.setLineWrap(true);
         currentStory.setWrapStyleWord(true);
+        currentStory.setText((currentRiddles.getEnigma(riddleNb - 1)).getQuestion());
         currentStory.setFont(FontPerso.courierNew);
         currentStory.setEditable(false);
-        currentStory.setPreferredSize(new Dimension(width-20,(height-90)*50/100-10));
-        currentStory.setText((currentRiddles.getEnigma(riddleNb - 1)).getQuestion());
-        currentStory.setBorder(BorderFactory.createEmptyBorder(0,0,0,20));
 
-
-        JScrollPane scrollCurrentStoryPanIn = new JScrollPane(currentStoryPanIn,
-                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollCurrentStoryPanIn = new JScrollPane(currentStory,
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         //scrollCurrentStoryPanIn.setPreferredSize(new Dimension(width-20,(height-90)*50/100));
         scrollCurrentStoryPanIn.getVerticalScrollBar().setUnitIncrement(10);
-        currentStoryPanIn.add(currentStory);
-        scrollCurrentStoryPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
-        currentStoryPanIn.setBackground(Color.white);
-        JPanel currentStoryPan = new JPanel();
-        currentStoryPan.setBackground(ColorPerso.darkGray);
-        currentStoryPan.setLayout(new FlowLayout(1));
+        scrollCurrentStoryPanIn.setBorder(BorderFactory.createEmptyBorder());
+
+        currentStoryPan = new JPanel();
+        currentStoryPan.setLayout(new GridLayout(1,1));
+        currentStoryPan.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+        currentStoryPan.setPreferredSize(new Dimension((int)((float) width*0.95),(int)((float) height*0.25)));
         currentStoryPan.add(scrollCurrentStoryPanIn);
         //currentStoryPan.setBorder(BorderFactory.createEmptyBorder(0,0,20,0));
 
@@ -476,8 +476,8 @@ public class PlayerManagement extends JPanel implements ActionListener,MouseList
 
         gbcglobal.weighty = 6;
         gbcglobal.gridy = 1;
-        gbcglobal.insets = new Insets(0,20,0,20);
-        mainPanel.add(scrollCurrentStoryPanIn, gbcglobal);
+        gbcglobal.insets = new Insets(0,10,0,10);
+        mainPanel.add(currentStoryPan, gbcglobal);
 
         gbcglobal.weighty = 3;
         gbcglobal.weightx = 1;
@@ -553,6 +553,8 @@ public class PlayerManagement extends JPanel implements ActionListener,MouseList
         };
         Thread ta = new Thread(runnable);
         ta.start();
+        frame.revalidate();
+        frame.repaint();
     }
 
   /*  public static PlayerManagement getInstance(GlobalFrame frame,Room room,int gameNb, int riddleNb, boolean boolHint1Revealed, boolean boolHint2Revealed,
