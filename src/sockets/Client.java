@@ -5,9 +5,11 @@ import launcher.Main;
 import model.Room;
 import model.RoomList;
 
+import javax.naming.ldap.SortKey;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
+import java.io.OutputStream;
 import java.net.*;
 
 
@@ -211,6 +213,27 @@ public class Client {
             System.out.println("sendMyAnswer UnknownHostException : " + e.getMessage());
         } catch (IOException e) {
             System.out.println("sendMyAnswer IOException : " + e.getMessage());
+        }
+    }
+
+    public static void sendTimer(int timer,int idUser){
+
+        try {
+            ServerSocket serverSocket = new ServerSocket(51000+idUser);
+            Socket socket = serverSocket.accept();
+
+            ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+            Object oserver = in.readObject();
+
+            if (oserver instanceof Boolean){
+                ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+                out.writeObject(timer);
+            }
+
+            socket.close();
+            serverSocket.close();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 

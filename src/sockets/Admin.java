@@ -191,4 +191,28 @@ public class Admin {
             System.out.println("acceptFin InterruptedException  : " + e.getMessage());
         }
     }
+
+    public static int recupTimer(int idUser){
+        Socket socket;
+        int timer =0;
+        try {
+            socket = new Socket(host.get(idUser),idUser+51000);
+
+            ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+            out.writeObject(true);
+
+            ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+            Object oserver =  in.readObject();
+
+            if (oserver instanceof Integer){
+                timer = (int) oserver;
+            }
+
+            socket.close();
+
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return timer;
+    }
 }

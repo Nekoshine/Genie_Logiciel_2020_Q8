@@ -1,5 +1,6 @@
 package view;
 
+import database.DBUser;
 import sockets.Admin;
 import database.DBEnigma;
 import database.DBGame;
@@ -7,6 +8,7 @@ import database.DBRoom;
 import launcher.Main;
 import model.EnigmaList;
 import model.Room;
+import sockets.Client;
 import view.style.ColorPerso;
 import view.style.FontPerso;
 
@@ -23,6 +25,9 @@ public class PlayerManagement extends JPanel implements ActionListener,MouseList
     private JPanel answersPanIn = new JPanel();
     private JPanelImage mainPanel;
     private JPanel panelTitre;
+    private JPanel currentStoryPan;
+
+    private JScrollPane scrollCurrentStoryPanIn;
 
     private JButton helpButtonGM;
     private JButton buttonReturn;
@@ -35,6 +40,9 @@ public class PlayerManagement extends JPanel implements ActionListener,MouseList
     private boolean boolHint2;
     private boolean boolHint3;
     private int riddleNb;
+
+    private Timer countdownGame;
+    private int countdownvalue;
 
     private JTextArea currentStory;
     private JTextArea proposition;
@@ -64,6 +72,8 @@ public class PlayerManagement extends JPanel implements ActionListener,MouseList
         this.boolHint3 = boolHint3Revealed;
         this.room = DBRoom.getRooms(Main.idAdmin).findByID(room.getId());
         this.riddleNb=riddleNb;
+        this.countdownvalue = Admin.recupTimer(room.getUserInside());
+        this.countdownvalue = Admin.recupTimer(room.getUserInside());
 
         int width = (int) frame.windowSize.getWidth();
         int height = (int) frame.windowSize.getHeight();
@@ -126,7 +136,7 @@ public class PlayerManagement extends JPanel implements ActionListener,MouseList
         timerPanIn.setOpaque(false);
         timerPanIn.setPreferredSize(new Dimension((int)((width-40)*0.3),(int) ((height-90)*0.06)));
         timerPanIn.setBackground(Color.LIGHT_GRAY);
-        //timerPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+        timer.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         timerPanIn.add(timer);
 
         JPanel timerPan = new JPanel();
@@ -143,23 +153,20 @@ public class PlayerManagement extends JPanel implements ActionListener,MouseList
         currentStory = new JTextArea();
         currentStory.setLineWrap(true);
         currentStory.setWrapStyleWord(true);
+        currentStory.setText((currentRiddles.getEnigma(riddleNb - 1)).getQuestion());
         currentStory.setFont(FontPerso.courierNew);
         currentStory.setEditable(false);
-        currentStory.setPreferredSize(new Dimension(width-20,(height-90)*50/100-10));
-        currentStory.setText((currentRiddles.getEnigma(riddleNb - 1)).getQuestion());
-        currentStory.setBorder(BorderFactory.createEmptyBorder(0,0,0,20));
 
-
-        JScrollPane scrollCurrentStoryPanIn = new JScrollPane(currentStoryPanIn,
-                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scrollCurrentStoryPanIn = new JScrollPane(currentStory,
+                ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         //scrollCurrentStoryPanIn.setPreferredSize(new Dimension(width-20,(height-90)*50/100));
         scrollCurrentStoryPanIn.getVerticalScrollBar().setUnitIncrement(10);
-        currentStoryPanIn.add(currentStory);
-        scrollCurrentStoryPanIn.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
-        currentStoryPanIn.setBackground(Color.white);
-        JPanel currentStoryPan = new JPanel();
-        currentStoryPan.setBackground(ColorPerso.darkGray);
-        currentStoryPan.setLayout(new FlowLayout(1));
+        scrollCurrentStoryPanIn.setBorder(BorderFactory.createEmptyBorder());
+
+        currentStoryPan = new JPanel();
+        currentStoryPan.setLayout(new GridLayout(1,1));
+        currentStoryPan.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
+        currentStoryPan.setPreferredSize(new Dimension((int)((float) width*0.95),(int)((float) height*0.25)));
         currentStoryPan.add(scrollCurrentStoryPanIn);
         //currentStoryPan.setBorder(BorderFactory.createEmptyBorder(0,0,20,0));
 
@@ -450,6 +457,43 @@ public class PlayerManagement extends JPanel implements ActionListener,MouseList
         helpButtonGM.addMouseListener(this);
         buttonReturn.addMouseListener(this);
 
+        //Timer
+
+
+        ActionListener countdowngameTask = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e1) {
+                int seconde = 0;
+                int minute = 0;
+
+                countdownvalue--;
+                seconde = countdownvalue % 60;
+                minute = (countdownvalue - seconde) / 60;
+                if (seconde < 10) {
+                    timer.setText(minute + ":0" + seconde);/* rafraichir le label */
+                    timer.setForeground(Color.RED);
+                } else {
+                    timer.setText(minute + ":" + seconde);/* rafraichir le label */
+                    timer.setForeground(Color.RED);
+                }
+                frame.revalidate();
+                frame.repaint();
+
+                if (countdownvalue == 0) {
+                    countdownGame.stop();
+                    if(Client.envoieFinPartie(DBUser.getUser(room.getUserInside()).getLogin(),room)){
+                        frame.connectionMenuDisplay(frame);
+                    }
+                    frame.defeatscreenDisplay(frame);
+                }
+            }
+        };
+        countdownGame = new Timer(1000, countdowngameTask);
+
+
+
+
+
         this.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
@@ -464,6 +508,7 @@ public class PlayerManagement extends JPanel implements ActionListener,MouseList
         this.add(buttonReturnPanIn,BorderLayout.SOUTH);
         this.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
         this.setBackground(ColorPerso.darkGray);
+        countdownGame.start();
 
         GridBagConstraints gbcglobal = new GridBagConstraints();
 
@@ -476,8 +521,8 @@ public class PlayerManagement extends JPanel implements ActionListener,MouseList
 
         gbcglobal.weighty = 6;
         gbcglobal.gridy = 1;
-        gbcglobal.insets = new Insets(0,20,0,20);
-        mainPanel.add(scrollCurrentStoryPanIn, gbcglobal);
+        gbcglobal.insets = new Insets(0,10,0,10);
+        mainPanel.add(currentStoryPan, gbcglobal);
 
         gbcglobal.weighty = 3;
         gbcglobal.weightx = 1;
@@ -553,6 +598,8 @@ public class PlayerManagement extends JPanel implements ActionListener,MouseList
         };
         Thread ta = new Thread(runnable);
         ta.start();
+        frame.revalidate();
+        frame.repaint();
     }
 
     /**
@@ -608,16 +655,21 @@ public class PlayerManagement extends JPanel implements ActionListener,MouseList
             buttonHint1.setText("Afficher indice 1");
             Admin.envoiAideJoueur(null,1,room.getUserInside());
             buttonHint1.setBackground(Color.DARK_GRAY);
+            buttonHint1.setEnabled(false);
         }else if(e.getSource()==buttonHint2){
             boolHint2=true;
             buttonHint2.setText("Afficher indice 2 ");
             Admin.envoiAideJoueur(null,2,room.getUserInside());
             buttonHint2.setBackground(Color.DARK_GRAY);
+            buttonHint2.setEnabled(false);
+
         }else if(e.getSource()==buttonHint3){
             boolHint3=true;
             buttonHint3.setText("Afficher indice 3 ");
             Admin.envoiAideJoueur(null,3,room.getUserInside());
             buttonHint3.setBackground(Color.DARK_GRAY);
+            buttonHint3.setEnabled(false);
+
         }
     }
 
@@ -666,16 +718,22 @@ public class PlayerManagement extends JPanel implements ActionListener,MouseList
     @Override
     public void mouseEntered(MouseEvent e) {
         if (e.getSource() == buttonHint1){
-            buttonHint1.setBackground(ColorPerso.grisClair);
-            buttonHint1.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+            if (buttonHint1.getBackground() != Color.DARK_GRAY) {
+                buttonHint1.setBackground(ColorPerso.grisClair);
+                buttonHint1.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+            }
         }
         else if (e.getSource() == buttonHint2){
-            buttonHint2.setBackground(ColorPerso.grisClair);
-            buttonHint2.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+            if (buttonHint1.getBackground() != Color.DARK_GRAY) {
+                buttonHint2.setBackground(ColorPerso.grisClair);
+                buttonHint2.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+            }
         }
         else if (e.getSource() == buttonHint3){
-            buttonHint3.setBackground(ColorPerso.grisClair);
-            buttonHint3.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+            if (buttonHint1.getBackground() != Color.DARK_GRAY) {
+                buttonHint3.setBackground(ColorPerso.grisClair);
+                buttonHint3.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+            }
         }
         else if (e.getSource()==buttonReturn){
             buttonReturn.setBackground(ColorPerso.rougeHoover);
@@ -690,16 +748,22 @@ public class PlayerManagement extends JPanel implements ActionListener,MouseList
     @Override
     public void mouseExited(MouseEvent e) {
         if (e.getSource() == buttonHint1){
-            buttonHint1.setBackground(ColorPerso.white);
-            buttonHint1.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+            if (buttonHint1.getBackground() != Color.DARK_GRAY) {
+                buttonHint1.setBackground(ColorPerso.white);
+                buttonHint1.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+            }
         }
         else if (e.getSource() == buttonHint2){
-            buttonHint2.setBackground(ColorPerso.white);
-            buttonHint2.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+            if (buttonHint1.getBackground() != Color.DARK_GRAY) {
+                buttonHint2.setBackground(ColorPerso.white);
+                buttonHint2.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+            }
         }
         else if (e.getSource() == buttonHint3){
-            buttonHint3.setBackground(ColorPerso.white);
-            buttonHint3.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+            if (buttonHint1.getBackground() != Color.DARK_GRAY) {
+                buttonHint3.setBackground(ColorPerso.white);
+                buttonHint3.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+            }
         }
         else if (e.getSource()==buttonReturn){
             buttonReturn.setBackground(ColorPerso.rouge);

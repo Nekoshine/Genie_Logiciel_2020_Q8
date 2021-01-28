@@ -175,8 +175,8 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
         currentEnigmaTextArea = new JTextArea(allEnigmas.getEnigma(enigmalistflag).getQuestion());
         currentEnigmaTextArea.setLineWrap(true);
         currentEnigmaTextArea.setWrapStyleWord(true);
-        currentEnigmaTextArea.setEditable(false);
         currentEnigmaTextArea.setFont(FontPerso.courierNew);
+        currentEnigmaTextArea.setEditable(false);
         currentEnigmaScroll = new JScrollPane(currentEnigmaTextArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         currentEnigmaScroll.getVerticalScrollBar().setUnitIncrement(20);
         currentEnigmaScroll.setBorder(BorderFactory.createEmptyBorder());
@@ -468,6 +468,17 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
         };
         Thread ta = new Thread(runnabla);
         ta.start();
+
+
+
+        Runnable timerRunnable = () -> {
+            while (true) {
+                Client.sendTimer(countdownvalue,idUser);
+            }
+        };
+        Thread taTimer = new Thread(timerRunnable);
+        taTimer.start();
+
 
     }
 

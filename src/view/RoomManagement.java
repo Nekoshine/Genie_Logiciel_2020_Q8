@@ -289,9 +289,9 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
             @Override
             public void actionPerformed(ActionEvent e) {
                 int riddleNB = Admin.getRiddleNb(salle.getUserInside());
+                riddleNB = Admin.getRiddleNb(salle.getUserInside());
                 System.out.println("le joueur me dit qu'il est a l'enigme "+riddleNB);
                 frame.playerManagementDisplay(frame,salle,salle.getGame().getId(), riddleNB,false,false,false);
-
             }
         });
 
