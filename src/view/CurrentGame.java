@@ -109,7 +109,8 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
         }
 
         room = Main.ListRoom.findByID(idRoom);
-
+        countdownvalue = partiechoisie.getTimer()*60;
+        initialCountDownValue=countdownvalue;
 
         //recuperaion du timer de l'indice 1 et des autres si indices présents
 
