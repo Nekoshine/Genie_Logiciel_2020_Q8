@@ -55,13 +55,14 @@ public class GameManagement extends JPanel implements ActionListener, MouseListe
         this.ListGame= DBGame.getGames(Main.idAdmin);
 
         /* Déclaration JPanel - JScrollPane */
-        listPanel = new JPanel();
-        gamePanel = new JPanel();
+        listPanel = new JPanelImage(Main.class.getResourceAsStream("/image/fondGestion.jpg"),frame.windowSize);
+        gamePanel = new JPanelImage(Main.class.getResourceAsStream("/image/fondGestion.jpg"),frame.windowSize);
         JPanel titlePanel = new JPanel();
         JPanel returnPanel = new JPanel();
         newButtonPanel = new JPanel();
         newButtonPanel.setBackground(ColorPerso.grisClair);
         newButtonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        newButtonPanel.setOpaque(false);
         JScrollPane scrollPane = new JScrollPane(gamePanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
         scrollPane.getVerticalScrollBar().setUnitIncrement(10);

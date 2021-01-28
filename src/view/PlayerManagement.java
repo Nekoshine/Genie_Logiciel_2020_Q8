@@ -294,6 +294,7 @@ public class PlayerManagement extends JPanel implements ActionListener,MouseList
 
         JTextArea hint1Text = new JTextArea();
         hint1Text.setLineWrap(true);
+        hint1Text.setOpaque(false);
         hint1Text.setWrapStyleWord(true);
         hint1Text.setAlignmentX(SwingConstants.CENTER);
         hint1Text.setAlignmentY(SwingConstants.CENTER);
@@ -319,6 +320,7 @@ public class PlayerManagement extends JPanel implements ActionListener,MouseList
         hint1TextPan.add(scrollHint1TextPan,BorderLayout.CENTER);
 
         JPanel hint1ButtonPan = new JPanel();
+        hint1ButtonPan.setOpaque(false);
         hint1ButtonPan.setLayout(new FlowLayout(1));
         hint1ButtonPan.add(buttonHint1);
         hint1ButtonPan.setBackground(Color.lightGray);
@@ -339,6 +341,7 @@ public class PlayerManagement extends JPanel implements ActionListener,MouseList
         JTextArea hint2Text = new JTextArea();
         hint2Text.setLineWrap(true);
         hint2Text.setWrapStyleWord(true);
+        hint2Text.setOpaque(false);
         hint2Text.setAlignmentX(SwingConstants.CENTER);
         hint2Text.setAlignmentY(SwingConstants.CENTER);
         hint2Text.setBackground(Color.LIGHT_GRAY);
@@ -362,6 +365,7 @@ public class PlayerManagement extends JPanel implements ActionListener,MouseList
         hint2TextPan.add(scrollHint2TextPan,BorderLayout.CENTER);
 
         JPanel hint2ButtonPan = new JPanel();
+        hint2ButtonPan.setOpaque(false);
         hint2ButtonPan.setLayout(new FlowLayout(1));
         hint2ButtonPan.add(buttonHint2);
         hint2ButtonPan.setBackground(Color.lightGray);
@@ -383,6 +387,7 @@ public class PlayerManagement extends JPanel implements ActionListener,MouseList
         hint3Text.setAlignmentX(SwingConstants.CENTER);
         hint3Text.setAlignmentY(SwingConstants.CENTER);
         hint3Text.setWrapStyleWord(true);
+        hint3Text.setOpaque(false);
         hint3Text.setBackground(Color.LIGHT_GRAY);
         hint3Text.setAlignmentX(SwingConstants.CENTER);
         //hint3Text.setColumns(15);
@@ -406,6 +411,7 @@ public class PlayerManagement extends JPanel implements ActionListener,MouseList
 
         JPanel hint3ButtonPan = new JPanel();
         hint3ButtonPan.setLayout(new FlowLayout(1));
+        hint3ButtonPan.setOpaque(false);
         hint3ButtonPan.add(buttonHint3);
         hint3ButtonPan.setBackground(Color.lightGray);
         buttonHint3PanIn.setLayout(new BoxLayout(buttonHint3PanIn, BoxLayout.PAGE_AXIS));
@@ -423,7 +429,7 @@ public class PlayerManagement extends JPanel implements ActionListener,MouseList
         JPanel bottomPan = new JPanel();
         bottomPan.setBackground(ColorPerso.darkGray);
         //bottomPan.setPreferredSize(new Dimension((int) (width-20),(int) ((height)*0.40)));
-        JPanel bottomPanIn = new JPanel();
+        JPanel bottomPanIn = new JPanelImage(Main.class.getResourceAsStream("/image/fondGestion.jpg"),frame.windowSize);
         bottomPanIn.setBackground(Color.LIGHT_GRAY);
         bottomPanIn.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();

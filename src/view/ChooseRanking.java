@@ -3,6 +3,7 @@ package view;
 import database.DBUser;
 import launcher.Main;
 import model.Game;
+import model.GameList;
 import model.RoomList;
 import model.User;
 import view.style.ColorPerso;
@@ -19,7 +20,7 @@ import java.io.InputStream;
 public class ChooseRanking extends JFrame {
 
     private JPanel generalPan;
-    private JPanel mainPanel;
+    private JPanelImage mainPanel;
     private JPanel titlePanel;
 
     private JLabel titleLabel;
@@ -31,17 +32,17 @@ public class ChooseRanking extends JFrame {
 
     /**
      * Interface de choix de jeu pour regarder son classement joueur
-     * @param roomList Liste des salles possédées par l'administrateur
-     * @param user
+     * @param gameList Liste des jeux possédées par l'administrateur
+     * @param user Utilisateur souhaitant voir son classement
      */
 
-    public ChooseRanking(RoomList roomList, User user){
+    public ChooseRanking(GameList gameList, User user){
 
         this.user = user;
 
         BorderLayout mainLayout = new BorderLayout(10,10);
         generalPan = new JPanel();
-        mainPanel = new JPanel();
+        mainPanel = new JPanelImage(Main.class.getResourceAsStream("/image/fondGestion.jpg"),GlobalFrame.windowSize);
         titlePanel = new JPanel();
 
         titleLabel = new JLabel("Choix du jeu");
@@ -80,9 +81,9 @@ public class ChooseRanking extends JFrame {
 
 
 
-        for (int i=0;i< roomList.getSize();i++){
+        for (int i=0;i< gameList.getSize();i++){
 
-            JPanel panel = ajoutJeu(roomList.getRoom(i).getGame(),gbc);
+            JPanel panel = ajoutJeu(gameList.getGame(i),gbc);
             mainPanel.add(panel,gbc);
             mainPanel.revalidate();
             mainPanel.repaint();

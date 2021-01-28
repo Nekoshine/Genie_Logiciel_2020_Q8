@@ -112,15 +112,26 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
         countdownvalue = partiechoisie.getTimer()*60;
         initialCountDownValue=countdownvalue;
 
+        hint1Button = new JButton("Indice n°1");
+        hint2Button = new JButton("Indice n°2");
+        hint3Button = new JButton("Indice n°3");
+
+
+
         //recuperaion du timer de l'indice 1 et des autres si indices présents
 
         timerclue1 = allEnigmas.getEnigma(enigmalistflag).getTimer1();
 
         ishint2present = !(allEnigmas.getEnigma(enigmalistflag).getClue2().isEmpty());
         if(ishint2present){timerclue2 = allEnigmas.getEnigma(enigmalistflag).getTimer2();}
+        else{hint2Button.setBackground(Color.darkGray);}
 
         ishint3present = !(allEnigmas.getEnigma(enigmalistflag).getClue3().isEmpty());
-        if(ishint3present){timerclue3 = allEnigmas.getEnigma(enigmalistflag).getTimer3();}
+
+        if(ishint3present){
+            timerclue3 = allEnigmas.getEnigma(enigmalistflag).getTimer3();
+        }
+        else{hint3Button.setBackground(Color.darkGray);}
 
         // nom de la fenetre
 
@@ -247,7 +258,7 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
 
         // indices
 
-        hint1Button = new JButton("Indice n°1");
+
         hint1Button.setEnabled(false);
         hint1Button.setBackground(Color.GRAY);
         hint1Button.addActionListener(this);
@@ -259,8 +270,9 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
         hintContainer1.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         hintContainer1.add(hint1Button);
 
-        hint2Button = new JButton("Indice n°2");
+
         hint2Button.setEnabled(false);
+        if (ishint2present)
         hint2Button.setBackground(ColorPerso.GRAY);
         hint2Button.addActionListener(this);
         hint2Button.setFont(FontPerso.lato);
@@ -271,8 +283,8 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
         hintContainer2.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         hintContainer2.add(hint2Button);
 
-        hint3Button = new JButton("Indice n°3");
         hint3Button.setEnabled(false);
+        if (ishint3present)
         hint3Button.setBackground(ColorPerso.GRAY);
         hint3Button.addActionListener(this);
         hint3Button.setFont(FontPerso.lato);
@@ -451,10 +463,13 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
                         int indice = (int) help;
                         if (indice == 1) {
                             hint1Button.setEnabled(true);
+                            hint1Button.setForeground(ColorPerso.blue);
                         } else if (indice == 2) {
                             hint2Button.setEnabled(true);
+                            hint2Button.setForeground(ColorPerso.blue);
                         } else if (indice == 3) {
                             hint3Button.setEnabled(true);
+                            hint3Button.setForeground(ColorPerso.blue);
                         }
                     }
                 } catch (ClassCastException e) {

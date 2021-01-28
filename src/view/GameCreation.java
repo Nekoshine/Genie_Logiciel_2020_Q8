@@ -158,12 +158,14 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
 
         newPanel.setLayout(newLayout);
         newPanel.add(buttonNewPanel,BorderLayout.NORTH);
+        newPanel.setOpaque(false);
         newPanel.add(winPanel,BorderLayout.CENTER);
         newPanel.setBorder(BorderFactory.createEmptyBorder(0,0,25,0));
 
         centerPanel.setLayout(centerLayout);
 
         enigmasPanel.setLayout(gridEnigma);
+        enigmasPanel.setOpaque(false);
 
         scrollEnigmas = new JScrollPane(enigmasPanel,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollEnigmas.getVerticalScrollBar().setUnitIncrement(20);
@@ -729,6 +731,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
         hint1Panel.add(hint1);
         hint1Panel.add(time1);
         hint1Panel.setLayout(gridHint);
+        hint1Panel.setOpaque(false);
         time1.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         //hint1Panel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
 
@@ -736,6 +739,7 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
         hint2Panel.add(hint2);
         hint2Panel.add(time2);
         hint2Panel.setLayout(gridHint);
+        hint2Panel.setOpaque(false);
         time2.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         //hint2Panel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
 
@@ -743,10 +747,11 @@ public class GameCreation extends JPanel implements ActionListener, MouseListene
         hint3Panel.add(hint3);
         hint3Panel.add(time3);
         hint3Panel.setLayout(gridHint);
+        hint3Panel.setOpaque(false);
         time3.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
         //hint3Panel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
 
-
+        infoEngimaPanel.setOpaque(false);
         infoEngimaPanel.add(answer);
         infoEngimaPanel.add(hint1Panel);
         infoEngimaPanel.add(hint2Panel);

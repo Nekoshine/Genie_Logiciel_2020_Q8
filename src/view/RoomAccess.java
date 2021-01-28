@@ -22,8 +22,8 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
     private RoomList ListRoom;
 
     /* Panel */
-    private final JPanel listPanel;
-    private final JPanel roomPanel;
+    private final JPanelImage listPanel;
+    private final JPanelImage roomPanel;
 
     /* Boutons */
     private final JButton returnButton;
@@ -49,8 +49,8 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
         ListRoom = roomList;
 
         /* Déclaration JPanel - JScrollPane */
-        listPanel = new JPanel();
-        roomPanel = new JPanel();
+        listPanel = new JPanelImage(Main.class.getResourceAsStream("/image/fondGestion.jpg"),frame.windowSize);
+        roomPanel = new JPanelImage(Main.class.getResourceAsStream("/image/fondGestion.jpg"),frame.windowSize);
         JPanel titlePanel = new JPanel();
         JPanel decoPanel = new JPanel();
         JPanel buttonPanel = new JPanel();
@@ -296,7 +296,7 @@ public class RoomAccess extends JPanel implements ActionListener,MouseListener {
         }
 
         if (e.getSource() == rankingButton){
-            ChooseRanking chooseRanking = new ChooseRanking(ListRoom,user);
+            ChooseRanking chooseRanking = new ChooseRanking(Main.ListGame,user);
         }
 
     }

@@ -2,6 +2,7 @@
 
 package view;
 
+import database.DBGame;
 import sockets.Admin;
 import sockets.Client;
 import database.DBRoom;
@@ -194,13 +195,14 @@ public class ConnectionMenu extends JPanel implements ActionListener, MouseListe
 
       Main.frame.mainMenuDisplay(Main.frame);
       Main.ListRoom = DBRoom.getRooms(Main.idAdmin); // recherche des salles dans la BDD apres la connection
-
+      Main.ListGame = DBGame.getGames(Main.idAdmin);
     }
     else if( isAdmin==0){
       int idAdmin=Client.recepIpIdAdmin(idUser);
       System.out.println("admin " + idAdmin);
       System.out.println("id du Joueur " + idUser);
       Main.ListRoom = DBRoom.getRooms(idAdmin); //si le joueur est le numero
+      Main.ListGame = DBGame.getGames(idAdmin);
       Main.frame.roomAccessDisplay(Main.frame,Main.ListRoom,DBUser.getUser(idUser));
 
     }

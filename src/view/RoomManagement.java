@@ -22,9 +22,9 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
     private RoomList ListRoom;
 
     /* Panel */
-    private final JPanel listPanel;
+    private final JPanelImage listPanel;
     private final JPanel newButtonPanel;
-    private final JPanel roomPanel;
+    private final JPanelImage roomPanel;
     /* Boutons */
     private final JButton returnButton;
     private final JButton newButton;
@@ -43,8 +43,8 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
         ListRoom = Main.ListRoom;
 
         /* Déclaration JPanel - JScrollPane */
-        listPanel = new JPanel();
-        roomPanel = new JPanel();
+        listPanel = new JPanelImage(Main.class.getResourceAsStream("/image/fondGestion.jpg"),windowSize);
+        roomPanel = new JPanelImage(Main.class.getResourceAsStream("/image/fondGestion.jpg"),windowSize);
         JPanel titlePanel = new JPanel();
         JPanel decoPanel = new JPanel();
         newButtonPanel = new JPanel();
@@ -103,6 +103,7 @@ public class RoomManagement extends JPanel implements ActionListener,MouseListen
 
         newButtonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         newButtonPanel.add(newButton);
+        newButtonPanel.setOpaque(false);
         newButtonPanel.setBackground(Color.LIGHT_GRAY);
 
         //roomPanel.setBorder(BorderFactory.createLineBorder(Color.BLUE));

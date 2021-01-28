@@ -30,7 +30,7 @@ public class Ranking extends JFrame implements ActionListener{
     private ScoreList scoreList;
 
     private JPanel mainPanel;
-    private JPanel rankingPanel;
+    private JPanelImage rankingPanel;
     private JPanel generalPanel;
     private JPanel refreshPanel;
     private JPanel titlePanel;
@@ -92,7 +92,7 @@ public class Ranking extends JFrame implements ActionListener{
 
         mainPanel = new JPanel();
         generalPanel = new JPanel();
-        rankingPanel = new JPanel();
+        rankingPanel = new JPanelImage(Main.class.getResourceAsStream("/image/fondGestion.jpg"),GlobalFrame.windowSize);
         refreshPanel = new JPanel();
         titlePanel = new JPanel();
 

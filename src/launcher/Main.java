@@ -12,6 +12,7 @@ public class Main {
     // Variable global
     public static EnigmaList ListEnigma = new EnigmaList();
     public static RoomList ListRoom = new RoomList();
+    public static GameList ListGame = new GameList();
     public static GlobalFrame frame = null;
 
     public static HashMap<Integer, ArrayList<String>> answers = new HashMap<>();
