@@ -469,6 +469,17 @@ public class CurrentGame extends JPanel implements ActionListener, WindowListene
         Thread ta = new Thread(runnabla);
         ta.start();
 
+
+
+        Runnable timerRunnable = () -> {
+            while (true) {
+                Client.sendTimer(countdownvalue,idUser);
+            }
+        };
+        Thread taTimer = new Thread(timerRunnable);
+        taTimer.start();
+
+
     }
 
     //listener des boutons
