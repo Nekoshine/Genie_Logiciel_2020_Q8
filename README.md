@@ -20,7 +20,7 @@ Pour exécuter ce logiciel, il faut posséder :
 
 - Java 8
 
-Ensuite il faut executer le fichier ***E-scape_Game.jar*** dans le dossier ***livrable***
+Ensuite il faut executer le fichier ***escapegame.jar*** dans le dossier ***livrable***
 
 ***ATTENTION*** 
 
@@ -29,14 +29,14 @@ joueur puisse acceder à des salles.
 
 Pour executer le logiciel sur une machine MJ, utilisez la ligne de commande suivante :
 
-***java -jar E-scape_Game.jar***
+***java -jar escapegame.jar***
 
 Pour executer le logiciel pour un joueur en local sur la meme machine que le mj, utilisez la ligne de commande suivante :
 
-***java -jar E-scape_Game.jar***
+***java -jar escapegame.jar***
 
 Pour executer le logiciel sur une machine joueur distincte sûr le même réseau local, utilisez la ligne de commande suivante avec l'ip du maître du jeu recuperable grace à la commande ***ipconfig***:
 
-***java -jar E-scape_Game.jar ipmj***
+***java -jar escapegame.jar***ipmj***
 
 Vous trouvrerez dans le dossier ***livrable*** le document ***manuel_d_utilisation.pdf*** détaillant l'ensemble des fonctionnalités.
