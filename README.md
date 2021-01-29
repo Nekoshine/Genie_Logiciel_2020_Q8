@@ -18,7 +18,7 @@ Le projet est réalisé en Java avec IntelliJ
 
 Pour exécuter ce logiciel, il faut posséder :
 
-- Java 15
+- Java 8
 
 Ensuite il faut executer le fichier ***escapegame.jar***
 
