@@ -32,10 +32,7 @@ public class SignupMenu extends JPanel implements ActionListener, MouseListener,
 
   private static volatile SignupMenu INSTANCE = new SignupMenu(Main.frame);
 
-  /**
-   *
-   * @param frame
-   */
+
 
   private SignupMenu(GlobalFrame frame) {
     
@@ -138,6 +135,12 @@ public class SignupMenu extends JPanel implements ActionListener, MouseListener,
     this.setVisible(true);
     
   }
+
+  /**
+   * Interface d'inscription
+   * @param frame Fenêtre d'affichage
+   * @return Retourne une instance de SignupMenu
+   */
 
   public final static SignupMenu getInstance(GlobalFrame frame) {
     //Le "Double-Checked Singleton"/"Singleton doublement vérifié" permet
