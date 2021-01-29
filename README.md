@@ -17,8 +17,7 @@ Le projet est réalisé en Java avec IntelliJ
 ## Lancement
 
 Pour exécuter ce logiciel, il faut posséder :
-- JUnit 5
-- mysql-connector
+
 - Java 15
 
 Ensuite il faut executer le fichier ***escapegame.jar***
@@ -36,8 +35,8 @@ Pour executer le logiciel pour un joueur en local sur la meme machine que le mj,
 
 ***java -jar escapegame.jar***
 
-Pour executer le logiciel sur une machine joueur distincte, utilisez la ligne de commande suivante :
+Pour executer le logiciel sur une machine joueur distincte, utilisez la ligne de commande suivante avec l'ip du maître du jeu recuperable grace à la commande ***ipconfig***:
 
 ***java -jar escapegame.jar ipmj***
 
-Vous trouvrerez dans les fichiers 
+Vous trouvrerez dans le dossier ***rapport*** le document ***manuel utilisation*** détaillant l'ensemble des fonctionnalités.
