@@ -3,7 +3,9 @@ package sockets;
 import model.Room;
 
 import java.io.Serializable;
-
+/**
+* Classe qui va permettre de créer un objet sérializable DemandeConnexion qui sera envoyé a travers les sockets
+*/
 final class DemandeConnexion implements Serializable {
   
   private int idUser;
@@ -21,18 +23,18 @@ final class DemandeConnexion implements Serializable {
     }
     
   }
-
+  
   Room getSalle() {
     return this.salle;
   }
-
+  
   int getIdUser(){
     return this.idUser;
   }
   boolean getFirstConn(){
     return this.firstConn;
   }
-
+  
   String getIp() {
     return this.ip;
   }
