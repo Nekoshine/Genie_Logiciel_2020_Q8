@@ -39,4 +39,4 @@ Pour executer le logiciel sur une machine joueur distincte, utilisez la ligne de
 
 ***java -jar escapegame.jar ipmj***
 
-Vous trouvrerez dans le dossier ***rapport*** le document ***manuel utilisation*** détaillant l'ensemble des fonctionnalités.
+Vous trouvrerez dans le dossier ***livrable*** le document ***manuel_d_utilisation.pdf*** détaillant l'ensemble des fonctionnalités.
