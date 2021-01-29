@@ -10,9 +10,9 @@ Projet de logiciel porté par l'équipe Q8 composée de :
 ## Dévelopement
 Ce projet a debuté le 20 novembre 2020
 
-La livraison aura lieu le 22 janvier 2021
+La livraison aura lieu le 29 janvier 2021
 
-Le projet est réalisé en Java avec IntelliJ
+Le projet est réalisé en Java avec IntelliJ et sera distribué sur windows
 
 ## Lancement
 
