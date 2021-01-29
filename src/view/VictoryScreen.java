@@ -15,6 +15,13 @@ public class VictoryScreen extends JPanel implements WindowListener {
 
     private Image backgroundVictoire;
 
+    /**
+     * Interface de victoire
+     * @param frame Fenêtre d'affichage
+     * @param score Score réalisé par le joueur
+     * @param temps Temps mis par le joueur pour finir
+     */
+
     public VictoryScreen(GlobalFrame frame, int score, int temps) {
 
         this.frame = frame;
