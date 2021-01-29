@@ -6,6 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Toute les fonction lié à la table Score dans la BDD
+ */
 public class DBScore extends DBConnexion {
 
     private DBScore(){
@@ -83,6 +86,11 @@ public class DBScore extends DBConnexion {
         return scoreList;
     }
 
+    /**
+     * Fonction qui ajoute un Score à la base de donnée
+     * @param score Le score à stocker
+     * @return
+     */
     public static boolean insertScore(Score score) {
         boolean inserted = false;
         try{
