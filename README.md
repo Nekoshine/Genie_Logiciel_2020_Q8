@@ -20,6 +20,8 @@ Pour exécuter ce logiciel, il faut posséder :
 
 - Java 8
 
+Il est également necessaire d'ouvrir les ports 8418,11210 et les tranches 8809-8859, 10811-10861, 10163-10213 et 10288-10338.
+
 Ensuite il faut executer le fichier ***E-scape_Game.jar*** dans le dossier ***livrable***
 
 ***ATTENTION*** 
@@ -31,7 +33,9 @@ Pour executer le logiciel sur une machine MJ, utilisez la ligne de commande suiv
 
 ***java -jar E-scape_Game.jar***
 
-Pour executer le logiciel pour un joueur en local sur la meme machine que le mj, utilisez la ligne de commande suivante :
+vous pouvez utiliser le couple id/mdp : ***admin/admin*** ou creer un compte MJ avec la clé temporaire suivante : ***JeSuisLaCleSecurisee***
+
+Pour executer le logiciel pour un joueur en local sur la meme machine que le mj, utilisez la ligne de commande suivante : 
 
 ***java -jar E-scape_Game.jar***
 
