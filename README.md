@@ -43,4 +43,6 @@ Pour executer le logiciel sur une machine joueur distincte sûr le même réseau
 
 ***java -jar escapegame.jar***ipmj***
 
+Vous pouvez utiliser les couples id/mdp : ***amoreau/a*** ou ***aee/a*** ou alors vous inscrire.
+
 Vous trouvrerez dans le dossier ***livrable*** le document ***manuel_d_utilisation.pdf*** détaillant l'ensemble des fonctionnalités.
